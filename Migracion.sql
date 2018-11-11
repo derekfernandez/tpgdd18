@@ -279,7 +279,7 @@ BEGIN
 		[ubicacion_id] [int],
 		[fecha_realizacion] [datetime] NOT NULL,
 		[valor_entrada] [numeric] (18,2) NOT NULL,
-		[medio_pago] [nvarchar] (30),
+		[tarjeta_id] [int] (30),
 		[cantidad_entradas] [int] NOT NULL,
 		--Puntos que otorgo la compra al cliente; NULL = 0
 		[cantidad_puntos] [bigint]
@@ -409,7 +409,7 @@ BEGIN
 		*/
 		[id_publicacion] [numeric] (18,0) PRIMARY KEY NOT NULL,
 		[descripcion] [nvarchar] (255) NOT NULL,
-		[fecha_publicacion] [datetime],
+		[fecha_creacion] [datetime],
 		[fecha_vencimiento] [datetime] NOT NULL,
 		[fecha_funcion] [datetime] NOT NULL,
 		--En la tabla maestra ninguno tiene direccion
@@ -679,6 +679,21 @@ IF NOT EXISTS (SELECT *
 		ADD CONSTRAINT FK_Compras_Clientes
 		FOREIGN KEY (cliente_id) REFERENCES [SQLITO].[Clientes](id_cliente)
 		PRINT('Foreign Key entre Compras y Clientes agregada')
+
+	END
+
+GO
+
+IF NOT EXISTS (SELECT * 
+    		   FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+               WHERE CONSTRAINT_NAME ='FK_Compras_Tarjetas')
+
+	BEGIN
+
+		ALTER TABLE [SQLITO].[Compras]
+		ADD CONSTRAINT FK_Compras_Tarjetas
+		FOREIGN KEY (tarjeta_id) REFERENCES [SQLITO].[Tarjetas](id_tarjeta)
+		PRINT('Foreign Key entre Compras y Tarjetas agregada')
 
 	END
 
