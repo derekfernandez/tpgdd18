@@ -295,8 +295,7 @@ BEGIN
 		[id_cliente] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[nombre] [nvarchar](255) NOT NULL,
 		[apellido] [nvarchar](255) NOT NULL,
-		[cuil] [nvarchar] (13) CHECK ([cuil] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]' OR 
-			[cuil] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]'),
+		[cuil] [nvarchar] (255) CHECK ([cuil] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]%'),
 		[tipo_documento] [nvarchar] (3) CHECK ([tipo_documento] IN ('DNI','LC','LE','CI')),
 		[numero_documento] [numeric] (8,0) CHECK (LEN([numero_documento]) <= 8),
 		[fecha_nacimiento] [datetime] NOT NULL,
@@ -365,8 +364,7 @@ BEGIN
 		[asiento] [numeric] (6,0),
 		[tipo_id] [int],
 		[precio] [numeric] (18,2) NOT NULL,
-		[disponible] [bit] DEFAULT 1,
-		[publicacion_id] [numeric] (18,0)
+		[publicacion_id] [int]
 	)
 
 PRINT('Tabla SQLITO.Ubicaciones creada')
@@ -402,7 +400,7 @@ BEGIN
 		/* El enunciado dice que tiene que ser autonumerico y consecutivo pero la tabla maestra
 		* tiene codigos cargados. Si pongo identity no va a hacer los inserts. Habria que ver como hacer
 		*/
-		[cod_publicacion] [numeric] (18,0) PRIMARY KEY NOT NULL,
+		[cod_publicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[descripcion] [nvarchar] (255) NOT NULL,
 		[fecha_creacion] [datetime],
 		[fecha_vencimiento] [datetime] NOT NULL,
@@ -483,8 +481,7 @@ BEGIN
 		[id_empresa] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[razonsocial] [nvarchar](255),
 		[fecha_creacion] [datetime],
-		[cuit] [nvarchar] (13) CHECK ([cuit] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]' OR 
-			[cuit] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]'),
+		[cuit] [nvarchar] (255) CHECK ([cuit] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]%'),
 		--Id del usuario al cual esta asociada la cuenta de la Empresa
 		[usuario_id] [int],
 		/* Agrego un campo para migrar forma_pago_desc, si no es correcto se cambia */
@@ -513,7 +510,7 @@ BEGIN
 		[telefono] [nvarchar](20),
 		[intentos_fallidos] [int] DEFAULT 0,
 		--1 es habilitado, 0 es inhabilitado
-		[estado] [bit] DEFAULT 1,
+		[habilitado] [bit] DEFAULT 1,
 		--Para mi, no deberiamos darle un valor default, que cada tipo de alta lo setee
 		[contraseniaActivada] [bit]
 	)
@@ -854,17 +851,15 @@ IF ((SELECT COUNT(*)
      FROM [SQLITO].[TiposUbicacion]) = 0)
 BEGIN
 
-	INSERT INTO [SQLITO].[TiposUbicacion]
-		(id_tipo,descripcion)
-	VALUES (4446, 'Platea Alta'),
-		   (4447, 'Platea Baja'),
-		   (4448, 'Vip'),
-	       (4449, 'Campo'),
-	       (4450, 'Campo Vip'),
-	       (4451, 'PullMan'),
-	       (4452, 'Super PullMan'),
-	       (4453, 'Cabecera'),
-	       (4454, 'S/N')
+	INSERT INTO [SQLITO].[TiposUbicacion] (id_tipo,descripcion)
+		SELECT Ubicacion_Tipo_Codigo,
+	   		   Ubicacion_Tipo_Descripcion
+		FROM gd_esquema.Maestra
+		GROUP BY Ubicacion_Tipo_Codigo, Ubicacion_Tipo_Descripcion
+		ORDER BY Ubicacion_Tipo_Codigo
+
+	INSERT INTO [SQLITO].[TiposUbicacion] (id_tipo,descripcion)
+	VALUES (4454, 'S/N')
 
 PRINT('Datos insertados en la tabla TiposUbicacion')
 END
@@ -874,8 +869,7 @@ IF ((SELECT COUNT(*)
      FROM [SQLITO].[EstadosPublicacion]) = 0)
 BEGIN
 
-	INSERT INTO [SQLITO].[EstadosPublicacion]
-		(descripcion)
+	INSERT INTO [SQLITO].[EstadosPublicacion] (descripcion)
 	VALUES ('Borrador'),
 		   ('Publicada'),
 		   ('Finalizada'),
@@ -885,14 +879,125 @@ PRINT('Datos insertados en la tabla EstadosPublicacion')
 END
 GO
 
+IF ((SELECT COUNT(*)
+     FROM [SQLITO].[Rubros]) = 0)
+BEGIN
+
+	INSERT INTO [SQLITO].[Rubros]
+		(descripcion)
+	VALUES ('Otros')
+
+PRINT('Rubro Otros insertado en la tabla Rubros, con el id = 1')
+END
+GO
+
 
 --Para limpiar la tabla y resetear el contador de IDENTITY en 0
 
-DELETE FROM [SQLITO].[EstadosPublicacion]
-DBCC CHECKIDENT ('[SQLITO].[EstadosPublicacion]', RESEED, 0)
+/*
+*DELETE FROM [SQLITO].[EstadosPublicacion]
+*DBCC CHECKIDENT ('[SQLITO].[EstadosPublicacion]', RESEED, 0)
+*GO
+*/
+
+
+
+--- FUNCIONES PARA LA MIGRACION ---
+
+
+
+IF OBJECT_ID('[SQLITO].[obtenerDireccion]') IS NOT NULL
+BEGIN
+	DROP FUNCTION [SQLITO].[obtenerDireccion]
+END
+GO
+CREATE FUNCTION [SQLITO].[obtenerDireccion]
+(@calle NVARCHAR(255), @altura NUMERIC(18,0), @piso NUMERIC(18,0), @depto NVARCHAR(255), @cp NVARCHAR(255))
+RETURNS NVARCHAR(255)
+BEGIN
+	DECLARE @direccion NVARCHAR(255)
+	SET @direccion = @calle + ' ' + CONVERT(NVARCHAR(18), @altura) +
+					 ' ' + CONVERT(NVARCHAR(18), @piso) + 'º' + @depto +
+					 ', CP: ' + @cp
+	RETURN @direccion
+END
+
+
+
+--- INSERTS ---
+
+--MIGRACION DE EMPRESAS--
+
+INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit)
+	SELECT Espec_Empresa_Razon_Social,
+       	   Espec_Empresa_Fecha_Creacion,
+	       Espec_Empresa_Cuit
+	FROM gd_esquema.Maestra
+	GROUP BY Espec_Empresa_Razon_Social, Espec_Empresa_Fecha_Creacion, Espec_Empresa_Cuit
 GO
 
--- INSERTS --
+PRINT('Datos existentes migrados a la tabla SQLITO.Empresas')
+
+
+--MIGRACION DE CLIENTES--
+
+INSERT INTO [SQLITO].[Clientes] (nombre, apellido, tipo_documento, numero_documento, fecha_nacimiento)
+	SELECT Cli_Nombre,
+	   	   Cli_Apeliido,
+	   	   --Todos los de la tabla maestra tienen DNI (el campo se llama asi); ya lo seteamos
+	       'DNI' AS TipoDocumento,
+	        Cli_Dni,
+	        Cli_Fecha_Nac
+	FROM gd_esquema.Maestra
+	WHERE Cli_Dni IS NOT NULL
+	GROUP BY Cli_Nombre, Cli_Apeliido, Cli_Dni, Cli_Fecha_Nac
+GO
+
+PRINT('Datos existentes migrados a la tabla SQLITO.Clientes')
+
+
+--MIGRACION DE PUBLICACIONES--
+
+--Con esto puedo insertar valores que yo quiera en una PK que es IDENTITY
+SET IDENTITY_INSERT [SQLITO].[Publicaciones] ON
+
+INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, rubro_id, estado_id)
+	SELECT Espectaculo_Cod,
+	   	   Espectaculo_Descripcion,
+	       Espectaculo_Fecha_Venc,
+	       Espectaculo_Fecha,
+	       --Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 1
+	       1,
+	       --Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
+	       2
+	FROM gd_esquema.Maestra
+	GROUP BY Espectaculo_Cod, Espectaculo_Descripcion, Espectaculo_Fecha_Venc, Espectaculo_Fecha
+GO
+
+--Deshabilito esto asi de ahora en mas todo lo que se agregue tiene IDENTITY autogenerada; sigue en el ultimo
+SET IDENTITY_INSERT [SQLITO].[Publicaciones] OFF
+
+PRINT('Datos existentes migrados a la tabla SQLITO.Publicaciones')
+
+
+--MIGRACION DE UBICACIONES--
+
+--Reseteo el contador de IDENTITY, por algun motivo se dispara
+DBCC CHECKIDENT ('[SQLITO].[Ubicaciones]', RESEED, 0)
+
+INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_id)
+	SELECT Ubicacion_Fila,
+	   	   Ubicacion_Asiento,
+	   	   Ubicacion_Precio,
+	   	   Ubicacion_Tipo_Codigo,
+	   	   Espectaculo_Cod
+	FROM gd_esquema.Maestra
+	GROUP BY Ubicacion_Fila, Ubicacion_Asiento, Ubicacion_Precio, Ubicacion_Tipo_Codigo, Espectaculo_Cod
+GO
+
+PRINT('Datos existentes migrados a la tabla SQLITO.Ubicaciones')
+
+
 
 INSERT INTO SQLITO.Compras (cliente_id, ubicacion_id, valor_entrada, tarjeta_id, cantidad_entradas, cantidad_puntos)
 SELECT c.id_cliente, u.id_ubicacion, Ubicacion_Precio*Compra_Cantidad, Compra_cantidad, c.tarjeta_id, null
