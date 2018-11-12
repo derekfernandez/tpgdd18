@@ -1,10 +1,7 @@
 USE [GD2C2018]
 GO
 
-
-
 --- CREACION DE ESQUEMA ---
-
 
 
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SQLITO')
@@ -16,123 +13,121 @@ END
 GO
 
 
-
 --- BORRADO DE TABLAS ---
-
 
 
 IF OBJECT_ID('SQLITO.Funcionalidades_Roles') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Funcionalidades_Roles]
-	PRINT('FuncionalidadesRoles eliminada')
+	PRINT('Tabla SQLITO.FuncionalidadesRoles eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Roles_Usuarios') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Roles_Usuarios]
-	PRINT('RolesUsuarios eliminada')
+	PRINT('Tabla SQLITO.RolesUsuarios eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Puntos') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Puntos]
-	PRINT('Puntos eliminada')
+	PRINT('Tabla SQLITO.Puntos eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Premios') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Premios]
-	PRINT('Premios eliminada')
+	PRINT('Tabla SQLITO.Premios eliminada')
 END
 
 IF OBJECT_ID('SQLITO.ItemsFactura') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[ItemsFactura]
-	PRINT('ItemsFactura eliminada')
+	PRINT('Tabla SQLITO.ItemsFactura eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Funcionalidades') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Funcionalidades]
-	PRINT('Funcionalidades eliminada')
+	PRINT('Tabla SQLITO.Funcionalidades eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Roles') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Roles]
-	PRINT('Roles eliminada')
+	PRINT('Tabla SQLITO.Roles eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Compras') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Compras]
-	PRINT('Compras eliminada')
+	PRINT('Tabla SQLITO.Compras eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Clientes') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Clientes]
-	PRINT('Clientes eliminada')
+	PRINT('Tabla SQLITO.Clientes eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Tarjetas') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Tarjetas]
-	PRINT('Tarjetas eliminada')
+	PRINT('Tabla SQLITO.Tarjetas eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Facturas') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Facturas]
-	PRINT('Facturas eliminada')
+	PRINT('Tabla SQLITO.Facturas eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Ubicaciones') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Ubicaciones]
-	PRINT('Ubicaciones eliminada')
+	PRINT('Tabla SQLITO.Ubicaciones eliminada')
 END
 
 IF OBJECT_ID('SQLITO.TiposUbicacion') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[TiposUbicacion]
-	PRINT('TiposUbicacion eliminada')
+	PRINT('Tabla SQLITO.TiposUbicacion eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Publicaciones') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Publicaciones]
-	PRINT('Publicaciones eliminada')
+	PRINT('Tabla SQLITO.Publicaciones eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Grados') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Grados]
-	PRINT('Grados eliminada')
+	PRINT('Tabla SQLITO.Grados eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Rubros') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Rubros]
-	PRINT('Rubros eliminada')
+	PRINT('Tabla SQLITO.Rubros eliminada')
 END
 
 IF OBJECT_ID('SQLITO.EstadosPublicacion') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[EstadosPublicacion]
-	PRINT('EstadosPublicacion eliminada')
+	PRINT('Tabla SQLITO.EstadosPublicacion eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Empresas') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Empresas]
-	PRINT('Empresas eliminada')
+	PRINT('Tabla SQLITO.Empresas eliminada')
 END
 
 IF OBJECT_ID('SQLITO.Usuarios') IS NOT NULL
 BEGIN
 	DROP TABLE [SQLITO].[Usuarios]
-	PRINT('Usuarios eliminada')
+	PRINT('Tabla SQLITO.Usuarios eliminada')
 END
 
 
@@ -220,8 +215,8 @@ BEGIN
 	CREATE TABLE [SQLITO].[ItemsFactura] (
 
 		[id_item] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[numero_item] [smallint] NOT NULL,							--Ordinal entre los renglones
 		[factura_id] [int],
+		[cantidad] [int],
 		[comision] [numeric] (6,2) NOT NULL,
 		[compra_id] [int],
 		[descripcion] [nvarchar] (255)
@@ -279,7 +274,7 @@ BEGIN
 		[ubicacion_id] [int],
 		[fecha_realizacion] [datetime] NOT NULL,
 		[valor_entrada] [numeric] (18,2) NOT NULL,
-		[tarjeta_id] [int] (30),
+		[tarjeta_id] [int],
 		[cantidad_entradas] [int] NOT NULL,
 		--Puntos que otorgo la compra al cliente; NULL = 0
 		[cantidad_puntos] [bigint]
@@ -407,7 +402,7 @@ BEGIN
 		/* El enunciado dice que tiene que ser autonumerico y consecutivo pero la tabla maestra
 		* tiene codigos cargados. Si pongo identity no va a hacer los inserts. Habria que ver como hacer
 		*/
-		[id_publicacion] [numeric] (18,0) PRIMARY KEY NOT NULL,
+		[cod_publicacion] [numeric] (18,0) PRIMARY KEY NOT NULL,
 		[descripcion] [nvarchar] (255) NOT NULL,
 		[fecha_creacion] [datetime],
 		[fecha_vencimiento] [datetime] NOT NULL,
@@ -418,8 +413,8 @@ BEGIN
 		[grado_id] [int],
 		[rubro_id] [int],
 		[estado_id] [int],
-		CHECK (([fecha_vencimiento] > [fecha_publicacion]) 
-			AND ([fecha_funcion] > [fecha_publicacion])
+		CHECK (([fecha_vencimiento] > [fecha_creacion]) 
+			AND ([fecha_funcion] > [fecha_creacion])
 			AND ([fecha_vencimiento] <= [fecha_funcion]))
 	)
 
@@ -509,8 +504,8 @@ BEGIN
 	CREATE TABLE [SQLITO].[Usuarios] (
 		
 		[id_usuario] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[username] [nvarchar](30) NOT NULL,
-		[password] [nvarchar](30) NOT NULL,
+		[username] [nvarchar](30),
+		[password] [nvarchar](30),
 		--Mail, direccion, zona y telefono pueden ser NULL en el administrador
 		[mail] [nvarchar](50),
 		[direccion] [nvarchar](255),
@@ -812,7 +807,7 @@ IF NOT EXISTS (SELECT *
 
 		ALTER TABLE [SQLITO].[Ubicaciones]
 		ADD CONSTRAINT FK_Ubicaciones_Publicaciones
-		FOREIGN KEY (publicacion_id) REFERENCES [SQLITO].[Publicaciones](id_publicacion)
+		FOREIGN KEY (publicacion_id) REFERENCES [SQLITO].[Publicaciones](cod_publicacion)
 		PRINT('Foreign Key entre Ubicaciones y Publicaciones agregada')
 
 	END
@@ -871,7 +866,9 @@ BEGIN
 	       (4453, 'Cabecera'),
 	       (4454, 'S/N')
 
+PRINT('Datos insertados en la tabla TiposUbicacion')
 END
+GO
 
 IF ((SELECT COUNT(*)
      FROM [SQLITO].[EstadosPublicacion]) = 0)
@@ -884,9 +881,89 @@ BEGIN
 		   ('Finalizada'),
 	       ('Pausada')
 
+PRINT('Datos insertados en la tabla EstadosPublicacion')
 END
+GO
+
 
 --Para limpiar la tabla y resetear el contador de IDENTITY en 0
+
 DELETE FROM [SQLITO].[EstadosPublicacion]
 DBCC CHECKIDENT ('[SQLITO].[EstadosPublicacion]', RESEED, 0)
 GO
+
+-- INSERTS --
+
+INSERT INTO SQLITO.Compras (cliente_id, ubicacion_id, valor_entrada, tarjeta_id, cantidad_entradas, cantidad_puntos)
+SELECT c.id_cliente, u.id_ubicacion, Ubicacion_Precio*Compra_Cantidad, Compra_cantidad, c.tarjeta_id, null
+FROM gd_esquema.Maestra gdm
+JOIN SQLITO.Clientes c ON c.numero_documento = gdm.Cli_Dni
+JOIN SQLITO.Publicaciones p ON p.cod_publicacion = gdm.Espectaculo_Cod
+JOIN SQLITO.Ubicaciones u ON u.fila = gdm.Ubicacion_Fila AND u.asiento = gdm.Ubicacion_Asiento
+WHERE Compra_Fecha IS NOT NULL
+
+PRINT('Datos insertados en la tabla Compras')
+GO
+
+INSERT INTO SQLITO.Facturas (numero_factura,fecha_emision,total,empresa_id)
+SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, e.id_empresa
+FROM gd_esquema.Maestra gdm
+JOIN SQLITO.Empresas e ON gdm.Espec_Empresa_Cuit = e.cuit
+WHERE Factura_Nro IS NOT NULL
+PRINT('Datos insertados en la tabla Facturas')
+GO
+
+INSERT INTO SQLITO.Publicaciones (cod_publicacion,descripcion,fecha_creacion,fecha_vencimiento,
+	fecha_funcion,direccion,empresa_id,grado_id,rubro_id,estado_id)
+SELECT DISTINCT Espectaculo_Cod, Espectaculo_Descripcion, Espec_Empresa_Fecha_Creacion, Espectaculo_Fecha_Venc,
+	Espectaculo_Fecha, null, r.id_rubro, Espectaculo_Estado 
+FROM gd_esquema.Maestra gdm
+JOIN SQLITO.Rubros r ON r.descripcion = gdm.Espectaculo_Rubro_Descripcion
+PRINT('Datos insertados en la tabla Publicaciones')
+GO
+
+INSERT INTO SQLITO.Ubicaciones (fila,asiento,tipo_id,precio,disponible,publicacion_id)
+SELECT Ubicacion_Fila, Ubicacion_Asiento, t.id_tipo, Ubicacion_Precio, null,p.cod_publicacion 
+FROM gd_esquema.Maestra gmd
+JOIN SQLITO.TiposUbicacion t ON t.id_tipo = gmd.Ubicacion_Tipo_Codigo
+JOIN SQLITO.Publicaciones p ON p.cod_publicacion = Espectaculo_Cod
+PRINT('Datos insertados en la tabla Ubicaciones')
+GO
+
+INSERT INTO SQLITO.Grados (descripcion,comision)
+VALUES ('Alta',9), ('Media',5),('Baja',3)
+PRINT('Datos insertados en la tabla Grados')
+GO
+
+INSERT INTO SQLITO.Rubros (descripcion)
+SELECT DISTINCT Espectaculo_Rubro_Descripcion
+FROM gd_esquema.Maestra
+PRINT('Datos insertados en la tabla Rubros')
+GO
+
+INSERT INTO SQLITO.Empresas(razonsocial,fecha_creacion,cuit,usuario_id,medio_pago_comision)
+SELECT DISTINCT Espec_Empresa_Razon_Social,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Cuit, u.id_usuario, Forma_Pago_Desc
+FROM gd_esquema.Maestra gdm
+JOIN SQLITO.Usuarios u ON u.mail = gdm.Espec_Empresa_Mail
+PRINT('Datos insertados en la tabla Empresas')
+GO
+
+-- DEJO ESTO POR SI TE SIRVE PARA USUARIOS --
+
+--TODOS LOS MAILS--
+
+SELECT DISTINCT Espec_Empresa_Mail FROM gd_esquema.Maestra UNION SELECT DISTINCT Cli_Mail FROM gd_esquema.Maestra)
+
+--TODOS LOS DOMICILIOS FORMATEADOS--
+
+SELECT DISTINCT(Espec_Empresa_Dom_Calle + ' ' + CAST(Espec_Empresa_Nro_Calle AS VARCHAR) + ' ' + CAST(Espec_Empresa_Piso AS VARCHAR)
+	 + ' ' + Espec_Empresa_Depto + ' ' + CAST(Espec_Empresa_Cod_Postal AS VARCHAR)) FROM gd_esquema.Maestra 
+	UNION
+	SELECT DISTINCT(Cli_Dom_Calle + ' ' + CAST(Cli_Nro_Calle AS VARCHAR) + ' ' + CAST(Cli_Piso AS VARCHAR)
+	 + ' ' + Cli_Depto + ' ' + CAST(Cli_Cod_Postal AS VARCHAR)) FROM gd_esquema.Maestra
+
+/* FALTAN ITEMSFACTURA, CLIENTES, PUNTOS, PREMIOS, USUARIOS, TARJETAS, ROL-USUARIO, ROL,
+* ROL-FUNCIONALIDAD, FUNCIONALIDAD
+* CUANDO ESTEN TODOS LOS INSERTS RECIEN SE PUEDE PROBAR POR EL TEMA DE LOS JOIN Y HAY QUE EJECUTARLOS EN UN
+* ORDEN DETERMINADO
+*/
