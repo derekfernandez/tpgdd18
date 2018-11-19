@@ -206,6 +206,7 @@ BEGIN
 	CREATE TABLE [SQLITO].[Premios] (
 
 		[id_premio] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+		[descripcion] [varchar] (100),
 		[puntos_requeridos] [smallint] NOT NULL,
 		[cantidad_stock] [smallint] NOT NULL
 	)
@@ -917,11 +918,11 @@ GO
 PRINT('Datos insertados en la tabla Funcionalidades')
 
 
---Para limpiar la tabla y resetear el contador de IDENTITY en 0
+--Para limpiar la tabla y resetear el contador de IDENTITY en 1
 
 /*
 *DELETE FROM [SQLITO].[EstadosPublicacion]
-*DBCC CHECKIDENT ('[SQLITO].[EstadosPublicacion]', RESEED, 0)
+*DBCC CHECKIDENT ('[SQLITO].[EstadosPublicacion]', RESEED, 1)
 *GO
 */
 
@@ -1021,7 +1022,7 @@ PRINT('Datos existentes migrados a la tabla SQLITO.Publicaciones. Filas insertad
 --MIGRACION DE UBICACIONES--
 
 --Reseteo el contador de IDENTITY, por algun motivo se dispara
-DBCC CHECKIDENT ('[SQLITO].[Ubicaciones]', RESEED, 0)
+DBCC CHECKIDENT ('[SQLITO].[Ubicaciones]', RESEED, 1)
 
 IF (SELECT COUNT(*) FROM [SQLITO].[Ubicaciones]) = 0
 BEGIN
@@ -1056,6 +1057,8 @@ AND sq2.fila = sq.Ubicacion_Fila AND sq2.publicacion_id = sq.Espectaculo_Cod
 END
 GO
 
+select * from SQLITO.Compras
+
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Compras)
 PRINT('Datos insertados en la tabla Compras. Filas insertadas: ' + @var)
@@ -1065,8 +1068,8 @@ PRINT('Datos insertados en la tabla Compras. Filas insertadas: ' + @var)
 IF (SELECT COUNT(*) FROM [SQLITO].[Facturas]) = 0
 BEGIN
 
-INSERT INTO SQLITO.Facturas (numero_factura,fecha_emision,total,empresa_id)
-SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, e.id_empresa
+INSERT INTO SQLITO.Facturas (numero_factura,fecha_emision,total,empresa_id,medio_pago)
+SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, e.id_empresa, Forma_Pago_Desc
 FROM gd_esquema.Maestra gdm
 JOIN SQLITO.Empresas e ON gdm.Espec_Empresa_Cuit = e.cuit
 WHERE Factura_Nro IS NOT NULL
@@ -1098,15 +1101,16 @@ PRINT('Datos insertados en la tabla ItemsFactura. Nuevas Filas: ' + @var)
 /* Para las siguientes tablas, la tabla maestra no aporta datos para migrar
 *
 * PUNTOS
-* PREMIOS
 * GRADOS
-* USUARIOS
-* USUARIOS_ROLES
+* PREMIOS (*) 
+* USUARIOS (*)
+* USUARIOS_ROLES (*)
+* ROLES_FUNCIONALIDADES (*)
 *
-* Agrego un usuaro admin, otro empresa y otro cliente, asigno roles a cada usuario y a cada funcionalidad
-* con el fin de probar las tablas intermedias y el cifrado del password
+*   (*) Agrego un usuaro admin, otro empresa y otro cliente, asigno roles a cada usuario y a cada funcionalidad
+* con el fin de probar las tablas intermedias y el cifrado del password; Agrego premios, librados a criterio del alumno
 */
-
+select * from gd_esquema.maestra
 -- INSERTS DE PRUEBA --
 
 DBCC CHECKIDENT('[SQLITO].[Usuarios]', RESEED, 1)
@@ -1121,6 +1125,17 @@ VALUES (2,1), (3,2), (1,3)
 
 INSERT INTO SQLITO.Funcionalidades_Roles
 VALUES (1,2), (2,2), (3,2), (4,3), (5,1), (6,1), (7,3), (8,3), (9,3), (10,2), (11,2)
+
+INSERT INTO SQLITO.Premios (descripcion, puntos_requeridos, cantidad_stock)
+VALUES('Mochila Hello Kitty', 1200, 60),
+	  ('Reloj Swatch Perfect Ride', 5400, 20),
+	  ('Camiseta Retro Argentina 86 Le Coq Sportif', 4000,10),
+	  ('Viaje a Tahiti 5 Noches',21000,5),
+	  ('Entradas Cinemark',500,200),
+	  ('Red Dead Redemption 2', 2425, 40),
+	  ('Cena P/2 en Parrilla Los Hermanos', 1850, 10),
+	  ('Dia de Spa', 2000, 10),
+	  ('Entradas Temaiken',850,150)
 
 PRINT('Insertados valores de prueba' + CHAR(13))
 PRINT('Script de migracion finalizado')
