@@ -12,9 +12,20 @@ BEGIN
 END
 GO
 
+--- BORRADO DE CONSTRAINTS ---
 
+DECLARE @delete_var NVARCHAR(255) = ''
+SELECT @delete_var = @delete_var + 'ALTER TABLE ' + QUOTENAME('SQLITO') + '.' + QUOTENAME(t.name) + ' DROP CONSTRAINT ' + 
+	QUOTENAME(fk.name) + '; ' + CHAR(13)
+FROM sys.tables t
+JOIN sys.foreign_keys fk ON t.object_id = fk.parent_object_id
+JOIN sys.schemas s ON t.schema_id = s.schema_id
+WHERE s.name = 'SQLITO'
+ORDER BY t.name
+EXEC (@delete_var)
+PRINT('Borrado de FKs finalizado')
+ 
 --- BORRADO DE TABLAS ---
-
 
 IF OBJECT_ID('SQLITO.Funcionalidades_Roles') IS NOT NULL
 BEGIN
@@ -134,8 +145,6 @@ END
 
 --- CREACION DE TABLAS ---
 
-
-
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Funcionalidades_Roles'
 	AND TABLE_SCHEMA = 'SQLITO')
 
@@ -198,8 +207,7 @@ BEGIN
 
 		[id_premio] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[puntos_requeridos] [smallint] NOT NULL,
-		[cantidad_stock] [smallint] NOT NULL,
-		[admin_responsable_id] [int]
+		[cantidad_stock] [smallint] NOT NULL
 	)
 
 PRINT('Tabla SQLITO.Premios creada')
@@ -302,6 +310,9 @@ BEGIN
 		--Puede ser NULL, los Clientes de la tabla maestra no tienen este campo
 		[fecha_creacion] [datetime],
 		--Puede ser NULL si un Cliente no tiene tarjetas registradas a su nombre
+		[mail] [nvarchar] (50),
+		[direccion] [nvarchar] (255),
+		[telefono] [nvarchar] (30),
 		[tarjeta_id] [int],
 		--Id del usuario al cual esta asociada la cuenta del Cliente
 		[usuario_id] [int],
@@ -343,8 +354,8 @@ BEGIN
 		[numero_factura] [int] PRIMARY KEY NOT NULL,
 		[fecha_emision] [datetime] NOT NULL,
 		[total] [numeric] (18,2) NOT NULL,
-		[empresa_id] [int]
-		--La descripcion del medio de pago no iria aca? O es fija de cada empresa?
+		[empresa_id] [int],
+		[medio_pago] [nvarchar] (30)
 	)
 
 PRINT('Tabla SQLITO.Facturas creada')
@@ -482,10 +493,11 @@ BEGIN
 		[razonsocial] [nvarchar](255),
 		[fecha_creacion] [datetime],
 		[cuit] [nvarchar] (255) CHECK ([cuit] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]%'),
+		[mail] [nvarchar] (50),
+		[direccion] [nvarchar] (255),
+		[telefono] [nvarchar] (30),
 		--Id del usuario al cual esta asociada la cuenta de la Empresa
-		[usuario_id] [int],
-		/* Agrego un campo para migrar forma_pago_desc, si no es correcto se cambia */
-		[medio_pago_comision] [nvarchar] (30)
+		[usuario_id] [int]
 	)
 
 PRINT('Tabla SQLITO.Empresas creada')
@@ -503,11 +515,6 @@ BEGIN
 		[id_usuario] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[username] [nvarchar](30),
 		[password] [nvarchar](30),
-		--Mail, direccion, zona y telefono pueden ser NULL en el administrador
-		[mail] [nvarchar](50),
-		[direccion] [nvarchar](255),
-		[zona] [nvarchar](80),
-		[telefono] [nvarchar](20),
 		[intentos_fallidos] [int] DEFAULT 0,
 		--1 es habilitado, 0 es inhabilitado
 		[habilitado] [bit] DEFAULT 1,
@@ -581,21 +588,6 @@ IF NOT EXISTS (SELECT *
 		ADD CONSTRAINT FK_RolesUsuarios_Usuarios
 		FOREIGN KEY (usuario_id) REFERENCES [SQLITO].[Usuarios](id_usuario)
 		PRINT('Foreign Key entre Roles_Usuarios y Usuarios agregada')
-
-	END
-
-GO
-
-IF NOT EXISTS (SELECT * 
-    		   FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
-               WHERE CONSTRAINT_NAME ='FK_Premios_Usuarios')
-
-	BEGIN
-
-		ALTER TABLE [SQLITO].[Premios]
-		ADD CONSTRAINT FK_Premios_Usuarios
-		FOREIGN KEY (admin_responsable_id) REFERENCES [SQLITO].[Usuarios](id_usuario)
-		PRINT('Foreign Key entre Premios y Usuarios agregada')
 
 	END
 
@@ -841,32 +833,29 @@ IF NOT EXISTS (SELECT *
 
 GO
 
-
-
 --- COMPLETADO DE TABLAS ACOTADAS ---
 
+--TIPOS DE UBICACION --
 
-
-IF ((SELECT COUNT(*)
-     FROM [SQLITO].[TiposUbicacion]) = 0)
+IF (SELECT COUNT(*) FROM [SQLITO].[TiposUbicacion]) = 0
 BEGIN
 
 	INSERT INTO [SQLITO].[TiposUbicacion] (id_tipo,descripcion)
-		SELECT Ubicacion_Tipo_Codigo,
-	   		   Ubicacion_Tipo_Descripcion
+		
+		SELECT DISTINCT Ubicacion_Tipo_Codigo, Ubicacion_Tipo_Descripcion
 		FROM gd_esquema.Maestra
-		GROUP BY Ubicacion_Tipo_Codigo, Ubicacion_Tipo_Descripcion
 		ORDER BY Ubicacion_Tipo_Codigo
 
 	INSERT INTO [SQLITO].[TiposUbicacion] (id_tipo,descripcion)
 	VALUES (4454, 'S/N')
 
-PRINT('Datos insertados en la tabla TiposUbicacion')
+PRINT('Datos insertados en la tabla SQLITO.TiposUbicacion')
 END
 GO
 
-IF ((SELECT COUNT(*)
-     FROM [SQLITO].[EstadosPublicacion]) = 0)
+-- ESTADOS DE PUBLICACION --
+
+IF (SELECT COUNT(*) FROM [SQLITO].[EstadosPublicacion]) = 0
 BEGIN
 
 	INSERT INTO [SQLITO].[EstadosPublicacion] (descripcion)
@@ -879,8 +868,9 @@ PRINT('Datos insertados en la tabla EstadosPublicacion')
 END
 GO
 
-IF ((SELECT COUNT(*)
-     FROM [SQLITO].[Rubros]) = 0)
+-- RUBROS --
+
+IF (SELECT COUNT(*) FROM [SQLITO].[Rubros]) = 0
 BEGIN
 
 	INSERT INTO [SQLITO].[Rubros]
@@ -891,6 +881,41 @@ PRINT('Rubro Otros insertado en la tabla Rubros, con el id = 1')
 END
 GO
 
+-- ROLES --
+
+IF (SELECT COUNT(*) FROM [SQLITO].[Roles]) = 0
+BEGIN
+INSERT INTO SQLITO.Roles (descripcion) 
+VALUES('Empresa'),
+	  ('Administrativo'),
+	  ('Cliente')
+END
+GO
+
+PRINT ('Datos insertados en la tabla Roles')
+
+-- FUNCIONALIDADES --
+
+IF (SELECT COUNT(*) FROM [SQLITO].[Funcionalidades]) = 0
+BEGIN
+
+INSERT INTO SQLITO.Funcionalidades (descripcion)
+VALUES ('ABM Roles'),
+	   ('ABM Clientes'),
+	   ('ABM Empresas'),
+	   ('ABM Grados'),
+	   ('Generar Publicacion'),
+	   ('Editar Publicacion'),
+	   ('Compras'),
+	   ('Historial de Compras'),
+	   ('Administacion de Puntos'),
+	   ('Rendicion de Comisiones'),
+	   ('Estadisticas')
+END
+GO
+
+PRINT('Datos insertados en la tabla Funcionalidades')
+
 
 --Para limpiar la tabla y resetear el contador de IDENTITY en 0
 
@@ -900,60 +925,69 @@ GO
 *GO
 */
 
-
-
 --- FUNCIONES PARA LA MIGRACION ---
-
-
 
 IF OBJECT_ID('[SQLITO].[obtenerDireccion]') IS NOT NULL
 BEGIN
 	DROP FUNCTION [SQLITO].[obtenerDireccion]
 END
 GO
+
 CREATE FUNCTION [SQLITO].[obtenerDireccion]
 (@calle NVARCHAR(255), @altura NUMERIC(18,0), @piso NUMERIC(18,0), @depto NVARCHAR(255), @cp NVARCHAR(255))
 RETURNS NVARCHAR(255)
 BEGIN
-	DECLARE @direccion NVARCHAR(255)
-	SET @direccion = @calle + ' ' + CONVERT(NVARCHAR(18), @altura) +
-					 ' ' + CONVERT(NVARCHAR(18), @piso) + 'º' + @depto +
+	DECLARE @direccion NVARCHAR(255) = ''
+	SET @direccion = @direccion + @calle + ' ' + CAST(@altura AS NVARCHAR) +
+					 ' ' + CAST(@piso AS NVARCHAR) + 'º' + @depto +
 					 ', CP: ' + @cp
 	RETURN @direccion
 END
-
-
+GO
 
 --- INSERTS ---
 
 --MIGRACION DE EMPRESAS--
 
-INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit)
-	SELECT Espec_Empresa_Razon_Social,
+IF (SELECT COUNT(*) FROM [SQLITO].[Empresas]) = 0
+BEGIN
+INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit, mail, direccion)
+	SELECT DISTINCT Espec_Empresa_Razon_Social,
        	   Espec_Empresa_Fecha_Creacion,
-	       Espec_Empresa_Cuit
+	       Espec_Empresa_Cuit,
+		   Espec_Empresa_Mail,
+		   SQLITO.obtenerDireccion(Espec_Empresa_Dom_Calle, Espec_Empresa_Nro_Calle, Espec_Empresa_Piso, Espec_Empresa_Depto, Espec_Empresa_Cod_Postal)
 	FROM gd_esquema.Maestra
-	GROUP BY Espec_Empresa_Razon_Social, Espec_Empresa_Fecha_Creacion, Espec_Empresa_Cuit
+END
 GO
 
-PRINT('Datos existentes migrados a la tabla SQLITO.Empresas')
-
+DECLARE @var NVARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.Empresas)
+PRINT('Datos existentes migrados a la tabla SQLITO.Empresas. Filas insertadas: ' + @var)
 
 --MIGRACION DE CLIENTES--
 
-INSERT INTO [SQLITO].[Clientes] (nombre, apellido, tipo_documento, numero_documento, fecha_nacimiento)
+IF (SELECT COUNT(*) FROM [SQLITO].[Clientes]) = 0
+BEGIN
+
+INSERT INTO [SQLITO].[Clientes] (nombre, apellido, tipo_documento, numero_documento, fecha_nacimiento, mail, direccion)
 	SELECT Cli_Nombre,
 	   	   Cli_Apeliido,
 	   	   --Todos los de la tabla maestra tienen DNI (el campo se llama asi); ya lo seteamos
 	       'DNI' AS TipoDocumento,
 	        Cli_Dni,
-	        Cli_Fecha_Nac
+	        Cli_Fecha_Nac,
+			Cli_Mail,
+			SQLITO.obtenerDireccion(Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal)
 	FROM gd_esquema.Maestra
 	WHERE Cli_Dni IS NOT NULL
-	GROUP BY Cli_Nombre, Cli_Apeliido, Cli_Dni, Cli_Fecha_Nac
+	GROUP BY Cli_Nombre, Cli_Apeliido, Cli_Dni, Cli_Fecha_Nac, Cli_Mail, Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal
+END
 GO
 
-PRINT('Datos existentes migrados a la tabla SQLITO.Clientes')
+DECLARE @var NVARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.Clientes)
+PRINT('Datos existentes migrados a la tabla SQLITO.Clientes. Filas insertadas: ' + @var)
 
 
 --MIGRACION DE PUBLICACIONES--
@@ -961,8 +995,11 @@ PRINT('Datos existentes migrados a la tabla SQLITO.Clientes')
 --Con esto puedo insertar valores que yo quiera en una PK que es IDENTITY
 SET IDENTITY_INSERT [SQLITO].[Publicaciones] ON
 
+IF (SELECT COUNT(*) FROM [SQLITO].[Publicaciones]) = 0
+BEGIN
+
 INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, rubro_id, estado_id)
-	SELECT Espectaculo_Cod,
+	SELECT DISTINCT Espectaculo_Cod,
 	   	   Espectaculo_Descripcion,
 	       Espectaculo_Fecha_Venc,
 	       Espectaculo_Fecha,
@@ -971,19 +1008,23 @@ INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencim
 	       --Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
 	       2
 	FROM gd_esquema.Maestra
-	GROUP BY Espectaculo_Cod, Espectaculo_Descripcion, Espectaculo_Fecha_Venc, Espectaculo_Fecha
+END
 GO
 
 --Deshabilito esto asi de ahora en mas todo lo que se agregue tiene IDENTITY autogenerada; sigue en el ultimo
 SET IDENTITY_INSERT [SQLITO].[Publicaciones] OFF
 
-PRINT('Datos existentes migrados a la tabla SQLITO.Publicaciones')
-
+DECLARE @var NVARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.Publicaciones)
+PRINT('Datos existentes migrados a la tabla SQLITO.Publicaciones. Filas insertadas: ' + @var)
 
 --MIGRACION DE UBICACIONES--
 
 --Reseteo el contador de IDENTITY, por algun motivo se dispara
 DBCC CHECKIDENT ('[SQLITO].[Ubicaciones]', RESEED, 0)
+
+IF (SELECT COUNT(*) FROM [SQLITO].[Ubicaciones]) = 0
+BEGIN
 
 INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_id)
 	SELECT Ubicacion_Fila,
@@ -993,82 +1034,94 @@ INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_
 	   	   Espectaculo_Cod
 	FROM gd_esquema.Maestra
 	GROUP BY Ubicacion_Fila, Ubicacion_Asiento, Ubicacion_Precio, Ubicacion_Tipo_Codigo, Espectaculo_Cod
+END
 GO
 
-PRINT('Datos existentes migrados a la tabla SQLITO.Ubicaciones')
+DECLARE @var NVARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.Ubicaciones)
+PRINT('Datos existentes migrados a la tabla SQLITO.Ubicaciones. Filas insertadas: ' + @var)
 
+-- MIGRACION DE TARJETAS --
 
+-- MIGRACION DE COMPRAS --
+IF (SELECT COUNT(*) FROM [SQLITO].[Compras]) = 0
+BEGIN
 
-INSERT INTO SQLITO.Compras (cliente_id, ubicacion_id, valor_entrada, tarjeta_id, cantidad_entradas, cantidad_puntos)
-SELECT c.id_cliente, u.id_ubicacion, Ubicacion_Precio*Compra_Cantidad, Compra_cantidad, c.tarjeta_id, null
-FROM gd_esquema.Maestra gdm
-JOIN SQLITO.Clientes c ON c.numero_documento = gdm.Cli_Dni
-JOIN SQLITO.Publicaciones p ON p.cod_publicacion = gdm.Espectaculo_Cod
-JOIN SQLITO.Ubicaciones u ON u.fila = gdm.Ubicacion_Fila AND u.asiento = gdm.Ubicacion_Asiento
-WHERE Compra_Fecha IS NOT NULL
-
-PRINT('Datos insertados en la tabla Compras')
+INSERT INTO SQLITO.Compras (cliente_id, ubicacion_id, fecha_realizacion, valor_entrada, cantidad_entradas)
+SELECT c.id_cliente, sq2.id_ubicacion,Compra_Fecha, Ubicacion_Precio*Compra_Cantidad AS 'Valor Compra', Compra_cantidad
+FROM (SELECT * FROM gd_esquema.Maestra WHERE Compra_Fecha IS NOT NULL AND Factura_Nro IS NULL) sq
+JOIN SQLITO.Clientes c ON c.numero_documento = sq.Cli_Dni
+JOIN (SELECT DISTINCT id_ubicacion, asiento, fila, publicacion_id FROM SQLITO.Ubicaciones) sq2 ON sq2.asiento = sq.Ubicacion_Asiento
+AND sq2.fila = sq.Ubicacion_Fila AND sq2.publicacion_id = sq.Espectaculo_Cod 
+END
 GO
+
+DECLARE @var NVARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.Compras)
+PRINT('Datos insertados en la tabla Compras. Filas insertadas: ' + @var)
+
+-- MIGRACION DE FACTURAS -- 
+
+IF (SELECT COUNT(*) FROM [SQLITO].[Facturas]) = 0
+BEGIN
 
 INSERT INTO SQLITO.Facturas (numero_factura,fecha_emision,total,empresa_id)
 SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, e.id_empresa
 FROM gd_esquema.Maestra gdm
 JOIN SQLITO.Empresas e ON gdm.Espec_Empresa_Cuit = e.cuit
 WHERE Factura_Nro IS NOT NULL
-PRINT('Datos insertados en la tabla Facturas')
+END
 GO
 
-INSERT INTO SQLITO.Publicaciones (cod_publicacion,descripcion,fecha_creacion,fecha_vencimiento,
-	fecha_funcion,direccion,empresa_id,grado_id,rubro_id,estado_id)
-SELECT DISTINCT Espectaculo_Cod, Espectaculo_Descripcion, Espec_Empresa_Fecha_Creacion, Espectaculo_Fecha_Venc,
-	Espectaculo_Fecha, null, r.id_rubro, Espectaculo_Estado 
-FROM gd_esquema.Maestra gdm
-JOIN SQLITO.Rubros r ON r.descripcion = gdm.Espectaculo_Rubro_Descripcion
-PRINT('Datos insertados en la tabla Publicaciones')
+DECLARE @var NVARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.Facturas)
+PRINT('Datos insertados en la tabla Facturas. Filas insertadas: ' + @var)
+
+-- MIGRACION DE ITEMS --
+
+IF (SELECT COUNT(*) FROM [SQLITO].[ItemsFactura]) = 0
+BEGIN
+
+INSERT INTO SQLITO.ItemsFactura (factura_id, cantidad, comision, compra_id, descripcion)
+SELECT DISTINCT Factura_Nro, Item_Factura_Cantidad, Item_Factura_Monto, c.id_compra, Item_Factura_Descripcion FROM gd_esquema.Maestra gdm
+JOIN SQLITO.Ubicaciones u ON u.asiento = gdm.Ubicacion_Asiento AND u.fila = gdm.Ubicacion_Fila
+JOIN SQLITO.Compras c ON c.ubicacion_id = u.id_ubicacion
+WHERE gdm.Espectaculo_Cod = u.publicacion_id
+AND Factura_Nro IS NOT NULL
+END
 GO
 
-INSERT INTO SQLITO.Ubicaciones (fila,asiento,tipo_id,precio,disponible,publicacion_id)
-SELECT Ubicacion_Fila, Ubicacion_Asiento, t.id_tipo, Ubicacion_Precio, null,p.cod_publicacion 
-FROM gd_esquema.Maestra gmd
-JOIN SQLITO.TiposUbicacion t ON t.id_tipo = gmd.Ubicacion_Tipo_Codigo
-JOIN SQLITO.Publicaciones p ON p.cod_publicacion = Espectaculo_Cod
-PRINT('Datos insertados en la tabla Ubicaciones')
-GO
+DECLARE @var VARCHAR(10)
+SELECT @var = (SELECT COUNT(*) FROM SQLITO.ItemsFactura)
+PRINT('Datos insertados en la tabla ItemsFactura. Nuevas Filas: ' + @var)
 
-INSERT INTO SQLITO.Grados (descripcion,comision)
-VALUES ('Alta',9), ('Media',5),('Baja',3)
-PRINT('Datos insertados en la tabla Grados')
-GO
-
-INSERT INTO SQLITO.Rubros (descripcion)
-SELECT DISTINCT Espectaculo_Rubro_Descripcion
-FROM gd_esquema.Maestra
-PRINT('Datos insertados en la tabla Rubros')
-GO
-
-INSERT INTO SQLITO.Empresas(razonsocial,fecha_creacion,cuit,usuario_id,medio_pago_comision)
-SELECT DISTINCT Espec_Empresa_Razon_Social,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Cuit, u.id_usuario, Forma_Pago_Desc
-FROM gd_esquema.Maestra gdm
-JOIN SQLITO.Usuarios u ON u.mail = gdm.Espec_Empresa_Mail
-PRINT('Datos insertados en la tabla Empresas')
-GO
-
--- DEJO ESTO POR SI TE SIRVE PARA USUARIOS --
-
---TODOS LOS MAILS--
-
-SELECT DISTINCT Espec_Empresa_Mail FROM gd_esquema.Maestra UNION SELECT DISTINCT Cli_Mail FROM gd_esquema.Maestra)
-
---TODOS LOS DOMICILIOS FORMATEADOS--
-
-SELECT DISTINCT(Espec_Empresa_Dom_Calle + ' ' + CAST(Espec_Empresa_Nro_Calle AS VARCHAR) + ' ' + CAST(Espec_Empresa_Piso AS VARCHAR)
-	 + ' ' + Espec_Empresa_Depto + ' ' + CAST(Espec_Empresa_Cod_Postal AS VARCHAR)) FROM gd_esquema.Maestra 
-	UNION
-	SELECT DISTINCT(Cli_Dom_Calle + ' ' + CAST(Cli_Nro_Calle AS VARCHAR) + ' ' + CAST(Cli_Piso AS VARCHAR)
-	 + ' ' + Cli_Depto + ' ' + CAST(Cli_Cod_Postal AS VARCHAR)) FROM gd_esquema.Maestra
-
-/* FALTAN ITEMSFACTURA, CLIENTES, PUNTOS, PREMIOS, USUARIOS, TARJETAS, ROL-USUARIO, ROL,
-* ROL-FUNCIONALIDAD, FUNCIONALIDAD
-* CUANDO ESTEN TODOS LOS INSERTS RECIEN SE PUEDE PROBAR POR EL TEMA DE LOS JOIN Y HAY QUE EJECUTARLOS EN UN
-* ORDEN DETERMINADO
+/* Para las siguientes tablas, la tabla maestra no aporta datos para migrar
+*
+* PUNTOS
+* PREMIOS
+* GRADOS
+* USUARIOS
+* USUARIOS_ROLES
+*
+* Agrego un usuaro admin, otro empresa y otro cliente, asigno roles a cada usuario y a cada funcionalidad
+* con el fin de probar las tablas intermedias y el cifrado del password
 */
+
+-- INSERTS DE PRUEBA --
+
+DBCC CHECKIDENT('[SQLITO].[Usuarios]', RESEED, 1)
+
+INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+VALUES('testAdmin',HASHBYTES('SHA2_256','admin'),1),
+	  ('testCliente',HASHBYTES('SHA2_256','password'),1),
+	  ('testEmpresa',HASHBYTES('SHA2_256','fact_pw'),1)
+
+INSERT INTO SQLITO.Roles_Usuarios
+VALUES (2,1), (3,2), (1,3)
+
+INSERT INTO SQLITO.Funcionalidades_Roles
+VALUES (1,2), (2,2), (3,2), (4,3), (5,1), (6,1), (7,3), (8,3), (9,3), (10,2), (11,2)
+
+PRINT('Insertados valores de prueba' + CHAR(13))
+PRINT('Script de migracion finalizado')
+GO
