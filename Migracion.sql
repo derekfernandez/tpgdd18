@@ -964,7 +964,7 @@ GO
 
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Empresas)
-PRINT('Datos existentes migrados a la tabla SQLITO.Empresas. Filas insertadas: ' + @var)
+PRINT('Datos existentes migrados a la tabla SQLITO.Empresas. Nuevas Filas: ' + @var)
 
 --MIGRACION DE CLIENTES--
 
@@ -988,7 +988,7 @@ GO
 
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Clientes)
-PRINT('Datos existentes migrados a la tabla SQLITO.Clientes. Filas insertadas: ' + @var)
+PRINT('Datos existentes migrados a la tabla SQLITO.Clientes. Nuevas Filas: ' + @var)
 
 
 --MIGRACION DE PUBLICACIONES--
@@ -1017,7 +1017,7 @@ SET IDENTITY_INSERT [SQLITO].[Publicaciones] OFF
 
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Publicaciones)
-PRINT('Datos existentes migrados a la tabla SQLITO.Publicaciones. Filas insertadas: ' + @var)
+PRINT('Datos existentes migrados a la tabla SQLITO.Publicaciones. Nuevas Filas: ' + @var)
 
 --MIGRACION DE UBICACIONES--
 
@@ -1040,7 +1040,7 @@ GO
 
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Ubicaciones)
-PRINT('Datos existentes migrados a la tabla SQLITO.Ubicaciones. Filas insertadas: ' + @var)
+PRINT('Datos existentes migrados a la tabla SQLITO.Ubicaciones. Nuevas filas: ' + @var)
 
 -- MIGRACION DE TARJETAS --
 
@@ -1061,7 +1061,7 @@ select * from SQLITO.Compras
 
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Compras)
-PRINT('Datos insertados en la tabla Compras. Filas insertadas: ' + @var)
+PRINT('Datos insertados en la tabla Compras. Nuevas Filas: ' + @var)
 
 -- MIGRACION DE FACTURAS -- 
 
@@ -1078,7 +1078,7 @@ GO
 
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Facturas)
-PRINT('Datos insertados en la tabla Facturas. Filas insertadas: ' + @var)
+PRINT('Datos insertados en la tabla Facturas. Nuevas Filas: ' + @var)
 
 -- MIGRACION DE ITEMS --
 
@@ -1098,11 +1098,26 @@ DECLARE @var VARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.ItemsFactura)
 PRINT('Datos insertados en la tabla ItemsFactura. Nuevas Filas: ' + @var)
 
+-- PREMIOS --
+
+INSERT INTO SQLITO.Premios (descripcion, puntos_requeridos, cantidad_stock)
+VALUES('Mochila Hello Kitty', 1200, 60),
+	  ('Reloj Swatch Perfect Ride', 5400, 20),
+	  ('Camiseta Retro Argentina 86 Le Coq Sportif', 4000,10),
+	  ('Viaje a Tahiti 5 Noches',21000,5),
+	  ('Entradas Cinemark',500,200),
+	  ('Red Dead Redemption 2', 2425, 40),
+	  ('Cena P/2 en Parrilla Los Hermanos', 1850, 10),
+	  ('Dia de Spa', 2000, 10),
+	  ('Entradas Temaiken',850,150)
+GO
+
+PRINT('Datos insertados en la tabla Premios')
+
 /* Para las siguientes tablas, la tabla maestra no aporta datos para migrar
 *
 * PUNTOS
 * GRADOS
-* PREMIOS (*) 
 * USUARIOS (*)
 * USUARIOS_ROLES (*)
 * ROLES_FUNCIONALIDADES (*)
@@ -1125,17 +1140,6 @@ VALUES (2,1), (3,2), (1,3)
 
 INSERT INTO SQLITO.Funcionalidades_Roles
 VALUES (1,2), (2,2), (3,2), (4,3), (5,1), (6,1), (7,3), (8,3), (9,3), (10,2), (11,2)
-
-INSERT INTO SQLITO.Premios (descripcion, puntos_requeridos, cantidad_stock)
-VALUES('Mochila Hello Kitty', 1200, 60),
-	  ('Reloj Swatch Perfect Ride', 5400, 20),
-	  ('Camiseta Retro Argentina 86 Le Coq Sportif', 4000,10),
-	  ('Viaje a Tahiti 5 Noches',21000,5),
-	  ('Entradas Cinemark',500,200),
-	  ('Red Dead Redemption 2', 2425, 40),
-	  ('Cena P/2 en Parrilla Los Hermanos', 1850, 10),
-	  ('Dia de Spa', 2000, 10),
-	  ('Entradas Temaiken',850,150)
 
 PRINT('Insertados valores de prueba' + CHAR(13))
 PRINT('Script de migracion finalizado')
