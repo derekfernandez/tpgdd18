@@ -1110,7 +1110,7 @@ PRINT('Datos insertados en la tabla ItemsFactura. Nuevas Filas: ' + @var)
 *   (*) Agrego un usuaro admin, otro empresa y otro cliente, asigno roles a cada usuario y a cada funcionalidad
 * con el fin de probar las tablas intermedias y el cifrado del password; Agrego premios, librados a criterio del alumno
 */
-select * from gd_esquema.maestra
+
 -- INSERTS DE PRUEBA --
 
 DBCC CHECKIDENT('[SQLITO].[Usuarios]', RESEED, 1)
