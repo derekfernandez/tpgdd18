@@ -920,12 +920,13 @@ PRINT('Datos insertados en la tabla Funcionalidades')
 INSERT INTO SQLITO.Funcionalidades_Roles
 /* (FUNCIONALIDAD,ROL)
 *   ROLES:           1 EMPRESA || 2 ADMIN || 3 CLIENTE
-*   FUNCIONALIDADES: 1 ABM ROLES || 2 ABM CIENTES || 3 ABM EMPRESAS || 4 ABM GRADOS || 5 GENERAR PUBLICACION || 6 EDITAR PUBLICACION 
-*				     7 COMPRAS || 8 HISTORIAL DE COMPRAS || 9 ADMINISTRACION DE PUNTOS || 10 COMISIONES || 11 ESTADISTICAS
+*   FUNCIONALIDADES: 1 ABM ROLES  || 2 REGISTRO || 3 ABM CLIENTES || 4 ABM EMPRESAS || 5 ABM GRADOS || 6 GENERAR PUBLICACION || 
+*					 7 EDITAR PUBLICACION || 8 COMPRAS || 9 HISTORIAL DE COMPRAS || 10 ADMINISTRACION DE PUNTOS || 11 COMISIONES ||
+*					 12 ESTADISTICAS
 */
-VALUES		 					   (5,1), (6,1), 
-	   (1,2), (2,2), (3,2), (4,2), (5,2), (6,2), (7,2), (8,2), (9,2), (10,2), (11,2),
-							(4,3),               (7,3), (8,3), (9,3)
+VALUES		  (2,1),					  (6,1), (7,1), 
+	   (1,2), (2,2), (3,2), (4,2), (5,2), (6,2), (7,2), (8,2), (9,2), (10,2), (11,2), (12,2),
+			  (2,3),		       (5,3),               (8,3), (9,3), (10,3)
 PRINT('Funcionalidades asignadas a los roles')
 
 
