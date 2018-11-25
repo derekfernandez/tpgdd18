@@ -1140,12 +1140,6 @@ GO
 PRINT ('Datos insertados en la tabla Grados')
 GO
 
-/* Para las siguientes tablas, la tabla maestra no aporta datos para migrar
-*
-* PUNTOS
-* USUARIOS_ROLES (*) -> FALTA AGREGAR ESTO EN EL PROCEDURE 
-*/
-
 -- USUARIOS --
 
 CREATE PROCEDURE crearUsuario_cliente
