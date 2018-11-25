@@ -514,8 +514,8 @@ BEGIN
 	CREATE TABLE [SQLITO].[Usuarios] (
 		
 		[id_usuario] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[username] [nvarchar](30),
-		[password] [nvarchar](30),
+		[username] [nvarchar](255),
+		[password] [nvarchar](255),
 		[intentos_fallidos] [int] DEFAULT 0,
 		--1 es habilitado, 0 es inhabilitado
 		[habilitado] [bit] DEFAULT 1,
@@ -917,6 +917,17 @@ GO
 
 PRINT('Datos insertados en la tabla Funcionalidades')
 
+INSERT INTO SQLITO.Funcionalidades_Roles
+/* (FUNCIONALIDAD,ROL)
+*   ROLES:           1 EMPRESA || 2 ADMIN || 3 CLIENTE
+*   FUNCIONALIDADES: 1 ABM ROLES || 2 ABM CIENTES || 3 ABM EMPRESAS || 4 ABM GRADOS || 5 GENERAR PUBLICACION || 6 EDITAR PUBLICACION 
+*				     7 COMPRAS || 8 HISTORIAL DE COMPRAS || 9 ADMINISTRACION DE PUNTOS || 10 COMISIONES || 11 ESTADISTICAS
+*/
+VALUES		 					   (5,1), (6,1), 
+	   (1,2), (2,2), (3,2), (4,2), (5,2), (6,2), (7,2), (8,2), (9,2), (10,2), (11,2),
+							(4,3),               (7,3), (8,3), (9,3)
+PRINT('Funcionalidades asignadas a los roles')
+
 
 --Para limpiar la tabla y resetear el contador de IDENTITY en 1
 
@@ -1114,33 +1125,91 @@ GO
 
 PRINT('Datos insertados en la tabla Premios')
 
+-- GRADOS --
+/* En la tabla maestra hay 13443 valores de comision distintos, todos cercanos a 10. Podriamos definir un grado 'Otros' con id = 4 
+* y valor de comision 10, ya que si se hace SELECT DISTINCT ROUND(Ubicacion_Precio/Item_Factura_Monto,0) obtenemos como unico resultado 10;
+* o simplemento dejarlo en null para las compras realizadas con anterioridad, que es el camino que voy a tomar de momento.
+* Basandome en uno de los mails recibidos al grupo durante la ultima semana, entiendo que al no estar explicitamente definidos en el enunciado,
+* hay que completar la tabla grados a criterio -arbitrariamente-. Es necesario contar con los grados migrados para usarlos en la app
+*/
+
+INSERT INTO SQLITO.Grados (descripcion,comision)
+VALUES ('Baja', 4), ('Media', 6), ('Alta', 9)
+GO
+
+PRINT ('Datos insertados en la tabla Grados')
+GO
+
 /* Para las siguientes tablas, la tabla maestra no aporta datos para migrar
 *
 * PUNTOS
-* GRADOS
-* USUARIOS (*)
-* USUARIOS_ROLES (*)
-* ROLES_FUNCIONALIDADES (*)
-*
-*   (*) Agrego un usuaro admin, otro empresa y otro cliente, asigno roles a cada usuario y a cada funcionalidad
-* con el fin de probar las tablas intermedias y el cifrado del password; Agrego premios, librados a criterio del alumno
+* USUARIOS_ROLES (*) -> FALTA AGREGAR ESTO EN EL PROCEDURE 
 */
 
--- INSERTS DE PRUEBA --
+-- USUARIOS --
 
-DBCC CHECKIDENT('[SQLITO].[Usuarios]', RESEED, 1)
+CREATE PROCEDURE crearUsuario_cliente
+AS
+BEGIN
+
+DECLARE @username NVARCHAR, @password NVARCHAR, @pw_act BIT
+
+DECLARE adduser_cursor CURSOR FOR
+SELECT DISTINCT LOWER(nombre) + LOWER(apellido), HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)), 1 FROM SQLITO.Clientes
+
+OPEN adduser_cursor
+FETCH NEXT FROM adduser_cursor INTO
+@username, @password, @pw_act
+
+WHILE @@FETCH_STATUS = 0
+
+BEGIN
 
 INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-VALUES('testAdmin',HASHBYTES('SHA2_256','admin'),1),
-	  ('testCliente',HASHBYTES('SHA2_256','password'),1),
-	  ('testEmpresa',HASHBYTES('SHA2_256','fact_pw'),1)
+VALUES (@username, @password, @pw_act)
 
-INSERT INTO SQLITO.Roles_Usuarios
-VALUES (2,1), (3,2), (1,3)
+FETCH NEXT FROM adduser_cursor INTO
+@username, @password, @pw_act
 
-INSERT INTO SQLITO.Funcionalidades_Roles
-VALUES (1,2), (2,2), (3,2), (4,3), (5,1), (6,1), (7,3), (8,3), (9,3), (10,2), (11,2)
+END
 
-PRINT('Insertados valores de prueba' + CHAR(13))
-PRINT('Script de migracion finalizado')
+CLOSE adduser_cursor
+DEALLOCATE adduser_cursor
+END
 GO
+
+CREATE PROCEDURE crearUsuario_empresa
+AS
+BEGIN
+
+DECLARE @username NVARCHAR, @password NVARCHAR, @pw_act BIT
+
+DECLARE addus3r_cursor CURSOR FOR
+SELECT DISTINCT LOWER(SUBSTRING(razonsocial,1,5)) +	LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
+	HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)), 1 FROM SQLITO.Empresas
+
+OPEN addus3r_cursor
+FETCH NEXT FROM addus3r_cursor INTO
+@username, @password, @pw_act
+
+WHILE @@FETCH_STATUS = 0
+
+BEGIN
+
+INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+VALUES (@username, @password, @pw_act)
+
+FETCH NEXT FROM addus3r_cursor INTO
+@username, @password, @pw_act
+
+END
+
+CLOSE addus3r_cursor
+DEALLOCATE addus3r_cursor
+END
+GO
+
+EXEC crearUsuario_cliente
+PRINT ('Usuarios creados para clientes existentes')
+EXEC crearUsuario_empresa
+PRINT ('Usuarios creados para empresas existentes')
