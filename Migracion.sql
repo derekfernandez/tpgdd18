@@ -1178,6 +1178,9 @@ INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
 VALUES (@username + '2', @password, @pw_act)
 END
 
+INSERT INTO SQLITO.Roles_Usuarios
+VALUES(3,SCOPE_IDENTITY())
+
 FETCH NEXT FROM adduser_cursor INTO
 @username, @password, @pw_act
 
@@ -1209,6 +1212,9 @@ BEGIN
 INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
 VALUES (@username, @password, @pw_act)
 
+INSERT INTO SQLITO.Roles_Usuarios
+VALUES (1,SCOPE_IDENTITY())
+
 FETCH NEXT FROM addus3r_cursor INTO
 @username, @password, @pw_act
 
@@ -1223,3 +1229,5 @@ EXEC crearUsuario_cliente
 PRINT ('Usuarios creados para clientes existentes')
 EXEC crearUsuario_empresa
 PRINT ('Usuarios creados para empresas existentes')
+
+select * from SQLITO.Roles_Usuarios
