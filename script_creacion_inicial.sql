@@ -925,9 +925,9 @@ INSERT INTO SQLITO.Funcionalidades_Roles
 *					 7 EDITAR PUBLICACION || 8 COMPRAS || 9 HISTORIAL DE COMPRAS || 10 ADMINISTRACION DE PUNTOS || 11 COMISIONES ||
 *					 12 ESTADISTICAS
 */
-VALUES		  (2,1),					 (6,1), (7,1), 
-	   (1,2),       (3,2), (4,2), (5,2),                                  (11,2), (12,2),
-			  (2,3),		      (5,3),              (8,3), (9,3), (10,3)
+VALUES (2,1), (6,1), (7,1), 
+	   (1,2), (3,2), (4,2), (11,2), (12,2),
+	   (2,3), (5,3), (8,3), (9,3), (10,3)
 
 PRINT('Funcionalidades asignadas a los roles')
 
