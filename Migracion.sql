@@ -1152,7 +1152,7 @@ CREATE PROCEDURE crearUsuario_cliente
 AS
 BEGIN
 
-DECLARE @username NVARCHAR, @password NVARCHAR, @pw_act BIT
+DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @pw_act BIT
 
 DECLARE adduser_cursor CURSOR FOR
 SELECT DISTINCT LOWER(nombre) + LOWER(apellido), HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)), 1 FROM SQLITO.Clientes
@@ -1165,8 +1165,18 @@ WHILE @@FETCH_STATUS = 0
 
 BEGIN
 
+IF (SELECT COUNT(username) FROM SQLITO.Usuarios WHERE username = @username) = 0
+
+BEGIN
 INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
 VALUES (@username, @password, @pw_act)
+END
+
+ELSE 
+BEGIN
+INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+VALUES (@username + '2', @password, @pw_act)
+END
 
 FETCH NEXT FROM adduser_cursor INTO
 @username, @password, @pw_act
@@ -1182,7 +1192,7 @@ CREATE PROCEDURE crearUsuario_empresa
 AS
 BEGIN
 
-DECLARE @username NVARCHAR, @password NVARCHAR, @pw_act BIT
+DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @pw_act BIT
 
 DECLARE addus3r_cursor CURSOR FOR
 SELECT DISTINCT LOWER(SUBSTRING(razonsocial,1,5)) +	LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
