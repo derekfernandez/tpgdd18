@@ -1023,8 +1023,8 @@ INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencim
 	   	   			Espectaculo_Descripcion,
 	       			Espectaculo_Fecha_Venc,
 	       			Espectaculo_Fecha,
-	       			--Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 1
-	       			1,
+	       			--Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 7
+	       			7,
 	       			--Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
 	       			2
 	FROM gd_esquema.Maestra
