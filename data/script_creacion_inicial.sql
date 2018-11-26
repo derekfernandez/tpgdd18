@@ -188,7 +188,7 @@ BEGIN
 
 		[id_puntos] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[cantidad] [bigint]	NOT NULL,
-		[cliente_id] [int],
+		[cliente_id] [int] NOT NULL,
 		--Si es NULL, no tienen vencimiento (?)
 		[fecha_vencimiento] [smalldatetime]
 	)
@@ -848,7 +848,7 @@ BEGIN
 		ORDER BY Ubicacion_Tipo_Codigo
 
 	INSERT INTO [SQLITO].[TiposUbicacion] (id_tipo,descripcion)
-	VALUES (4454, 'S/N')
+		VALUES (4454, 'S/N')
 
 PRINT('Datos insertados en la tabla SQLITO.TiposUbicacion')
 END
@@ -860,10 +860,10 @@ IF (SELECT COUNT(*) FROM [SQLITO].[EstadosPublicacion]) = 0
 BEGIN
 
 	INSERT INTO [SQLITO].[EstadosPublicacion] (descripcion)
-	VALUES ('Borrador'),
-		   ('Publicada'),
-		   ('Finalizada'),
-	       ('Pausada')
+		VALUES ('Borrador'),
+		  	   ('Publicada'),
+		       ('Finalizada'),
+	           ('Pausada')
 
 PRINT('Datos insertados en la tabla EstadosPublicacion')
 END
@@ -874,11 +874,16 @@ GO
 IF (SELECT COUNT(*) FROM [SQLITO].[Rubros]) = 0
 BEGIN
 
-	INSERT INTO [SQLITO].[Rubros]
-		(descripcion)
-	VALUES ('Otros')
+	INSERT INTO [SQLITO].[Rubros] (descripcion)
+		VALUES ('Teatro'),
+		       ('Cine'),
+		       ('Conciertos'),
+		       ('Musicales'),
+		       ('Deportes'),
+		       ('Infantiles'),
+			   ('Otros')
 
-PRINT('Rubro Otros insertado en la tabla Rubros, con el id = 1')
+PRINT('Datos insertados en la tabla Rubros')
 END
 GO
 
@@ -886,10 +891,10 @@ GO
 
 IF (SELECT COUNT(*) FROM [SQLITO].[Roles]) = 0
 BEGIN
-INSERT INTO SQLITO.Roles (descripcion) 
-VALUES('Empresa'),
-	  ('Administrativo'),
-	  ('Cliente')
+	INSERT INTO SQLITO.Roles (descripcion) 
+	VALUES ('Empresa'),
+	       ('Administrativo'),
+	       ('Cliente')
 END
 GO
 
@@ -900,19 +905,19 @@ PRINT ('Datos insertados en la tabla Roles')
 IF (SELECT COUNT(*) FROM [SQLITO].[Funcionalidades]) = 0
 BEGIN
 
-INSERT INTO SQLITO.Funcionalidades (descripcion)
-VALUES ('ABM Roles'),
-	   ('Registro'),
-	   ('ABM Clientes'),
-	   ('ABM Empresas'),
-	   ('ABM Grados'),
-	   ('Generar Publicacion'),
-	   ('Editar Publicacion'),
-	   ('Compras'),
-	   ('Historial de Compras'),
-	   ('Administacion de Puntos'),
-	   ('Rendicion de Comisiones'),
-	   ('Estadisticas')
+	INSERT INTO SQLITO.Funcionalidades (descripcion)
+		VALUES ('ABM Roles'),
+			   ('Registro'),
+			   ('ABM Clientes'),
+			   ('ABM Empresas'),
+			   ('ABM Grados'),
+			   ('Generar Publicacion'),
+			   ('Editar Publicacion'),
+			   ('Compras'),
+			   ('Historial de Compras'),
+			   ('Administacion de Puntos'),
+			   ('Rendicion de Comisiones'),
+			   ('Estadisticas')
 END
 GO
 
@@ -1015,13 +1020,13 @@ BEGIN
 
 INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, rubro_id, estado_id)
 	SELECT DISTINCT Espectaculo_Cod,
-	   	   Espectaculo_Descripcion,
-	       Espectaculo_Fecha_Venc,
-	       Espectaculo_Fecha,
-	       --Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 1
-	       1,
-	       --Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
-	       2
+	   	   			Espectaculo_Descripcion,
+	       			Espectaculo_Fecha_Venc,
+	       			Espectaculo_Fecha,
+	       			--Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 1
+	       			1,
+	       			--Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
+	       			2
 	FROM gd_esquema.Maestra
 END
 GO
