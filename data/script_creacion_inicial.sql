@@ -1076,8 +1076,6 @@ AND sq2.fila = sq.Ubicacion_Fila AND sq2.publicacion_id = sq.Espectaculo_Cod
 END
 GO
 
-select * from SQLITO.Compras
-
 DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Compras)
 PRINT('Datos insertados en la tabla Compras. Nuevas Filas: ' + @var)
@@ -1150,6 +1148,14 @@ GO
 
 -- USUARIOS --
 
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'crearUsuario_cliente')
+BEGIN
+
+DROP PROCEDURE crearUsuario_cliente
+
+END
+GO
+
 CREATE PROCEDURE crearUsuario_cliente
 AS
 BEGIN
@@ -1193,6 +1199,15 @@ DEALLOCATE adduser_cursor
 END
 GO
 
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'crearUsuario_empresa')
+BEGIN
+
+DROP PROCEDURE crearUsuario_empresa
+
+END
+GO
+
+
 CREATE PROCEDURE crearUsuario_empresa
 AS
 BEGIN
@@ -1224,6 +1239,7 @@ END
 
 CLOSE addus3r_cursor
 DEALLOCATE addus3r_cursor
+
 END
 GO
 
