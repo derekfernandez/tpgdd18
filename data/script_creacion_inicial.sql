@@ -1207,7 +1207,6 @@ DROP PROCEDURE crearUsuario_empresa
 END
 GO
 
-
 CREATE PROCEDURE crearUsuario_empresa
 AS
 BEGIN
@@ -1239,7 +1238,6 @@ END
 
 CLOSE addus3r_cursor
 DEALLOCATE addus3r_cursor
-
 END
 GO
 
