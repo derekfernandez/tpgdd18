@@ -9,6 +9,7 @@ BEGIN
 	
 	EXEC('CREATE SCHEMA [SQLITO] AUTHORIZATION [gdEspectaculos2018]')
 	PRINT 'Esquema Creado'
+
 END
 GO
 
@@ -374,7 +375,7 @@ BEGIN
 	CREATE TABLE [SQLITO].[Ubicaciones] (
 		
 		[id_ubicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[fila] [nvarchar](3),
+		[fila] [nvarchar] (3),
 		[asiento] [numeric] (6,0),
 		[tipo_id] [int],
 		[precio] [numeric] (18,2) NOT NULL,
@@ -915,7 +916,9 @@ BEGIN
 	INSERT INTO SQLITO.Roles (descripcion) 
 	VALUES ('Empresa'),
 	       ('Administrativo'),
-	       ('Cliente')
+	       ('Cliente'),
+	       --Este rol es unico y puede realizar todas las funcionalidades; ID = 4
+	       ('Administrador General')
 END
 GO
 
@@ -942,26 +945,30 @@ BEGIN
 END
 GO
 
-PRINT('Datos insertados en la tabla Funcionalidades')
+PRINT('Datos insertados en la tabla SQLITO.Funcionalidades')
+
+-- FUNCIONALIDADES POR ROL --
 
 IF (SELECT COUNT(*) FROM [SQLITO].[Funcionalidades_Roles]) = 0
 BEGIN
 
 	INSERT INTO SQLITO.Funcionalidades_Roles (funcionalidad_id, rol_id)
 	/* (FUNCIONALIDAD,ROL)
-	*   ROLES:           1 EMPRESA || 2 ADMIN || 3 CLIENTE
+	*   ROLES:           1 EMPRESA || 2 ADMIN || 3 CLIENTE || 4 ADMINISTRADOR GENERAL
 	*   FUNCIONALIDADES: 1 ABM ROLES  || 2 REGISTRO || 3 ABM CLIENTES || 4 ABM EMPRESAS || 5 ABM GRADOS || 6 GENERAR PUBLICACION || 
 	*					 7 EDITAR PUBLICACION || 8 COMPRAS || 9 HISTORIAL DE COMPRAS || 10 ADMINISTRACION DE PUNTOS || 11 COMISIONES ||
 	*					 12 ESTADISTICAS
 	*/
 		VALUES (2,1), (6,1), (7,1), 
 			   (1,2), (3,2), (4,2), (5,2), (11,2), (12,2),
-			   (2,3), (8,3), (9,3), (10,3)
+			   (2,3), (8,3), (9,3), (10,3),
+			   --El Administrador General puede realizar todas las funcionalidades
+			   (1,4), (2,4), (3,4), (4,4), (5,4), (6,4), (7,4), (8,4), (9,4), (10,4), (11,4), (12,4)
 
 END
 GO
 
-PRINT('Funcionalidades asignadas a los roles')
+PRINT('Funcionalidades asignadas a los roles. Datos insertados en SQLITO.Funcionalidades_Roles')
 
 -- PREMIOS --
 
@@ -971,13 +978,13 @@ BEGIN
 	INSERT INTO SQLITO.Premios (descripcion, puntos_requeridos, cantidad_stock)
 	VALUES('Mochila Hello Kitty', 1200, 60),
 		  ('Reloj Swatch Perfect Ride', 5400, 20),
-		  ('Camiseta Retro Argentina 86 Le Coq Sportif', 4000,10),
-		  ('Viaje a Tahiti 5 Noches',21000,5),
-		  ('Entradas Cinemark',500,200),
+		  ('Camiseta Retro Argentina 86 Le Coq Sportif', 4000, 10),
+		  ('Viaje a Tahiti 5 Noches',21000, 5),
+		  ('Entradas Cinemark',500, 200),
 		  ('Red Dead Redemption 2', 2425, 40),
 		  ('Cena P/2 en Parrilla Los Hermanos', 1850, 10),
 		  ('Dia de Spa', 2000, 10),
-		  ('Entradas Temaiken',850,150)
+		  ('Entradas Temaiken',850, 150)
 
 END
 GO
@@ -1043,13 +1050,16 @@ FROM gd_esquema.Maestra
 
 IF (SELECT COUNT(*) FROM [SQLITO].[Empresas]) = 0
 BEGIN
-INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit, mail, direccion)
-	SELECT DISTINCT Espec_Empresa_Razon_Social,
-       	   Espec_Empresa_Fecha_Creacion,
-	       Espec_Empresa_Cuit,
-		   Espec_Empresa_Mail,
-		   SQLITO.obtenerDireccion(Espec_Empresa_Dom_Calle, Espec_Empresa_Nro_Calle, Espec_Empresa_Piso, Espec_Empresa_Depto, '', Espec_Empresa_Cod_Postal)
-	FROM gd_esquema.Maestra
+
+	INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit, mail, direccion)
+		SELECT DISTINCT Espec_Empresa_Razon_Social,
+       	   				Espec_Empresa_Fecha_Creacion,
+	       				Espec_Empresa_Cuit,
+		  				Espec_Empresa_Mail,
+		   				SQLITO.obtenerDireccion(Espec_Empresa_Dom_Calle, Espec_Empresa_Nro_Calle, Espec_Empresa_Piso,
+		   										Espec_Empresa_Depto, '', Espec_Empresa_Cod_Postal)
+		FROM gd_esquema.Maestra
+
 END
 GO
 
@@ -1057,23 +1067,25 @@ DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Empresas)
 PRINT('Datos existentes migrados a la tabla SQLITO.Empresas. Nuevas Filas: ' + @var)
 
+
 --MIGRACION DE CLIENTES--
 
 IF (SELECT COUNT(*) FROM [SQLITO].[Clientes]) = 0
 BEGIN
 
-INSERT INTO [SQLITO].[Clientes] (nombre, apellido, tipo_documento, numero_documento, fecha_nacimiento, mail, direccion)
-	SELECT Cli_Nombre,
-	   	   Cli_Apeliido,
-	   	   --Todos los de la tabla maestra tienen DNI (el campo se llama asi); ya lo seteamos
-	       'DNI' AS TipoDocumento,
-	        Cli_Dni,
-	        Cli_Fecha_Nac,
-			Cli_Mail,
-			SQLITO.obtenerDireccion(Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal)
-	FROM gd_esquema.Maestra
-	WHERE Cli_Dni IS NOT NULL
-	GROUP BY Cli_Nombre, Cli_Apeliido, Cli_Dni, Cli_Fecha_Nac, Cli_Mail, Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal
+	INSERT INTO [SQLITO].[Clientes] (nombre, apellido, tipo_documento, numero_documento, fecha_nacimiento, mail, direccion)
+		SELECT Cli_Nombre,
+		   	   Cli_Apeliido,
+		   	   --Todos los de la tabla maestra tienen DNI (el campo se llama asi); ya lo seteamos
+		       'DNI' AS TipoDocumento,
+		       Cli_Dni,
+		       Cli_Fecha_Nac,
+			   Cli_Mail,
+			   SQLITO.obtenerDireccion(Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, '', Cli_Cod_Postal)
+		FROM gd_esquema.Maestra
+		WHERE Cli_Dni IS NOT NULL
+		GROUP BY Cli_Nombre, Cli_Apeliido, Cli_Dni, Cli_Fecha_Nac, Cli_Mail, Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal
+
 END
 GO
 
@@ -1100,7 +1112,7 @@ BEGIN
 		       			--Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
 		       			2
 		FROM gd_esquema.Maestra
-		
+
 END
 GO
 
@@ -1120,14 +1132,15 @@ DBCC CHECKIDENT ('[SQLITO].[Ubicaciones]', RESEED, 1)
 IF (SELECT COUNT(*) FROM [SQLITO].[Ubicaciones]) = 0
 BEGIN
 
-INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_id)
-	SELECT Ubicacion_Fila,
-	   	   Ubicacion_Asiento,
-	   	   Ubicacion_Precio,
-	   	   Ubicacion_Tipo_Codigo,
-	   	   Espectaculo_Cod
-	FROM gd_esquema.Maestra
-	GROUP BY Ubicacion_Fila, Ubicacion_Asiento, Ubicacion_Precio, Ubicacion_Tipo_Codigo, Espectaculo_Cod
+	INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_id)
+		SELECT Ubicacion_Fila,
+		   	   Ubicacion_Asiento,
+		   	   Ubicacion_Precio,
+		   	   Ubicacion_Tipo_Codigo,
+		   	   Espectaculo_Cod
+		FROM gd_esquema.Maestra
+		GROUP BY Ubicacion_Fila, Ubicacion_Asiento, Ubicacion_Precio, Ubicacion_Tipo_Codigo, Espectaculo_Cod
+		
 END
 GO
 
@@ -1141,7 +1154,7 @@ PRINT('Datos existentes migrados a la tabla SQLITO.Ubicaciones. Nuevas filas: ' 
 IF (SELECT COUNT(*) FROM [SQLITO].[Compras]) = 0
 BEGIN
 
-	INSERT INTO SQLITO.Compras (cliente_id, ubicacion_id, fecha_realizacion, valor_entrada, cantidad_entradas)
+	INSERT INTO SQLITO.Compras (cliente_id, ubicacion_id, fecha_realizacion, valor_entrada)
 		SELECT c.id_cliente,
 			   sq2.id_ubicacion,
 			   Compra_Fecha,
@@ -1219,58 +1232,68 @@ PRINT('Datos existentes migrados a la tabla SQLITO.ItemsFactura. Nuevas Filas: '
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'crearUsuario_cliente')
 BEGIN
 
-DROP PROCEDURE crearUsuario_cliente
+	DROP PROCEDURE crearUsuario_cliente
 
 END
 GO
 
+--Usuarios para Clientes migrados
 CREATE PROCEDURE crearUsuario_cliente
 AS
 BEGIN
 
-DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @pw_act BIT
+	DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @clienteID INT
 
-DECLARE adduser_cursor CURSOR FOR
-SELECT DISTINCT LOWER(nombre) + LOWER(apellido), HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)), 1 FROM SQLITO.Clientes
+	DECLARE adduser_cursor CURSOR FOR SELECT id_cliente,
+											 LOWER(nombre) + LOWER(apellido),
+											 HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8))
+									  FROM SQLITO.Clientes
 
-OPEN adduser_cursor
-FETCH NEXT FROM adduser_cursor INTO
-@username, @password, @pw_act
+	OPEN adduser_cursor
+	FETCH NEXT FROM adduser_cursor INTO @clienteID, @username, @password
 
-WHILE @@FETCH_STATUS = 0
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
 
-BEGIN
+		IF (SELECT COUNT(username)
+		    FROM SQLITO.Usuarios
+		    WHERE username = @username) = 0
+		BEGIN
+			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+			VALUES (@username, @password, 1)
+		END
 
-IF (SELECT COUNT(username) FROM SQLITO.Usuarios WHERE username = @username) = 0
+		ELSE 
+		BEGIN
+			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+			VALUES (@username + '2', @password, 1)
+		END
 
-BEGIN
-INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-VALUES (@username, @password, @pw_act)
-END
+		--Al Cliente cuyo usuario recien cree, le guardo el ID de dicho usuario
+		UPDATE SQLITO.Clientes
+			SET usuario_id = SCOPE_IDENTITY()
+			WHERE id_cliente = @clienteID
 
-ELSE 
-BEGIN
-INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-VALUES (@username + '2', @password, @pw_act)
-END
+		--Le asigno al usuario creado el rol de Cliente
+		INSERT INTO SQLITO.Roles_Usuarios (rol_id, usuario_id)
+		VALUES(3, SCOPE_IDENTITY())
 
-INSERT INTO SQLITO.Roles_Usuarios
-VALUES(3,SCOPE_IDENTITY())
+		FETCH NEXT FROM adduser_cursor INTO @clienteID, @username, @password
 
-FETCH NEXT FROM adduser_cursor INTO
-@username, @password, @pw_act
+	END
 
-END
+	CLOSE adduser_cursor
+	DEALLOCATE adduser_cursor
 
-CLOSE adduser_cursor
-DEALLOCATE adduser_cursor
 END
 GO
+
+--Usuarios para Empresas migradas
 
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'crearUsuario_empresa')
 BEGIN
 
-DROP PROCEDURE crearUsuario_empresa
+	DROP PROCEDURE crearUsuario_empresa
 
 END
 GO
@@ -1279,33 +1302,38 @@ CREATE PROCEDURE crearUsuario_empresa
 AS
 BEGIN
 
-DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @pw_act BIT
+	DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @empresaID INT
 
-DECLARE addus3r_cursor CURSOR FOR
-SELECT DISTINCT LOWER(SUBSTRING(razonsocial,1,5)) +	LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
-	HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)), 1 FROM SQLITO.Empresas
+	DECLARE addus3r_cursor CURSOR FOR SELECT id_empresa,
+											 LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
+											 HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8))
+									  FROM SQLITO.Empresas
+	
+	OPEN addus3r_cursor
+	FETCH NEXT FROM addus3r_cursor INTO @empresaID, @username, @password
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
 
-OPEN addus3r_cursor
-FETCH NEXT FROM addus3r_cursor INTO
-@username, @password, @pw_act
+		INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+		VALUES (@username, @password, 1)
 
-WHILE @@FETCH_STATUS = 0
+		--A la Empresa cuyo usuario recien cree, le guardo el ID de dicho usuario
+		UPDATE SQLITO.Empresas
+			SET usuario_id = SCOPE_IDENTITY()
+			WHERE id_empresa = @empresaID
 
-BEGIN
+		--Le asigno al usuario creado el rol de Empresa
+		INSERT INTO SQLITO.Roles_Usuarios (rol_id, usuario_id)
+		VALUES (1,SCOPE_IDENTITY())
 
-INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-VALUES (@username, @password, @pw_act)
+		FETCH NEXT FROM addus3r_cursor INTO @empresaID, @username, @password
 
-INSERT INTO SQLITO.Roles_Usuarios
-VALUES (1,SCOPE_IDENTITY())
+	END
 
-FETCH NEXT FROM addus3r_cursor INTO
-@username, @password, @pw_act
+	CLOSE addus3r_cursor
+	DEALLOCATE addus3r_cursor
 
-END
-
-CLOSE addus3r_cursor
-DEALLOCATE addus3r_cursor
 END
 GO
 
@@ -1314,22 +1342,27 @@ PRINT ('Usuarios creados para clientes existentes')
 EXEC crearUsuario_empresa
 PRINT ('Usuarios creados para empresas existentes')
 
--- ADMIN GENERAL DEL SISTEMA --
+-- ADMINISTRADOR GENERAL DEL SISTEMA --
 
-INSERT INTO SQLITO.Roles
-VALUES ('Administrador General')
-GO
+IF (SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = 'admin') = 0
+BEGIN
+	
+	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) 
+	VALUES ('admin', HASHBYTES('SHA2_256','w23e'),1)
 
-INSERT INTO SQLITO.Funcionalidades_Roles
-VALUES (1,4), (2,4), (3,4), (4,4), (5,4), (6,4), (7,4), (8,4), (9,4), (10,4), (11,4), (12,4)
-GO
+	DECLARE @adminUser INT
+	SET @adminUser = (SELECT id_usuario
+					  FROM SQLITO.Usuarios
+					  WHERE username = 'admin')
 
-INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) 
-VALUES ('admin', HASHBYTES('SHA2_256','w23e'),1)
-GO
+	INSERT INTO SQLITO.Roles_Usuarios
+	VALUES(4, @adminUser)
 
-INSERT INTO SQLITO.Roles_Usuarios
-VALUES(4,(SELECT id_usuario FROM SQLITO.Usuarios WHERE username = 'admin'))
+	--Lo designo como responsable de todos los premios; VER ESTO
+	UPDATE SQLITO.Premios
+	SET admin_responsable_id = @adminUser
+
+END
 GO
 
 PRINT ('Agregado Administrador General del Sistema')
