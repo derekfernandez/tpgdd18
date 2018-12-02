@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
-    public partial class ABM_Alta_Empresa : Form
+    public partial class ABM_empresa_publicacion : Form
     {
-        public ABM_Alta_Empresa()
+        public ABM_empresa_publicacion()
         {
             InitializeComponent();
         }
@@ -40,19 +40,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-      
+            //Funcionalidad de ingresar datos en la tabla empresa y validar que sean correctos
             try
             {
-
-                if (this.CamposVacio())
-                {
-                    MessageBox.Show("Por favor, complete todos los campos correctamente");
-                }
-                else
-                {
-                    //Aca iria funcionalidad de ingresar nueva empresa
-                    MessageBox.Show("Datos ingresados correctamente");
-                }
+                MessageBox.Show("Datos ingresados correctamente");
             }
             catch (Exception)
             {
@@ -67,9 +58,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             try
             {
                 //Aca se va a llamar al Form anterior donde estan las opciones del admin
+                MessageBox.Show("Volviendo...");
                 this.Hide();
-                ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
-                nuevoMenu.Show();
+                Form1 nuevaForm1 = new Form1();
+                nuevaForm1.Show();
             }
             catch (Exception)
             {
@@ -78,20 +70,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
 
         }
-        public Boolean CamposVacio()
-        {
-            //Buscar una funcion que ya evalue si los campos son blancos: seguro hay
-            foreach (Control c in this.Controls)
-            {
 
-                if (c is TextBox && c.Text == "")
-                {
-                    return true;
-                }
-
-            }
-            return false;
-        }
       
 
        
