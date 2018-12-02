@@ -7,14 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Misc;
 
 namespace PalcoNet
 {
-    public partial class Form1 : Form
+    public partial class MenuPrincipal : Form
     {
-        public Form1()
+        Session session { get; set; }
+
+        public MenuPrincipal(Session session)
         {
             InitializeComponent();
+            this.session = session;
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
