@@ -521,7 +521,7 @@ BEGIN
 		
 		[id_usuario] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[username] [nvarchar](255),
-		[password] [nvarchar](255),
+		[password] [varbinary](255),
 		[intentos_fallidos] [int] DEFAULT 0,
 		--1 es habilitado, 0 es inhabilitado
 		[habilitado] [bit] DEFAULT 1,
@@ -1242,7 +1242,7 @@ CREATE PROCEDURE crearUsuario_cliente
 AS
 BEGIN
 
-	DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @clienteID INT
+	DECLARE @username NVARCHAR(255), @password VARBINARY (255), @clienteID INT
 
 	DECLARE adduser_cursor CURSOR FOR SELECT id_cliente,
 											 LOWER(nombre) + LOWER(apellido),
@@ -1302,7 +1302,7 @@ CREATE PROCEDURE crearUsuario_empresa
 AS
 BEGIN
 
-	DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @empresaID INT
+	DECLARE @username NVARCHAR(255), @password VARBINARY(255), @empresaID INT
 
 	DECLARE addus3r_cursor CURSOR FOR SELECT id_empresa,
 											 LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
