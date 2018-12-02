@@ -214,13 +214,13 @@ BEGIN
 		    WHERE username = @username) = 0
 		BEGIN
 			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-			VALUES (@username, @password, 1)
+			VALUES (@username, @password, 0)
 		END
 
 		ELSE 
 		BEGIN
 			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-			VALUES (@username + '2', @password, 1)
+			VALUES (@username + '2', @password, 0)
 		END
 
 		--Al Cliente cuyo usuario recien cree, le guardo el ID de dicho usuario
@@ -270,7 +270,7 @@ BEGIN
 	BEGIN
 
 		INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-		VALUES (@username, @password, 1)
+		VALUES (@username, @password, 0)
 
 		--A la Empresa cuyo usuario recien cree, le guardo el ID de dicho usuario
 		UPDATE SQLITO.Empresas
@@ -302,7 +302,7 @@ IF (SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = 'admin') = 0
 BEGIN
 	
 	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) 
-	VALUES ('admin', HASHBYTES('SHA2_256','w23e'),1)
+	VALUES ('admin', HASHBYTES('SHA2_256','w23e'), 0)
 
 	DECLARE @adminUser INT
 	SET @adminUser = (SELECT id_usuario
