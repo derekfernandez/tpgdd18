@@ -23,15 +23,27 @@ namespace PalcoNet.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<SerializableConnectionString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <ConnectionString>Data Source=DESKTOP-2F87K01\SQLSERVER2012;Initial Catalog=GD2C2018;Persist Security Info=True;User ID=gdEspectaculos2018;Password=gd2018</ConnectionString>
+  <ProviderName>System.Data.SqlClient</ProviderName>
+</SerializableConnectionString>")]
         public string GD2C2018ConnectionString {
             get {
                 return ((string)(this["GD2C2018ConnectionString"]));
             }
-            set {
-                this["GD2C2018ConnectionString"] = value;
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLSERVER2012;Initial Catalog=GD2C2018;Persist Security Info=True;U" +
+            "ser ID=gdEspectaculos2018;Password=gd2018")]
+        public string GD2C2018ConnectionString1 {
+            get {
+                return ((string)(this["GD2C2018ConnectionString1"]));
             }
         }
     }

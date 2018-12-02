@@ -1,6 +1,6 @@
 ﻿namespace PalcoNet.Abm_Empresa_Espectaculo
 {
-    partial class ABM_empresa_publicacion
+    partial class ABM_Alta_Empresa
     {
         /// <summary>
         /// Required designer variable.
@@ -298,7 +298,7 @@
             this.label1.TabIndex = 24;
             this.label1.Text = "Alta Empresa";
             // 
-            // ABM_empresa_publicacion
+            // ABM_Alta_Empresa
             // 
             this.AcceptButton = this.btnAceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -329,7 +329,7 @@
             this.Controls.Add(this.labelTelefono);
             this.Controls.Add(this.labelMail);
             this.Controls.Add(this.labelRazonSocial);
-            this.Name = "ABM_empresa_publicacion";
+            this.Name = "ABM_Alta_Empresa";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "ABM Empresa Publicacion";
             this.Load += new System.EventHandler(this.ABM_empresa_publicacion_Load);
