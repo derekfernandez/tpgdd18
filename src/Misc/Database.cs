@@ -207,7 +207,7 @@ namespace PalcoNet.Misc
         public static List<string> getRolesFor(Usuario user)
         {
             SqlCommand query = createQuery(@"SELECT descripcion FROM SQLITO.Roles r JOIN SQLITO.Roles_Usuarios ru 
-                    ON r.id_rol = ru.rol_id JOIN SQLITO.Usuarios u ON u.id_usuario = ru.usuario.id
+                    ON r.id_rol = ru.rol_id JOIN SQLITO.Usuarios u ON u.id_usuario = ru.usuario_id
                     WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
             return getList(query);
