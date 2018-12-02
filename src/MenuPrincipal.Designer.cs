@@ -39,7 +39,7 @@
             this.btnEmpresa.TabIndex = 0;
             this.btnEmpresa.Text = "Menu Empresa";
             this.btnEmpresa.UseVisualStyleBackColor = true;
-            
+            this.btnEmpresa.Click += new System.EventHandler(this.btnEmpresa_Click);
             // 
             // MenuPrincipal
             // 
