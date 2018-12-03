@@ -10,11 +10,18 @@ using System.Windows.Forms;
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
-    public partial class Form1 : Form
+    public partial class AMB_Modificar_Eliminar : Form
     {
-        public Form1()
+        public AMB_Modificar_Eliminar()
         {
             InitializeComponent();
+        }
+
+        private void bntAltaEmpresa_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
+            nuevoMenu.Show();
         }
     }
 }

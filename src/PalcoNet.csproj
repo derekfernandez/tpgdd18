@@ -51,11 +51,23 @@
     <Compile Include="Abm Cliente\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Empresa Espectaculo\Form1.cs">
+    <Compile Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Empresa Espectaculo\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.designer.cs">
+      <DependentUpon>ABM_Alta_Empresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Menu_Empresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Menu_Empresa.designer.cs">
+      <DependentUpon>ABM_Menu_Empresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.designer.cs">
+      <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Grado\Form1.cs">
       <SubType>Form</SubType>
@@ -153,6 +165,15 @@
     <Compile Include="Registro de Usuario\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.resx">
+      <DependentUpon>ABM_Alta_Empresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ABM_Menu_Empresa.resx">
+      <DependentUpon>ABM_Menu_Empresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.resx">
+      <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </EmbeddedResource>
