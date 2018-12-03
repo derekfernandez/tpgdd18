@@ -51,6 +51,24 @@
     <Compile Include="Abm Cliente\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.designer.cs">
+      <DependentUpon>ABM_Alta_Empresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Menu_Empresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ABM_Menu_Empresa.designer.cs">
+      <DependentUpon>ABM_Menu_Empresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.designer.cs">
+      <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Grado\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,10 +99,11 @@
     <Compile Include="Comprar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GD2C2018DataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
+    <Compile Include="VentanaInicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VentanaInicio.Designer.cs">
+      <DependentUpon>VentanaInicio.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -152,11 +171,20 @@
     <Compile Include="Registro de Usuario\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Abm Cliente\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.resx">
+      <DependentUpon>ABM_Alta_Empresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ABM_Menu_Empresa.resx">
+      <DependentUpon>ABM_Menu_Empresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.resx">
+      <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VentanaInicio.resx">
+      <DependentUpon>VentanaInicio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\ElegirRol.resx">
       <DependentUpon>ElegirRol.cs</DependentUpon>
@@ -176,17 +204,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="GD2C2018DataSet.xsc">
-      <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
-    </None>
-    <None Include="GD2C2018DataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>GD2C2018DataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="GD2C2018DataSet.xss">
-      <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -200,9 +217,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abm Empresa Espectaculo\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

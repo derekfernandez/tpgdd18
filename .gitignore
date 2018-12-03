@@ -1,8 +1,4 @@
 
-*.resources
-*.Cache
+src/bin
+src/obj
 src/PalcoNet.v11.suo
-src/PalcoNet.csproj
-*.exe
-*.exe
-*.config

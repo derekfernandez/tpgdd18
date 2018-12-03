@@ -76,7 +76,7 @@ namespace PalcoNet.Misc
         public static DataRow getRow(SqlCommand query)
         {
             DataTable table = getTable(query);
-            if (table.Rows.Count > 1)
+            if (table.Rows.Count > 0)
             {
                 return table.Rows[0];
             }
@@ -207,7 +207,7 @@ namespace PalcoNet.Misc
         public static List<string> getRolesFor(Usuario user)
         {
             SqlCommand query = createQuery(@"SELECT descripcion FROM SQLITO.Roles r JOIN SQLITO.Roles_Usuarios ru 
-                    ON r.id_rol = ru.rol_id JOIN SQLITO.Usuarios u ON u.id_usuario = ru.usuario.id
+                    ON r.id_rol = ru.rol_id JOIN SQLITO.Usuarios u ON u.id_usuario = ru.usuario_id
                     WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
             return getList(query);
@@ -225,9 +225,11 @@ namespace PalcoNet.Misc
             SqlCommand query = createQuery("SELECT habilitado FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
 
-            if (getValue(query) == "1")
+            var temp = bool.Parse(getValue(query));
+
+            if(temp)
             {
-                return false;
+              return false;
             }
 
             else return true;
