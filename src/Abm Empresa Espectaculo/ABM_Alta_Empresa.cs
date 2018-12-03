@@ -92,6 +92,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             return false;
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
       
 
        

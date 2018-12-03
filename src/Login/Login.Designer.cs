@@ -1,6 +1,6 @@
 ﻿namespace PalcoNet.Login
 {
-    partial class Login
+    partial class LoginUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginUsuario));
             this.userTextbox = new System.Windows.Forms.TextBox();
             this.pwTextbox = new System.Windows.Forms.TextBox();
             this.pwLabel = new System.Windows.Forms.Label();
@@ -43,45 +43,50 @@
             // 
             // userTextbox
             // 
-            this.userTextbox.Location = new System.Drawing.Point(66, 189);
+            this.userTextbox.Location = new System.Drawing.Point(132, 363);
+            this.userTextbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.userTextbox.Name = "userTextbox";
-            this.userTextbox.Size = new System.Drawing.Size(150, 20);
+            this.userTextbox.Size = new System.Drawing.Size(296, 31);
             this.userTextbox.TabIndex = 1;
             this.userTextbox.TextChanged += new System.EventHandler(this.userTextbox_TextChanged);
             // 
             // pwTextbox
             // 
-            this.pwTextbox.Location = new System.Drawing.Point(66, 224);
+            this.pwTextbox.Location = new System.Drawing.Point(132, 431);
+            this.pwTextbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pwTextbox.Name = "pwTextbox";
-            this.pwTextbox.Size = new System.Drawing.Size(150, 20);
+            this.pwTextbox.Size = new System.Drawing.Size(296, 31);
             this.pwTextbox.TabIndex = 2;
             this.pwTextbox.TextChanged += new System.EventHandler(this.pwTextbox_TextChanged);
             // 
             // pwLabel
             // 
             this.pwLabel.AutoSize = true;
-            this.pwLabel.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pwLabel.Location = new System.Drawing.Point(2, 224);
+            this.pwLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pwLabel.Location = new System.Drawing.Point(4, 431);
+            this.pwLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.pwLabel.Name = "pwLabel";
-            this.pwLabel.Size = new System.Drawing.Size(58, 16);
+            this.pwLabel.Size = new System.Drawing.Size(133, 30);
             this.pwLabel.TabIndex = 3;
             this.pwLabel.Text = "Password:";
             // 
             // userLabel
             // 
             this.userLabel.AutoSize = true;
-            this.userLabel.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userLabel.Location = new System.Drawing.Point(12, 189);
+            this.userLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userLabel.Location = new System.Drawing.Point(24, 363);
+            this.userLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.userLabel.Name = "userLabel";
-            this.userLabel.Size = new System.Drawing.Size(48, 16);
+            this.userLabel.Size = new System.Drawing.Size(109, 30);
             this.userLabel.TabIndex = 4;
             this.userLabel.Text = "Usuario:";
             // 
             // byeBtn
             // 
-            this.byeBtn.Location = new System.Drawing.Point(103, 254);
+            this.byeBtn.Location = new System.Drawing.Point(206, 488);
+            this.byeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.byeBtn.Name = "byeBtn";
-            this.byeBtn.Size = new System.Drawing.Size(75, 23);
+            this.byeBtn.Size = new System.Drawing.Size(150, 44);
             this.byeBtn.TabIndex = 5;
             this.byeBtn.Text = "Salir";
             this.byeBtn.UseVisualStyleBackColor = true;
@@ -89,9 +94,10 @@
             // 
             // loginBtn
             // 
-            this.loginBtn.Location = new System.Drawing.Point(185, 254);
+            this.loginBtn.Location = new System.Drawing.Point(370, 488);
+            this.loginBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.loginBtn.Name = "loginBtn";
-            this.loginBtn.Size = new System.Drawing.Size(75, 23);
+            this.loginBtn.Size = new System.Drawing.Size(150, 44);
             this.loginBtn.TabIndex = 6;
             this.loginBtn.Text = "Ingresar";
             this.loginBtn.UseVisualStyleBackColor = true;
@@ -100,11 +106,12 @@
             // failureMsgLabel
             // 
             this.failureMsgLabel.AutoSize = true;
-            this.failureMsgLabel.Font = new System.Drawing.Font("Arial Narrow", 10F);
+            this.failureMsgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.failureMsgLabel.ForeColor = System.Drawing.Color.Red;
-            this.failureMsgLabel.Location = new System.Drawing.Point(66, 153);
+            this.failureMsgLabel.Location = new System.Drawing.Point(132, 294);
+            this.failureMsgLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.failureMsgLabel.Name = "failureMsgLabel";
-            this.failureMsgLabel.Size = new System.Drawing.Size(0, 17);
+            this.failureMsgLabel.Size = new System.Drawing.Size(0, 31);
             this.failureMsgLabel.TabIndex = 8;
             // 
             // controllerError
@@ -112,11 +119,11 @@
             this.controllerError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.controllerError.ContainerControl = this;
             // 
-            // Login
+            // LoginUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 289);
+            this.ClientSize = new System.Drawing.Size(544, 556);
             this.Controls.Add(this.failureMsgLabel);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.byeBtn);
@@ -125,7 +132,8 @@
             this.Controls.Add(this.pwTextbox);
             this.Controls.Add(this.userTextbox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Login";
+            this.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            this.Name = "LoginUsuario";
             this.Text = "Login - PalcoNet";
             this.Load += new System.EventHandler(this.Login_Load);
             this.Controls.SetChildIndex(this.userTextbox, 0);

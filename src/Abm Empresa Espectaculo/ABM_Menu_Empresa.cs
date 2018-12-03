@@ -36,7 +36,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            
+            this.Hide();
+            VentanaInicio inicio = new VentanaInicio();
+            inicio.Show();
         }
 
         private void ABM_Menu_Empresa_Load(object sender, EventArgs e)
