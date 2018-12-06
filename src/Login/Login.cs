@@ -12,9 +12,9 @@ using PalcoNet.Misc;
 
 namespace PalcoNet.Login
 {
-    public partial class LoginUsuario : BaseWindow
+    public partial class Login : BaseWindow
     {
-        public LoginUsuario()
+        public Login()
         {
             InitializeComponent();
         }

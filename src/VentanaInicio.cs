@@ -34,7 +34,7 @@ namespace PalcoNet
         private void btnLogin_Click(object sender, EventArgs e)
         {
             this.Hide();
-            LoginUsuario nuevoLogin = new LoginUsuario();
+            Login.Login nuevoLogin = new Login.Login();
             nuevoLogin.Show();
         }
     }
