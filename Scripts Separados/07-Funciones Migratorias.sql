@@ -18,7 +18,7 @@ BEGIN
 END
 GO
 
-
+--No utilizada por ahora
 IF OBJECT_ID('[SQLITO].[obtenerIDdeUbicacion]') IS NOT NULL
 BEGIN
 	DROP FUNCTION [SQLITO].[obtenerIDdeUbicacion]

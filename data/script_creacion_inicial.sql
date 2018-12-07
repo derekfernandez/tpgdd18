@@ -1102,11 +1102,14 @@ SET IDENTITY_INSERT [SQLITO].[Publicaciones] ON
 IF (SELECT COUNT(*) FROM [SQLITO].[Publicaciones]) = 0
 BEGIN
 
-	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, rubro_id, estado_id)
+	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id)
 		SELECT DISTINCT Espectaculo_Cod,
 		   	   			Espectaculo_Descripcion,
 		       			Espectaculo_Fecha_Venc,
 		       			Espectaculo_Fecha,
+		       			(SELECT id_empresa
+		       			 FROM [SQLITO].[Empresas]
+		       			 WHERE (razonsocial = Espec_Empresa_Razon_Social)),
 		       			--Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 7
 		       			7,
 		       			--Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
