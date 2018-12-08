@@ -183,6 +183,9 @@
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Canje Puntos\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VentanaInicio.resx">
       <DependentUpon>VentanaInicio.cs</DependentUpon>
     </EmbeddedResource>

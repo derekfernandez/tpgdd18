@@ -236,5 +236,11 @@ namespace PalcoNet.Misc
         }
 
         #endregion
+
+        #region Puntos
+
+
+        #endregion
+
     }
 }

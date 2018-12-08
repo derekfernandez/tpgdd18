@@ -16,7 +16,8 @@ namespace PalcoNet
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login.Login());
+            Application.Run(new Canje_Puntos.Form1());
         }
+        //Login.login();
     }
 }
