@@ -56,7 +56,7 @@ SET IDENTITY_INSERT [SQLITO].[Publicaciones] ON
 IF (SELECT COUNT(*) FROM [SQLITO].[Publicaciones]) = 0
 BEGIN
 
-	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id)
+	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id, grado_id)
 		SELECT DISTINCT Espectaculo_Cod,
 		   	   			Espectaculo_Descripcion,
 		       			Espectaculo_Fecha_Venc,
@@ -67,6 +67,8 @@ BEGIN
 		       			--Ninguna tiene Rubro, con lo cual le asignamos el rubro 'Otros', de id = 7
 		       			7,
 		       			--Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
+		       			2,
+		       			--Ponemos todas en 'Media' por default, tienen una comision del 10% aprox
 		       			2
 		FROM gd_esquema.Maestra
 
@@ -199,7 +201,7 @@ CREATE PROCEDURE crearUsuario_cliente
 AS
 BEGIN
 
-	DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @clienteID INT
+	DECLARE @username NVARCHAR(255), @password VARBINARY (255), @clienteID INT
 
 	DECLARE adduser_cursor CURSOR FOR SELECT id_cliente,
 											 LOWER(nombre) + LOWER(apellido),
@@ -259,7 +261,7 @@ CREATE PROCEDURE crearUsuario_empresa
 AS
 BEGIN
 
-	DECLARE @username NVARCHAR(255), @password NVARCHAR(255), @empresaID INT
+	DECLARE @username NVARCHAR(255), @password VARBINARY(255), @empresaID INT
 
 	DECLARE addus3r_cursor CURSOR FOR SELECT id_empresa,
 											 LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 

@@ -99,6 +99,30 @@
     <Compile Include="Comprar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GD2C2018DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoClientesPuntos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoClientesPuntos.Designer.cs">
+      <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoPeoresEmpresas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoPeoresEmpresas.Designer.cs">
+      <DependentUpon>ListadoPeoresEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\VentanaSeleccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\VentanaSeleccion.Designer.cs">
+      <DependentUpon>VentanaSeleccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\EstadisticasUtils.cs" />
     <Compile Include="VentanaInicio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,12 +175,6 @@
     <Compile Include="Historial Cliente\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Listado Estadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Login\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,8 +201,19 @@
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Listado Estadistico\ListadoClientesPuntos.resx">
+      <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoPeoresEmpresas.resx">
+      <DependentUpon>ListadoPeoresEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\VentanaSeleccion.resx">
+      <DependentUpon>VentanaSeleccion.cs</DependentUpon>
+>>>>>>> 7222f1cea5adc201d7824f7da7e063b15fa10577
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaInicio.resx">
       <DependentUpon>VentanaInicio.cs</DependentUpon>
@@ -207,6 +236,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="GD2C2018DataSet.xsc">
+      <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GD2C2018DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GD2C2018DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GD2C2018DataSet.xss">
+      <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
