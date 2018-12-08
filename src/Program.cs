@@ -16,7 +16,9 @@ namespace PalcoNet
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login.Login());
+            Application.Run(new Listado_Estadistico.VentanaSeleccion());
+            //Application.Run(new Listado_Estadistico.ListadoPeoresEmpresas(2018, 2));
+            //Application.Run(new Login.Login());
         }
     }
 }
