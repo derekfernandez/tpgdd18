@@ -201,10 +201,9 @@
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-=======
+    </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoClientesPuntos.resx">
       <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,7 +212,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\VentanaSeleccion.resx">
       <DependentUpon>VentanaSeleccion.cs</DependentUpon>
->>>>>>> 7222f1cea5adc201d7824f7da7e063b15fa10577
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaInicio.resx">
       <DependentUpon>VentanaInicio.cs</DependentUpon>
