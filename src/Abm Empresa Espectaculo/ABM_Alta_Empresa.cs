@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Misc;
+
+using PalcoNet.Controllers;
+
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class ABM_Alta_Empresa : Form
     {
+        
         public ABM_Alta_Empresa()
         {
             InitializeComponent();
@@ -38,27 +43,30 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void btnCargar_Click(object sender, EventArgs e)
         {
-      
-            try
+               try
             {
-
-                if (this.CamposVacio())
-                {
-                    MessageBox.Show("Por favor, complete todos los campos correctamente");
-                }
-                else
-                {
-                    //Aca iria funcionalidad de ingresar nueva empresa
-                    MessageBox.Show("Datos ingresados correctamente");
-                }
-            }
-            catch (Exception)
-            {
+                   //Temporal
+                DateTime myDateTime = DateTime.Now;
+                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                   /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
+                    * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
+                string insert = string.Format("insert into Empresas values('{0}','{1}','{2}','{3}','{4}','{5}'", textBoxRazonSocial.Text,textBoxCuit.Text,textBoxMail.Text,textBoxDireccion,textBoxTelefono.Text, sqlFormattedDate);
+                Database.execNonQuery(Database.createQuery(insert));
                 
-                throw;
             }
+            catch(Exception exp) 
+            {
+                throw new Exception("Error al ejecutar la query: " + exp.Message);
+            }
+            finally
+            {
+                Database.cerrar();
+            }
+
+
+          
             
         }
 
@@ -93,10 +101,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             return false;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
       
 
        

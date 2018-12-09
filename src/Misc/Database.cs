@@ -32,34 +32,60 @@ namespace PalcoNet.Misc
             return new SqlCommand(query, getConnection());
         }
 
-        public static void execQuery(SqlCommand query)
+        public static void abrir()
         {
-            connection.Open();
-            query.ExecuteNonQuery();
+            connection.Open(); 
+        }
+        public static void cerrar()
+        {
             connection.Close();
         }
 
-        public static DataSet getDataSet(SqlCommand query)
+        public static void execNonQuery(SqlCommand cmd)
+        {
+                abrir();
+                cmd.ExecuteNonQuery();
+                cerrar();
+        }
+
+        public static SqlDataReader execDataReader(SqlCommand cmd)
+        {
+            abrir();
+            SqlDataReader reader = cmd.ExecuteReader();
+            cerrar();
+            return reader;  
+        }
+
+        public static object getScalarValue(SqlCommand cmd)
+        {
+            abrir();
+            object value = cmd.ExecuteScalar();
+            cerrar();
+            return value;
+        }
+
+
+        public static DataSet getDataSet(SqlCommand cmd)
         {
             DataSet dataSet = new DataSet();
 
-            SqlDataAdapter adapter = new SqlDataAdapter(query);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             adapter.Fill(dataSet);
 
             return dataSet;
         }
 
-        public static DataTable getTable(SqlCommand query)
+        public static DataTable getTable(SqlCommand cmd)
         {
-            DataSet dataSet = getDataSet(query);
+            DataSet dataSet = getDataSet(cmd);
             DataTable table = dataSet.Tables[0];
 
             return table;
         }
 
-        public static List<string> getList(SqlCommand query)
+        public static List<string> getList(SqlCommand cmd)
         {
-            DataTable table = getTable(query);
+            DataTable table = getTable(cmd);
             List<string> lista = new List<string>();
 
             if (table.Rows.Count > 0)
@@ -73,9 +99,9 @@ namespace PalcoNet.Misc
             return lista;
         }
 
-        public static DataRow getRow(SqlCommand query)
+        public static DataRow getRow(SqlCommand cmd)
         {
-            DataTable table = getTable(query);
+            DataTable table = getTable(cmd);
             if (table.Rows.Count > 0)
             {
                 return table.Rows[0];
@@ -84,7 +110,7 @@ namespace PalcoNet.Misc
             else return null;
         }
 
-        public static string getValue(SqlCommand query)
+        /*public static string getValue(SqlCommand query)
         {
             List<string> lista = getList(query);
 
@@ -97,6 +123,51 @@ namespace PalcoNet.Misc
             {
                 return "";
             }
+        }*/
+
+        
+        #endregion
+
+        #region Metodos Simplificados / Genericos 
+
+        /*Agregado Agus: 
+        -Unifico metodos para llamadas mas simples.
+        -Agrego getListaGenerica
+        -Agrego una funcion que obtiene un valor usando ExecuteScalar
+         */
+
+        //Querys tipo update, insert, delete, o llamadas a proc que no devuelvan tablas
+        public static void ejecutarNonQueryShort(string query)
+        {
+            abrir();
+            Database.execNonQuery(Database.createQuery(query));
+            cerrar();
+        }
+
+        //Reemplaza a getValue
+        public object ejecutarExecuteScalar(string query)
+        {
+            abrir();
+            object reader = Database.getScalarValue(Database.createQuery(query));
+            cerrar();
+            return reader;
+           
+        }
+
+        public static List<T> getListaGenerica<T>(SqlCommand cmd)
+        {
+            DataTable table = getTable(cmd);
+            List<T> lista = new List<T>();
+
+            if (table.Rows.Count > 0)
+            {
+                foreach (DataRow row in table.Rows)
+                {
+                    lista.Add((T)row[0]);
+                }
+            }
+
+            return lista;
         }
 
         #endregion
@@ -172,7 +243,7 @@ namespace PalcoNet.Misc
                 SqlCommand update = createQuery("UPDATE SQLITO.Usuarios SET intentos_fallidos = @intentos");
                 update.Parameters.AddWithValue("@intentos", retries);
 
-                execQuery(update);
+                execNonQuery(update);
 
                 if (retries >= 3)
                 {
@@ -188,7 +259,7 @@ namespace PalcoNet.Misc
         {
             SqlCommand update = createQuery("UPDATE SQLITO.Usuarios SET intentos_fallidos = 0 WHERE username = @username");
             update.Parameters.AddWithValue("@username", user.username);
-            execQuery(update);
+            execNonQuery(update);
 
             return new LoginController().succeed(user.username);
         }
@@ -201,7 +272,7 @@ namespace PalcoNet.Misc
         {
             SqlCommand query = createQuery("SELECT id_usuario FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
-            return getValue(query);
+            return (string)getScalarValue(query);
         }
 
         public static List<string> getRolesFor(Usuario user)
@@ -217,7 +288,7 @@ namespace PalcoNet.Misc
         {
             SqlCommand update = createQuery("UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE username = @username");
             update.Parameters.AddWithValue("@username", user.username);
-            execQuery(update);
+            execNonQuery(update);
         }
 
         public static bool estaInhabilitado(Usuario user)
@@ -225,7 +296,7 @@ namespace PalcoNet.Misc
             SqlCommand query = createQuery("SELECT habilitado FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
 
-            var temp = bool.Parse(getValue(query));
+            var temp = bool.Parse((string)getScalarValue(query));
 
             if(temp)
             {

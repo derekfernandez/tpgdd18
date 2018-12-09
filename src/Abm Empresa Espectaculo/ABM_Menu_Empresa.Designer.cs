@@ -36,7 +36,7 @@
             // 
             // btnNuevaEmpresa
             // 
-            this.btnNuevaEmpresa.Location = new System.Drawing.Point(244, 588);
+            this.btnNuevaEmpresa.Location = new System.Drawing.Point(238, 559);
             this.btnNuevaEmpresa.Name = "btnNuevaEmpresa";
             this.btnNuevaEmpresa.Size = new System.Drawing.Size(293, 160);
             this.btnNuevaEmpresa.TabIndex = 0;
@@ -56,7 +56,7 @@
             // 
             // btnModEliminar
             // 
-            this.btnModEliminar.Location = new System.Drawing.Point(616, 588);
+            this.btnModEliminar.Location = new System.Drawing.Point(611, 559);
             this.btnModEliminar.Name = "btnModEliminar";
             this.btnModEliminar.Size = new System.Drawing.Size(293, 160);
             this.btnModEliminar.TabIndex = 2;
@@ -67,7 +67,7 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(996, 588);
+            this.btnVolver.Location = new System.Drawing.Point(994, 559);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(293, 160);
             this.btnVolver.TabIndex = 3;

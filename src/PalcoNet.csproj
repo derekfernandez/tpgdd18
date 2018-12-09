@@ -198,6 +198,9 @@
     <EmbeddedResource Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.resx">
       <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </EmbeddedResource>
