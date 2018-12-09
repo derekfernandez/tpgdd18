@@ -47,13 +47,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
                try
             {
-                   //Temporal
-                DateTime myDateTime = DateTime.Now;
-                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+              
                    /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
                     * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
-                string insert = string.Format("insert into Empresas values('{0}','{1}','{2}','{3}','{4}','{5}'", textBoxRazonSocial.Text,textBoxCuit.Text,textBoxMail.Text,textBoxDireccion,textBoxTelefono.Text, sqlFormattedDate);
+                string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion, textBoxTelefono.Text);
                 Database.execNonQuery(Database.createQuery(insert));
+
+
                 
             }
             catch(Exception exp) 
