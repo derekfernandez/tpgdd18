@@ -122,6 +122,7 @@
     <Compile Include="Listado Estadistico\VentanaSeleccion.Designer.cs">
       <DependentUpon>VentanaSeleccion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Misc\Rol.cs" />
     <Compile Include="Misc\EstadisticasUtils.cs" />
     <Compile Include="VentanaInicio.cs">
       <SubType>Form</SubType>

@@ -53,7 +53,7 @@
             this.Name = "BaseWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BaseWindow";
-            ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
+           ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
             this.ResumeLayout(false);
 
         }

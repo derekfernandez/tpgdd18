@@ -43,7 +43,7 @@
             // 
             // userTextbox
             // 
-            this.userTextbox.Location = new System.Drawing.Point(76, 189);
+            this.userTextbox.Location = new System.Drawing.Point(76, 173);
             this.userTextbox.Name = "userTextbox";
             this.userTextbox.Size = new System.Drawing.Size(150, 20);
             this.userTextbox.TabIndex = 1;
@@ -51,17 +51,18 @@
             // 
             // pwTextbox
             // 
-            this.pwTextbox.Location = new System.Drawing.Point(76, 224);
+            this.pwTextbox.Location = new System.Drawing.Point(76, 212);
             this.pwTextbox.Name = "pwTextbox";
             this.pwTextbox.Size = new System.Drawing.Size(150, 20);
             this.pwTextbox.TabIndex = 2;
+            this.pwTextbox.UseSystemPasswordChar = true;
             this.pwTextbox.TextChanged += new System.EventHandler(this.pwTextbox_TextChanged);
             // 
             // pwLabel
             // 
             this.pwLabel.AutoSize = true;
             this.pwLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pwLabel.Location = new System.Drawing.Point(2, 224);
+            this.pwLabel.Location = new System.Drawing.Point(-1, 212);
             this.pwLabel.Name = "pwLabel";
             this.pwLabel.Size = new System.Drawing.Size(71, 16);
             this.pwLabel.TabIndex = 3;
@@ -71,7 +72,7 @@
             // 
             this.userLabel.AutoSize = true;
             this.userLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userLabel.Location = new System.Drawing.Point(12, 189);
+            this.userLabel.Location = new System.Drawing.Point(12, 173);
             this.userLabel.Name = "userLabel";
             this.userLabel.Size = new System.Drawing.Size(58, 16);
             this.userLabel.TabIndex = 4;
@@ -79,22 +80,26 @@
             // 
             // byeBtn
             // 
-            this.byeBtn.Location = new System.Drawing.Point(103, 254);
+            this.byeBtn.BackColor = System.Drawing.Color.Crimson;
+            this.byeBtn.Font = new System.Drawing.Font("Arial", 10F);
+            this.byeBtn.Location = new System.Drawing.Point(76, 243);
             this.byeBtn.Name = "byeBtn";
-            this.byeBtn.Size = new System.Drawing.Size(75, 23);
+            this.byeBtn.Size = new System.Drawing.Size(75, 34);
             this.byeBtn.TabIndex = 5;
             this.byeBtn.Text = "Salir";
-            this.byeBtn.UseVisualStyleBackColor = true;
+            this.byeBtn.UseVisualStyleBackColor = false;
             this.byeBtn.Click += new System.EventHandler(this.byeBtn_Click);
             // 
             // loginBtn
             // 
-            this.loginBtn.Location = new System.Drawing.Point(185, 254);
+            this.loginBtn.BackColor = System.Drawing.Color.LimeGreen;
+            this.loginBtn.Font = new System.Drawing.Font("Arial", 10F);
+            this.loginBtn.Location = new System.Drawing.Point(172, 243);
             this.loginBtn.Name = "loginBtn";
-            this.loginBtn.Size = new System.Drawing.Size(75, 23);
+            this.loginBtn.Size = new System.Drawing.Size(75, 34);
             this.loginBtn.TabIndex = 6;
             this.loginBtn.Text = "Ingresar";
-            this.loginBtn.UseVisualStyleBackColor = true;
+            this.loginBtn.UseVisualStyleBackColor = false;
             this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
             // 
             // failureMsgLabel
@@ -112,7 +117,7 @@
             this.controllerError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.controllerError.ContainerControl = this;
             // 
-            // LoginUsuario
+            // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -125,8 +130,8 @@
             this.Controls.Add(this.pwTextbox);
             this.Controls.Add(this.userTextbox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.Name = "LoginUsuario";
+            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Name = "Login";
             this.Text = "Login - PalcoNet";
             this.Load += new System.EventHandler(this.Login_Load);
             this.Controls.SetChildIndex(this.userTextbox, 0);

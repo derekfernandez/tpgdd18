@@ -273,7 +273,7 @@ namespace PalcoNet.Misc
         {
             SqlCommand query = createQuery("SELECT id_usuario FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
-            return (string)getScalarValue(query);
+            return getValue(query);
         }
 
         public static List<string> getRolesFor(Usuario user)
@@ -297,7 +297,7 @@ namespace PalcoNet.Misc
             SqlCommand query = createQuery("SELECT habilitado FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", user.username);
 
-            var temp = bool.Parse((string)getScalarValue(query));
+            var temp = bool.Parse(getValue(query));
 
             if(temp)
             {
@@ -311,6 +311,17 @@ namespace PalcoNet.Misc
 
         #region Puntos
 
+
+        #endregion
+
+        #region rol
+
+        public static Boolean rolHabilitado(Rol rol)
+        {
+            SqlCommand query = createQuery("SELECT habilitado FROM SQLITO.Roles WHERE descripcion = @desc");
+            query.Parameters.AddWithValue("@desc", rol.descripcion);
+            return Boolean.Parse(getValue(query));
+        }
 
         #endregion
 

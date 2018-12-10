@@ -38,5 +38,14 @@ namespace PalcoNet
             return camposCompletos;
 
         }
+
+        public void fillSelect(ComboBox cb, List<String> d)
+        {
+            cb.Items.Clear();
+            foreach (String val in d)
+            {
+                cb.Items.Add(val);
+            }
+        }
     }
 }
