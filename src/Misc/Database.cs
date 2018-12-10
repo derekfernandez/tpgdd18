@@ -9,6 +9,7 @@ using System.Data;
 using PalcoNet.Controllers;
 using System.Security.Cryptography;
 
+
 namespace PalcoNet.Misc
 {
     class Database
@@ -110,7 +111,7 @@ namespace PalcoNet.Misc
             else return null;
         }
 
-        /*public static string getValue(SqlCommand query)
+        public static string getValue(SqlCommand query)
         {
             List<string> lista = getList(query);
 
@@ -123,7 +124,7 @@ namespace PalcoNet.Misc
             {
                 return "";
             }
-        }*/
+        }
 
         
         #endregion
