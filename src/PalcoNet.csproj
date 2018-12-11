@@ -211,8 +211,10 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
-      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+
+    <EmbeddedResource Include="Historial Cliente\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoClientesPuntos.resx">
       <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>
@@ -270,7 +272,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
