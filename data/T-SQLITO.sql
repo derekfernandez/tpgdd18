@@ -72,7 +72,30 @@ DBCC CHECKIDENT ('SQLITO.Empresas', RESEED, @identity);
 SELECT ERROR_MESSAGE() 
 end catch
 end
+
+--PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO
 GO
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Eliminar_empresa')
+BEGIN
+	DROP PROCEDURE pr_Eliminar_empresa
+END
+GO
+create proc pr_Eliminar_empresa (@idEmpresa int)
+as
+begin
+begin try
+DECLARE @ID_USER INT
+SET @ID_USER = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
+begin transaction
+UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE id_usuario = @ID_USER
+commit transaction
+end try
+begin catch
+ROLLBACK TRAN
+SELECT ERROR_MESSAGE()
+end catch
+end
+
 /*Si llegase a romper el identity usar:
 GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
