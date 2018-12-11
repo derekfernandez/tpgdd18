@@ -43,22 +43,40 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
+        public void controlarNulos () 
+        {
+         foreach (Control c in Controls)
+            {
+
+                if (c is TextBox && c.Text == "")
+                {
+
+                    c.Text = null;
+
+                }
+
+            }
+        }
+
         private void btnCargar_Click(object sender, EventArgs e)
         {
                try
             {
+                    
               
                    /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
                     * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
-                string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion, textBoxTelefono.Text);
+                controlarNulos();
+                string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
                 Database.execNonQuery(Database.createQuery(insert));
-
+                //Database.ejecutarNonQueryShort(insert);
+                MessageBox.Show("Empresa agregadas ");
 
                 
             }
             catch(Exception exp) 
             {
-                throw new Exception("Error al ejecutar la query: " + exp.Message);
+                 MessageBox.Show("Error al ejecutar la query: " + exp.Message);
             }
             finally
             {
@@ -79,17 +97,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
                 nuevoMenu.Show();
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-
-                throw;
+                MessageBox.Show("Error " + exp.Message);
             }
 
         }
         public Boolean CamposVacio()
         {
             //Buscar una funcion que ya evalue si los campos son blancos: seguro hay
-            foreach (Control c in this.Controls)
+            foreach (Control c in Controls)
             {
 
                 if (c is TextBox && c.Text == "")
@@ -99,6 +116,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
             }
             return false;
+        }
+
+        private void ABM_Alta_Empresa_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
 
         

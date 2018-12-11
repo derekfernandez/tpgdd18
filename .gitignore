@@ -4,3 +4,5 @@ src/obj
 src/PalcoNet.v11.suo
 *.exe
 *.suo
+src/.vs/PalcoNet/v15/Server/sqlite3/storage.ide-shm
+src/.vs/PalcoNet/v15/Server/sqlite3/storage.ide-wal

@@ -44,9 +44,23 @@ namespace PalcoNet.Misc
 
         public static void execNonQuery(SqlCommand cmd)
         {
+
+            try
+            {
                 abrir();
                 cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
                 cerrar();
+            }
+                
         }
 
         public static SqlDataReader execDataReader(SqlCommand cmd)
@@ -140,19 +154,30 @@ namespace PalcoNet.Misc
         //Querys tipo update, insert, delete, o llamadas a proc que no devuelvan tablas
         public static void ejecutarNonQueryShort(string query)
         {
-            abrir();
+            
             Database.execNonQuery(Database.createQuery(query));
-            cerrar();
+           
+            
+        }
+        //obtiene un DS con la query simplemente
+        public static DataSet ObtenerDataSet(string query)
+        {
+            DataSet dataSet = new DataSet();
+            
+            SqlDataAdapter adapter = new SqlDataAdapter(query,connection);
+            adapter.Fill(dataSet);
+            
+            return dataSet;
         }
 
+
         //Reemplaza a getValue
-        public object ejecutarExecuteScalar(string query)
+        public static T ejecutarExecuteScalar<T>(string query)
         {
             abrir();
-            object reader = Database.getScalarValue(Database.createQuery(query));
+            T variable = (T)(Database.createQuery(query)).ExecuteScalar();
             cerrar();
-            return reader;
-           
+            return variable;
         }
 
         public static List<T> getListaGenerica<T>(SqlCommand cmd)

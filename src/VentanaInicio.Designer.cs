@@ -30,6 +30,7 @@
         {
             this.btnEmpresa = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.btnGrado = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnEmpresa
@@ -52,11 +53,22 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
+            // btnGrado
+            // 
+            this.btnGrado.Location = new System.Drawing.Point(698, 589);
+            this.btnGrado.Name = "btnGrado";
+            this.btnGrado.Size = new System.Drawing.Size(210, 150);
+            this.btnGrado.TabIndex = 2;
+            this.btnGrado.Text = "Ir Grado";
+            this.btnGrado.UseVisualStyleBackColor = true;
+            this.btnGrado.Click += new System.EventHandler(this.btnGrado_Click);
+            // 
             // VentanaInicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1436, 846);
+            this.Controls.Add(this.btnGrado);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnEmpresa);
             this.Name = "VentanaInicio";
@@ -70,5 +82,6 @@
 
         private System.Windows.Forms.Button btnEmpresa;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button btnGrado;
     }
 }

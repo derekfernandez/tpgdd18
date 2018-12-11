@@ -182,7 +182,6 @@
             this.label1.Size = new System.Drawing.Size(518, 88);
             this.label1.TabIndex = 24;
             this.label1.Text = "Alta Empresa";
-            
             // 
             // label3
             // 
@@ -222,6 +221,7 @@
             this.Name = "ABM_Alta_Empresa";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "ABM Empresa Publicacion";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ABM_Alta_Empresa_FormClosed);
             this.Load += new System.EventHandler(this.ABM_empresa_publicacion_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
