@@ -89,7 +89,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public Boolean CamposVacio()
         {
             //Buscar una funcion que ya evalue si los campos son blancos: seguro hay
-            foreach (Control c in this.Controls)
+            foreach (Control c in Controls)
             {
 
                 if (c is TextBox && c.Text == "")
