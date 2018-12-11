@@ -16,5 +16,11 @@ namespace PalcoNet.Misc
         {
             this.descripcion = descripcion;
         }
+
+        public Rol(string id, string descripcion)
+        {
+            this.id = id;
+            this.descripcion = descripcion;
+        }
     }
 }

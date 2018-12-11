@@ -38,6 +38,7 @@
             this.loginBtn = new System.Windows.Forms.Button();
             this.failureMsgLabel = new System.Windows.Forms.Label();
             this.controllerError = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.controllerError)).BeginInit();
             this.SuspendLayout();
             // 
@@ -133,7 +134,9 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Login";
             this.Text = "Login - PalcoNet";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Login_FormClosed);
             this.Load += new System.EventHandler(this.Login_Load);
+            this.Controls.SetChildIndex(this.logoPalcoNet, 0);
             this.Controls.SetChildIndex(this.userTextbox, 0);
             this.Controls.SetChildIndex(this.pwTextbox, 0);
             this.Controls.SetChildIndex(this.pwLabel, 0);
@@ -141,6 +144,7 @@
             this.Controls.SetChildIndex(this.byeBtn, 0);
             this.Controls.SetChildIndex(this.loginBtn, 0);
             this.Controls.SetChildIndex(this.failureMsgLabel, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.controllerError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -75,11 +75,17 @@
     <Compile Include="Abm Grado\Grado.designer.cs">
       <DependentUpon>Grado.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\Form1.cs">
+    <Compile Include="Abm Rol\Modify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rol\Modify.Designer.cs">
+      <DependentUpon>Modify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\RoleMainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\RoleMainWindow.Designer.cs">
+      <DependentUpon>RoleMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rubro\Rubro.cs">
       <SubType>Form</SubType>
@@ -204,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rubro\Rubro.resx">
       <DependentUpon>Rubro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\Modify.resx">
+      <DependentUpon>Modify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\RoleMainWindow.resx">
+      <DependentUpon>RoleMainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
