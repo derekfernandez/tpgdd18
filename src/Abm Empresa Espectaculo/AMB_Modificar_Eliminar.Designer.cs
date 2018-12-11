@@ -81,6 +81,7 @@
             this.btnEditar.TabIndex = 3;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnEliminar
             // 
@@ -90,6 +91,7 @@
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // grillaEmpresas
             // 
@@ -99,7 +101,6 @@
             this.grillaEmpresas.RowTemplate.Height = 33;
             this.grillaEmpresas.Size = new System.Drawing.Size(1413, 447);
             this.grillaEmpresas.TabIndex = 5;
-
             // 
             // labelCUIT
             // 
@@ -168,7 +169,7 @@
             this.Controls.Add(this.btnVolver);
             this.Name = "AMB_Modificar_Eliminar";
             this.Text = "Editar_ModificarABM";
-
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AMB_Modificar_Eliminar_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

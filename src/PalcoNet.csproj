@@ -69,11 +69,11 @@
     <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.designer.cs">
       <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Grado\Form1.cs">
+    <Compile Include="Abm Grado\Grado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Grado\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Grado\Grado.designer.cs">
+      <DependentUpon>Grado.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\Form1.cs">
       <SubType>Form</SubType>
@@ -81,11 +81,11 @@
     <Compile Include="Abm Rol\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rubro\Form1.cs">
+    <Compile Include="Abm Rubro\Rubro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rubro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rubro\Rubro.designer.cs">
+      <DependentUpon>Rubro.cs</DependentUpon>
     </Compile>
     <Compile Include="Canje Puntos\Form1.cs">
       <SubType>Form</SubType>
@@ -103,6 +103,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicacion\GenerarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\GenerarPublicacion.Designer.cs">
+      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Listado Estadistico\ListadoClientesPuntos.cs">
       <SubType>Form</SubType>
@@ -158,12 +164,6 @@
     <Compile Include="BaseWindow.Designer.cs">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicacion\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Generar Publicacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Generar Rendicion Comisiones\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,14 +199,20 @@
     <EmbeddedResource Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.resx">
       <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Grado\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Grado\Grado.resx">
+      <DependentUpon>Grado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rubro\Rubro.resx">
+      <DependentUpon>Rubro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BaseWindow.resx">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
+      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoClientesPuntos.resx">
       <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>

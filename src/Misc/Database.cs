@@ -163,18 +163,21 @@ namespace PalcoNet.Misc
         public static DataSet ObtenerDataSet(string query)
         {
             DataSet dataSet = new DataSet();
-
+            
             SqlDataAdapter adapter = new SqlDataAdapter(query,connection);
             adapter.Fill(dataSet);
-
+            
             return dataSet;
         }
 
 
         //Reemplaza a getValue
-        public object ejecutarExecuteScalar(string query)
+        public static T ejecutarExecuteScalar<T>(string query)
         {
-            return Database.getScalarValue(Database.createQuery(query));
+            abrir();
+            T variable = (T)(Database.createQuery(query)).ExecuteScalar();
+            cerrar();
+            return variable;
         }
 
         public static List<T> getListaGenerica<T>(SqlCommand cmd)

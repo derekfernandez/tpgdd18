@@ -37,5 +37,12 @@ namespace PalcoNet
             Login.Login nuevoLogin = new Login.Login();
             nuevoLogin.Show();
         }
+
+        private void btnGrado_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Abm_Grado.Grado grado = new Abm_Grado.Grado();
+            grado.Show();
+        }
     }
 }
