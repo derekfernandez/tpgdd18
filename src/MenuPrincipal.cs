@@ -21,6 +21,10 @@ namespace PalcoNet
             this.session = session;
         }
 
+        // temporal para pruebas
+
+        public MenuPrincipal() { }
+
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
 

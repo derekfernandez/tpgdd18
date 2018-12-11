@@ -29,7 +29,7 @@ namespace PalcoNet.Login
             fillSelect(roleSelect, session.roles);
         }
 
-        private void ElegirRol_FormClosed(object sender, EventArgs e)
+        private void ElegirRol_FormClosed(object sender, FormClosedEventArgs e)
         {
             new Login().Show();
         }
