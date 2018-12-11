@@ -42,8 +42,8 @@ namespace PalcoNet.Canje_Puntos
         }
         public void sumarPuntos()
         {
-            SqlCommand query = Database.createQuery("SELECT ISNULL(Sum(cantidad),0) From SQLITO.Puntos Where cliente_id = '" + this.cliente + "'");
-           string puntos = Database.getValue(query);
+            SqlCommand query = Database.createQuery("SELECT TOP 1 SQLITO.sumarPuntos("+this.cliente+") as Puntos FROM SQLITO.Puntos");
+            string puntos = Database.getValue(query);
             label6.Text = puntos;
 
         }
@@ -87,9 +87,18 @@ namespace PalcoNet.Canje_Puntos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            sumarPuntos();
-            //revisar
-           // SqlCommand query = Database.createQuery("Insert Into SQLITO.Premios (cantidad,cliente_id,fecha_vencimiento) Values("+Int32.Parse(label5.Text)+",this.cliente)";
+            if (Int32.Parse(label5.Text) > Int32.Parse(label6.Text))
+            {
+                MessageBox.Show("No tiene los suficientes puntos para ese premio, intente con otro!", "Premio", MessageBoxButtons.OK);
+            }
+            else
+           {
+                SqlCommand query = Database.createQuery("Insert Into SQLITO.Puntos (cantidad,cliente_id,fecha_vencimiento) Values(" + Int32.Parse(label5.Text) * (-1) + ","+this.cliente+", NULL)");
+                Database.execNonQuery(query);
+                sumarPuntos();
+                MessageBox.Show("Se canjeo el premio correctamente!", "Premio", MessageBoxButtons.OK);
+           }
+
         }
     }
 }
