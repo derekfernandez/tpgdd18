@@ -45,7 +45,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(134, 841);
+            this.btnVolver.Location = new System.Drawing.Point(104, 841);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(252, 133);
             this.btnVolver.TabIndex = 0;
@@ -95,17 +95,19 @@
             // 
             // grillaEmpresas
             // 
+            this.grillaEmpresas.AllowUserToOrderColumns = true;
             this.grillaEmpresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grillaEmpresas.Location = new System.Drawing.Point(104, 364);
+            this.grillaEmpresas.Location = new System.Drawing.Point(12, 360);
             this.grillaEmpresas.Name = "grillaEmpresas";
             this.grillaEmpresas.RowTemplate.Height = 33;
-            this.grillaEmpresas.Size = new System.Drawing.Size(1413, 447);
+            this.grillaEmpresas.Size = new System.Drawing.Size(1505, 447);
             this.grillaEmpresas.TabIndex = 5;
+            this.grillaEmpresas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grillaEmpresas_CellContentClick);
             // 
             // labelCUIT
             // 
             this.labelCUIT.AutoSize = true;
-            this.labelCUIT.Location = new System.Drawing.Point(117, 278);
+            this.labelCUIT.Location = new System.Drawing.Point(99, 278);
             this.labelCUIT.Name = "labelCUIT";
             this.labelCUIT.Size = new System.Drawing.Size(66, 25);
             this.labelCUIT.TabIndex = 6;
@@ -131,7 +133,7 @@
             // 
             // textBoxRazonSocial
             // 
-            this.textBoxRazonSocial.Location = new System.Drawing.Point(245, 172);
+            this.textBoxRazonSocial.Location = new System.Drawing.Point(250, 172);
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(507, 31);
             this.textBoxRazonSocial.TabIndex = 10;
@@ -145,7 +147,7 @@
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Location = new System.Drawing.Point(961, 175);
+            this.textBoxEmail.Location = new System.Drawing.Point(961, 178);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(507, 31);
             this.textBoxEmail.TabIndex = 13;
@@ -154,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1616, 1039);
+            this.ClientSize = new System.Drawing.Size(1538, 1048);
             this.Controls.Add(this.textBoxEmail);
             this.Controls.Add(this.textBoxCUIT);
             this.Controls.Add(this.textBoxRazonSocial);
@@ -178,17 +180,18 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.Label labelTituloModEli;
-        private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.DataGridView grillaEmpresas;
-        private System.Windows.Forms.Label labelCUIT;
-        private System.Windows.Forms.Label labelRazonSocial;
-        private System.Windows.Forms.Label labelEmail;
-        private System.Windows.Forms.TextBox textBoxRazonSocial;
-        private System.Windows.Forms.TextBox textBoxCUIT;
-        private System.Windows.Forms.TextBox textBoxEmail;
+        public System.Windows.Forms.Button btnVolver;
+        public System.Windows.Forms.Button btnBuscar;
+        public System.Windows.Forms.Label labelTituloModEli;
+        public System.Windows.Forms.Button btnEditar;
+        public System.Windows.Forms.Button btnEliminar;
+        public System.Windows.Forms.DataGridView grillaEmpresas;
+        public System.Windows.Forms.Label labelCUIT;
+        public System.Windows.Forms.Label labelRazonSocial;
+        public System.Windows.Forms.Label labelEmail;
+        public System.Windows.Forms.TextBox textBoxRazonSocial;
+        public System.Windows.Forms.TextBox textBoxCUIT;
+        public System.Windows.Forms.TextBox textBoxEmail;
+
     }
 }

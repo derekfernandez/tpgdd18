@@ -62,8 +62,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
                try
             {
-                    
-              
                    /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
                     * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
                 controlarNulos();
