@@ -17,11 +17,7 @@ namespace PalcoNet
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Login.Login());
-            Usuario u = new Usuario("empresa1");
-            u.id = "775";
-            //Application.Run(new Generar_Publicacion.VentanaPrincipal(u));
-            Application.Run(new Editar_Publicacion.SeleccionPublicacion(u));
+            Application.Run(new Login.Login());
         }
 
     }
