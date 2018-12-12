@@ -30,8 +30,8 @@ namespace PalcoNet.Abm_Grado
         private void buttonVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            GenerarPublicacion nuevaPublicacion = new GenerarPublicacion();
-            nuevaPublicacion.Show();
+            //GenerarPublicacion nuevaPublicacion = new GenerarPublicacion();
+            //nuevaPublicacion.Show();
         }
         
 

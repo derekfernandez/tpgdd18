@@ -28,11 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.lbTitulo = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // lbTitulo
+            // 
+            this.lbTitulo.AutoSize = true;
+            this.lbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTitulo.Location = new System.Drawing.Point(72, 9);
+            this.lbTitulo.Name = "lbTitulo";
+            this.lbTitulo.Size = new System.Drawing.Size(310, 17);
+            this.lbTitulo.TabIndex = 0;
+            this.lbTitulo.Text = "SELECCIONE LA PUBLICACIÓN A EDITAR";
+            // 
+            // SeleccionPublicacion
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(444, 442);
+            this.Controls.Add(this.lbTitulo);
+            this.Name = "SeleccionPublicacion";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lbTitulo;
     }
 }

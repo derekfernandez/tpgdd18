@@ -232,6 +232,9 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\SeleccionPublicacion.resx">
+      <DependentUpon>SeleccionPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
       <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
     </EmbeddedResource>

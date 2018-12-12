@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PalcoNet.Misc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace PalcoNet.Editar_Publicacion
 {
     public partial class SeleccionPublicacion : Form
     {
-        public SeleccionPublicacion()
+        public SeleccionPublicacion(Usuario user)
         {
             InitializeComponent();
         }
