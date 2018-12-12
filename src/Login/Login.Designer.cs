@@ -38,6 +38,7 @@
             this.loginBtn = new System.Windows.Forms.Button();
             this.failureMsgLabel = new System.Windows.Forms.Label();
             this.controllerError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.controllerError)).BeginInit();
             this.SuspendLayout();
@@ -118,11 +119,23 @@
             this.controllerError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.controllerError.ContainerControl = this;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(12, 293);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(191, 13);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "¿Aún no tiene una cuenta? Regístrese";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 289);
+            this.ClientSize = new System.Drawing.Size(265, 315);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.failureMsgLabel);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.byeBtn);
@@ -144,6 +157,7 @@
             this.Controls.SetChildIndex(this.byeBtn, 0);
             this.Controls.SetChildIndex(this.loginBtn, 0);
             this.Controls.SetChildIndex(this.failureMsgLabel, 0);
+            this.Controls.SetChildIndex(this.linkLabel1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.controllerError)).EndInit();
             this.ResumeLayout(false);
@@ -161,5 +175,6 @@
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.Label failureMsgLabel;
         private System.Windows.Forms.ErrorProvider controllerError;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

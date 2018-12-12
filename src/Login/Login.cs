@@ -92,5 +92,11 @@ namespace PalcoNet.Login
             failureMsgLabel.Text = login.msg;
             failureMsgLabel.Show();
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            new Registro_de_Usuario.Registro().Show();
+        }
     }
 }

@@ -110,7 +110,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Generar Publicacion\DisposicionUbicaciones.cs">
+=======
+<Compile Include="Generar Publicacion\DisposicionUbicaciones.cs">
+>>>>>>> 223c77e0c41d4e62159517b7feb400d2fe139ece
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Generar Publicacion\DisposicionUbicaciones.Designer.cs">
@@ -124,6 +128,15 @@
     </Compile>
     <Compile Include="Generar Publicacion\VentanaPrincipal.Designer.cs">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+<<<<<<< HEAD
+=======
+    </Compile>
+    <Compile Include="Generar Publicacion\GenerarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\GenerarPublicacion.Designer.cs">
+      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+>>>>>>> 223c77e0c41d4e62159517b7feb400d2fe139ece
     </Compile>
     <Compile Include="Listado Estadistico\ListadoClientesPuntos.cs">
       <SubType>Form</SubType>
@@ -199,11 +212,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registro de Usuario\Form1.cs">
+    <Compile Include="Registro de Usuario\Registro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro de Usuario\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro de Usuario\Registro.Designer.cs">
+      <DependentUpon>Registro.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.resx">
       <DependentUpon>ABM_Alta_Empresa.cs</DependentUpon>
@@ -232,12 +245,24 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
       <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+=======
+      <EmbeddedResource Include="Historial Cliente\Form1.resx">
+        <DependentUpon>Form1.cs</DependentUpon>
+      </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
+      <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
+    </EmbeddedResource>
+      <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
+        <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+      </EmbeddedResource>
+>>>>>>> 223c77e0c41d4e62159517b7feb400d2fe139ece
     <EmbeddedResource Include="Historial Cliente\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -249,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\VentanaSeleccion.resx">
       <DependentUpon>VentanaSeleccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\Registro.resx">
+      <DependentUpon>Registro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaInicio.resx">
       <DependentUpon>VentanaInicio.cs</DependentUpon>
