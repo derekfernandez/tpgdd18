@@ -332,6 +332,13 @@ namespace PalcoNet.Misc
             else return true;
         }
 
+        public static Boolean userExiste(string username)
+        {
+            SqlCommand query = createQuery("SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = @username");
+            query.Parameters.AddWithValue("@username", username);
+            return (Convert.ToInt32(getValue(query)) != 0);
+        }
+
         #endregion
 
         #region Puntos
