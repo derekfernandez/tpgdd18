@@ -49,10 +49,23 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             try
             {
+                
                 //LIMITACION: NO FILTRA POR VALORES NULOS
                 filtrosVacios();
                 string query = string.Format("select * from SQLITO.Empresas where (razonsocial like '{0}' or razonsocial is null) and (cuit like '{1}' or cuit is null) and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+                grillaEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
                 grillaEmpresas.DataSource = Database.ObtenerDataSet(query).Tables[0];
+
+                grillaEmpresas.Columns[0].HeaderText = "ID";
+                grillaEmpresas.Columns[1].HeaderText = "Razon Social";
+                grillaEmpresas.Columns[2].HeaderText = "Fecha de Creacion";
+                grillaEmpresas.Columns[3].HeaderText = "CUIT";
+                grillaEmpresas.Columns[4].HeaderText = "Mail";
+                grillaEmpresas.Columns[5].HeaderText = "Direccion";
+                grillaEmpresas.Columns[6].HeaderText = "Telefono";
+                grillaEmpresas.Columns[7].HeaderText = "Usuario ID";
+
+                
             }
             catch (Exception exp) 
             {
@@ -74,10 +87,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 
                 btnBuscar_Click(sender,e);
             }
-            catch (Exception)
+            catch (Exception exp)
             {
                 
-                throw;
+                MessageBox.Show("Error: " + exp.Message);
             }
         }
 
@@ -88,9 +101,30 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
-            nuevoMenu.Show();
+            //Falta query para actualizar los campos que devuelve la grilla
+            string actualizar = string.Format("update SQLITO.Empresas set ... where '{0}'");
+            try
+            {
+                Database.execNonQuery(Database.createQuery(actualizar));
+                MessageBox.Show("Empresa actualizada correctamente");
+
+                btnBuscar_Click(sender, e);
+            }
+            catch (Exception exp)
+            {
+
+                MessageBox.Show("Error: " + exp.Message);
+            }
+        }
+
+        private void grillaEmpresas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void AMB_Modificar_Eliminar_Load(object sender, EventArgs e)
+        {
+
         }
 
     

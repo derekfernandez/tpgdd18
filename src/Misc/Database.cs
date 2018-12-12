@@ -195,7 +195,7 @@ namespace PalcoNet.Misc
 
             return lista;
         }
-
+ 
         #endregion
 
         #region Auxiliares

@@ -110,6 +110,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
     </Compile>
+<Compile Include="Generar Publicacion\DisposicionUbicaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\DisposicionUbicaciones.Designer.cs">
+      <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicacion\ItemCombo.cs" />
+    <Compile Include="Generar Publicacion\ParTipoTarifa.cs" />
+    <Compile Include="Generar Publicacion\Ubicacion.cs" />
+    <Compile Include="Generar Publicacion\VentanaPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\VentanaPrincipal.Designer.cs">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Publicacion\GenerarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +238,15 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+      <EmbeddedResource Include="Historial Cliente\Form1.resx">
+        <DependentUpon>Form1.cs</DependentUpon>
+      </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
+      <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
+    </EmbeddedResource>
+      <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
+        <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+      </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

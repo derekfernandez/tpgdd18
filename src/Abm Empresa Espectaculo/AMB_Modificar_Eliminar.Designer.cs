@@ -40,12 +40,13 @@
             this.textBoxRazonSocial = new System.Windows.Forms.TextBox();
             this.textBoxCUIT = new System.Windows.Forms.TextBox();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).BeginInit();
             this.SuspendLayout();
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(134, 841);
+            this.btnVolver.Location = new System.Drawing.Point(12, 841);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(252, 133);
             this.btnVolver.TabIndex = 0;
@@ -55,10 +56,10 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(1216, 841);
+            this.btnBuscar.Location = new System.Drawing.Point(1265, 841);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(252, 133);
-            this.btnBuscar.TabIndex = 1;
+            this.btnBuscar.TabIndex = 0;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
@@ -67,7 +68,7 @@
             // 
             this.labelTituloModEli.AutoSize = true;
             this.labelTituloModEli.Font = new System.Drawing.Font("Arial", 28.125F, System.Drawing.FontStyle.Bold);
-            this.labelTituloModEli.Location = new System.Drawing.Point(230, 24);
+            this.labelTituloModEli.Location = new System.Drawing.Point(229, 9);
             this.labelTituloModEli.Name = "labelTituloModEli";
             this.labelTituloModEli.Size = new System.Drawing.Size(1097, 88);
             this.labelTituloModEli.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(487, 841);
+            this.btnEditar.Location = new System.Drawing.Point(428, 841);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(252, 133);
             this.btnEditar.TabIndex = 3;
@@ -85,7 +86,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(852, 841);
+            this.btnEliminar.Location = new System.Drawing.Point(836, 841);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(252, 133);
             this.btnEliminar.TabIndex = 4;
@@ -95,17 +96,19 @@
             // 
             // grillaEmpresas
             // 
+            this.grillaEmpresas.AllowUserToOrderColumns = true;
             this.grillaEmpresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grillaEmpresas.Location = new System.Drawing.Point(104, 364);
+            this.grillaEmpresas.Location = new System.Drawing.Point(12, 234);
             this.grillaEmpresas.Name = "grillaEmpresas";
             this.grillaEmpresas.RowTemplate.Height = 33;
-            this.grillaEmpresas.Size = new System.Drawing.Size(1413, 447);
+            this.grillaEmpresas.Size = new System.Drawing.Size(1505, 573);
             this.grillaEmpresas.TabIndex = 5;
+            this.grillaEmpresas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grillaEmpresas_CellContentClick);
             // 
             // labelCUIT
             // 
             this.labelCUIT.AutoSize = true;
-            this.labelCUIT.Location = new System.Drawing.Point(117, 278);
+            this.labelCUIT.Location = new System.Drawing.Point(606, 172);
             this.labelCUIT.Name = "labelCUIT";
             this.labelCUIT.Size = new System.Drawing.Size(66, 25);
             this.labelCUIT.TabIndex = 6;
@@ -114,7 +117,7 @@
             // labelRazonSocial
             // 
             this.labelRazonSocial.AutoSize = true;
-            this.labelRazonSocial.Location = new System.Drawing.Point(99, 175);
+            this.labelRazonSocial.Location = new System.Drawing.Point(7, 172);
             this.labelRazonSocial.Name = "labelRazonSocial";
             this.labelRazonSocial.Size = new System.Drawing.Size(145, 25);
             this.labelRazonSocial.TabIndex = 7;
@@ -123,7 +126,7 @@
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
-            this.labelEmail.Location = new System.Drawing.Point(847, 181);
+            this.labelEmail.Location = new System.Drawing.Point(1115, 172);
             this.labelEmail.Name = "labelEmail";
             this.labelEmail.Size = new System.Drawing.Size(71, 25);
             this.labelEmail.TabIndex = 8;
@@ -131,30 +134,41 @@
             // 
             // textBoxRazonSocial
             // 
-            this.textBoxRazonSocial.Location = new System.Drawing.Point(245, 172);
+            this.textBoxRazonSocial.Location = new System.Drawing.Point(158, 169);
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
-            this.textBoxRazonSocial.Size = new System.Drawing.Size(507, 31);
+            this.textBoxRazonSocial.Size = new System.Drawing.Size(325, 31);
             this.textBoxRazonSocial.TabIndex = 10;
             // 
             // textBoxCUIT
             // 
-            this.textBoxCUIT.Location = new System.Drawing.Point(245, 275);
+            this.textBoxCUIT.Location = new System.Drawing.Point(678, 169);
             this.textBoxCUIT.Name = "textBoxCUIT";
-            this.textBoxCUIT.Size = new System.Drawing.Size(507, 31);
+            this.textBoxCUIT.Size = new System.Drawing.Size(325, 31);
             this.textBoxCUIT.TabIndex = 12;
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Location = new System.Drawing.Point(961, 175);
+            this.textBoxEmail.Location = new System.Drawing.Point(1192, 169);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(507, 31);
+            this.textBoxEmail.Size = new System.Drawing.Size(325, 31);
             this.textBoxEmail.TabIndex = 13;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(18, 106);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(873, 37);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "*Seleccionar buscar sin aplicar filtros traera todas las empresas existentes";
             // 
             // AMB_Modificar_Eliminar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1616, 1039);
+            this.ClientSize = new System.Drawing.Size(1538, 1048);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxEmail);
             this.Controls.Add(this.textBoxCUIT);
             this.Controls.Add(this.textBoxRazonSocial);
@@ -170,6 +184,7 @@
             this.Name = "AMB_Modificar_Eliminar";
             this.Text = "Editar_ModificarABM";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AMB_Modificar_Eliminar_FormClosed);
+            this.Load += new System.EventHandler(this.AMB_Modificar_Eliminar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -178,17 +193,19 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.Label labelTituloModEli;
-        private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.DataGridView grillaEmpresas;
-        private System.Windows.Forms.Label labelCUIT;
-        private System.Windows.Forms.Label labelRazonSocial;
-        private System.Windows.Forms.Label labelEmail;
-        private System.Windows.Forms.TextBox textBoxRazonSocial;
-        private System.Windows.Forms.TextBox textBoxCUIT;
-        private System.Windows.Forms.TextBox textBoxEmail;
+        public System.Windows.Forms.Button btnVolver;
+        public System.Windows.Forms.Button btnBuscar;
+        public System.Windows.Forms.Label labelTituloModEli;
+        public System.Windows.Forms.Button btnEditar;
+        public System.Windows.Forms.Button btnEliminar;
+        public System.Windows.Forms.DataGridView grillaEmpresas;
+        public System.Windows.Forms.Label labelCUIT;
+        public System.Windows.Forms.Label labelRazonSocial;
+        public System.Windows.Forms.Label labelEmail;
+        public System.Windows.Forms.TextBox textBoxRazonSocial;
+        public System.Windows.Forms.TextBox textBoxCUIT;
+        public System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.Label label1;
+
     }
 }

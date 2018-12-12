@@ -45,5 +45,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
         }
+
+        private void ABM_Menu_Empresa_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
