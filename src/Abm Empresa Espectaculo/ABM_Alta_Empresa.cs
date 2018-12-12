@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Misc;
+
+using PalcoNet.Controllers;
+
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class ABM_Alta_Empresa : Form
     {
+        
         public ABM_Alta_Empresa()
         {
             InitializeComponent();
@@ -38,27 +43,46 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        public void controlarNulos () 
         {
-      
-            try
+         foreach (Control c in Controls)
             {
 
-                if (this.CamposVacio())
+                if (c is TextBox && c.Text == "")
                 {
-                    MessageBox.Show("Por favor, complete todos los campos correctamente");
+
+                    c.Text = null;
+
                 }
-                else
-                {
-                    //Aca iria funcionalidad de ingresar nueva empresa
-                    MessageBox.Show("Datos ingresados correctamente");
-                }
+
             }
-            catch (Exception)
+        }
+
+        private void btnCargar_Click(object sender, EventArgs e)
+        {
+               try
             {
+                   /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
+                    * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
+                controlarNulos();
+                string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
+                Database.execNonQuery(Database.createQuery(insert));
+                //Database.ejecutarNonQueryShort(insert);
+                MessageBox.Show("Empresa agregadas ");
+
                 
-                throw;
             }
+            catch(Exception exp) 
+            {
+                 MessageBox.Show("Error al ejecutar la query: " + exp.Message);
+            }
+            finally
+            {
+                Database.cerrar();
+            }
+
+
+          
             
         }
 
@@ -71,17 +95,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
                 nuevoMenu.Show();
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-
-                throw;
+                MessageBox.Show("Error " + exp.Message);
             }
 
         }
         public Boolean CamposVacio()
         {
             //Buscar una funcion que ya evalue si los campos son blancos: seguro hay
-            foreach (Control c in this.Controls)
+            foreach (Control c in Controls)
             {
 
                 if (c is TextBox && c.Text == "")
@@ -93,10 +116,12 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             return false;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void ABM_Alta_Empresa_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            Application.Exit();
         }
+
+        
       
 
        

@@ -20,11 +20,48 @@ namespace PalcoNet.Login
         {
             InitializeComponent();
             this.session = session;
+            this.Show();
         }
 
         private void ElegirRol_Load(object sender, EventArgs e)
         {
+            this.AcceptButton = gobtn;
+            fillSelect(roleSelect, session.roles);
+        }
 
+        private void ElegirRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new Login().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Login().Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (roleSelect.SelectedIndex == -1 || roleSelect.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK);
+                return;
+            }
+
+            Rol role = new Rol(roleSelect.SelectedItem.ToString());
+            session.rol = role;
+
+            if (Database.rolHabilitado(role))
+            {
+                this.Hide();
+                new MenuPrincipal(session).Show();
+            }
+
+            else
+            {
+                MessageBox.Show("El rol se encuentra temporalmente inhabilitado", "Error", MessageBoxButtons.OK);
+                return;
+            }
         }
     }
 }

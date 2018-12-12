@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PalcoNet.Abm_Rubro
+namespace PalcoNet.Abm_Empresa_Espectaculo
 {
-    public partial class Form1 : Form
+    public partial class ABM_Modificar_Empresa : ABM_Alta_Empresa
     {
-        public Form1()
+        public ABM_Modificar_Empresa()
         {
             InitializeComponent();
+        }
+
+        private void ABM_Modificar_Empresa_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

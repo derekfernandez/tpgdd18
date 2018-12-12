@@ -24,7 +24,7 @@ namespace PalcoNet.Login
             this.AcceptButton = loginBtn;
         }
 
-        private void Login_FormClosed(object sender, EventArgs e)
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
@@ -76,13 +76,14 @@ namespace PalcoNet.Login
 
             if (session.cantRoles() >1)
             {
-                ElegirRol roleSelect = new ElegirRol(session);
+                new ElegirRol(session).Show();
             }
 
             else
             {
-                MenuPrincipal main = new MenuPrincipal(session);
-            }
+                session.rol = new Rol(Database.getRolesFor(user).First());
+                new MenuPrincipal(session).Show();
+             }
         }
 
         private void loginFailed(LoginController login)

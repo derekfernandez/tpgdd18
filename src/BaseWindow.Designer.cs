@@ -39,7 +39,7 @@
             this.logoPalcoNet.Location = new System.Drawing.Point(69, 12);
             this.logoPalcoNet.Name = "logoPalcoNet";
             this.logoPalcoNet.Size = new System.Drawing.Size(144, 127);
-            this.logoPalcoNet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.logoPalcoNet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logoPalcoNet.TabIndex = 0;
             this.logoPalcoNet.TabStop = false;
             // 
@@ -53,6 +53,7 @@
             this.Name = "BaseWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BaseWindow";
+            this.Load += new System.EventHandler(this.BaseWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
             this.ResumeLayout(false);
 
@@ -60,7 +61,8 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox logoPalcoNet;
+        public System.Windows.Forms.PictureBox logoPalcoNet;
+
     }
 }
 

@@ -1,6 +1,6 @@
-﻿namespace PalcoNet.Abm_Rol
+﻿namespace PalcoNet.Generar_Publicacion
 {
-    partial class Form1
+    partial class GenerarPublicacion
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // GenerarPublicacion
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(1102, 745);
+            this.Name = "GenerarPublicacion";
+            this.Text = "Generar Publicacion";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

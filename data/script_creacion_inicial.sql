@@ -1,4 +1,4 @@
-USE [GD2C2018]
+﻿USE [GD2C2018]
 GO
 
 --- CREACION DE ESQUEMA ---
@@ -1443,4 +1443,25 @@ BEGIN
 	ORDER BY SUM(P.cantidad) DESC
 
 END
+GO
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Alta_Empresa')
+BEGIN
+
+	DROP PROCEDURE pr_Alta_Empresa
+END
+GO
+create proc [dbo].[pr_Alta_Empresa](@razonsocial nvarchar(255),
+    @cuit nvarchar(255),
+    @mail nvarchar(50),
+    @direccion nvarchar(255),
+    @telefono nvarchar(30))
+as
+begin
+DECLARE @fecha_creacion datetime
+DECLARE @usuario_id int
+--Falta vincularlo con prUsuarioEmpresa, Validar CUIT y RS. 
+set @fecha_creacion = GETDATE()
+set @usuario_id = (select top 1 id_usuario from [SQLITO].Usuarios order by 1 desc)
+insert into [GD2C2018].[SQLITO].[Empresas](razonsocial,fecha_creacion,cuit,mail,direccion,telefono,usuario_id) values (@razonsocial,@fecha_creacion,@cuit,@mail,@direccion,@telefono,@usuario_id)
+end
 GO

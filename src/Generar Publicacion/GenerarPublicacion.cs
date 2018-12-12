@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PalcoNet.Abm_Grado
+namespace PalcoNet.Generar_Publicacion
 {
-    public partial class Form1 : Form
+    public partial class GenerarPublicacion : Form
     {
-        public Form1()
+        public GenerarPublicacion()
         {
             InitializeComponent();
         }
