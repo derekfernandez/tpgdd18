@@ -156,5 +156,16 @@ namespace PalcoNet.Abm_Grado
                 MessageBox.Show("Error: " + exp.Message);
             }
         }
+
+        private void Grado_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            //Falta referencias al menu:
+            this.Hide();
+        }
     }
 }

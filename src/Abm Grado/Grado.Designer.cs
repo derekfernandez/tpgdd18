@@ -75,6 +75,7 @@
             this.btnVolver.TabIndex = 2;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // label1
             // 
@@ -277,6 +278,7 @@
             this.Font = new System.Drawing.Font("Arial", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "Grado";
             this.Text = "Grado";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Grado_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.gradosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).EndInit();
             this.ResumeLayout(false);

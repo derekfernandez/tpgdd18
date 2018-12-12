@@ -16,6 +16,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class AMB_Modificar_Eliminar : Form
     {
+        int indice = -1;
         public AMB_Modificar_Eliminar()
         {
             InitializeComponent();
@@ -98,28 +99,42 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             Application.Exit();
         }
-
+        
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            //Falta query para actualizar los campos que devuelve la grilla
-            string actualizar = string.Format("update SQLITO.Empresas set ... where '{0}'");
-            try
+            if (indice < 0)
+                MessageBox.Show("No se detectaron cambios");
+            else
             {
-                Database.execNonQuery(Database.createQuery(actualizar));
-                MessageBox.Show("Empresa actualizada correctamente");
+                string razonSocial, cuit, mail, direccion, telefono, id_Empresa;
+                razonSocial = grillaEmpresas.Rows[indice].Cells["razonsocial"].Value.ToString();
+                cuit = grillaEmpresas.Rows[indice].Cells["cuit"].Value.ToString();
+                mail = grillaEmpresas.Rows[indice].Cells["mail"].Value.ToString();
+                direccion = grillaEmpresas.Rows[indice].Cells["direccion"].Value.ToString();
+                telefono = grillaEmpresas.Rows[indice].Cells["telefono"].Value.ToString();
+                id_Empresa = grillaEmpresas.Rows[indice].Cells["id_empresa"].Value.ToString();
 
-                btnBuscar_Click(sender, e);
-            }
-            catch (Exception exp)
-            {
+                string actualizar = string.Format("update SQLITO.Empresas set razonsocial = '{0}',cuit = '{1}',mail= '{2}', direccion = '{3}', telefono = '{4}'  where id_empresa = '{5}'", razonSocial, cuit, mail, direccion, telefono, id_Empresa);
+               
+                try
+                {
+                    Database.execNonQuery(Database.createQuery(actualizar));
+                    MessageBox.Show("Empresa actualizada correctamente");
 
-                MessageBox.Show("Error: " + exp.Message);
+                    btnBuscar_Click(sender, e);
+                }
+                catch (Exception exp)
+                {
+
+                    MessageBox.Show("Error: " + exp.Message);
+                }
+                indice = -1;
             }
         }
 
         private void grillaEmpresas_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            indice = e.RowIndex;
         }
 
         private void AMB_Modificar_Eliminar_Load(object sender, EventArgs e)
