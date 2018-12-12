@@ -110,11 +110,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Generar Publicacion\DisposicionUbicaciones.cs">
-=======
-<Compile Include="Generar Publicacion\DisposicionUbicaciones.cs">
->>>>>>> 223c77e0c41d4e62159517b7feb400d2fe139ece
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Generar Publicacion\DisposicionUbicaciones.Designer.cs">
@@ -128,15 +124,6 @@
     </Compile>
     <Compile Include="Generar Publicacion\VentanaPrincipal.Designer.cs">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
-<<<<<<< HEAD
-=======
-    </Compile>
-    <Compile Include="Generar Publicacion\GenerarPublicacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Generar Publicacion\GenerarPublicacion.Designer.cs">
-      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
->>>>>>> 223c77e0c41d4e62159517b7feb400d2fe139ece
     </Compile>
     <Compile Include="Listado Estadistico\ListadoClientesPuntos.cs">
       <SubType>Form</SubType>
@@ -245,24 +232,12 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
       <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-=======
-      <EmbeddedResource Include="Historial Cliente\Form1.resx">
-        <DependentUpon>Form1.cs</DependentUpon>
-      </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
-      <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
-    </EmbeddedResource>
-      <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
-        <DependentUpon>VentanaPrincipal.cs</DependentUpon>
-      </EmbeddedResource>
->>>>>>> 223c77e0c41d4e62159517b7feb400d2fe139ece
     <EmbeddedResource Include="Historial Cliente\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
