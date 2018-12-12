@@ -49,9 +49,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             try
             {
+                
                 //LIMITACION: NO FILTRA POR VALORES NULOS
                 filtrosVacios();
                 string query = string.Format("select * from SQLITO.Empresas where (razonsocial like '{0}' or razonsocial is null) and (cuit like '{1}' or cuit is null) and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+                grillaEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
                 grillaEmpresas.DataSource = Database.ObtenerDataSet(query).Tables[0];
 
                 grillaEmpresas.Columns[0].HeaderText = "ID";
@@ -116,6 +118,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         }
 
         private void grillaEmpresas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void AMB_Modificar_Eliminar_Load(object sender, EventArgs e)
         {
 
         }

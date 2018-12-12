@@ -56,7 +56,7 @@
             // 
             // btnModEliminar
             // 
-            this.btnModEliminar.Location = new System.Drawing.Point(550, 430);
+            this.btnModEliminar.Location = new System.Drawing.Point(545, 430);
             this.btnModEliminar.Name = "btnModEliminar";
             this.btnModEliminar.Size = new System.Drawing.Size(210, 125);
             this.btnModEliminar.TabIndex = 2;
@@ -88,6 +88,7 @@
             this.Controls.Add(this.btnNuevaEmpresa);
             this.Name = "ABM_Menu_Empresa";
             this.Text = "MenuEmpresa";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ABM_Menu_Empresa_FormClosed);
             this.Load += new System.EventHandler(this.ABM_Menu_Empresa_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
