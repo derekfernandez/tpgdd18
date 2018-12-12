@@ -376,7 +376,7 @@ BEGIN
 		
 		[id_ubicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[fila] [nvarchar] (3),
-		[asiento] [numeric] (6,0),
+		[asiento] [nvarchar] (3),
 		[tipo_id] [int],
 		[precio] [numeric] (18,2) NOT NULL,
 		[publicacion_id] [int]
@@ -418,7 +418,8 @@ BEGIN
 		[cod_publicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[descripcion] [nvarchar] (255) NOT NULL,
 		[fecha_creacion] [datetime],
-		[fecha_vencimiento] [datetime] NOT NULL,
+		--La fecha de vencimiento puede ser null, si todavia no se publico el espectaculo
+		[fecha_vencimiento] [datetime],
 		[fecha_funcion] [datetime] NOT NULL,
 		--En la tabla maestra ninguno tiene direccion
 		[direccion] [nvarchar] (100),
@@ -1139,7 +1140,7 @@ BEGIN
 
 	INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_id)
 		SELECT Ubicacion_Fila,
-		   	   Ubicacion_Asiento,
+		   	   CONVERT(NVARCHAR(3), Ubicacion_Asiento),
 		   	   Ubicacion_Precio,
 		   	   Ubicacion_Tipo_Codigo,
 		   	   Espectaculo_Cod

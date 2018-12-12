@@ -104,6 +104,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2018DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Generar Publicacion\DisposicionUbicaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\DisposicionUbicaciones.Designer.cs">
+      <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicacion\ItemCombo.cs" />
+    <Compile Include="Generar Publicacion\ParTipoTarifa.cs" />
+    <Compile Include="Generar Publicacion\Ubicacion.cs" />
+    <Compile Include="Generar Publicacion\VentanaPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\VentanaPrincipal.Designer.cs">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Listado Estadistico\ListadoClientesPuntos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,12 +172,6 @@
     <Compile Include="BaseWindow.Designer.cs">
       <DependentUpon>BaseWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicacion\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Generar Publicacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Generar Rendicion Comisiones\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +212,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\DisposicionUbicaciones.resx">
+      <DependentUpon>DisposicionUbicaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoClientesPuntos.resx">
       <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>
