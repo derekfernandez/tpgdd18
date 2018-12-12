@@ -379,10 +379,6 @@ namespace PalcoNet.Generar_Publicacion
                 }
             }
 
-            //Como obtener nombre e id del tipo de ubicacion
-            MessageBox.Show(comboTipo.SelectedItem.ToString());
-            MessageBox.Show(((ItemCombo)comboTipo.SelectedItem).Id.ToString());
-
             //Creo la ubicacion elegida y la agrego a la lista
             Ubicacion nuevaUbicacion = new Ubicacion(tbFila.Text, tbAsiento.Text,
                                                      comboTipo.SelectedItem.ToString(),         //Nombre del tipo

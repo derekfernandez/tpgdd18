@@ -105,6 +105,12 @@
     <Compile Include="Comprar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editar Publicacion\EdicionPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar Publicacion\EdicionPublicacion.Designer.cs">
+      <DependentUpon>EdicionPublicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="GD2C2018DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -231,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar Publicacion\EdicionPublicacion.resx">
+      <DependentUpon>EdicionPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\SeleccionPublicacion.resx">
       <DependentUpon>SeleccionPublicacion.cs</DependentUpon>

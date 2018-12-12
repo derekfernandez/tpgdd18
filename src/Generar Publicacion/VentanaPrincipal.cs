@@ -170,8 +170,6 @@ namespace PalcoNet.Generar_Publicacion
         {
 
             DateTime fechaIngresada = dtpFecha.Value.Date + dtpHorario.Value.TimeOfDay;
-            MessageBox.Show(fechaConfig.ToString());
-            MessageBox.Show(fechaIngresada.ToString());
             
             //Siempre chequeo esto, haya cuantas fechas haya
             if (fechaIngresada < fechaConfig)
@@ -282,7 +280,6 @@ namespace PalcoNet.Generar_Publicacion
                 String query = "SELECT comision FROM SQLITO.Grados WHERE id_grado = " + grado;
                 SqlCommand cmd = Database.createQuery(query);
                 comision = Database.getValue(cmd);
-                MessageBox.Show(grado + " " + comision);
             }
 
             if (comboRubro.SelectedIndex < 0)
@@ -303,7 +300,7 @@ namespace PalcoNet.Generar_Publicacion
             {
                 queryFecha = "INSERT INTO SQLITO.Publicaciones (descripcion, fecha_creacion, fecha_funcion, direccion, ";
                 queryFecha += "empresa_id, grado_id, comision, rubro_id, estado_id) VALUES(@Descripcion, @FechaCreacion, ";
-                queryFecha += "@FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 2)";
+                queryFecha += "@FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 1)";
                 cmdFecha = Database.createQuery(queryFecha);
                 cmdFecha.Parameters.AddWithValue("@Descripcion", descripcion);
                 cmdFecha.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).Value = fechaConfig;
@@ -401,7 +398,7 @@ namespace PalcoNet.Generar_Publicacion
                  
                 queryFecha = "INSERT INTO SQLITO.Publicaciones (descripcion, fecha_creacion, fecha_funcion, fecha_vencimiento, ";
                 queryFecha += "direccion, empresa_id, grado_id, comision, rubro_id, estado_id) VALUES(@Descripcion, ";
-                queryFecha += "@FechaCreacion, @FechaVenc, @FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 1)";
+                queryFecha += "@FechaCreacion, @FechaVenc, @FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 2)";
                 cmdFecha = Database.createQuery(queryFecha);
                 cmdFecha.Parameters.AddWithValue("@Descripcion", descripcion);
                 cmdFecha.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).Value = fechaConfig;
