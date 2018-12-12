@@ -48,6 +48,7 @@
             this.lbElegirFecha = new System.Windows.Forms.Label();
             this.gbFunciones = new System.Windows.Forms.GroupBox();
             this.dtpHorario = new System.Windows.Forms.DateTimePicker();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.gbDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFechasElegidas)).BeginInit();
             this.gbFunciones.SuspendLayout();
@@ -197,9 +198,9 @@
             // 
             // btnBorrador
             // 
-            this.btnBorrador.Location = new System.Drawing.Point(163, 486);
+            this.btnBorrador.Location = new System.Drawing.Point(194, 486);
             this.btnBorrador.Name = "btnBorrador";
-            this.btnBorrador.Size = new System.Drawing.Size(158, 23);
+            this.btnBorrador.Size = new System.Drawing.Size(137, 23);
             this.btnBorrador.TabIndex = 5;
             this.btnBorrador.Text = "Guardar como Borrador";
             this.btnBorrador.UseVisualStyleBackColor = true;
@@ -208,9 +209,9 @@
             // btnPublicar
             // 
             this.btnPublicar.BackColor = System.Drawing.Color.LimeGreen;
-            this.btnPublicar.Location = new System.Drawing.Point(343, 486);
+            this.btnPublicar.Location = new System.Drawing.Point(370, 486);
             this.btnPublicar.Name = "btnPublicar";
-            this.btnPublicar.Size = new System.Drawing.Size(158, 23);
+            this.btnPublicar.Size = new System.Drawing.Size(146, 23);
             this.btnPublicar.TabIndex = 6;
             this.btnPublicar.Text = "Publicar";
             this.btnPublicar.UseVisualStyleBackColor = false;
@@ -247,11 +248,22 @@
             this.dtpHorario.Size = new System.Drawing.Size(74, 20);
             this.dtpHorario.TabIndex = 18;
             // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(13, 486);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(137, 23);
+            this.btnLimpiar.TabIndex = 19;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
             // VentanaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(528, 521);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.gbFunciones);
             this.Controls.Add(this.btnPublicar);
             this.Controls.Add(this.btnBorrador);
@@ -291,5 +303,6 @@
         private System.Windows.Forms.Label lbElegirFecha;
         private System.Windows.Forms.GroupBox gbFunciones;
         private System.Windows.Forms.DateTimePicker dtpHorario;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

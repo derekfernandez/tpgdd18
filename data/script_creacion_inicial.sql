@@ -428,10 +428,11 @@ BEGIN
 		--Comision aca, desnormalizada, por si cambia la comision de uno de los grados (que son fijos)
 		[comision] [numeric] (6,2),
 		[rubro_id] [int],
-		[estado_id] [int],
-		CHECK (([fecha_vencimiento] > [fecha_creacion]) 
-			AND ([fecha_funcion] > [fecha_creacion])
-			AND ([fecha_vencimiento] <= [fecha_funcion]))
+		[estado_id] [int]
+		--Este check quedaria medio al dope, ya las inserciones verifican esta restriccion desde la aplicacion
+		--CHECK (([fecha_funcion] > [fecha_creacion])
+		--	AND ([fecha_vencimiento] > [fecha_creacion])
+		--	AND ([fecha_vencimiento] <= [fecha_funcion]))
 	)
 
 PRINT('Tabla SQLITO.Publicaciones creada')

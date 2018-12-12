@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PalcoNet.Misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,10 @@ namespace PalcoNet
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login.Login());
+            //Application.Run(new Login.Login());
+            Usuario u = new Usuario("empresa1");
+            u.id = "775";
+            Application.Run(new Generar_Publicacion.VentanaPrincipal(u));
         }
 
     }

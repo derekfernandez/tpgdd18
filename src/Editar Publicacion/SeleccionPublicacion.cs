@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PalcoNet.Editar_Publicacion
 {
-    public partial class Form1 : Form
+    public partial class SeleccionPublicacion : Form
     {
-        public Form1()
+        public SeleccionPublicacion()
         {
             InitializeComponent();
         }

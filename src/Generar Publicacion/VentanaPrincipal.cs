@@ -149,6 +149,18 @@ namespace PalcoNet.Generar_Publicacion
             return paresTT[tipoId - 4446].nud.Value;
         }
 
+        //Intento que la fecha de vencimiento sea 7 dias antes de la funcion; si esa fecha es anterior a la fecha de creacion,
+        //entonces la fecha de vencimiento sera la fecha misma de la funcion
+        private DateTime ObtenerFechaVencimiento(DateTime fechaFuncion, DateTime fechaCreacion)
+        {
+            DateTime fechaVenc = fechaFuncion.AddDays(-7);
+            if (fechaVenc < fechaCreacion)
+            {
+                fechaVenc = fechaFuncion;
+            }
+            return fechaVenc;
+        }
+
         #endregion Coherencia
 
         #region Eventos
@@ -294,7 +306,7 @@ namespace PalcoNet.Generar_Publicacion
                 queryFecha += "@FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 2)";
                 cmdFecha = Database.createQuery(queryFecha);
                 cmdFecha.Parameters.AddWithValue("@Descripcion", descripcion);
-                cmdFecha.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).Value = ConfigurationManager.AppSettings["FechaSistema"];
+                cmdFecha.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).Value = fechaConfig;
                 cmdFecha.Parameters.Add("@FechaFuncion", SqlDbType.DateTime).Value = fecha;
                 cmdFecha.Parameters.AddWithValue("@Direccion", direccion);
                 cmdFecha.Parameters.AddWithValue("@EmpresaID", idEmpresa);
@@ -387,13 +399,16 @@ namespace PalcoNet.Generar_Publicacion
             foreach (var fecha in fechasFuncion)
             {
                  
-                queryFecha = "INSERT INTO SQLITO.Publicaciones (descripcion, fecha_creacion, fecha_funcion, direccion, ";
-                queryFecha += "empresa_id, grado_id, comision, rubro_id, estado_id) VALUES(@Descripcion, @FechaCreacion, ";
-                queryFecha += "@FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 1)";
+                queryFecha = "INSERT INTO SQLITO.Publicaciones (descripcion, fecha_creacion, fecha_funcion, fecha_vencimiento, ";
+                queryFecha += "direccion, empresa_id, grado_id, comision, rubro_id, estado_id) VALUES(@Descripcion, ";
+                queryFecha += "@FechaCreacion, @FechaVenc, @FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 1)";
                 cmdFecha = Database.createQuery(queryFecha);
                 cmdFecha.Parameters.AddWithValue("@Descripcion", descripcion);
-                cmdFecha.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).Value = ConfigurationManager.AppSettings["FechaSistema"];
+                cmdFecha.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).Value = fechaConfig;
                 cmdFecha.Parameters.Add("@FechaFuncion", SqlDbType.DateTime).Value = fecha;
+                //Siguiendo el patron de la migracion, las fechas de vencimiento son una semana antes de la fecha de la funcion
+                DateTime fechaVenc = ObtenerFechaVencimiento(fecha, fechaConfig);
+                cmdFecha.Parameters.Add("@FechaVenc", SqlDbType.DateTime).Value = fechaVenc;
                 cmdFecha.Parameters.AddWithValue("@Direccion", direccion);
                 cmdFecha.Parameters.AddWithValue("@EmpresaID", idEmpresa);
                 cmdFecha.Parameters.AddWithValue("@GradoID", grado);
@@ -430,6 +445,16 @@ namespace PalcoNet.Generar_Publicacion
                 this.Close();
 
             }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            tbDescripcion.Text = "";
+            tbDireccion.Text = "";
+            fechasFuncion = new List<DateTime>();
+            actualizarDatosDGV();
+            ubicacionesIngresadas = new List<Ubicacion>();
+            InicializarPares();
         }
 
         #endregion Eventos

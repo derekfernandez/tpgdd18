@@ -42,6 +42,13 @@ namespace PalcoNet.Misc
             connection.Close();
         }
 
+        public static void execQuery(SqlCommand query)
+        {
+            connection.Open();
+            query.ExecuteNonQuery();
+            connection.Close();
+        }
+
         public static void execNonQuery(SqlCommand cmd)
         {
 
