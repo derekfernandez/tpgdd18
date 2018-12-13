@@ -146,8 +146,13 @@ namespace PalcoNet.Misc
                 return "";
             }
         }
+        public static int countRows(SqlCommand cmd)
+        {
+            int cantRows = getTable(cmd).Rows.Count;
+            return cantRows;
+         
+        }
 
-        
         #endregion
 
         #region Metodos Simplificados / Genericos 
