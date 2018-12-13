@@ -23,6 +23,13 @@ namespace PalcoNet.Misc
         public string iduser { get; set; }
         public string estado { get; set; }
 
+        public string calle { get; set; }
+        public string altura { get; set; }
+        public string piso { get; set; }
+        public string depto { get; set; }
+        public string localidad { get; set; }
+        public string cp { get; set; }
+
         public Cliente(String id,String nombre,String apellido,String cuil,String tipo_doc,String nro_doc,String fecha_nac,
                             String fecha_creacion,String mail,String direccion,String tel, String idtarjeta,String iduser, String estado)
         {
@@ -40,11 +47,83 @@ namespace PalcoNet.Misc
             this.idtarjeta=idtarjeta;
             this.iduser=iduser;
             this.estado=estado;
+            setCalle(direccion);
+            setAltura(direccion);
+            setPiso(direccion);
+            setDepto(direccion);
+            setLocalidad(direccion);
+            setCP(direccion);
         }
 
         public Cliente(string id)
         {
             this.id = id;
         }
+
+        public void setCalle(string direccion)
+        {
+            string[] dir = direccion.Split(new Char[] { ',', 'º' });
+            calle = dir[0];
+        }
+
+        public void setAltura(string direccion)
+        {
+            string[] dir = direccion.Split(new Char[] { ',', 'º' });
+            altura = dir[1];
+        }
+
+        public void setPiso(string direccion)
+        {
+            string[] dir = direccion.Split(new Char[] { ',', 'º' });
+            piso = dir[2];
+        }
+
+        public void setDepto(string direccion)
+        {
+            string[] dir = direccion.Split(new Char[] { ',', 'º' });
+            depto = dir[3];
+        }
+
+        public void setLocalidad(string direccion)
+        {
+            string[] dir = direccion.Split(new Char[] { ',', 'º' });
+            localidad = dir[4];
+        }
+
+        public void setCP(string direccion)
+        {
+            cp = direccion.Substring(direccion.Length - 4);
+        }
+
+        public string getCalle()
+        {
+            return calle;
+        }
+
+        public string getAltura()
+        {
+            return altura;
+        }
+
+        public string getPiso()
+        {
+            return piso;
+        }
+
+        public string getDepto()
+        {
+            return depto;
+        }
+
+        public string getLocalidad()
+        {
+            return localidad;
+        }
+
+        public string getCP()
+        {
+            return cp;
+        }
+
     }
 }

@@ -31,6 +31,8 @@
             this.linkLabel_registrocliente = new System.Windows.Forms.LinkLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tab_modificar = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,6 +45,8 @@
             this.textBox_nombre = new System.Windows.Forms.TextBox();
             this.dgv_clientesmodificar = new System.Windows.Forms.DataGridView();
             this.tab_delete = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -55,10 +59,6 @@
             this.textBox_nombreeliminar = new System.Windows.Forms.TextBox();
             this.dgv_eliminar = new System.Windows.Forms.DataGridView();
             this.btn_back = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tab_modificar.SuspendLayout();
@@ -119,6 +119,25 @@
             this.tab_modificar.TabIndex = 1;
             this.tab_modificar.Text = "Modificar";
             this.tab_modificar.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label11.Location = new System.Drawing.Point(2, 145);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(889, 2);
+            this.label11.TabIndex = 14;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label12.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label12.Location = new System.Drawing.Point(18, 147);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(259, 17);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "Clientes que coinciden con la búsqueda";
             // 
             // label4
             // 
@@ -217,7 +236,7 @@
             this.dgv_clientesmodificar.Name = "dgv_clientesmodificar";
             this.dgv_clientesmodificar.Size = new System.Drawing.Size(890, 321);
             this.dgv_clientesmodificar.TabIndex = 0;
-            this.dgv_clientesmodificar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_eliminar_CellContentClick);
+            this.dgv_clientesmodificar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_clientesmodificar_CellContentClick);
             // 
             // tab_delete
             // 
@@ -241,6 +260,25 @@
             this.tab_delete.TabIndex = 3;
             this.tab_delete.Text = "Eliminar";
             this.tab_delete.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label10.Location = new System.Drawing.Point(3, 144);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(889, 2);
+            this.label10.TabIndex = 12;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label9.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label9.Location = new System.Drawing.Point(19, 146);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(259, 17);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Clientes que coinciden con la búsqueda";
             // 
             // label5
             // 
@@ -350,44 +388,6 @@
             this.btn_back.Text = "Salir";
             this.btn_back.UseVisualStyleBackColor = true;
             this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label9.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.label9.Location = new System.Drawing.Point(19, 146);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(259, 17);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Clientes que coinciden con la búsqueda";
-            // 
-            // label10
-            // 
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label10.Location = new System.Drawing.Point(3, 144);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(889, 2);
-            this.label10.TabIndex = 12;
-            // 
-            // label11
-            // 
-            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label11.Location = new System.Drawing.Point(2, 145);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(889, 2);
-            this.label11.TabIndex = 14;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label12.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.label12.Location = new System.Drawing.Point(18, 147);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(259, 17);
-            this.label12.TabIndex = 13;
-            this.label12.Text = "Clientes que coinciden con la búsqueda";
             // 
             // ClientesMainWindow
             // 
