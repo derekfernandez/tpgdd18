@@ -59,7 +59,7 @@ namespace PalcoNet.Generar_Publicacion
             //Cargo los Grados de la tabla, junto con el detalle de las comisiones, al ComboBox
             //En dos renglones, para que sea mas legible
             String queryGrados = "SELECT id_grado, (descripcion + ' (Comision del ' + CAST(comision as nvarchar(20))";
-            queryGrados += "+ '%)') AS Detalle FROM SQLITO.Grados";
+            queryGrados += "+ '%)') AS Detalle FROM SQLITO.Grados WHERE habilitado = 1";
             SqlCommand cmdGrados = new SqlCommand(queryGrados, Database.getConnection());
 
             comboGrado.DataSource = Database.getTable(cmdGrados);

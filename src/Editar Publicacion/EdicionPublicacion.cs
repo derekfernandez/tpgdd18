@@ -70,10 +70,12 @@ namespace PalcoNet.Editar_Publicacion
             cmdRubros = Database.createQuery(queryRubros);
             comboRubro.SelectedValue = Database.getValue(cmdRubros);
 
+            #region Grados
+
             //Cargo los Grados de la tabla, junto con el detalle de las comisiones, al ComboBox
             //En dos renglones, para que sea mas legible
             String queryGrados = "SELECT id_grado, (descripcion + ' (Comision del ' + CAST(comision as nvarchar(20))";
-            queryGrados += "+ '%)') AS Detalle FROM SQLITO.Grados";
+            queryGrados += "+ '%)') AS Detalle FROM SQLITO.Grados WHERE habilitado = 1";
             SqlCommand cmdGrados = new SqlCommand(queryGrados, Database.getConnection());
 
             comboGrado.DataSource = Database.getTable(cmdGrados);
@@ -82,7 +84,23 @@ namespace PalcoNet.Editar_Publicacion
             //Pongo el valor que tenia guardado en la tabla
             queryGrados = "SELECT grado_id FROM SQLITO.Publicaciones WHERE cod_publicacion = '" + idPublicacion + "'";
             cmdGrados = Database.createQuery(queryGrados);
-            comboGrado.SelectedValue = Database.getValue(cmdGrados);
+            String gradoElegido = Database.getValue(cmdGrados);
+
+            String queryVerificacion = "SELECT habilitado FROM SQLITO.Grados WHERE id_grado = " + gradoElegido;
+            SqlCommand cmdVerificacion = Database.createQuery(queryVerificacion);
+            String gradoHabilitado = Database.getValue(cmdVerificacion);
+
+            MessageBox.Show(gradoHabilitado);
+
+            //Solo si el grado esta habilitado lo pongo como opcion al arrancar el form; si fue
+            //inhabilitado en el medio (entre la generacion del borrador y esto) dejo el por defecto
+            //NOTA: Parseado a string, un  bit = 1 vale "True"
+            if (gradoHabilitado == "True")
+            {
+                comboGrado.SelectedValue = gradoElegido;
+            }
+
+            #endregion Grados
 
             String queryFecha = "SELECT fecha_funcion FROM SQLITO.Publicaciones WHERE cod_publicacion = '" + idPublicacion + "'";
             SqlCommand cmdFecha = Database.createQuery(queryFecha);
