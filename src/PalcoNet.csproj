@@ -254,7 +254,6 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Comprar\BusquedaPublicacion.resx">
       <DependentUpon>BusquedaPublicacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -264,12 +263,9 @@
     <EmbeddedResource Include="Comprar\RegistrarTarjeta.resx">
       <DependentUpon>RegistrarTarjeta.cs</DependentUpon>
     </EmbeddedResource>
-=======
-<<<<<<< HEAD
     <EmbeddedResource Include="Generar Rendicion Comisiones\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-=======
->>>>>>> 46958b322a886a04a218d9118ea47b52fd74ef8c
+  	</EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\EdicionPublicacion.resx">
       <DependentUpon>EdicionPublicacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,7 +277,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
->>>>>>> 63c8a61dd9f0041c7f97c337c7990b47bc67f7f3
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
