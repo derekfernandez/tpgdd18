@@ -24,7 +24,7 @@ namespace PalcoNet.Login
             this.AcceptButton = loginBtn;
         }
 
-        private void Login_FormClosed(object sender, EventArgs e)
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
@@ -91,6 +91,12 @@ namespace PalcoNet.Login
             pwTextbox.Clear();
             failureMsgLabel.Text = login.msg;
             failureMsgLabel.Show();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            new Registro_de_Usuario.Registro().Show();
         }
     }
 }

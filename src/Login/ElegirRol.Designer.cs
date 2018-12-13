@@ -32,6 +32,7 @@
             this.roleLabel = new System.Windows.Forms.Label();
             this.gobtn = new System.Windows.Forms.Button();
             this.backbtn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.SuspendLayout();
             // 
             // roleSelect
@@ -89,11 +90,14 @@
             this.Controls.Add(this.roleSelect);
             this.Name = "ElegirRol";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ElegirRol_FormClosed);
             this.Load += new System.EventHandler(this.ElegirRol_Load);
+            this.Controls.SetChildIndex(this.logoPalcoNet, 0);
             this.Controls.SetChildIndex(this.roleSelect, 0);
             this.Controls.SetChildIndex(this.roleLabel, 0);
             this.Controls.SetChildIndex(this.gobtn, 0);
             this.Controls.SetChildIndex(this.backbtn, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

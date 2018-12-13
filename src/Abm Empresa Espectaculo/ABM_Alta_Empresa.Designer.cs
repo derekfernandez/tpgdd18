@@ -63,7 +63,7 @@
             this.labelMail.AutoEllipsis = true;
             this.labelMail.AutoSize = true;
             this.labelMail.Font = new System.Drawing.Font("Arial", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMail.Location = new System.Drawing.Point(119, 485);
+            this.labelMail.Location = new System.Drawing.Point(121, 392);
             this.labelMail.Name = "labelMail";
             this.labelMail.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelMail.Size = new System.Drawing.Size(82, 34);
@@ -76,7 +76,7 @@
             this.labelTelefono.AutoEllipsis = true;
             this.labelTelefono.AutoSize = true;
             this.labelTelefono.Font = new System.Drawing.Font("Arial", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTelefono.Location = new System.Drawing.Point(119, 745);
+            this.labelTelefono.Location = new System.Drawing.Point(121, 549);
             this.labelTelefono.Name = "labelTelefono";
             this.labelTelefono.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelTelefono.Size = new System.Drawing.Size(145, 34);
@@ -89,7 +89,7 @@
             this.labelCUIT.AutoEllipsis = true;
             this.labelCUIT.AutoSize = true;
             this.labelCUIT.Font = new System.Drawing.Font("Arial", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCUIT.Location = new System.Drawing.Point(121, 364);
+            this.labelCUIT.Location = new System.Drawing.Point(121, 314);
             this.labelCUIT.Name = "labelCUIT";
             this.labelCUIT.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelCUIT.Size = new System.Drawing.Size(90, 34);
@@ -106,28 +106,28 @@
             // 
             // textBoxMail
             // 
-            this.textBoxMail.Location = new System.Drawing.Point(355, 489);
+            this.textBoxMail.Location = new System.Drawing.Point(355, 392);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(846, 31);
             this.textBoxMail.TabIndex = 12;
             // 
             // textBoxTelefono
             // 
-            this.textBoxTelefono.Location = new System.Drawing.Point(355, 749);
+            this.textBoxTelefono.Location = new System.Drawing.Point(355, 549);
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(846, 31);
             this.textBoxTelefono.TabIndex = 13;
             // 
             // textBoxCuit
             // 
-            this.textBoxCuit.Location = new System.Drawing.Point(355, 368);
+            this.textBoxCuit.Location = new System.Drawing.Point(355, 318);
             this.textBoxCuit.Name = "textBoxCuit";
             this.textBoxCuit.Size = new System.Drawing.Size(846, 31);
             this.textBoxCuit.TabIndex = 14;
             // 
             // textBoxDireccion
             // 
-            this.textBoxDireccion.Location = new System.Drawing.Point(355, 614);
+            this.textBoxDireccion.Location = new System.Drawing.Point(355, 468);
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(846, 31);
             this.textBoxDireccion.TabIndex = 16;
@@ -136,16 +136,16 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(121, 162);
+            this.label2.Location = new System.Drawing.Point(121, 148);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(621, 33);
+            this.label2.Size = new System.Drawing.Size(619, 33);
             this.label2.TabIndex = 20;
-            this.label2.Text = "Ingrese los siguientes datos de la empresa:";
+            this.label2.Text = "Ingrese los datos de la empresa a ingresar:";
             // 
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(125, 870);
+            this.btnVolver.Location = new System.Drawing.Point(127, 641);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(210, 125);
             this.btnVolver.TabIndex = 21;
@@ -155,7 +155,7 @@
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(1050, 870);
+            this.btnCargar.Location = new System.Drawing.Point(1084, 641);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(210, 125);
             this.btnCargar.TabIndex = 22;
@@ -165,7 +165,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(600, 870);
+            this.btnLimpiar.Location = new System.Drawing.Point(637, 641);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(210, 125);
             this.btnLimpiar.TabIndex = 23;
@@ -177,7 +177,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 28.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(509, 47);
+            this.label1.Location = new System.Drawing.Point(520, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(518, 88);
             this.label1.TabIndex = 24;
@@ -188,7 +188,7 @@
             this.label3.AutoEllipsis = true;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(120, 610);
+            this.label3.Location = new System.Drawing.Point(121, 464);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label3.Size = new System.Drawing.Size(157, 34);
@@ -202,7 +202,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(1413, 1175);
+            this.ClientSize = new System.Drawing.Size(1361, 829);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLimpiar);

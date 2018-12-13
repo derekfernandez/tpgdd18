@@ -37,5 +37,13 @@ namespace PalcoNet
             Login.Login nuevoLogin = new Login.Login();
             nuevoLogin.Show();
         }
+
+        private void btnGrado_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            //Grado recibe un codigo de publicacion harcodeado hasta que me lo pase pepe
+            Abm_Grado.Grado grado = new Abm_Grado.Grado();
+            grado.Show();
+        }
     }
 }

@@ -376,7 +376,7 @@ BEGIN
 		
 		[id_ubicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[fila] [nvarchar] (3),
-		[asiento] [numeric] (6,0),
+		[asiento] [nvarchar] (3),
 		[tipo_id] [int],
 		[precio] [numeric] (18,2) NOT NULL,
 		[publicacion_id] [int]
@@ -418,7 +418,8 @@ BEGIN
 		[cod_publicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[descripcion] [nvarchar] (255) NOT NULL,
 		[fecha_creacion] [datetime],
-		[fecha_vencimiento] [datetime] NOT NULL,
+		--La fecha de vencimiento puede ser null, si todavia no se publico el espectaculo
+		[fecha_vencimiento] [datetime],
 		[fecha_funcion] [datetime] NOT NULL,
 		--En la tabla maestra ninguno tiene direccion
 		[direccion] [nvarchar] (100),
@@ -427,10 +428,11 @@ BEGIN
 		--Comision aca, desnormalizada, por si cambia la comision de uno de los grados (que son fijos)
 		[comision] [numeric] (6,2),
 		[rubro_id] [int],
-		[estado_id] [int],
-		CHECK (([fecha_vencimiento] > [fecha_creacion]) 
-			AND ([fecha_funcion] > [fecha_creacion])
-			AND ([fecha_vencimiento] <= [fecha_funcion]))
+		[estado_id] [int]
+		--Este check quedaria medio al dope, ya las inserciones verifican esta restriccion desde la aplicacion
+		--CHECK (([fecha_funcion] > [fecha_creacion])
+		--	AND ([fecha_vencimiento] > [fecha_creacion])
+		--	AND ([fecha_vencimiento] <= [fecha_funcion]))
 	)
 
 PRINT('Tabla SQLITO.Publicaciones creada')
@@ -449,7 +451,7 @@ BEGIN
 		[descripcion] [nvarchar] (255),
 		--Esta comision es la actual de cada grado; la desnormalizo en Publicacion al crearla, por si esta variase
 		[comision] [numeric] (6,2) NOT NULL,
-		CHECK ([descripcion] IN ('Alta', 'Media', 'Baja'))
+		[habilitado] bit CONSTRAINT validarNulos DEFAULT 1
 	)
 
 PRINT('Tabla SQLITO.Grados creada')
@@ -1139,7 +1141,7 @@ BEGIN
 
 	INSERT INTO [SQLITO].[Ubicaciones] (fila, asiento, precio, tipo_id, publicacion_id)
 		SELECT Ubicacion_Fila,
-		   	   Ubicacion_Asiento,
+		   	   CONVERT(NVARCHAR(3), Ubicacion_Asiento),
 		   	   Ubicacion_Precio,
 		   	   Ubicacion_Tipo_Codigo,
 		   	   Espectaculo_Cod
