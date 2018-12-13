@@ -53,6 +53,10 @@ namespace PalcoNet.Editar_Publicacion
             queryDireccion += (idPublicacion + "'");
             SqlCommand cmdDireccion = Database.createQuery(queryDireccion);
             tbDireccion.Text = Database.getValue(cmdDireccion);
+            if (tbDireccion.Text == "NULL")
+            {
+                tbDireccion.Text = "";
+            }
 
             //Cargo los Rubros de la tabla al ComboBox
             String queryRubros = "SELECT id_rubro, descripcion FROM SQLITO.Rubros ORDER BY descripcion";
@@ -151,16 +155,17 @@ namespace PalcoNet.Editar_Publicacion
             DataTable tablaUbicaciones = Database.getTable(cmdUbicaciones);
             int i = 0;
 
-            String queryTipo = "SELECT descripcion FROM SQLITO.TiposUbicacion WHERE id_tipo = ";
-            queryTipo += tablaUbicaciones.Rows[i]["tipo_id"].ToString();
-            String tipoUbicacion = Database.getValue(Database.createQuery(queryTipo));
-
             while (i < tablaUbicaciones.Rows.Count)
             {
+                String queryTipo = "SELECT descripcion FROM SQLITO.TiposUbicacion WHERE id_tipo = ";
+                queryTipo += tablaUbicaciones.Rows[i]["tipo_id"].ToString();
+                String tipoUbicacion = Database.getValue(Database.createQuery(queryTipo));
+                
                 ubicacionesIngresadas.Add(new Ubicacion(tablaUbicaciones.Rows[i]["fila"].ToString(),
                                                         tablaUbicaciones.Rows[i]["asiento"].ToString(),
                                                         tipoUbicacion,
-                                                        Int32.Parse(tablaUbicaciones.Rows[i]["tipo_id"].ToString())));
+                                                        Int32.Parse(tablaUbicaciones.Rows[i]["tipo_id"].ToString()),
+                                                        -1));                   //Tarifa basura
                 i++;
             }
             
@@ -405,11 +410,13 @@ namespace PalcoNet.Editar_Publicacion
 
             //El UPDATE es igual al de btnActualizar, solo que tambien le pone el estado en 2 (ya esta publicada)
             queryUpdate = "UPDATE SQLITO.Publicaciones SET descripcion = @Descripcion, fecha_funcion = @FechaFuncion, ";
-            queryUpdate += "grado_id = @GradoID, direccion = @Direccion, comision = @Comision, rubro_id = @RubroID, estado_id = 2 ";
-            queryUpdate += ("WHERE cod_publicacion = " + idPublicacion);
+            queryUpdate += "fecha_vencimiento = @FechaVenc, grado_id = @GradoID, direccion = @Direccion, comision = @Comision, ";
+            queryUpdate += ("rubro_id = @RubroID, estado_id = 2 WHERE cod_publicacion = " + idPublicacion);
             cmdUpdate = Database.createQuery(queryUpdate);
             cmdUpdate.Parameters.AddWithValue("@Descripcion", descripcion);
             cmdUpdate.Parameters.Add("@FechaFuncion", SqlDbType.DateTime).Value = fechaElegida;
+            DateTime fechaVenc = ObtenerFechaVencimiento(fechaElegida, fechaConfig);
+            cmdUpdate.Parameters.Add("@FechaVenc", SqlDbType.DateTime).Value = fechaVenc;
             cmdUpdate.Parameters.Add("@Direccion", SqlDbType.NVarChar).Value = direccion;
             cmdUpdate.Parameters.AddWithValue("@GradoID", grado);
             cmdUpdate.Parameters.Add("@Comision", SqlDbType.Decimal).Value = Double.Parse(comision);
