@@ -41,12 +41,14 @@
             this.textBoxCUIT = new System.Windows.Forms.TextBox();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).BeginInit();
             this.SuspendLayout();
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(12, 841);
+            this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnVolver.Location = new System.Drawing.Point(12, 903);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(252, 133);
             this.btnVolver.TabIndex = 0;
@@ -56,7 +58,7 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(1265, 841);
+            this.btnBuscar.Location = new System.Drawing.Point(1265, 903);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(252, 133);
             this.btnBuscar.TabIndex = 0;
@@ -76,7 +78,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(428, 841);
+            this.btnEditar.Location = new System.Drawing.Point(430, 903);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(252, 133);
             this.btnEditar.TabIndex = 3;
@@ -86,7 +88,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(836, 841);
+            this.btnEliminar.Location = new System.Drawing.Point(867, 903);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(252, 133);
             this.btnEliminar.TabIndex = 4;
@@ -101,7 +103,7 @@
             this.grillaEmpresas.Location = new System.Drawing.Point(12, 234);
             this.grillaEmpresas.Name = "grillaEmpresas";
             this.grillaEmpresas.RowTemplate.Height = 33;
-            this.grillaEmpresas.Size = new System.Drawing.Size(1505, 573);
+            this.grillaEmpresas.Size = new System.Drawing.Size(1505, 596);
             this.grillaEmpresas.TabIndex = 5;
             this.grillaEmpresas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grillaEmpresas_CellContentClick);
             // 
@@ -163,11 +165,25 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "*Seleccionar buscar sin aplicar filtros traera todas las empresas existentes";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(18, 845);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(928, 37);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "*Editar de a una fila a la vez. No se puede editar el id_usuario ni el id_empresa" +
+    "";
+            // 
             // AMB_Modificar_Eliminar
             // 
+            this.AcceptButton = this.btnBuscar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnVolver;
             this.ClientSize = new System.Drawing.Size(1538, 1048);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxEmail);
             this.Controls.Add(this.textBoxCUIT);
@@ -206,6 +222,7 @@
         public System.Windows.Forms.TextBox textBoxCUIT;
         public System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
 
     }
 }

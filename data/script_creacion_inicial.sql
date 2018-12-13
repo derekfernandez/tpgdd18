@@ -452,7 +452,7 @@ BEGIN
 		[descripcion] [nvarchar] (255),
 		--Esta comision es la actual de cada grado; la desnormalizo en Publicacion al crearla, por si esta variase
 		[comision] [numeric] (6,2) NOT NULL,
-		CHECK ([descripcion] IN ('Alta', 'Media', 'Baja'))
+		[habilitado] bit CONSTRAINT validarNulos DEFAULT 1
 	)
 
 PRINT('Tabla SQLITO.Grados creada')
@@ -970,6 +970,7 @@ BEGIN
 
 END
 GO
+
 
 PRINT('Funcionalidades asignadas a los roles. Datos insertados en SQLITO.Funcionalidades_Roles')
 

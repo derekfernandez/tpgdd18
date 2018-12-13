@@ -36,8 +36,19 @@ namespace PalcoNet
                 }
             }
 
-            return camposCompletos;
+           return camposCompletos;
+        }
 
+        public void limpiarTextBox(Control window)
+        {
+            foreach (Control obj in window.Controls)
+            {
+                if (obj is TextBox)
+                {
+                    TextBox textbox = (TextBox)obj;
+                    textbox.Clear();
+                }
+            }
         }
 
         public void fillSelect(ComboBox cb, List<String> d)
@@ -120,6 +131,11 @@ namespace PalcoNet
             }
 
             else return false;
+        }
+
+        public Boolean textBoxVacio(TextBox txb)
+        { 
+            return string.IsNullOrWhiteSpace(txb.Text);
         }
 
         public static Boolean check_email(string email)

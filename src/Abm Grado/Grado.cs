@@ -15,77 +15,146 @@ namespace PalcoNet.Abm_Grado
     public partial class Grado : Form
     {
 
-      
-        string idPublicacion;
 
-        public Grado(string idPublicacion)
+        public Grado()
         {
             //Pepe despues me tiene que pasar por parametro el cod de la publicacion
             InitializeComponent();
-            cargarLista();
-            this.idPublicacion = idPublicacion;
-        }
-            
 
-        private void buttonVolver_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            //GenerarPublicacion nuevaPublicacion = new GenerarPublicacion();
-            //nuevaPublicacion.Show();
         }
-        
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void btnBuscar_Click(object sender, EventArgs e)
         {
-            //Query que se ejecutara para actualizar la publicacion.
-            string queryUpdate = string.Format("update SQLITO.Publicaciones set grado_id = '{0}' where cod_publicacion = '{1}'", comboBoxGrado.SelectedValue.ToString(), idPublicacion);
+            if (textBoxBuscar.Text == "")
+            {
+                MessageBox.Show("Ingrese un valor para buscar");
+            }
+            else
+            {
+                try
+                {
+                    string buscar = string.Format("select * from SQLITO.Grados where id_grado = '{0}'", textBoxBuscar.Text);
+
+                    textBoxDescripcion.Text = Database.ObtenerDataSet(buscar).Tables[0].Rows[0]["descripcion"].ToString();
+                    textBoxComision.Text = Database.ObtenerDataSet(buscar).Tables[0].Rows[0]["comision"].ToString();
+
+                    if (textBoxComision.Text.Contains(","))
+                    {
+                        textBoxComision.Text = textBoxComision.Text.Replace(",", ".");
+                    }
+
+                    if (Database.ObtenerDataSet(buscar).Tables[0].Rows[0]["habilitado"].ToString() == "True")
+                    {
+                        textBoxHabilitacion.Text = "1";
+                    }
+                    else
+                    {
+                        textBoxHabilitacion.Text = "0";
+                    }
+
+
+                }
+                catch (Exception exp)
+                {
+
+                    MessageBox.Show("Error: " + exp.Message);
+                }
+            }
+
+        }
+
+        private void btnIngresar_Click(object sender, EventArgs e)
+        {
+            string ingresar = string.Format("pr_Carga_Grado '{0}','{1}'", textBoxDescripcion.Text, textBoxComision.Text);
             try
             {
-                Database.ejecutarNonQueryShort(queryUpdate);
-                MessageBox.Show("Grado de publicacion actualizado correctamente ");
+                if (algunNulo())
+                {
+                    MessageBox.Show("Error: Descripcion o Comision vacia");
+                }
+                else
+                {
+                    Database.ejecutarNonQueryShort(ingresar);
+                    MessageBox.Show("Grado ingresado correctamente");
+                }
             }
             catch (Exception exp)
             {
-                
-                MessageBox.Show("Error al ejecutar la query: " + exp.Message);
+                MessageBox.Show("Error: " + exp.Message);
+            }
+
+        }
+
+        public Boolean algunNulo()
+        {
+            if (textBoxDescripcion.Text == "" || textBoxComision.Text == "")
+                return true;
+            return false;
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            string eliminar = string.Format("update SQLITO.Grados set habilitado = 0 where id_grado = '{0}'", textBoxBuscar.Text);
+            try
+            {
+                if (textBoxBuscar.Text == "")
+                {
+                    MessageBox.Show("Error: ingresar id de grado a inhabilitar");
+                }
+                else
+                {
+                    Database.ejecutarNonQueryShort(eliminar);
+                    MessageBox.Show("Grado inhabilitado correctamente");
+                    btnBuscar_Click(sender, e);
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Error: " + exp.Message);
             }
         }
 
-        public void cargarLista()
+        private void btnHabilitar_Click(object sender, EventArgs e)
         {
-            string query = "select id_grado from SQLITO.GRADOS";
-
-            comboBoxGrado.ValueMember = "id_grado";
-            comboBoxGrado.DisplayMember = "id_grado";
-            
-            
-
-
-            comboBoxGrado.DataSource = (Database.ObtenerDataSet(query).Tables[0]);
-            comboBoxGrado.SelectedIndex = 2; //Por defecto el mas caro
+            string eliminar = string.Format("update SQLITO.Grados set habilitado = 1 where id_grado = '{0}'", textBoxBuscar.Text);
+            try
+            {
+                if (textBoxBuscar.Text == "")
+                {
+                    MessageBox.Show("Error: ingresar id de grado a habilitar");
+                }
+                else
+                {
+                    Database.ejecutarNonQueryShort(eliminar);
+                    MessageBox.Show("Grado habilitado correctamente");
+                    btnBuscar_Click(sender, e);
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Error: " + exp.Message);
+            }
         }
 
-        private void comboBoxGrado_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnModificar_Click(object sender, EventArgs e)
         {
-   
-           string query = string.Format("select * from SQLITO.GRADOS where id_grado= '{0}'", comboBoxGrado.SelectedValue.ToString());
-
-           switch (Database.ObtenerDataSet(query).Tables[0].Rows[0]["descripcion"].ToString())
-           {
-               case "Alta":
-                   textBoxGrado.Text = "Grado Alto de Exposicion";
-                   break;
-               case "Media":
-                   textBoxGrado.Text = "Grado Medio de Exposicion";
-                   break;
-               case "Baja":
-                   textBoxGrado.Text = "Grado Bajo de Exposicion";
-                   break;
-           }
-
-           //textBoxGrado.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["descripcion"].ToString();
-           textBoxComision.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["comision"].ToString() + " %";
-        
+            string modificar = string.Format("update SQLITO.Grados set descripcion = '{0}',comision = '{1}' where id_grado = '{2}'", textBoxDescripcion.Text, textBoxComision.Text, textBoxBuscar.Text);
+            try
+            {
+                if (textBoxBuscar.Text == "")
+                {
+                    MessageBox.Show("Error: ingresar id de grado a modificar");
+                }
+                else
+                {
+                    Database.ejecutarNonQueryShort(modificar);
+                    MessageBox.Show("Grado modificado correctamente");
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Error: " + exp.Message);
+            }
         }
 
         private void Grado_FormClosed(object sender, FormClosedEventArgs e)
@@ -93,11 +162,10 @@ namespace PalcoNet.Abm_Grado
             Application.Exit();
         }
 
-        private void Grado_Load(object sender, EventArgs e)
+        private void btnVolver_Click(object sender, EventArgs e)
         {
-
+            //Falta referencias al menu:
+            this.Hide();
         }
-
-       
     }
 }

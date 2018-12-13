@@ -60,14 +60,25 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnCargar_Click(object sender, EventArgs e)
         {
+            string select = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
+            string error;
+
+            if(1==0)
+            {
+                MessageBox.Show("Error: " + error);
+            }
+            else
+            {
                try
             {
                    /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
                     * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
+
                 controlarNulos();
+
                 string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
-                Database.execNonQuery(Database.createQuery(insert));
-                //Database.ejecutarNonQueryShort(insert);
+                
+                Database.ejecutarNonQueryShort(insert);
                 MessageBox.Show("Empresa agregadas ");
 
                 
@@ -79,6 +90,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             finally
             {
                 Database.cerrar();
+            }
             }
 
 

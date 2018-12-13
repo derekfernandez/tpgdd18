@@ -14,18 +14,82 @@ namespace PalcoNet.Registro_de_Usuario
 {
     public partial class Registro : BaseWindow
     {
+
+        public Session session { get; set; }
+        public Cliente cliente { get; set; }
+
+        #region Constructores
+
+        public Registro(Cliente cliente)
+        {
+            this.cliente = cliente;
+            InitializeComponent();
+        }
+
+        public Registro(Session session)
+        {
+            this.session = session;
+            InitializeComponent();
+        }
+      
         public Registro()
         {
             InitializeComponent();
         }
 
+        #endregion
+
         private void Registro_Load(object sender, EventArgs e)
         {
-            comboBox_cargarRolesUsuario(comboBox_roles);
-            comboBox_cargarTiposDocumento(comboBox_tipodoc);
-            btn_next.Enabled = false;
-            monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
-            monthCalendar_fechanac.MinDate = new DateTime(1910,01,01,00,00,00);
+            if (session != null)
+            {
+                groupBox_gral.Enabled = false;
+                groupBox_gral.Visible = false;
+                groupBox_empresa.Enabled = false;
+                groupBox_empresa.Visible = false;
+                groupBox_clientes.Enabled = true;
+                groupBox_clientes.Visible = true;
+                comboBox_cargarTiposDocumento(comboBox_tipodoc);
+                monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
+            }
+
+            else if (cliente != null)
+            {
+                groupBox_gral.Enabled = false;
+                groupBox_gral.Visible = false;
+                groupBox_empresa.Enabled = false;
+                groupBox_empresa.Visible = false;
+                groupBox_clientes.Enabled = true;
+                groupBox_clientes.Visible = true;
+                comboBox_cargarTiposDocumento(comboBox_tipodoc);
+                monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
+                label1.Visible = false;
+                lbl_modify.Visible = true;
+
+                //cargando datos del cliente al form
+                textBox_nombre.Text = cliente.nombre;
+                textBox_apellido.Text = cliente.apellido;
+                textBox_cuil.Text = cliente.cuil;
+                textBox_doc.Text = cliente.nro_doc;
+                comboBox_tipodoc.SelectedText = cliente.tipo_doc;
+                textBox_mail.Text = cliente.mail;
+                textBox_tel.Text = cliente.tel;
+                textBox_banco.Text = Database.getBancoTarjeta(cliente);
+                textBox_cvv.Text = Database.getCVVTarjeta(cliente);
+                textBox_nrotarjeta.Text = Database.getNroTarjeta(cliente);
+                lbl_seleccionfecha.Text = cliente.fecha_nac;
+            }
+
+            else
+            {
+                comboBox_cargarRolesUsuario(comboBox_roles);
+                comboBox_cargarTiposDocumento(comboBox_tipodoc);
+                btn_next.Enabled = false;
+                monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
+            } 
         }
 
         private void btn_check_Click(object sender, EventArgs e)

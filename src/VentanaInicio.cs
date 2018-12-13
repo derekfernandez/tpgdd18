@@ -42,7 +42,7 @@ namespace PalcoNet
         {
             this.Hide();
             //Grado recibe un codigo de publicacion harcodeado hasta que me lo pase pepe
-            Abm_Grado.Grado grado = new Abm_Grado.Grado("12401");
+            Abm_Grado.Grado grado = new Abm_Grado.Grado();
             grado.Show();
         }
     }

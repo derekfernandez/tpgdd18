@@ -146,8 +146,13 @@ namespace PalcoNet.Misc
                 return "";
             }
         }
+        public static int countRows(SqlCommand cmd)
+        {
+            int cantRows = getTable(cmd).Rows.Count;
+            return cantRows;
+         
+        }
 
-        
         #endregion
 
         #region Metodos Simplificados / Genericos 
@@ -344,6 +349,309 @@ namespace PalcoNet.Misc
             SqlCommand query = createQuery("SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", username);
             return (Convert.ToInt32(getValue(query)) != 0);
+        }
+
+        #endregion
+
+        #region Clientes
+
+        public static DataTable getClientesPorNombre(string nombre)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nombre + '%' ORDER BY nombre");
+            query.Parameters.AddWithValue("@nombre",nombre);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorApellido(string apellido)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @apellido + '%' ORDER BY apellido");
+            query.Parameters.AddWithValue("@apellido",apellido);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNroDoc(string nrodoc)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE numero_documento = @nrodoc");
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorEmail(string email)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @email + '%' ORDER BY mail");
+            query.Parameters.AddWithValue("@email", email);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_Apellido(string nombre, string apellido)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%')");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_nroDoc(string nombre, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_mail(string nombre, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorApellido_nroDoc(string apellido, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorApellido_mail(string apellido, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorMail_nroDoc(string mail, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@mail", mail);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_apellido_nrodoc(string nombre, string apellido, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_apellido_mail(string nombre, string apellido, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%')");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_nroDoc_mail(string nombre, string nrodoc, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@nrodoc",nrodoc);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorApellido_nroDoc_mail(string apellido, string nrodoc, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nrodoc",nrodoc);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesPorNombre_apellido_nroDoc_mail(string nombre, string apellido, string nrodoc, string mail)
+        { 
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%' AND
+                    numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre(string nombre)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nombre + '%' AND estado = 1 ORDER BY nombre");
+            query.Parameters.AddWithValue("@nombre", nombre);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorApellido(string apellido)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @apellido + '%'  AND estado = 1 ORDER BY apellido");
+            query.Parameters.AddWithValue("@apellido", apellido);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNroDoc(string nrodoc)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE numero_documento = @nrodoc AND estado = 1");
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorEmail(string email)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @email + '%' AND estado = 1 ORDER BY mail");
+            query.Parameters.AddWithValue("@email", email);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_Apellido(string nombre, string apellido)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%')");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_nroDoc(string nombre, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_mail(string nombre, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorApellido_nroDoc(string apellido, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorApellido_mail(string apellido, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorMail_nroDoc(string mail, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@mail", mail);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_apellido_nrodoc(string nombre, string apellido, string nrodoc)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_apellido_mail(string nombre, string apellido, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%')");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_nroDoc_mail(string nombre, string nrodoc, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorApellido_nroDoc_mail(string apellido, string nrodoc, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND estado = 1  AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            return getTable(query);
+        }
+
+        public static DataTable getClientesHabilitadosPorNombre_apellido_nroDoc_mail(string nombre, string apellido, string nrodoc, string mail)
+        {
+            SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%' AND
+                    numero_documento = @nrodoc)");
+            query.Parameters.AddWithValue("@nom", nombre);
+            query.Parameters.AddWithValue("@ap", apellido);
+            query.Parameters.AddWithValue("@mail", mail);
+            query.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return getTable(query);
+        }
+
+        public static string getNroTarjeta(Cliente cliente)
+        { 
+            SqlCommand query = createQuery(@"SELECT numero_tarjeta FROM SQLITO.Tarjetas t JOIN SQLITO.Clientes c 
+                                                ON t.id_tarjeta = c.tarjeta_id AND c.tarjeta_id = @id");
+            query.Parameters.AddWithValue("@id", cliente.idtarjeta);
+            return getValue(query);
+        }
+
+        public static string getCVVTarjeta(Cliente cliente)
+        {
+            SqlCommand query = createQuery(@"SELECT cvv FROM SQLITO.Tarjetas t JOIN SQLITO.Clientes c 
+                                                ON t.id_tarjeta = c.tarjeta_id AND c.tarjeta_id = @id");
+            query.Parameters.AddWithValue("@id", cliente.idtarjeta);
+            return getValue(query);
+        }
+
+        public static string getBancoTarjeta(Cliente cliente)
+        {
+            SqlCommand query = createQuery(@"SELECT nombre_banco FROM SQLITO.Tarjetas t JOIN SQLITO.Clientes c 
+                                                ON t.id_tarjeta = c.tarjeta_id AND c.tarjeta_id = @id");
+            query.Parameters.AddWithValue("@id", cliente.idtarjeta);
+            return getValue(query);
+        }
+
+        public static void inhabilitarCliente(Cliente cliente)
+        {
+            SqlCommand query = createQuery("UPDATE SQLITO.Clientes SET estado = 0 WHERE id_cliente = @id");
+            query.Parameters.AddWithValue("@id", cliente.id);
+            execNonQuery(query);
         }
 
         #endregion

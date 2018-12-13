@@ -45,11 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abm Cliente\Form1.cs">
+    <Compile Include="Abm Cliente\ClientesMainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Cliente\ClientesMainWindow.Designer.cs">
+      <DependentUpon>ClientesMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.cs">
       <SubType>Form</SubType>
@@ -161,6 +161,7 @@
     <Compile Include="Listado Estadistico\VentanaSeleccion.Designer.cs">
       <DependentUpon>VentanaSeleccion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Misc\Cliente.cs" />
     <Compile Include="Misc\Rol.cs" />
     <Compile Include="Misc\EstadisticasUtils.cs" />
     <Compile Include="VentanaInicio.cs">
@@ -223,6 +224,9 @@
     <Compile Include="Registro de Usuario\Registro.Designer.cs">
       <DependentUpon>Registro.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Abm Cliente\ClientesMainWindow.resx">
+      <DependentUpon>ClientesMainWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\ABM_Alta_Empresa.resx">
       <DependentUpon>ABM_Alta_Empresa.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,6 +254,7 @@
     <EmbeddedResource Include="Canje Puntos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Comprar\BusquedaPublicacion.resx">
       <DependentUpon>BusquedaPublicacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -259,6 +264,12 @@
     <EmbeddedResource Include="Comprar\RegistrarTarjeta.resx">
       <DependentUpon>RegistrarTarjeta.cs</DependentUpon>
     </EmbeddedResource>
+=======
+<<<<<<< HEAD
+    <EmbeddedResource Include="Generar Rendicion Comisiones\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+=======
+>>>>>>> 46958b322a886a04a218d9118ea47b52fd74ef8c
     <EmbeddedResource Include="Editar Publicacion\EdicionPublicacion.resx">
       <DependentUpon>EdicionPublicacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,6 +281,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+>>>>>>> 63c8a61dd9f0041c7f97c337c7990b47bc67f7f3
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
