@@ -159,11 +159,14 @@ namespace PalcoNet.Generar_Publicacion
             ubicacionesBinding = new BindingList<Ubicacion>(ubicacionesIngresadas);
             ubicacionesSource = new BindingSource(ubicacionesBinding, null);
             dgvUbicacionesElegidas.DataSource = ubicacionesSource;
-            //Uso las tres columnas, les pongo nombre y un tamaño autoajustable
+            //Uso las tres columnas, les pongo nombre y un tamaño autoajustable; oculto las ultimas columnas
             dgvUbicacionesElegidas.Columns[3].Visible = false;
+            dgvUbicacionesElegidas.Columns[4].Visible = false;
+            dgvUbicacionesElegidas.Columns[5].Visible = false;
             dgvUbicacionesElegidas.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvUbicacionesElegidas.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvUbicacionesElegidas.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvUbicacionesElegidas.Columns[2].HeaderText = "Tipo";
         }
 
         #endregion Inicializacion
@@ -382,7 +385,8 @@ namespace PalcoNet.Generar_Publicacion
             //Creo la ubicacion elegida y la agrego a la lista
             Ubicacion nuevaUbicacion = new Ubicacion(tbFila.Text, tbAsiento.Text,
                                                      comboTipo.SelectedItem.ToString(),         //Nombre del tipo
-                                                     ((ItemCombo)comboTipo.SelectedItem).Id);   //Id intrinseca del tipo
+                                                     ((ItemCombo)comboTipo.SelectedItem).Id,    //Id intrinseca del tipo
+                                                     -1);                                        //Tarifa basura, no es necesaria aca
 
             ubicacionesIngresadas.Add(nuevaUbicacion);
             ActualizarDatosDGV();

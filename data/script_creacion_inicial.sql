@@ -336,8 +336,9 @@ BEGIN
 	CREATE TABLE [SQLITO].[Tarjetas] (
 		
 		[id_tarjeta] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		--El banco puede no estar especificado
+		--El banco y el nombre en la tarjeta pueden no estar especificados
 		[nombre_banco] [nvarchar](50),
+		[nombre_titular] [nvarchar](50) NOT NULL,
 		[numero_tarjeta] [numeric](18,0) NOT NULL,
 		--No deberia poder ser NULL, seria fundamental tenerla para verificar los pagos
 		[cvv] [int] CHECK(LEN([cvv]) = 3) NOT NULL
@@ -1465,4 +1466,60 @@ set @fecha_creacion = GETDATE()
 set @usuario_id = (select top 1 id_usuario from [SQLITO].Usuarios order by 1 desc)
 insert into [GD2C2018].[SQLITO].[Empresas](razonsocial,fecha_creacion,cuit,mail,direccion,telefono,usuario_id) values (@razonsocial,@fecha_creacion,@cuit,@mail,@direccion,@telefono,@usuario_id)
 end
+GO
+
+--Trigger para controlar que cuando se acaban las ubicaciones de una publciacion, se lo ponga en estado "Finalizado" (3)
+IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'FinalizarPublicacionAutomaticamente')
+BEGIN
+
+	DROP TRIGGER FinalizarPublicacionAutomaticamente
+
+END
+GO
+
+CREATE TRIGGER SQLITO.FinalizarPublicacionAutomaticamente
+ON SQLITO.Compras AFTER INSERT
+AS
+BEGIN
+	--ID de la ultima compra, de ahi voy a sacar el ID de la Ubicacion recien comprada
+	DECLARE @UltimaCompraID INT
+	--ID de la Ubicacion recien comprada, seria el ID mas reciente de Compras
+	--Esto puede hacerse asi porque las inserciones a Compras son atomicas (desde el ABM Compras)
+	--TODO: Implementar con cursor, para la migracion
+	DECLARE @UbicacionComprada INT
+	--ID de la Publicacion a la cual pertenece la Ubicacion comprada
+	DECLARE @PublicacionID INT
+	--Cantidad de Ubicaciones de la Publicacion (para verificar si todas fueron compradas)
+	DECLARE @CantidadUbicaciones INT
+	--Cantidad de Ubicaciones de la Publicacion que fueron compradas
+	DECLARE @CantidadCompradas INT
+	SET @UltimaCompraID = (SELECT TOP 1 id_compra FROM INSERTED)
+	SET @UbicacionComprada = (SELECT ubicacion_id
+							  FROM SQLITO.Compras
+							  WHERE id_compra = @UltimaCompraID)
+	SET @PublicacionID = (SELECT publicacion_id
+						  FROM SQLITO.Ubicaciones
+						  WHERE id_ubicacion = @UbicacionComprada)
+	SET @CantidadUbicaciones = (SELECT COUNT(*)
+								FROM SQLITO.Publicaciones
+									JOIN SQLITO.Ubicaciones ON (publicacion_id = cod_publicacion)
+								WHERE cod_publicacion = @PublicacionID
+								GROUP BY cod_publicacion)
+	SET @CantidadCompradas = (SELECT COUNT(*)
+							  FROM SQLITO.Publicaciones AS P
+								JOIN SQLITO.Ubicaciones AS U ON (U.publicacion_id = P.cod_publicacion)
+							    LEFT JOIN SQLITO.Compras AS C ON (C.ubicacion_id = U.id_ubicacion)
+							  WHERE (cod_publicacion = @PublicacionID)
+								AND (U.id_ubicacion IN (SELECT C1.ubicacion_id
+														FROM SQLITO.Compras AS C1)))
+
+	--Si todas las ubicaciones fueron compradas (las cantidades coinciden) marco la publicacion como finalizada
+	IF @CantidadCompradas = @CantidadUbicaciones
+	BEGIN
+		UPDATE SQLITO.Publicaciones
+		SET estado_id = 3
+		WHERE cod_publicacion = @PublicacionID
+	END
+							
+END
 GO
