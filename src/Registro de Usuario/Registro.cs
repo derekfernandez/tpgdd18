@@ -73,13 +73,33 @@ namespace PalcoNet.Registro_de_Usuario
                 textBox_apellido.Text = cliente.apellido;
                 textBox_cuil.Text = cliente.cuil;
                 textBox_doc.Text = cliente.nro_doc;
-                comboBox_tipodoc.SelectedText = cliente.tipo_doc;
+                if (cliente.tipo_doc == "DNI")
+                {
+                    comboBox_tipodoc.SelectedIndex = 0;
+                }
+
+                if (cliente.tipo_doc == "LE")
+                {
+                    comboBox_tipodoc.SelectedIndex = 2;
+                }
+
+                if (cliente.tipo_doc == "LC")
+                {
+                    comboBox_tipodoc.SelectedIndex = 1;
+                }
+                errorAdv_doc.Hide();
                 textBox_mail.Text = cliente.mail;
                 textBox_tel.Text = cliente.tel;
                 textBox_banco.Text = Database.getBancoTarjeta(cliente);
                 textBox_cvv.Text = Database.getCVVTarjeta(cliente);
                 textBox_nrotarjeta.Text = Database.getNroTarjeta(cliente);
                 lbl_seleccionfecha.Text = cliente.fecha_nac;
+                textBox_calle.Text = cliente.getCalle();
+                textBox_nro.Text = cliente.getAltura();
+                textBox_piso.Text = cliente.getPiso();
+                textBox_depto.Text = cliente.getDepto();
+                textBox_localidad.Text = cliente.getLocalidad();
+                textBox_cp.Text = cliente.getCP();
             }
 
             else
@@ -240,7 +260,7 @@ namespace PalcoNet.Registro_de_Usuario
 
             else
             {
-                if (textBox_doc.Text.Length < 8 || textBox_doc.Text.Length > 9)
+                if (textBox_doc.Text.Length < 7 || textBox_doc.Text.Length > 8)
                 {
                     errorAdv_doc.Show();
                     lbl_formatodoc.Show();
@@ -458,6 +478,16 @@ namespace PalcoNet.Registro_de_Usuario
             if (string.IsNullOrWhiteSpace(textBox_mail.Text))
             {
                 errorAdv_mail.Show();
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox_tel.Text))
+            {
+                errorAdv_tel.Show();
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox_titular.Text))
+            {
+                errorAdv_titular.Show();
             }
 
             if (string.IsNullOrWhiteSpace(lbl_seleccionfecha.Text))
@@ -748,6 +778,12 @@ namespace PalcoNet.Registro_de_Usuario
                 errorAdv_localidadempresa.Hide();
                 return;
             }
+        }
+
+        private void textBox_titular_TextChanged(object sender, EventArgs e)
+        {
+            errorAdv_titular.Hide();
+            return;
         }
     }
 }

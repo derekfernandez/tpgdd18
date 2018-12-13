@@ -970,7 +970,7 @@ BEGIN
 END
 GO
 
-
+select * from SQLITO.Clientes
 PRINT('Funcionalidades asignadas a los roles. Datos insertados en SQLITO.Funcionalidades_Roles')
 
 -- PREMIOS --
@@ -1033,8 +1033,8 @@ CREATE FUNCTION [SQLITO].[obtenerDireccion]
 RETURNS NVARCHAR(255)
 BEGIN
 	DECLARE @direccion NVARCHAR(255)
-	SET @direccion = @calle + ' ' + CONVERT(NVARCHAR(18), @altura) +
-					 ' ' + CONVERT(NVARCHAR(18), @piso) + 'º' + @depto +
+	SET @direccion = @calle + ',' + CONVERT(NVARCHAR(18), @altura) +
+					 ',' + CONVERT(NVARCHAR(18), @piso) + 'º' + @depto +
 					 ', ' + @localidad + ', CP: ' + @cp
 	RETURN @direccion
 END
@@ -1252,10 +1252,9 @@ BEGIN
 
 	DECLARE @username NVARCHAR(255), @password VARBINARY (255), @clienteID INT
 
-	DECLARE adduser_cursor CURSOR FOR SELECT id_cliente,
-											 LOWER(nombre) + LOWER(apellido),
-											 HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8))
-									  FROM SQLITO.Clientes
+	DECLARE adduser_cursor CURSOR FOR 
+	SELECT id_cliente,LOWER(REPLACE(nombre,' ','')) + LOWER(REPLACE(apellido,' ','')),
+	HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)) FROM SQLITO.Clientes
 
 	OPEN adduser_cursor
 	FETCH NEXT FROM adduser_cursor INTO @clienteID, @username, @password
@@ -1313,9 +1312,8 @@ BEGIN
 	DECLARE @username NVARCHAR(255), @password VARBINARY(255), @empresaID INT
 
 	DECLARE addus3r_cursor CURSOR FOR SELECT id_empresa,
-											 LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
-											 HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8))
-									  FROM SQLITO.Empresas
+	LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
+	HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)) FROM SQLITO.Empresas
 	
 	OPEN addus3r_cursor
 	FETCH NEXT FROM addus3r_cursor INTO @empresaID, @username, @password
