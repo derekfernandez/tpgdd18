@@ -970,6 +970,7 @@ BEGIN
 END
 GO
 
+
 PRINT('Funcionalidades asignadas a los roles. Datos insertados en SQLITO.Funcionalidades_Roles')
 
 -- PREMIOS --
