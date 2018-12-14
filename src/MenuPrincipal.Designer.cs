@@ -49,6 +49,7 @@
             this.menu_datoscuenta = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_cerrarsesion = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.menu_rubros = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -73,8 +74,9 @@
             this.menu_clientes,
             this.menu_empresas,
             this.menu_grados,
-            this.menu_comisiones,
-            this.menu_stats});
+            this.menu_rubros,
+            this.menu_stats,
+            this.menu_comisiones});
             this.menuadmin.Name = "menuadmin";
             this.menuadmin.Size = new System.Drawing.Size(100, 20);
             this.menuadmin.Text = "Administración";
@@ -196,7 +198,7 @@
             // menu_datoscuenta
             // 
             this.menu_datoscuenta.Name = "menu_datoscuenta";
-            this.menu_datoscuenta.Size = new System.Drawing.Size(152, 22);
+            this.menu_datoscuenta.Size = new System.Drawing.Size(142, 22);
             this.menu_datoscuenta.Text = "Mis datos";
             this.menu_datoscuenta.Click += new System.EventHandler(this.menu_datoscuenta_Click);
             // 
@@ -217,6 +219,13 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // menu_rubros
+            // 
+            this.menu_rubros.Name = "menu_rubros";
+            this.menu_rubros.Size = new System.Drawing.Size(208, 22);
+            this.menu_rubros.Text = "ABM Rubros";
+            this.menu_rubros.Click += new System.EventHandler(this.menu_rubros_Click);
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -226,7 +235,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MenuPrincipal";
-            this.Text = "Form1";
+            this.Text = "PalcoNet - Menú Principal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.MenuPrincipal_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -259,6 +268,7 @@
         private System.Windows.Forms.ToolStripMenuItem menu_datoscuenta;
         private System.Windows.Forms.ToolStripMenuItem menu_cerrarsesion;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem menu_rubros;
 
     }
 }

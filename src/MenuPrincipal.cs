@@ -28,6 +28,7 @@ namespace PalcoNet
                 menuadmin.Visible = true;
                 menuclientes.Visible = false;
                 menuempresas.Visible = false;
+                menu_rubros.Visible = true;
             }
 
             if (session.rol.descripcion.Equals("Cliente"))
@@ -35,6 +36,7 @@ namespace PalcoNet
                 menuadmin.Visible = false;
                 menuclientes.Visible = true;
                 menuempresas.Visible = false;
+                menu_rubros.Visible = false;
             }
 
             if (session.rol.descripcion.Equals("Empresa"))
@@ -42,13 +44,15 @@ namespace PalcoNet
                 menuadmin.Visible = false;
                 menuclientes.Visible = false;
                 menuempresas.Visible = true;
+                menu_rubros.Visible = false;
             }
 
             if (session.rol.descripcion.Equals("Administrador General"))
-            {
+            {   
                 menuadmin.Visible = true;
                 menuclientes.Visible = true;
                 menuempresas.Visible = true;
+                menu_rubros.Visible = true;
             }
         }
        
@@ -204,6 +208,11 @@ namespace PalcoNet
         private void menu_datoscuenta_Click(object sender, EventArgs e)
         {
             new SesionActual(this.session).ShowDialog();
+        }
+
+        private void menu_rubros_Click(object sender, EventArgs e)
+        {
+            new Abm_Rubro.Rubro().ShowDialog();
         }
     
     }
