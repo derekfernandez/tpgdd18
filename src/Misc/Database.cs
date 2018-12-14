@@ -278,7 +278,8 @@ namespace PalcoNet.Misc
             else
             {
                 retries = retries + 1;
-                SqlCommand update = createQuery("UPDATE SQLITO.Usuarios SET intentos_fallidos = @intentos");
+                SqlCommand update = createQuery("UPDATE SQLITO.Usuarios SET intentos_fallidos = @intentos WHERE username = @username");
+                update.Parameters.AddWithValue("@username",username);
                 update.Parameters.AddWithValue("@intentos", retries);
 
                 execNonQuery(update);
@@ -351,9 +352,118 @@ namespace PalcoNet.Misc
             return (Convert.ToInt32(getValue(query)) != 0);
         }
 
+        public static void guardarUsuario(Usuario user)
+        {
+            SqlCommand query = createQuery("INSERT INTO SQLITO.Usuarios VALUES(@username,HASHBYTES('SHA2_256',@password),0,1,1)");
+            query.Parameters.AddWithValue("@username", user.username);
+            query.Parameters.AddWithValue("@password", user.password);
+            execNonQuery(query);
+        }
+
+        public static void actualizarCliente(Cliente cliente)
+        {
+            SqlCommand query = createQuery(@"UPDATE SQLITO.Clientes SET nombre = @nom, apellido = @ap, cuil = @cuil, tipo_documento = @tipodoc,
+                numero_documento = @nrodoc, fecha_nacimiento = @fecha_nac, fecha_creacion = @fecha_creacion, mail = @mail, direccion = @direccion,
+                telefono = @tel, tarjeta_id = @idtarjeta, usuario_id = @iduser, estado = @estado WHERE id_cliente = @idcliente");
+            query.Parameters.AddWithValue("@nom", cliente.nombre);
+            query.Parameters.AddWithValue("@ap", cliente.apellido);
+            query.Parameters.AddWithValue("@cuil", cliente.cuil);
+            query.Parameters.AddWithValue("@tipodoc", cliente.tipo_doc);
+            query.Parameters.AddWithValue("@nrodoc", cliente.nro_doc);
+            query.Parameters.AddWithValue("@fecha_nac", DateTime.Parse(cliente.fecha_nac));
+            query.Parameters.AddWithValue("@fecha_creacion", DateTime.Parse(cliente.fecha_creacion));
+            query.Parameters.AddWithValue("@mail", cliente.mail);
+            query.Parameters.AddWithValue("@direccion", cliente.direccion);
+            query.Parameters.AddWithValue("@tel", cliente.tel);
+            query.Parameters.AddWithValue("@idtarjeta", cliente.idtarjeta);
+            query.Parameters.AddWithValue("@iduser", cliente.iduser);
+            query.Parameters.AddWithValue("@estado", cliente.estado);
+            query.Parameters.AddWithValue("@idcliente", cliente.id);
+            execQuery(query);
+        }
+
+        #endregion
+
+        #region Tarjeta
+
+        public static Boolean clienteTieneTarjeta(Cliente cliente)
+        {
+            SqlCommand q = createQuery("SELECT tarjeta_id FROM SQLITO.Clientes WHERE id_cliente = @id");
+            q.Parameters.AddWithValue("@id", cliente.id);
+            if (getValue(q) != string.Empty)
+            {
+                return true;
+            }
+
+            else return false;
+        }
+
+        public static void guardarTarjeta(Tarjeta tarjeta)
+        {
+            SqlCommand query = createQuery(@"INSERT INTO SQLITO.Tarjetas (nombre_banco,nombre_titular,numero_tarjeta,cvv)
+                    VALUES(@banco, @titular, @num, @cvv)");
+            query.Parameters.AddWithValue("@banco", tarjeta.banco);
+            query.Parameters.AddWithValue("@titular", tarjeta.titular);
+            query.Parameters.AddWithValue("@num", tarjeta.nro);
+            query.Parameters.AddWithValue("@cvv", tarjeta.cvv);
+            execQuery(query);
+        }
+
+        public static void actualizarTarjeta(Tarjeta tarjeta)
+        {
+            SqlCommand query = createQuery(@"UPDATE SQLITO.Tarjetas SET nombre_banco = @banco, nombre_titular = @titular,
+                numero_tarjeta = @num, cvv = @cvv WHERE id_tarjeta = @idtarjeta");
+            query.Parameters.AddWithValue("@banco", tarjeta.banco);
+            query.Parameters.AddWithValue("@titular", tarjeta.titular);
+            query.Parameters.AddWithValue("@num", tarjeta.nro);
+            query.Parameters.AddWithValue("@cvv", tarjeta.cvv);
+            query.Parameters.AddWithValue("@idtarjeta", tarjeta.id);
+            execNonQuery(query);
+        }
+
+        public static string getTarjetaPorNumero(string nro)
+        {
+            SqlCommand query = createQuery("SELECT id_tarjeta FROM SQLITO.Tarjetas WHERE numero_tarjeta = @nro");
+            query.Parameters.AddWithValue("@nro", nro);
+            return getValue(query);
+        }
+
         #endregion
 
         #region Clientes
+
+        public static void guardarCliente(Cliente cliente)
+        { 
+            SqlCommand query = createQuery(@"INSERT INTO SQLITO.Clientes VALUES(@nom, @ap, @cuil, @tipodoc, @nrodoc, @fecha_nac,
+                 @fecha_creacion, @mail, @direccion, @tel, @id_tarjeta, @id_user, 1)");
+            query.Parameters.AddWithValue("@nom", cliente.nombre);
+            query.Parameters.AddWithValue("@ap", cliente.apellido);
+            query.Parameters.AddWithValue("@cuil", cliente.cuil);
+            query.Parameters.AddWithValue("@tipodoc", cliente.tipo_doc);
+            query.Parameters.AddWithValue("@nrodoc", cliente.nro_doc);
+            query.Parameters.AddWithValue("@fecha_nac", DateTime.Parse(cliente.fecha_nac));
+            query.Parameters.AddWithValue("@fecha_creacion", DateTime.Parse(cliente.fecha_creacion));
+            query.Parameters.AddWithValue("@mail", cliente.mail);
+            query.Parameters.AddWithValue("@direccion", cliente.direccion);
+            query.Parameters.AddWithValue("@tel", cliente.tel);
+            query.Parameters.AddWithValue("@id_tarjeta", cliente.idtarjeta);
+            query.Parameters.AddWithValue("@id_user", cliente.iduser);
+            execNonQuery(query);
+        }
+
+        public static void habilitarCliente(Cliente cliente)
+        {
+            SqlCommand query = createQuery("UPDATE SQLITO.Clientes SET estado = 1 WHERE id_cliente = @id");
+            query.Parameters.AddWithValue("@id", cliente.id);
+            execNonQuery(query);
+        }
+
+        public static DataRow getTarjetaDeCliente(Cliente cliente)
+        {
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Tarjetas WHERE id_tarjeta = @id");
+            query.Parameters.AddWithValue("@id", cliente.idtarjeta);
+            return getRow(query);
+        }
 
         public static DataTable getClientesPorNombre(string nombre)
         {
@@ -692,6 +802,14 @@ namespace PalcoNet.Misc
         {
             SqlCommand query = createQuery("SELECT DISTINCT(descripcion) FROM SQLITO.Funcionalidades");
             return getList(query); 
+        }
+
+        public static List<string> getFuncionalidadesDeRol(Rol rol)
+        {
+            SqlCommand query = createQuery(@"SELECT DISTINCT(funcionalidad_id) FROM SQLITO.Funcionalidades_Roles
+                    WHERE rol_id = @idrol");
+            query.Parameters.AddWithValue("@idrol", getIdRol(rol));
+            return getList(query);
         }
 
         public static Boolean rolHabilitado(Rol rol)

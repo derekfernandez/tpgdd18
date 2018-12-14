@@ -24,9 +24,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void bntAltaEmpresa_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
-            nuevoMenu.Show();
+            MessageBox.Show("La operación fue exitosa", "", MessageBoxButtons.OK);
+            this.Close();
         }
 
         public void filtrosVacios() 
@@ -97,7 +96,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void AMB_Modificar_Eliminar_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
         
         private void btnEditar_Click(object sender, EventArgs e)

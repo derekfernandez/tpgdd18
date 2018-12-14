@@ -48,6 +48,11 @@
             this.textBox_usuario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox_clientes = new System.Windows.Forms.GroupBox();
+            this.lbl_fechacreacion = new System.Windows.Forms.Label();
+            this.lbl_cvvlen = new System.Windows.Forms.Label();
+            this.errorAdv_titular = new System.Windows.Forms.Label();
+            this.textBox_titular = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.btn_backcliente = new System.Windows.Forms.Button();
             this.lbl_seleccionfecha = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -161,9 +166,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ep = new System.Windows.Forms.ErrorProvider(this.components);
             this.lbl_modify = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.textBox_titular = new System.Windows.Forms.TextBox();
-            this.errorAdv_titular = new System.Windows.Forms.Label();
+            this.lbl_showestado = new System.Windows.Forms.Label();
+            this.lbl_estado = new System.Windows.Forms.Label();
+            this.btn_habilitar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.groupBox_gral.SuspendLayout();
             this.groupBox_clientes.SuspendLayout();
@@ -385,6 +390,8 @@
             // 
             // groupBox_clientes
             // 
+            this.groupBox_clientes.Controls.Add(this.lbl_fechacreacion);
+            this.groupBox_clientes.Controls.Add(this.lbl_cvvlen);
             this.groupBox_clientes.Controls.Add(this.errorAdv_titular);
             this.groupBox_clientes.Controls.Add(this.textBox_titular);
             this.groupBox_clientes.Controls.Add(this.label29);
@@ -461,6 +468,56 @@
             this.groupBox_clientes.TabStop = false;
             this.groupBox_clientes.Visible = false;
             // 
+            // lbl_fechacreacion
+            // 
+            this.lbl_fechacreacion.AutoSize = true;
+            this.lbl_fechacreacion.Location = new System.Drawing.Point(209, 128);
+            this.lbl_fechacreacion.Name = "lbl_fechacreacion";
+            this.lbl_fechacreacion.Size = new System.Drawing.Size(10, 13);
+            this.lbl_fechacreacion.TabIndex = 73;
+            this.lbl_fechacreacion.Text = "-";
+            this.lbl_fechacreacion.Visible = false;
+            // 
+            // lbl_cvvlen
+            // 
+            this.lbl_cvvlen.AutoSize = true;
+            this.lbl_cvvlen.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_cvvlen.Location = new System.Drawing.Point(206, 573);
+            this.lbl_cvvlen.Name = "lbl_cvvlen";
+            this.lbl_cvvlen.Size = new System.Drawing.Size(154, 13);
+            this.lbl_cvvlen.TabIndex = 72;
+            this.lbl_cvvlen.Text = "Ingrese un número de 3 dígitos";
+            this.lbl_cvvlen.Visible = false;
+            // 
+            // errorAdv_titular
+            // 
+            this.errorAdv_titular.AutoSize = true;
+            this.errorAdv_titular.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.errorAdv_titular.ForeColor = System.Drawing.Color.Red;
+            this.errorAdv_titular.Location = new System.Drawing.Point(341, 553);
+            this.errorAdv_titular.Name = "errorAdv_titular";
+            this.errorAdv_titular.Size = new System.Drawing.Size(15, 20);
+            this.errorAdv_titular.TabIndex = 71;
+            this.errorAdv_titular.Text = "*";
+            this.errorAdv_titular.Visible = false;
+            // 
+            // textBox_titular
+            // 
+            this.textBox_titular.Location = new System.Drawing.Point(104, 553);
+            this.textBox_titular.Name = "textBox_titular";
+            this.textBox_titular.Size = new System.Drawing.Size(231, 20);
+            this.textBox_titular.TabIndex = 70;
+            this.textBox_titular.TextChanged += new System.EventHandler(this.textBox_titular_TextChanged);
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(6, 556);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(92, 13);
+            this.label29.TabIndex = 69;
+            this.label29.Text = "Nombre del titular:";
+            // 
             // btn_backcliente
             // 
             this.btn_backcliente.Location = new System.Drawing.Point(209, 641);
@@ -475,7 +532,7 @@
             // 
             this.lbl_seleccionfecha.AutoSize = true;
             this.lbl_seleccionfecha.ForeColor = System.Drawing.Color.Purple;
-            this.lbl_seleccionfecha.Location = new System.Drawing.Point(8, 352);
+            this.lbl_seleccionfecha.Location = new System.Drawing.Point(124, 423);
             this.lbl_seleccionfecha.Name = "lbl_seleccionfecha";
             this.lbl_seleccionfecha.Size = new System.Drawing.Size(0, 13);
             this.lbl_seleccionfecha.TabIndex = 67;
@@ -1603,40 +1660,47 @@
             this.lbl_modify.Text = "Modificar Cliente";
             this.lbl_modify.Visible = false;
             // 
-            // label29
+            // lbl_showestado
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(6, 556);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(92, 13);
-            this.label29.TabIndex = 69;
-            this.label29.Text = "Nombre del titular:";
+            this.lbl_showestado.AutoSize = true;
+            this.lbl_showestado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lbl_showestado.ForeColor = System.Drawing.Color.Purple;
+            this.lbl_showestado.Location = new System.Drawing.Point(708, 18);
+            this.lbl_showestado.Name = "lbl_showestado";
+            this.lbl_showestado.Size = new System.Drawing.Size(64, 20);
+            this.lbl_showestado.TabIndex = 19;
+            this.lbl_showestado.Text = "Estado:";
+            this.lbl_showestado.Visible = false;
             // 
-            // textBox_titular
+            // lbl_estado
             // 
-            this.textBox_titular.Location = new System.Drawing.Point(104, 553);
-            this.textBox_titular.Name = "textBox_titular";
-            this.textBox_titular.Size = new System.Drawing.Size(231, 20);
-            this.textBox_titular.TabIndex = 70;
-            this.textBox_titular.TextChanged += new System.EventHandler(this.textBox_titular_TextChanged);
+            this.lbl_estado.AutoSize = true;
+            this.lbl_estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lbl_estado.ForeColor = System.Drawing.Color.Red;
+            this.lbl_estado.Location = new System.Drawing.Point(778, 18);
+            this.lbl_estado.Name = "lbl_estado";
+            this.lbl_estado.Size = new System.Drawing.Size(0, 20);
+            this.lbl_estado.TabIndex = 20;
             // 
-            // errorAdv_titular
+            // btn_habilitar
             // 
-            this.errorAdv_titular.AutoSize = true;
-            this.errorAdv_titular.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.errorAdv_titular.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_titular.Location = new System.Drawing.Point(341, 553);
-            this.errorAdv_titular.Name = "errorAdv_titular";
-            this.errorAdv_titular.Size = new System.Drawing.Size(15, 20);
-            this.errorAdv_titular.TabIndex = 71;
-            this.errorAdv_titular.Text = "*";
-            this.errorAdv_titular.Visible = false;
+            this.btn_habilitar.Location = new System.Drawing.Point(900, 16);
+            this.btn_habilitar.Name = "btn_habilitar";
+            this.btn_habilitar.Size = new System.Drawing.Size(75, 23);
+            this.btn_habilitar.TabIndex = 21;
+            this.btn_habilitar.Text = "Habilitar";
+            this.btn_habilitar.UseVisualStyleBackColor = true;
+            this.btn_habilitar.Visible = false;
+            this.btn_habilitar.Click += new System.EventHandler(this.btn_habilitar_Click);
             // 
             // Registro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 721);
+            this.Controls.Add(this.btn_habilitar);
+            this.Controls.Add(this.lbl_estado);
+            this.Controls.Add(this.lbl_showestado);
             this.Controls.Add(this.lbl_modify);
             this.Controls.Add(this.groupBox_empresa);
             this.Controls.Add(this.label1);
@@ -1651,6 +1715,9 @@
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.groupBox_empresa, 0);
             this.Controls.SetChildIndex(this.lbl_modify, 0);
+            this.Controls.SetChildIndex(this.lbl_showestado, 0);
+            this.Controls.SetChildIndex(this.lbl_estado, 0);
+            this.Controls.SetChildIndex(this.btn_habilitar, 0);
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).EndInit();
             this.groupBox_gral.ResumeLayout(false);
             this.groupBox_gral.PerformLayout();
@@ -1801,5 +1868,10 @@
         private System.Windows.Forms.Label errorAdv_titular;
         private System.Windows.Forms.TextBox textBox_titular;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label lbl_cvvlen;
+        private System.Windows.Forms.Button btn_habilitar;
+        private System.Windows.Forms.Label lbl_estado;
+        private System.Windows.Forms.Label lbl_showestado;
+        private System.Windows.Forms.Label lbl_fechacreacion;
     }
 }

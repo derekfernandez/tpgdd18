@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Misc;
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
@@ -15,30 +16,26 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
     /// </summary>
     public partial class ABM_Menu_Empresa : Form
     {
-        public ABM_Menu_Empresa()
+        public ABM_Menu_Empresa(Session session)
         {
             InitializeComponent();
         }
 
         private void btnNuevaEmpresa_Click(object sender, EventArgs e)
         {
-            this.Hide();
             ABM_Alta_Empresa nuevaAlta = new ABM_Alta_Empresa();
-            nuevaAlta.Show();
+            nuevaAlta.ShowDialog();
         }
 
         private void btnModEliminar_Click(object sender, EventArgs e)
         {
-            this.Hide();
             AMB_Modificar_Eliminar nuevoEditar = new AMB_Modificar_Eliminar();
-            nuevoEditar.Show();
+            nuevoEditar.ShowDialog();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            VentanaInicio inicio = new VentanaInicio();
-            inicio.Show();
+            this.Close();
         }
 
         private void ABM_Menu_Empresa_Load(object sender, EventArgs e)
@@ -48,7 +45,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void ABM_Menu_Empresa_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
     }
 }

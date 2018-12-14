@@ -31,16 +31,19 @@ namespace PalcoNet.Abm_Cliente
             
         }
 
+        private void ClientesMainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void btn_back_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            new MenuPrincipal(session).Show();
+            this.Close();
         }
 
         private void linkLabel_registrocliente_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Hide();
-            new Registro_de_Usuario.Registro(session).Show();
+            new Registro_de_Usuario.Registro(session).ShowDialog();
         }
 
         #region modificar
@@ -447,7 +450,7 @@ namespace PalcoNet.Abm_Cliente
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
-            {   //corregir
+            {   
                 Cliente cliente = new Cliente(dgv_clientesmodificar.Rows[e.RowIndex].Cells["id_cliente"].Value.ToString(),
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["nombre"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["apellido"].Value.ToString(),
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["cuil"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["tipo_documento"].Value.ToString(),
@@ -457,8 +460,7 @@ namespace PalcoNet.Abm_Cliente
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["tarjeta_id"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["usuario_id"].Value.ToString(),
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["estado"].Value.ToString());
 
-                this.Hide();
-                new Registro_de_Usuario.Registro(cliente).Show();
+                new Registro_de_Usuario.Registro(cliente).ShowDialog();
             }
         }
 

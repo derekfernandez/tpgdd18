@@ -307,12 +307,12 @@ BEGIN
 		[id_cliente] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
 		[nombre] [nvarchar](255) NOT NULL,
 		[apellido] [nvarchar](255) NOT NULL,
-		[cuil] [nvarchar] (255) CHECK ([cuil] LIKE '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9]%'),
-		[tipo_documento] [nvarchar] (3) CHECK ([tipo_documento] IN ('DNI','LC','LE','CI')),
+		[cuil] [nvarchar] (255),
+		[tipo_documento] [nvarchar] (3),
 		[numero_documento] [numeric] (8,0) CHECK (LEN([numero_documento]) <= 8),
 		[fecha_nacimiento] [datetime] NOT NULL,
 		--Puede ser NULL, los Clientes de la tabla maestra no tienen este campo
-		[fecha_creacion] [datetime],
+		[fecha_creacion] [datetime] DEFAULT '1980-01-01 00:00:00',
 		--Puede ser NULL si un Cliente no tiene tarjetas registradas a su nombre
 		[mail] [nvarchar] (50),
 		[direccion] [nvarchar] (255),
@@ -353,7 +353,7 @@ IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Factu
 	AND TABLE_SCHEMA = 'SQLITO')
 
 BEGIN
-	
+
 	CREATE TABLE [SQLITO].[Facturas] (
 
 		[numero_factura] [int] PRIMARY KEY NOT NULL,
@@ -367,6 +367,7 @@ PRINT('Tabla SQLITO.Facturas creada')
 
 END
 GO
+
 
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Ubicaciones'
 	AND TABLE_SCHEMA = 'SQLITO')
@@ -967,11 +968,10 @@ BEGIN
 			   (2,3), (8,3), (9,3), (10,3),
 			   --El Administrador General puede realizar todas las funcionalidades
 			   (1,4), (2,4), (3,4), (4,4), (5,4), (6,4), (7,4), (8,4), (9,4), (10,4), (11,4), (12,4)
-
+			   
 END
 GO
 
-select * from SQLITO.Clientes
 PRINT('Funcionalidades asignadas a los roles. Datos insertados en SQLITO.Funcionalidades_Roles')
 
 -- PREMIOS --
@@ -1262,7 +1262,6 @@ BEGIN
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-
 		IF (SELECT COUNT(username)
 		    FROM SQLITO.Usuarios
 		    WHERE username = @username) = 0
@@ -1373,6 +1372,27 @@ END
 GO
 
 PRINT ('Agregado Administrador General del Sistema')
+
+IF (SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = 'admin') = 0
+BEGIN
+	
+	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) 
+	VALUES ('admin', HASHBYTES('SHA2_256','w23e'), 0)
+
+	DECLARE @adminUser INT
+	SET @adminUser = (SELECT id_usuario
+					  FROM SQLITO.Usuarios
+					  WHERE username = 'admin')
+
+	INSERT INTO SQLITO.Roles_Usuarios
+	VALUES(4, @adminUser)
+
+	--Lo designo como responsable de todos los premios; VER ESTO
+	UPDATE SQLITO.Premios
+	SET admin_responsable_id = @adminUser
+	select * from SQLITO.Usuarios
+END
+GO
 
 PRINT ('Script de Migracion Finalizado')
 

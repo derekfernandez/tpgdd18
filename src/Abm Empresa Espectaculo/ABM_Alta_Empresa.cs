@@ -103,9 +103,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             try
             {
                 //Aca se va a llamar al Form anterior donde estan las opciones del admin
-                this.Hide();
-                ABM_Menu_Empresa nuevoMenu = new ABM_Menu_Empresa();
-                nuevoMenu.Show();
+                this.Close();
             }
             catch (Exception exp)
             {
@@ -130,7 +128,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void ABM_Alta_Empresa_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         

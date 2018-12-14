@@ -11,6 +11,7 @@ namespace PalcoNet.Misc
         public string id { get; set; }
         public string descripcion { get; set; }
         public string habilitado { get; set; }
+        public List<string> funcionalidades { get; set; }
 
         public Rol(string descripcion)
         {
@@ -21,6 +22,14 @@ namespace PalcoNet.Misc
         {
             this.id = id;
             this.descripcion = descripcion;
+        }
+
+        public Rol(string id, string descripcion, string habilitado, List<string> funcionalidades)
+        {
+            this.id = id;
+            this.descripcion = descripcion;
+            this.habilitado = habilitado;
+            this.funcionalidades = funcionalidades;
         }
     }
 }

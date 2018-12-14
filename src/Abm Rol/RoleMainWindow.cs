@@ -17,11 +17,6 @@ namespace PalcoNet.Abm_Rol
 
         //temporal para probar
 
-        public RoleMainWindow()
-        {
-            InitializeComponent();
-        }
-
         public RoleMainWindow(Session session)
         {
             InitializeComponent();
@@ -43,8 +38,7 @@ namespace PalcoNet.Abm_Rol
 
         private void RoleMainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Hide();
-            new MenuPrincipal().Show();
+            this.Close();
         }
 
         private void dgvRefresh()
@@ -65,8 +59,7 @@ namespace PalcoNet.Abm_Rol
                 e.RowIndex >= 0)
             {
                 Rol rol = new Rol(dgv_modify.Rows[e.RowIndex].Cells["id_rol"].Value.ToString(),dgv_modify.Rows[e.RowIndex].Cells["descripcion"].Value.ToString());
-                this.Hide();
-                new Modify(rol).Show();
+                new Modify(rol).ShowDialog();
             }
         }
 

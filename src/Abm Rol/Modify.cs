@@ -120,8 +120,7 @@ namespace PalcoNet.Abm_Rol
         //volver
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            new RoleMainWindow().Show();
+            this.Close();
         }
 
         //modificar
@@ -168,16 +167,14 @@ namespace PalcoNet.Abm_Rol
 
                     Database.agregarFuncionalidades(nuevoRol, li);
                     MessageBox.Show("Rol modificado con éxito", "", MessageBoxButtons.OK);
-                    this.Hide();
-                    new RoleMainWindow().Show();
+                    this.Close();
                 }
 
                 else
                 {
                     Database.inhabilitarRol(rol);
                     MessageBox.Show("El rol fue inhabilitado", "", MessageBoxButtons.OK);
-                    this.Hide();
-                    new RoleMainWindow().Show();
+                    this.Close();
                 }
             }
         }
@@ -193,8 +190,7 @@ namespace PalcoNet.Abm_Rol
 
         private void Modify_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Hide();
-            new RoleMainWindow().Show();
+            this.Close();
         }
     }
 }

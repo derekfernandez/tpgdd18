@@ -48,10 +48,12 @@ namespace PalcoNet.Login
                 return;
             }
 
-            Rol role = new Rol(roleSelect.SelectedItem.ToString());
-            session.rol = role;
 
-            if (Database.rolHabilitado(role))
+            Rol rol = new Rol(roleSelect.SelectedItem.ToString());
+            session.rol.id = Database.getIdRol(rol);
+            session.rol.funcionalidades = Database.getFuncionalidadesDeRol(rol);
+
+            if (Database.rolHabilitado(rol))
             {
                 this.Hide();
                 new MenuPrincipal(session).Show();

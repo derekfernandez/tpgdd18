@@ -81,7 +81,9 @@ namespace PalcoNet.Login
 
             else
             {
-                session.rol = new Rol(Database.getRolesFor(user).First());
+                session.rol = new Rol(Database.getRolesFor(user).ElementAt(0));
+                session.rol.id = Database.getIdRol(session.rol);
+                session.rol.funcionalidades = Database.getFuncionalidadesDeRol(session.rol);
                 new MenuPrincipal(session).Show();
              }
         }

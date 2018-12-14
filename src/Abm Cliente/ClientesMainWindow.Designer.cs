@@ -399,6 +399,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "ClientesMainWindow";
             this.Text = "Clientes";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClientesMainWindow_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Controls.SetChildIndex(this.tabControl1, 0);
             this.Controls.SetChildIndex(this.linkLabel_registrocliente, 0);

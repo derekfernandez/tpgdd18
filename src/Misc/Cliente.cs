@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,11 @@ namespace PalcoNet.Misc
         public string localidad { get; set; }
         public string cp { get; set; }
 
+        public string titulartarjeta { get; set; }
+        public string numtarjeta { get; set; }
+        public string cvvtarjeta { get; set; }
+        public string emisortarjeta { get; set; }
+
         public Cliente(String id,String nombre,String apellido,String cuil,String tipo_doc,String nro_doc,String fecha_nac,
                             String fecha_creacion,String mail,String direccion,String tel, String idtarjeta,String iduser, String estado)
         {
@@ -53,6 +59,52 @@ namespace PalcoNet.Misc
             setDepto(direccion);
             setLocalidad(direccion);
             setCP(direccion);
+            DataRow tarjeta = Database.getTarjetaDeCliente(this);
+
+            if (Database.clienteTieneTarjeta(this))
+            {
+                this.titulartarjeta = tarjeta["nombre_titular"].ToString();
+                this.numtarjeta = tarjeta["numero_tarjeta"].ToString();
+                this.emisortarjeta = tarjeta["nombre_banco"].ToString();
+                this.cvvtarjeta = tarjeta["cvv"].ToString();
+            }
+
+            else
+            {
+                this.titulartarjeta = "";
+                this.numtarjeta = "";
+                this.emisortarjeta = "";
+                this.cvvtarjeta = "";
+            }
+        }
+
+        public Cliente(String nombre, String apellido, String cuil, String tipo_doc, String nro_doc, String fecha_nac,
+                            String fecha_creacion, String mail, String direccion, String tel, String idtarjeta, String iduser, String estado)
+        {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.cuil = cuil;
+            this.tipo_doc = tipo_doc;
+            this.nro_doc = nro_doc;
+            this.fecha_nac = fecha_nac;
+            this.fecha_creacion = fecha_creacion;
+            this.mail = mail;
+            this.direccion = direccion;
+            this.tel = tel;
+            this.idtarjeta = idtarjeta;
+            this.iduser = iduser;
+            this.estado = estado;
+            setCalle(direccion);
+            setAltura(direccion);
+            setPiso(direccion);
+            setDepto(direccion);
+            setLocalidad(direccion);
+            setCP(direccion);
+            DataRow tarjeta = Database.getTarjetaDeCliente(this);
+            this.titulartarjeta = tarjeta["nombre_titular"].ToString();
+            this.numtarjeta = tarjeta["numero_tarjeta"].ToString();
+            this.emisortarjeta = tarjeta["nombre_banco"].ToString();
+            this.cvvtarjeta = tarjeta["cvv"].ToString();
         }
 
         public Cliente(string id)
@@ -124,6 +176,8 @@ namespace PalcoNet.Misc
         {
             return cp;
         }
+
+
 
     }
 }
