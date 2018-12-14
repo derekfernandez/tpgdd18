@@ -159,13 +159,13 @@ namespace PalcoNet.Abm_Grado
 
         private void Grado_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
             //Falta referencias al menu:
-            this.Hide();
+            this.Close();
         }
     }
 }

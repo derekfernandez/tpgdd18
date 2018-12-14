@@ -18,6 +18,7 @@ namespace PalcoNet.Abm_Cliente
 
         public ClientesMainWindow(Session session)
         {
+            this.session = session;
             InitializeComponent();
         }
 

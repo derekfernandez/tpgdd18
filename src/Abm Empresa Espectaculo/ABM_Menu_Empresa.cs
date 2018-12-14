@@ -16,8 +16,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
     /// </summary>
     public partial class ABM_Menu_Empresa : Form
     {
+        public Session session { get; set; }
+
         public ABM_Menu_Empresa(Session session)
         {
+            this.session = session;
             InitializeComponent();
         }
 

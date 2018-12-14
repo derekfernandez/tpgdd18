@@ -23,14 +23,17 @@ namespace PalcoNet.Comprar
         String idUsuario;
         String idCliente;
         ErrorProvider errorProvider;
+        public Usuario user { get; set; }
+        public Session session { get; set; }
 
         #endregion Atributos
 
         #region Inicializacion
 
-        public BusquedaPublicacion(Usuario user)
+        public BusquedaPublicacion(Session session)
         {
-            
+            this.session = session;
+            user = session.user;
             InitializeComponent();
             errorProvider = new ErrorProvider();
             fechaConfig = Convert.ToDateTime(ConfigurationManager.AppSettings["FechaSistema"]);
@@ -235,6 +238,11 @@ namespace PalcoNet.Comprar
         }
 
         #endregion Eventos
+
+        private void BusquedaPublicacion_Load(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }

@@ -15,11 +15,12 @@ namespace PalcoNet.Canje_Puntos
 {
     public partial class canjePuntos : Form
     {
-        public int cliente { get; set; }
+        public Session session { get; set; }
      
-        public canjePuntos(int clienteId)
+        public canjePuntos(Session session)
         {
-            this.cliente = clienteId;
+            this.session = session;
+            InitializeComponent();
         }
         public canjePuntos()
         {
@@ -43,7 +44,7 @@ namespace PalcoNet.Canje_Puntos
         public void sumarPuntos()
         {
             SqlCommand query = Database.createQuery("SELECT TOP 1 SQLITO.sumarPuntos(@cliente) as Puntos FROM SQLITO.Puntos");
-            query.Parameters.AddWithValue("@cliente", this.cliente);
+            query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
             string puntos = Database.getValue(query);
             label6.Text = puntos;
 
@@ -94,7 +95,7 @@ namespace PalcoNet.Canje_Puntos
             else
            {
                 SqlCommand query = Database.createQuery("Insert Into SQLITO.Puntos (cantidad,cliente_id,fecha_vencimiento) Values(" + Int32.Parse(label5.Text) * (-1) + ",@cliente, NULL)");
-                query.Parameters.AddWithValue("@cliente", this.cliente);
+                query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
                 Database.execNonQuery(query);
                 sumarPuntos();
                 MessageBox.Show("Se canjeo el premio correctamente!", "Premio", MessageBoxButtons.OK);

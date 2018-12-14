@@ -123,6 +123,18 @@
     <Compile Include="Editar Publicacion\EdicionPublicacion.Designer.cs">
       <DependentUpon>EdicionPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="CambioPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CambioPassword.Designer.cs">
+      <DependentUpon>CambioPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SesionActual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SesionActual.Designer.cs">
+      <DependentUpon>SesionActual.cs</DependentUpon>
+    </Compile>
     <Compile Include="GD2C2018DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -257,6 +269,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Comprar\RegistrarTarjeta.resx">
       <DependentUpon>RegistrarTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CambioPassword.resx">
+      <DependentUpon>CambioPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SesionActual.resx">
+      <DependentUpon>SesionActual.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Rendicion Comisiones\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

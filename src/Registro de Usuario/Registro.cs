@@ -573,41 +573,50 @@ namespace PalcoNet.Registro_de_Usuario
                 && !errorAdv_piso.Visible && !errorAdv_localidad.Visible && !errorAdv_titular.Visible && !errorAdv_cvv.Visible && !errorAdv_nrotarjeta.Visible
                 && !errorAdv_nro.Visible && !errorAdv_cp.Visible)
             {
-                string fechasistema = ConfigurationManager.AppSettings["FechaSistema"].ToString();
-                DateTime fechasistema_dt = DateTime.Parse(fechasistema);
-                lbl_fechacreacion.Text = fechasistema_dt.ToShortDateString();
-              
-                SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
-                sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
-                sql.Parameters.AddWithValue("@titular", textBox_titular.Text);
-                sql.Parameters.AddWithValue("@nro", textBox_nrotarjeta.Text);
-                sql.Parameters.AddWithValue("@cvv", textBox_cvv.Text);
-                Database.execNonQuery(sql);
-
-                SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
-                string idtarjeta = Database.getValue(cmd);
-
-                Usuario user = new Usuario(textBox_usuario.Text, textBox_password.Text);
-                Database.guardarUsuario(user);
-                string iduser = Database.getIDFor(user);
-                Cliente nuevoCliente = new Cliente(textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
-                    comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text,ConfigurationManager.AppSettings["FechaSistema"].ToString(), textBox_mail.Text,
-                    (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                    textBox_tel.Text,idtarjeta, iduser,"1");
-                Database.guardarCliente(nuevoCliente);
-
-                MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
-
-                if (session != null)
+                if (!Database.cuilDuplicado(textBox_cuil.Text))
                 {
-                    this.Close();
+                    string fechasistema = ConfigurationManager.AppSettings["FechaSistema"].ToString();
+                    DateTime fechasistema_dt = DateTime.Parse(fechasistema);
+                    lbl_fechacreacion.Text = fechasistema_dt.ToShortDateString();
+
+                    SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
+                    sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
+                    sql.Parameters.AddWithValue("@titular", textBox_titular.Text);
+                    sql.Parameters.AddWithValue("@nro", textBox_nrotarjeta.Text);
+                    sql.Parameters.AddWithValue("@cvv", textBox_cvv.Text);
+                    Database.execNonQuery(sql);
+
+                    SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
+                    string idtarjeta = Database.getValue(cmd);
+
+                    Usuario user = new Usuario(textBox_usuario.Text, textBox_password.Text);
+                    Database.guardarUsuario(user);
+                    string iduser = Database.getIDFor(user);
+                    Cliente nuevoCliente = new Cliente(textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
+                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, ConfigurationManager.AppSettings["FechaSistema"].ToString(), textBox_mail.Text,
+                        (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
+                        textBox_tel.Text, idtarjeta, iduser, "1");
+                    Database.guardarCliente(nuevoCliente);
+
+                    MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
+
+                    if (session != null)
+                    {
+                        this.Close();
+                    }
+
+                    else
+                    {
+                        this.Hide();
+                        new Login.Login().Show();
+                    }
                 }
 
                 else
                 {
-                    this.Hide();
-                    new Login.Login().Show();
-                } 
+                    MessageBox.Show("CUIL Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                    return;
+                }
             }
 
             //actualizar datos cliente
@@ -619,34 +628,41 @@ namespace PalcoNet.Registro_de_Usuario
             {
                 if (cliente.idtarjeta != String.Empty)
                 {
-                    string fechacreacion_str = cliente.fecha_creacion;
-                    DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
-                    lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
-                    Tarjeta tarjetaModificada = new Tarjeta(textBox_nrotarjeta.Text, textBox_cvv.Text, textBox_banco.Text, textBox_titular.Text,cliente.idtarjeta);
-                    Database.actualizarTarjeta(tarjetaModificada);
-                    Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
-                    comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
-                    (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                    textBox_tel.Text, cliente.idtarjeta, cliente.iduser, cliente.estado);
-                    Database.actualizarCliente(clienteModificado);
+                    if (!Database.cuilDuplicado(textBox_cuil.Text))
+                    {
+                        string fechacreacion_str = cliente.fecha_creacion;
+                        DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
+                        lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
+                        Tarjeta tarjetaModificada = new Tarjeta(textBox_nrotarjeta.Text, textBox_cvv.Text, textBox_banco.Text, textBox_titular.Text, cliente.idtarjeta);
+                        Database.actualizarTarjeta(tarjetaModificada);
+                        Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
+                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
+                        (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
+                        textBox_tel.Text, cliente.idtarjeta, cliente.iduser, cliente.estado);
+                        Database.actualizarCliente(clienteModificado);
 
-                    MessageBox.Show("Cliente modificado con éxito", "", MessageBoxButtons.OK);
-                    this.Close();
+                        MessageBox.Show("Cliente modificado con éxito", "", MessageBoxButtons.OK);
+                        this.Close();
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("CUIL Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                        return;
+                    }
                 }
 
                 else
                 {
-                    MessageBox.Show(textBox_nrotarjeta.Text + " " + textBox_cvv.Text + " " + textBox_banco.Text + " " + textBox_titular.Text, "");
-
                     string fechacreacion_str = cliente.fecha_creacion;
                     DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
                     lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
-                    
+
                     SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
-                    sql.Parameters.AddWithValue("@nom",textBox_banco.Text);
-                    sql.Parameters.AddWithValue("@titular",textBox_titular.Text);
-                    sql.Parameters.AddWithValue("@nro",textBox_nrotarjeta.Text);
-                    sql.Parameters.AddWithValue("@cvv",textBox_cvv.Text);
+                    sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
+                    sql.Parameters.AddWithValue("@titular", textBox_titular.Text);
+                    sql.Parameters.AddWithValue("@nro", textBox_nrotarjeta.Text);
+                    sql.Parameters.AddWithValue("@cvv", textBox_cvv.Text);
                     Database.execNonQuery(sql);
 
                     SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
@@ -655,8 +671,8 @@ namespace PalcoNet.Registro_de_Usuario
                     Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
                     comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
                     (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                    textBox_tel.Text,idtarjeta, cliente.iduser, cliente.estado);
-                
+                    textBox_tel.Text, idtarjeta, cliente.iduser, cliente.estado);
+
                     Database.actualizarCliente(clienteModificado);
 
                     MessageBox.Show("Cliente modificado con éxito", "", MessageBoxButtons.OK);
@@ -733,30 +749,41 @@ namespace PalcoNet.Registro_de_Usuario
             if (camposNoVacios(this.groupBox_empresa, ep) && !errorAdv_razonsocial.Visible && !errorAdv_cuit.Visible
                 && !errorAdv_telempresa.Visible && !errorAdv_mailempresa.Visible && !errorAdv_calleempresa.Visible && !errorAdv_nroempresa.Visible
                 && !errorAdv_pisoempresa.Visible && !errorAdv_ciudadempresa.Visible && !errorAdv_localidadempresa.Visible && !errorAdv_cpempresa.Visible)
-            {   
-                Usuario user = new Usuario(textBox_usuario.Text, textBox_password.Text);
-                Database.guardarUsuario(user);
-                string iduser = Database.getIDFor(user);
+            {
 
-                SqlCommand cmd = Database.createQuery("INSERT INTO SQLITO.Empresas VALUES(@razonsoc,@fecha_creacion,@cuit,@mail,@dir,@tel,@userid)");
-                cmd.Parameters.AddWithValue("@razonsoc", textBox_razonsocial.Text);
-                cmd.Parameters.AddWithValue("@fecha_creacion", ConfigurationManager.AppSettings["FechaSistema"].ToString());
-                cmd.Parameters.AddWithValue("@cuit", textBox_cuit.Text);
-                cmd.Parameters.AddWithValue("@mail", textBox_mailempresa.Text);
-                cmd.Parameters.AddWithValue("@tel", textBox_telempresa.Text);
-                cmd.Parameters.AddWithValue("@userid", iduser);
-                cmd.Parameters.AddWithValue("@dir", (textBox_calleempresa.Text + "," + textBox_nroempresa.Text + "," + textBox_pisoempresa.Text 
-                    + "º" + textBox_deptoempresa.Text + "," + textBox_localidadempresa.Text + ", CP: " + textBox_cpempresa.Text));
-                Database.execNonQuery(cmd);
+                if (!Database.cuitDuplicado(textBox_cuit.Text))
+                {
 
-                MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
-                this.Hide();
-                new Login.Login().Show();
+                    Usuario user = new Usuario(textBox_usuario.Text, textBox_password.Text);
+                    Database.guardarUsuario(user);
+                    string iduser = Database.getIDFor(user);
+
+                    SqlCommand cmd = Database.createQuery("INSERT INTO SQLITO.Empresas VALUES(@razonsoc,@fecha_creacion,@cuit,@mail,@dir,@tel,@userid)");
+                    cmd.Parameters.AddWithValue("@razonsoc", textBox_razonsocial.Text);
+                    cmd.Parameters.AddWithValue("@fecha_creacion", ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                    cmd.Parameters.AddWithValue("@cuit", textBox_cuit.Text);
+                    cmd.Parameters.AddWithValue("@mail", textBox_mailempresa.Text);
+                    cmd.Parameters.AddWithValue("@tel", textBox_telempresa.Text);
+                    cmd.Parameters.AddWithValue("@userid", iduser);
+                    cmd.Parameters.AddWithValue("@dir", (textBox_calleempresa.Text + "," + textBox_nroempresa.Text + "," + textBox_pisoempresa.Text
+                        + "º" + textBox_deptoempresa.Text + "," + textBox_localidadempresa.Text + ", CP: " + textBox_cpempresa.Text));
+                    Database.execNonQuery(cmd);
+
+                    MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
+                    this.Hide();
+                    new Login.Login().Show();
+                }
+
+                else
+                {
+                    ep.Clear();
+                    return;
+                }
             }
 
             else
             {
-                ep.Clear();
+                MessageBox.Show("CUIT Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
                 return;
             }
         }

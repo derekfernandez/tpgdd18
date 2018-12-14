@@ -18,12 +18,14 @@ namespace PalcoNet.Historial_Cliente
         private int CurrentPageIndex = 0;
         private int TotalPage = 0;
         int PreviousPageOffSet = 0;
+        string cliente;
+        public Session session { get; set; }
 
-        public int cliente { get; set; }
-
-        public historial(int clienteId)
+        public historial(Session session)
         {
-            this.cliente = clienteId;
+            this.session = session;
+            InitializeComponent();
+            cliente = Database.getIdPorUsuario(session.user);
         }
 
         public historial()

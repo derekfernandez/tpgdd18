@@ -221,6 +221,20 @@ namespace PalcoNet.Misc
             }
         }
 
+        public static Boolean cuilDuplicado(string cuil)
+        {
+            SqlCommand sql = createQuery("SELECT COUNT(*) FROM SQLITO.Clientes WHERE cuil = @cuil");
+            sql.Parameters.AddWithValue("@cuil", cuil);
+            return (Convert.ToInt32(getValue(sql)) != 0);
+        }
+
+        public static Boolean cuitDuplicado(string cuit)
+        {
+            SqlCommand sql = createQuery("SELECT COUNT(*) FROM SQLITO.Empresas WHERE cuit = @cuit");
+            sql.Parameters.AddWithValue("@cuit", cuit);
+            return (Convert.ToInt32(getValue(sql)) != 0);
+        }
+
         #endregion
 
         #region Login
@@ -306,6 +320,13 @@ namespace PalcoNet.Misc
         #endregion
 
         #region User
+
+        public static byte[] getPasswordFor(Usuario usuario)
+        {
+            SqlCommand query = createQuery("SELECT password FROM SQLITO.Usuarios WHERE username = @username");
+            query.Parameters.AddWithValue("@username", usuario.username);
+            return Encoding.ASCII.GetBytes(getValue(query));
+        }
 
         public static string getIDFor(Usuario user)
         {
@@ -431,6 +452,13 @@ namespace PalcoNet.Misc
         #endregion
 
         #region Clientes
+
+        public static string getIdPorUsuario(Usuario user)
+        {
+            SqlCommand sql = createQuery("SELECT id_cliente FROM SQLITO.Clientes WHERE usuario_id = @user");
+            sql.Parameters.AddWithValue("@user", user.id);
+            return getValue(sql);
+        }
 
         public static void guardarCliente(Cliente cliente)
         { 

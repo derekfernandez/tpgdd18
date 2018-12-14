@@ -34,18 +34,18 @@
             this.menu_roles = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_clientes = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_empresas = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuclientes = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuempresas = new System.Windows.Forms.ToolStripMenuItem();
-            this.menucuenta = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_grados = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_comisiones = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_stats = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuclientes = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_compras = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_historial = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_puntos = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuempresas = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_publicaciones = new System.Windows.Forms.ToolStripMenuItem();
             this.submenu_generarpublicacion = new System.Windows.Forms.ToolStripMenuItem();
             this.submenu_editarpublicacion = new System.Windows.Forms.ToolStripMenuItem();
+            this.menucuenta = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_datoscuenta = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_cerrarsesion = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -100,34 +100,6 @@
             this.menu_empresas.Text = "ABM Empresas";
             this.menu_empresas.Click += new System.EventHandler(this.menu_empresas_Click);
             // 
-            // menuclientes
-            // 
-            this.menuclientes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menu_compras,
-            this.menu_historial,
-            this.menu_puntos});
-            this.menuclientes.Name = "menuclientes";
-            this.menuclientes.Size = new System.Drawing.Size(61, 20);
-            this.menuclientes.Text = "Clientes";
-            // 
-            // menuempresas
-            // 
-            this.menuempresas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menu_publicaciones});
-            this.menuempresas.Name = "menuempresas";
-            this.menuempresas.Size = new System.Drawing.Size(69, 20);
-            this.menuempresas.Text = "Empresas";
-            // 
-            // menucuenta
-            // 
-            this.menucuenta.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menu_datoscuenta,
-            this.menu_cerrarsesion});
-            this.menucuenta.Name = "menucuenta";
-            this.menucuenta.Size = new System.Drawing.Size(74, 20);
-            this.menucuenta.Text = "Mi Cuenta";
-            this.menucuenta.Click += new System.EventHandler(this.menucuenta_Click);
-            // 
             // menu_grados
             // 
             this.menu_grados.Name = "menu_grados";
@@ -148,6 +120,16 @@
             this.menu_stats.Size = new System.Drawing.Size(208, 22);
             this.menu_stats.Text = "Estadísticas";
             this.menu_stats.Click += new System.EventHandler(this.menu_stats_Click);
+            // 
+            // menuclientes
+            // 
+            this.menuclientes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu_compras,
+            this.menu_historial,
+            this.menu_puntos});
+            this.menuclientes.Name = "menuclientes";
+            this.menuclientes.Size = new System.Drawing.Size(61, 20);
+            this.menuclientes.Text = "Clientes";
             // 
             // menu_compras
             // 
@@ -170,13 +152,21 @@
             this.menu_puntos.Text = "Administración de puntos";
             this.menu_puntos.Click += new System.EventHandler(this.menu_puntos_Click);
             // 
+            // menuempresas
+            // 
+            this.menuempresas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu_publicaciones});
+            this.menuempresas.Name = "menuempresas";
+            this.menuempresas.Size = new System.Drawing.Size(69, 20);
+            this.menuempresas.Text = "Empresas";
+            // 
             // menu_publicaciones
             // 
             this.menu_publicaciones.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.submenu_generarpublicacion,
             this.submenu_editarpublicacion});
             this.menu_publicaciones.Name = "menu_publicaciones";
-            this.menu_publicaciones.Size = new System.Drawing.Size(152, 22);
+            this.menu_publicaciones.Size = new System.Drawing.Size(147, 22);
             this.menu_publicaciones.Text = "Publicaciones";
             // 
             // submenu_generarpublicacion
@@ -193,16 +183,27 @@
             this.submenu_editarpublicacion.Text = "Editar Publicación";
             this.submenu_editarpublicacion.Click += new System.EventHandler(this.submenu_editarpublicacion_Click);
             // 
+            // menucuenta
+            // 
+            this.menucuenta.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu_datoscuenta,
+            this.menu_cerrarsesion});
+            this.menucuenta.Name = "menucuenta";
+            this.menucuenta.Size = new System.Drawing.Size(74, 20);
+            this.menucuenta.Text = "Mi Cuenta";
+            this.menucuenta.Click += new System.EventHandler(this.menucuenta_Click);
+            // 
             // menu_datoscuenta
             // 
             this.menu_datoscuenta.Name = "menu_datoscuenta";
             this.menu_datoscuenta.Size = new System.Drawing.Size(152, 22);
             this.menu_datoscuenta.Text = "Mis datos";
+            this.menu_datoscuenta.Click += new System.EventHandler(this.menu_datoscuenta_Click);
             // 
             // menu_cerrarsesion
             // 
             this.menu_cerrarsesion.Name = "menu_cerrarsesion";
-            this.menu_cerrarsesion.Size = new System.Drawing.Size(152, 22);
+            this.menu_cerrarsesion.Size = new System.Drawing.Size(142, 22);
             this.menu_cerrarsesion.Text = "Cerrar sesión";
             this.menu_cerrarsesion.Click += new System.EventHandler(this.menu_cerrarsesion_Click);
             // 
@@ -226,6 +227,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MenuPrincipal";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.MenuPrincipal_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

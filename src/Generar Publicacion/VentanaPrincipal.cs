@@ -33,14 +33,17 @@ namespace PalcoNet.Generar_Publicacion
         private string idUsuario;
         //ID de la empresa publicante, necesario para ir a buscar a la base de datos
         private string idEmpresa;
+        Usuario user { get; set; }
+        Session session { get; set; }
 
         #endregion Atributos
 
         #region Inicializacion
 
-        public VentanaPrincipal(Usuario user)
+        public VentanaPrincipal(Session session)
         {
-            
+            this.session = session;
+            user = session.user;
             InitializeComponent();
 
             fechaConfig = Convert.ToDateTime(ConfigurationManager.AppSettings["FechaSistema"]);

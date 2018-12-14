@@ -19,10 +19,13 @@ namespace PalcoNet.Editar_Publicacion
         String idEmpresa;
         ErrorProvider errorProvider;
         DataTable tablaEditables;
-        
-        public SeleccionPublicacion(Usuario user)
+        Usuario user { get; set; }
+        Session session { get; set; }
+
+        public SeleccionPublicacion(Session session)
         {
-            
+            this.session = session;
+            user = session.user;
             InitializeComponent();
 
             errorProvider = new ErrorProvider();

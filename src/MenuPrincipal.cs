@@ -13,7 +13,7 @@ namespace PalcoNet
 {
     public partial class MenuPrincipal : Form
     {
-        Session session { get; set; }
+        public Session session { get; set; }
 
         #region Constructores
 
@@ -140,29 +140,30 @@ namespace PalcoNet
             }
         }
 
+
         private void submenu_generarpublicacion_Click(object sender, EventArgs e)
         {
-
+            new Generar_Publicacion.VentanaPrincipal(this.session).ShowDialog();
         }
 
         private void submenu_editarpublicacion_Click(object sender, EventArgs e)
         {
-
+            new Editar_Publicacion.SeleccionPublicacion(this.session).ShowDialog();
         }
 
         private void menu_compras_Click(object sender, EventArgs e)
         {
-
+            new Comprar.BusquedaPublicacion(this.session).ShowDialog();
         }
 
         private void menu_historial_Click(object sender, EventArgs e)
         {
-
+            new Historial_Cliente.historial(this.session).ShowDialog();
         }
 
         private void menu_puntos_Click(object sender, EventArgs e)
         {
-
+            new Canje_Puntos.canjePuntos(this.session).ShowDialog();
         }
 
         private void menu_roles_Click(object sender, EventArgs e)
@@ -182,17 +183,27 @@ namespace PalcoNet
 
         private void menu_grados_Click(object sender, EventArgs e)
         {
-
+            new Abm_Grado.Grado().ShowDialog();
         }
 
         private void menu_comisiones_Click(object sender, EventArgs e)
         {
-
+            new Generar_Rendicion_Comisiones.comisiones().ShowDialog();
         }
 
         private void menu_stats_Click(object sender, EventArgs e)
         {
+            new Listado_Estadistico.VentanaSeleccion().ShowDialog();
+        }
 
+        private void MenuPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void menu_datoscuenta_Click(object sender, EventArgs e)
+        {
+            new SesionActual(this.session).ShowDialog();
         }
     
     }

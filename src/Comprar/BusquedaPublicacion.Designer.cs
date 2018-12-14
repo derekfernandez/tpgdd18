@@ -288,6 +288,7 @@
             this.Controls.Add(this.gbRubros);
             this.Name = "BusquedaPublicacion";
             this.Text = "Comprar - Busqueda de Publicacion";
+            this.Load += new System.EventHandler(this.BusquedaPublicacion_Load);
             this.gbRubros.ResumeLayout(false);
             this.gbRubros.PerformLayout();
             this.gbRango.ResumeLayout(false);
