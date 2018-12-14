@@ -592,6 +592,12 @@ namespace PalcoNet.Registro_de_Usuario
                     Usuario user = new Usuario(textBox_usuario.Text, textBox_password.Text);
                     Database.guardarUsuario(user);
                     string iduser = Database.getIDFor(user);
+
+                    SqlCommand q = Database.createQuery("INSERT INTO SQLITO.Roles_Usuarios VALUES(3,@id)");
+                    q.Parameters.AddWithValue("@id", iduser);
+                    Database.execNonQuery(q);
+
+                    
                     Cliente nuevoCliente = new Cliente(textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
                         comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, ConfigurationManager.AppSettings["FechaSistema"].ToString(), textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
@@ -757,6 +763,9 @@ namespace PalcoNet.Registro_de_Usuario
                     Usuario user = new Usuario(textBox_usuario.Text, textBox_password.Text);
                     Database.guardarUsuario(user);
                     string iduser = Database.getIDFor(user);
+                    SqlCommand q = Database.createQuery("INSERT INTO SQLITO.Roles_Usuarios VALUES(1,@id)");
+                    q.Parameters.AddWithValue("@id", iduser);
+                    Database.execNonQuery(q);
 
                     SqlCommand cmd = Database.createQuery("INSERT INTO SQLITO.Empresas VALUES(@razonsoc,@fecha_creacion,@cuit,@mail,@dir,@tel,@userid)");
                     cmd.Parameters.AddWithValue("@razonsoc", textBox_razonsocial.Text);
