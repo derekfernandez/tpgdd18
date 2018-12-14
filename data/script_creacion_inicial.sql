@@ -230,7 +230,7 @@ BEGIN
 		[cantidad] [int] DEFAULT 1,
 		[comision] [numeric] (6,2) NOT NULL,
 		[compra_id] [int],
-		[descripcion] [nvarchar] (255)
+		[descripcion] [nvarchar] (255) DEFAULT 'Comision por compra'
 		--Habria que ver que hacer con Item_Factura_Descripcion, creo que serian todos iguales
 		--Agregamos un campo mas o lo dejamos implicito? Despues de todo, las facturas son por comisiones
 	)
@@ -1480,11 +1480,10 @@ CREATE TRIGGER SQLITO.FinalizarPublicacionAutomaticamente
 ON SQLITO.Compras AFTER INSERT
 AS
 BEGIN
-	--ID de la ultima compra, de ahi voy a sacar el ID de la Ubicacion recien comprada
-	DECLARE @UltimaCompraID INT
+	
 	--ID de la Ubicacion recien comprada, seria el ID mas reciente de Compras
 	--Esto puede hacerse asi porque las inserciones a Compras son atomicas (desde el ABM Compras)
-	--TODO: Implementar con cursor, para la migracion
+	--TODO: Implementar con cursor, para la migracion (Hacerlo o no?)
 	DECLARE @UbicacionComprada INT
 	--ID de la Publicacion a la cual pertenece la Ubicacion comprada
 	DECLARE @PublicacionID INT
@@ -1492,10 +1491,7 @@ BEGIN
 	DECLARE @CantidadUbicaciones INT
 	--Cantidad de Ubicaciones de la Publicacion que fueron compradas
 	DECLARE @CantidadCompradas INT
-	SET @UltimaCompraID = (SELECT TOP 1 id_compra FROM INSERTED)
-	SET @UbicacionComprada = (SELECT ubicacion_id
-							  FROM SQLITO.Compras
-							  WHERE id_compra = @UltimaCompraID)
+	SET @UbicacionComprada = (SELECT TOP 1 ubicacion_id FROM INSERTED)
 	SET @PublicacionID = (SELECT publicacion_id
 						  FROM SQLITO.Ubicaciones
 						  WHERE id_ubicacion = @UbicacionComprada)
