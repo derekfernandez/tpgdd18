@@ -104,12 +104,12 @@ namespace PalcoNet
                 aux.Add(c);
             }
 
-            if (cadena.Length == 14)
+            if (cadena.Length == 13)
             {
                 if (esNumero(aux.ElementAt(0)) && esNumero(aux.ElementAt(1)) && (aux.ElementAt(2) == '-') && esNumero(aux.ElementAt(3))
                     && esNumero(aux.ElementAt(4)) && esNumero(aux.ElementAt(5)) && esNumero(aux.ElementAt(6)) && esNumero(aux.ElementAt(7))
-                       && esNumero(aux.ElementAt(8)) && esNumero(aux.ElementAt(9)) && esNumero(aux.ElementAt(10)) && esNumero(aux.ElementAt(11))
-                            && (aux.ElementAt(12) == '-') && esNumero(aux.ElementAt(13)))
+                       && esNumero(aux.ElementAt(8)) && esNumero(aux.ElementAt(9)) && esNumero(aux.ElementAt(10))
+                            && (aux.ElementAt(11) == '-') && esNumero(aux.ElementAt(12)))
                 {
                     return true;
                 }
@@ -117,12 +117,12 @@ namespace PalcoNet
                 else return false;
             }
 
-            else if (cadena.Length == 13)
+            else if (cadena.Length == 12)
             {
                 if (esNumero(aux.ElementAt(0)) && esNumero(aux.ElementAt(1)) && (aux.ElementAt(2) == '-') && esNumero(aux.ElementAt(3))
                     && esNumero(aux.ElementAt(4)) && esNumero(aux.ElementAt(5)) && esNumero(aux.ElementAt(6)) && esNumero(aux.ElementAt(7))
-                       && esNumero(aux.ElementAt(8)) && esNumero(aux.ElementAt(9)) && esNumero(aux.ElementAt(10)) && (aux.ElementAt(11) == '-')
-                            && esNumero(aux.ElementAt(12)))
+                       && esNumero(aux.ElementAt(8)) && esNumero(aux.ElementAt(9)) && (aux.ElementAt(10) == '-')
+                            && esNumero(aux.ElementAt(11)))
                 {
                     return true;
                 }
