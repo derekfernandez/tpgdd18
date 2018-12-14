@@ -77,6 +77,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                 query2.Parameters.AddWithValue("@tope",numericUpDown1.Value.ToString());
                 query2.Parameters.AddWithValue("@IdFactura", lastNumberOfFactura);
                 query2.Parameters.AddWithValue("@idEmpresaElegida", empresa);
+                Database.execQuery(query2);
                 SqlCommand query4 = Database.createQuery("SELECT SUM(comision) FROM SQLITO.ItemsFactura WHERE factura_id = @IdFactura");
                 query4.Parameters.AddWithValue("@IdFactura", lastNumberFactura);
                 string comision = Database.getValue(query4);
@@ -85,6 +86,8 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                 query2.Parameters.AddWithValue("@fecha", fechaConfig);
                 query2.Parameters.AddWithValue("@totalFactura", comision);
                 query2.Parameters.AddWithValue("@idEmpresaElegida", empresa);
+                Database.execQuery(query5);
+
             }
         }
     }
