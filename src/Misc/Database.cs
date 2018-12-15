@@ -325,7 +325,7 @@ namespace PalcoNet.Misc
         {
             SqlCommand query = createQuery("SELECT password FROM SQLITO.Usuarios WHERE username = @username");
             query.Parameters.AddWithValue("@username", usuario.username);
-            return Encoding.ASCII.GetBytes(getValue(query));
+            return Encoding.UTF8.GetBytes(getValue(query));
         }
 
         public static string getIDFor(Usuario user)

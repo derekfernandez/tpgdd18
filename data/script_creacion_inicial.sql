@@ -1539,7 +1539,6 @@ BEGIN
 END
 GO
 
-<<<<<<< HEAD
 --PROC ALTA USUARIOS PARA EMPRESAS YA IMPORTADAS DEL MASTER
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_altaUsuario_empresa')
 BEGIN
@@ -1657,13 +1656,13 @@ DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity);
 SELECT ERROR_MESSAGE()
 end catch
 end
-
+GO
 /*Si llegase a romper el identity usar:
 GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
-=======
+
 CREATE FUNCTION [SQLITO].[sumarPuntos]
 (@cliente INT)
 RETURNS INT
