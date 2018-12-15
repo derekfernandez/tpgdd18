@@ -61,7 +61,7 @@
             // 
             this.lbl_username.AutoSize = true;
             this.lbl_username.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lbl_username.Location = new System.Drawing.Point(94, 62);
+            this.lbl_username.Location = new System.Drawing.Point(98, 60);
             this.lbl_username.Name = "lbl_username";
             this.lbl_username.Size = new System.Drawing.Size(0, 17);
             this.lbl_username.TabIndex = 2;
@@ -71,7 +71,7 @@
             this.lbl_rol.AutoSize = true;
             this.lbl_rol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lbl_rol.ForeColor = System.Drawing.Color.Orange;
-            this.lbl_rol.Location = new System.Drawing.Point(50, 111);
+            this.lbl_rol.Location = new System.Drawing.Point(54, 107);
             this.lbl_rol.Name = "lbl_rol";
             this.lbl_rol.Size = new System.Drawing.Size(0, 17);
             this.lbl_rol.TabIndex = 3;

@@ -47,7 +47,6 @@ namespace PalcoNet.Canje_Puntos
             query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
             string puntos = Database.getValue(query);
             label6.Text = puntos;
-
         }
         public void llenarPremios(ComboBox cb)
         {
@@ -88,18 +87,23 @@ namespace PalcoNet.Canje_Puntos
         }
             private void button1_Click(object sender, EventArgs e)
         {
-            if (Int32.Parse(label5.Text) > Int32.Parse(label6.Text))
+            if (string.IsNullOrEmpty(label6.Text))
+            {
+                MessageBox.Show("Lo sentimos, no dispones de puntos para canjear en este momento", "", MessageBoxButtons.OK);
+            }
+
+            else if (Int32.Parse(label5.Text) > Int32.Parse(label6.Text))
             {
                 MessageBox.Show("No tiene los suficientes puntos para ese premio, intente con otro!", "Premio", MessageBoxButtons.OK);
             }
             else
-           {
+            {
                 SqlCommand query = Database.createQuery("Insert Into SQLITO.Puntos (cantidad,cliente_id,fecha_vencimiento) Values(" + Int32.Parse(label5.Text) * (-1) + ",@cliente, NULL)");
                 query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
                 Database.execNonQuery(query);
                 sumarPuntos();
                 MessageBox.Show("Se canjeo el premio correctamente!", "Premio", MessageBoxButtons.OK);
-           }
+            }
 
         }
 
