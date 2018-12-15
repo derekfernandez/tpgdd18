@@ -375,9 +375,9 @@ namespace PalcoNet.Misc
 
         public static void guardarUsuario(Usuario user)
         {
-            SqlCommand query = createQuery("INSERT INTO SQLITO.Usuarios VALUES(@username,HASHBYTES('SHA2_256',@password),0,1,1)");
+            SqlCommand query = createQuery("INSERT INTO SQLITO.Usuarios VALUES(@username,@password,0,1,1)");
             query.Parameters.AddWithValue("@username", user.username);
-            query.Parameters.AddWithValue("@password", user.password);
+            query.Parameters.AddWithValue("@password", encriptarPassword(user.password));
             execNonQuery(query);
         }
 

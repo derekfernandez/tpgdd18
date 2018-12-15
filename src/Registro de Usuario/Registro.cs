@@ -40,6 +40,8 @@ namespace PalcoNet.Registro_de_Usuario
 
         #endregion
 
+        #region Inicializacion
+
         private void Registro_Load(object sender, EventArgs e)
         {
             if (session != null)
@@ -130,6 +132,8 @@ namespace PalcoNet.Registro_de_Usuario
                 monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
             } 
         }
+
+        #endregion
 
         private void btn_check_Click(object sender, EventArgs e)
         {

@@ -38,12 +38,11 @@ namespace PalcoNet
 
                 else
                 {
-                    SqlCommand query = Database.createQuery(@"UPDATE SQLITO.Usuarios SET password = HASHBYTES('SHA2_256',@pw) 
-                           WHERE username = @username");
-                    query.Parameters.AddWithValue("@pw", textbox_ingresopw.Text);
+                    SqlCommand query = Database.createQuery(@"UPDATE SQLITO.Usuarios SET password = @pw");
+                    query.Parameters.AddWithValue("@pw", Database.encriptarPassword(textbox_ingresopw.Text));
                     query.Parameters.AddWithValue("@username", session.user.username);
                     Database.execNonQuery(query);
-                    MessageBox.Show("La contraseña se cambió correctamente", "", MessageBoxButtons.OK);
+                    MessageBox.Show("La contraseña se cambió correctamente. Deberá ingresar la nueva contraseña en su próximo login", "Éxito", MessageBoxButtons.OK);
                     this.Close();
                 }
             }
