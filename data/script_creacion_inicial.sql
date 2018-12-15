@@ -1539,6 +1539,7 @@ BEGIN
 END
 GO
 
+<<<<<<< HEAD
 --PROC ALTA USUARIOS PARA EMPRESAS YA IMPORTADAS DEL MASTER
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_altaUsuario_empresa')
 BEGIN
@@ -1662,3 +1663,21 @@ GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
+=======
+CREATE FUNCTION [SQLITO].[sumarPuntos]
+(@cliente INT)
+RETURNS INT
+BEGIN 
+	DECLARE @puntos INT
+	SET @puntos = (SELECT TOP (1) ISNULL(SUM(ISNULL(cantidad,0)),0) 
+					FROM SQLITO.Puntos  
+					WHERE (cliente_id = @cliente AND fecha_vencimiento IS NULL) OR (cliente_id = @cliente AND fecha_vencimiento > (SELECT CAST (GETDATE() AS SMALLDATETIME))))
+					
+	IF(@puntos<0)
+	BEGIN 
+	SET @puntos = 0
+	END
+  RETURN @puntos
+END
+GO
+>>>>>>> abc8e5f1eb81a5f389888a44447d82be407afa31
