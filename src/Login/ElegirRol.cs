@@ -14,7 +14,7 @@ namespace PalcoNet.Login
     public partial class ElegirRol : BaseWindow
     {
 
-        Session session { get; set; }
+        public Session session { get; set; }
 
         public ElegirRol(Session session)
         {
@@ -36,7 +36,6 @@ namespace PalcoNet.Login
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Hide();
             new Login().Show();
         }
 
@@ -48,12 +47,11 @@ namespace PalcoNet.Login
                 return;
             }
 
+            session.rol = new Rol(roleSelect.SelectedItem.ToString());
+            session.rol.id = Database.getIdRol(session.rol);
+            session.rol.funcionalidades = Database.getFuncionalidadesDeRol(session.rol);
 
-            Rol rol = new Rol(roleSelect.SelectedItem.ToString());
-            session.rol.id = Database.getIdRol(rol);
-            session.rol.funcionalidades = Database.getFuncionalidadesDeRol(rol);
-
-            if (Database.rolHabilitado(rol))
+            if (Database.rolHabilitado(session.rol))
             {
                 this.Hide();
                 new MenuPrincipal(session).Show();

@@ -1354,7 +1354,7 @@ IF (SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = 'admin') = 0
 BEGIN
 	
 	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) 
-	VALUES ('admin', HASHBYTES('SHA2_256','w23e'), 0)
+	VALUES ('admin', HASHBYTES('SHA2_256','w23e'), 1)
 
 	DECLARE @adminUser INT
 	SET @adminUser = (SELECT id_usuario
@@ -1363,36 +1363,27 @@ BEGIN
 
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(4, @adminUser)
+	
+	INSERT INTO SQLITO.Clientes (nombre,apellido,tipo_documento,numero_documento,fecha_nacimiento,fecha_creacion,usuario_id,estado)
+		 VALUES ('Admin','General','DNI','37541207','1993-03-13 23:50:00', '2018-11-30 00:00:00',@adminUser, 1)
+	
+	INSERT INTO SQLITO.Roles_Usuarios
+	VALUES(3, @adminUser)
 
+	INSERT INTO SQLITO.Empresas (razonsocial,fecha_creacion,usuario_id) 
+		 VALUES ('Admin General', '2018-11-30 00:00:00',@adminUser)
+	
+	INSERT INTO SQLITO.Roles_Usuarios
+	VALUES(1, @adminUser)
+	
 	--Lo designo como responsable de todos los premios; VER ESTO
 	UPDATE SQLITO.Premios
 	SET admin_responsable_id = @adminUser
-
+	
 END
 GO
 
 PRINT ('Agregado Administrador General del Sistema')
-
-IF (SELECT COUNT(*) FROM SQLITO.Usuarios WHERE username = 'admin') = 0
-BEGIN
-	
-	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) 
-	VALUES ('admin', HASHBYTES('SHA2_256','w23e'), 0)
-
-	DECLARE @adminUser INT
-	SET @adminUser = (SELECT id_usuario
-					  FROM SQLITO.Usuarios
-					  WHERE username = 'admin')
-
-	INSERT INTO SQLITO.Roles_Usuarios
-	VALUES(4, @adminUser)
-
-	--Lo designo como responsable de todos los premios; VER ESTO
-	UPDATE SQLITO.Premios
-	SET admin_responsable_id = @adminUser
-	select * from SQLITO.Usuarios
-END
-GO
 
 PRINT ('Script de Migracion Finalizado')
 
@@ -1663,6 +1654,12 @@ DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
 
+IF OBJECT_ID('[SQLITO].[sumarPuntos]') IS NOT NULL
+BEGIN
+	DROP FUNCTION [SQLITO].[sumarPuntos]
+END
+GO
+
 CREATE FUNCTION [SQLITO].[sumarPuntos]
 (@cliente INT)
 RETURNS INT
@@ -1679,4 +1676,3 @@ BEGIN
   RETURN @puntos
 END
 GO
->>>>>>> abc8e5f1eb81a5f389888a44447d82be407afa31
