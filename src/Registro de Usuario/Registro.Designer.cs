@@ -520,7 +520,7 @@
             // 
             // btn_backcliente
             // 
-            this.btn_backcliente.Location = new System.Drawing.Point(209, 641);
+            this.btn_backcliente.Location = new System.Drawing.Point(209, 625);
             this.btn_backcliente.Name = "btn_backcliente";
             this.btn_backcliente.Size = new System.Drawing.Size(75, 23);
             this.btn_backcliente.TabIndex = 68;
@@ -823,7 +823,7 @@
             // 
             // btn_terminar
             // 
-            this.btn_terminar.Location = new System.Drawing.Point(293, 641);
+            this.btn_terminar.Location = new System.Drawing.Point(290, 625);
             this.btn_terminar.Name = "btn_terminar";
             this.btn_terminar.Size = new System.Drawing.Size(75, 23);
             this.btn_terminar.TabIndex = 38;
