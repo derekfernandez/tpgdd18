@@ -485,7 +485,7 @@ BEGIN
 	CREATE TABLE [SQLITO].[EstadosPublicacion] (
 		
 		[id_estado] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[descripcion] [nvarchar] (255) CHECK ([descripcion] IN ('Borrador','Publicada','Finalizada','Pausada'))
+		[descripcion] [nvarchar] (255) CHECK ([descripcion] IN ('Borrador','Publicada','Finalizada','Pausada','Inhabilitada'))
 	)
 
 PRINT('Tabla SQLITO.EstadosPublicacion creada')
@@ -889,7 +889,8 @@ BEGIN
 		VALUES ('Borrador'),
 		  	   ('Publicada'),
 		       ('Finalizada'),
-	           ('Pausada')
+	           ('Pausada'),
+			   ('Inhabilitada')
 
 PRINT('Datos insertados en la tabla SQLITO.EstadosPublicacion')
 END
@@ -1023,6 +1024,7 @@ PRINT ('Datos insertados en la tabla SQLITO.Grados')
 
 --- FUNCIONES PARA LA MIGRACION ---
 
+-- Obtener la cadena que formara el campo direccion de un Cliente o Empresa --
 IF OBJECT_ID('[SQLITO].[obtenerDireccion]') IS NOT NULL
 BEGIN
 	DROP FUNCTION [SQLITO].[obtenerDireccion]
@@ -1047,6 +1049,58 @@ FROM gd_esquema.Maestra
 SELECT [SQLITO].[obtenerDireccion](Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, '', Cli_Cod_Postal)
 FROM gd_esquema.Maestra
 */
+
+-- Actualizar las Publicaciones que tienen las localidades agotadas, y marcarlas como Finalizadas --
+IF OBJECT_ID('[SQLITO].[SP_tieneUbicacionesAgotadas]') IS NOT NULL
+BEGIN
+	DROP PROCEDURE [SQLITO].[SP_tieneUbicacionesAgotadas]
+END
+GO
+
+CREATE PROCEDURE [SQLITO].[SP_tieneUbicacionesAgotadas]
+AS
+BEGIN
+
+	--Variable de tabla (no puedo llamar una temporal desde aca) con las ubicaciones
+	--totales y vendidas de cada publicacion, y flag de si estan agotadas o no
+	DECLARE @UbicacionesPorPublicacion AS TABLE (
+		[id_publicacion] INT,
+		[entradas_totales] INT,
+		[entradas_compradas] INT,
+		[esta_agotada] BIT
+	)
+
+	--Inserto los datos necesarios en dicha variable de tabla; de entrada, supongo que ninguna esta agotada
+	INSERT INTO @UbicacionesPorPublicacion
+	(id_publicacion, entradas_totales, entradas_compradas,esta_agotada)
+		SELECT cod_publicacion,
+			   COUNT(*),
+		       (SELECT COUNT(*)
+			    FROM SQLITO.Ubicaciones AS U
+					LEFT JOIN SQLITO.Compras AS C ON (C.ubicacion_id = U.id_ubicacion)
+		        WHERE (U.id_ubicacion IN (SELECT C1.ubicacion_id
+								          FROM SQLITO.Compras AS C1))
+					AND (U.publicacion_id = P.cod_publicacion)),
+				0
+	            FROM SQLITO.Publicaciones AS P
+					JOIN SQLITO.Ubicaciones AS U ON (U.publicacion_id = P.cod_publicacion)
+	            GROUP BY cod_publicacion
+	            ORDER BY cod_publicacion
+	
+	--Marco cuales estan agotadas, haciendo una simple comparacion compradas-totales
+	UPDATE @UbicacionesPorPublicacion
+		SET esta_agotada = 1
+		WHERE entradas_compradas = entradas_totales
+
+	--Actualizo la tabla de Publicaciones en aquellas que, segun la variable, estan agotadas
+	--Las marco como Finalizadas (estado = 3)
+	UPDATE SQLITO.Publicaciones
+	SET estado_id = 3
+		WHERE (SELECT esta_agotada
+			   FROM @UbicacionesPorPublicacion
+			   WHERE id_publicacion = cod_publicacion) = 1
+
+END
 
 --- INSERTS ---
 
@@ -1187,6 +1241,9 @@ DECLARE @var NVARCHAR(10)
 SELECT @var = (SELECT COUNT(*) FROM SQLITO.Compras)
 PRINT('Datos existentes migrados a la tabla SQLITO.Compras. Nuevas Filas: ' + @var)
 
+-- CORRECCION DE PUBLICACIONES MIGRADAS --
+
+EXEC [SQLITO].[SP_tieneUbicacionesAgotadas]
 
 -- MIGRACION DE FACTURAS -- 
 
