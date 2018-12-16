@@ -38,7 +38,7 @@ namespace PalcoNet
 
                 else
                 {
-                    SqlCommand query = Database.createQuery(@"UPDATE SQLITO.Usuarios SET password = @pw");
+                    SqlCommand query = Database.createQuery(@"UPDATE SQLITO.Usuarios SET password = @pw, contraseniaActivada = 1 WHERE username = @username");
                     query.Parameters.AddWithValue("@pw", Database.encriptarPassword(textbox_ingresopw.Text));
                     query.Parameters.AddWithValue("@username", session.user.username);
                     Database.execNonQuery(query);

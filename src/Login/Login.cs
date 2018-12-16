@@ -65,8 +65,7 @@ namespace PalcoNet.Login
         }
 
         private void loginOK(LoginController login)
-        {
-            this.Hide();
+        {   
             string username = login.msg;
 
             Usuario user = new Usuario(username);
@@ -74,8 +73,15 @@ namespace PalcoNet.Login
 
             Session session = new Session(user, Database.getRolesFor(user));
 
-            if (session.cantRoles() >1)
+            if (!Database.tieneContraseniaActivada(session.user))
             {
+                pwTextbox.Clear();
+                new CambioPassword(session).ShowDialog(); 
+            }
+
+            else if (session.cantRoles() >1)
+            {
+                this.Hide();
                 new ElegirRol(session).Show();
             }
 
@@ -84,6 +90,7 @@ namespace PalcoNet.Login
                 session.rol = new Rol(Database.getRolesFor(user).ElementAt(0));
                 session.rol.id = Database.getIdRol(session.rol);
                 session.rol.funcionalidades = Database.getFuncionalidadesDeRol(session.rol);
+                this.Hide();
                 new MenuPrincipal(session).Show();
              }
         }

@@ -1267,13 +1267,13 @@ BEGIN
 		    WHERE username = @username) = 0
 		BEGIN
 			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-			VALUES (@username, @password, 0)
+			VALUES (@username, @password, 1)
 		END
 
 		ELSE 
 		BEGIN
 			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-			VALUES (@username + '2', @password, 0)
+			VALUES (@username + '2', @password, 1)
 		END
 
 		--Al Cliente cuyo usuario recien cree, le guardo el ID de dicho usuario
@@ -1322,7 +1322,7 @@ BEGIN
 	BEGIN
 
 		INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-		VALUES (@username, @password, 0)
+		VALUES (@username, @password, 1)
 
 		--A la Empresa cuyo usuario recien cree, le guardo el ID de dicho usuario
 		UPDATE SQLITO.Empresas
@@ -1365,13 +1365,13 @@ BEGIN
 	VALUES(4, @adminUser)
 	
 	INSERT INTO SQLITO.Clientes (nombre,apellido,tipo_documento,numero_documento,fecha_nacimiento,fecha_creacion,usuario_id,estado)
-		 VALUES ('Admin','General','DNI','37541207','1993-03-13 23:50:00', '2018-11-30 00:00:00',@adminUser, 1)
+		 VALUES ('Admin','General','DNI','37541207','1993-03-13T23:50:00', '2018-11-30T00:00:00',@adminUser, 1)
 	
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(3, @adminUser)
 
 	INSERT INTO SQLITO.Empresas (razonsocial,fecha_creacion,usuario_id) 
-		 VALUES ('Admin General', '2018-11-30 00:00:00',@adminUser)
+		 VALUES ('Admin General', '2018-11-30T00:00:00',@adminUser)
 	
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(1, @adminUser)

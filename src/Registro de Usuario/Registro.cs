@@ -499,6 +499,13 @@ namespace PalcoNet.Registro_de_Usuario
                 errorAdv_nombre.Show();
             }
 
+            if (!string.IsNullOrWhiteSpace(textBox_doc.Text) && Database.documentoRepetido(comboBox_tipodoc.SelectedItem.ToString(), textBox_doc.Text))
+            {
+                MessageBox.Show("El documento ingresado ya se encuentra asociado a un cliente. Revise los datos e intente nuevamente", "", MessageBoxButtons.OK);
+                errorAdv_doc.Show();
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(textBox_apellido.Text))
             {
                 errorAdv_apellido.Show();
@@ -572,7 +579,7 @@ namespace PalcoNet.Registro_de_Usuario
 
             //crear cliente
             if (camposNoVacios(this.groupBox_clientes, ep) && comboBox_tipodoc.SelectedIndex != -1 && (!string.IsNullOrWhiteSpace(lbl_seleccionfecha.Text))
-                && cliente == null && !errorAdv_nombre.Visible && !errorAdv_apellido.Visible && !errorAdv_cuil.Visible && !errorAdv_doc.Visible
+                && cliente == null && session == null && !errorAdv_nombre.Visible && !errorAdv_apellido.Visible && !errorAdv_cuil.Visible && !errorAdv_doc.Visible
                 && !errorAdv_tel.Visible && !errorAdv_mail.Visible && !errorAdv_fecha.Visible && !errorAdv_calle.Visible && !errorAdv_calle.Visible
                 && !errorAdv_piso.Visible && !errorAdv_localidad.Visible && !errorAdv_titular.Visible && !errorAdv_cvv.Visible && !errorAdv_nrotarjeta.Visible
                 && !errorAdv_nro.Visible && !errorAdv_cp.Visible)
@@ -610,21 +617,66 @@ namespace PalcoNet.Registro_de_Usuario
 
                     MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
 
-                    if (session != null)
-                    {
-                        this.Close();
-                    }
-
-                    else
-                    {
-                        this.Hide();
-                        new Login.Login().Show();
-                    }
+                  
+                    this.Hide();
+                    new Login.Login().Show();
+                    
                 }
 
                 else
                 {
                     MessageBox.Show("CUIL Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                    textBox_cuil.Focus();
+                    return;
+                }
+            }
+
+            //crear cliente por administrador
+            else if (camposNoVacios(this.groupBox_clientes, ep) && comboBox_tipodoc.SelectedIndex != -1 && (!string.IsNullOrWhiteSpace(lbl_seleccionfecha.Text))
+                && cliente == null && session != null && !errorAdv_nombre.Visible && !errorAdv_apellido.Visible && !errorAdv_cuil.Visible && !errorAdv_doc.Visible
+                && !errorAdv_tel.Visible && !errorAdv_mail.Visible && !errorAdv_fecha.Visible && !errorAdv_calle.Visible && !errorAdv_calle.Visible
+                && !errorAdv_piso.Visible && !errorAdv_localidad.Visible && !errorAdv_titular.Visible && !errorAdv_cvv.Visible && !errorAdv_nrotarjeta.Visible
+                && !errorAdv_nro.Visible && !errorAdv_cp.Visible)
+            {
+                if (!Database.cuilDuplicado(textBox_cuil.Text))
+                {
+                    string fechasistema = ConfigurationManager.AppSettings["FechaSistema"].ToString();
+                    DateTime fechasistema_dt = DateTime.Parse(fechasistema);
+                    lbl_fechacreacion.Text = fechasistema_dt.ToShortDateString();
+
+                    SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
+                    sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
+                    sql.Parameters.AddWithValue("@titular", textBox_titular.Text);
+                    sql.Parameters.AddWithValue("@nro", textBox_nrotarjeta.Text);
+                    sql.Parameters.AddWithValue("@cvv", textBox_cvv.Text);
+                    Database.execNonQuery(sql);
+
+                    SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
+                    string idtarjeta = Database.getValue(cmd);
+
+                    Usuario user = new Usuario(textBox_nombre.Text.ToLower()+textBox_apellido.Text+Database.ultimoIdAlmacenado(), textBox_doc.Text);
+                    Database.guardarUsuarioAdmin(user);
+                    string iduser = Database.getIDFor(user);
+
+                    SqlCommand q = Database.createQuery("INSERT INTO SQLITO.Roles_Usuarios VALUES(3,@id)");
+                    q.Parameters.AddWithValue("@id", iduser);
+                    Database.execNonQuery(q);
+
+                    Cliente nuevoCliente = new Cliente(textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
+                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, ConfigurationManager.AppSettings["FechaSistema"].ToString(), textBox_mail.Text,
+                        (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
+                        textBox_tel.Text, idtarjeta, iduser, "1");
+                    Database.guardarCliente(nuevoCliente);
+
+                    MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
+
+                    this.Close();
+                }
+
+                else
+                {
+                    MessageBox.Show("CUIL Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                    textBox_cuil.Focus();
                     return;
                 }
             }
@@ -658,35 +710,45 @@ namespace PalcoNet.Registro_de_Usuario
                     else
                     {
                         MessageBox.Show("CUIL Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                        textBox_cuil.Focus();
                         return;
                     }
                 }
 
                 else
                 {
-                    string fechacreacion_str = cliente.fecha_creacion;
-                    DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
-                    lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
+                    if (!Database.cuilDuplicado(textBox_cuil.Text))
+                    {
+                        string fechacreacion_str = cliente.fecha_creacion;
+                        DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
+                        lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
 
-                    SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
-                    sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
-                    sql.Parameters.AddWithValue("@titular", textBox_titular.Text);
-                    sql.Parameters.AddWithValue("@nro", textBox_nrotarjeta.Text);
-                    sql.Parameters.AddWithValue("@cvv", textBox_cvv.Text);
-                    Database.execNonQuery(sql);
+                        SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
+                        sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
+                        sql.Parameters.AddWithValue("@titular", textBox_titular.Text);
+                        sql.Parameters.AddWithValue("@nro", textBox_nrotarjeta.Text);
+                        sql.Parameters.AddWithValue("@cvv", textBox_cvv.Text);
+                        Database.execNonQuery(sql);
 
-                    SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
-                    string idtarjeta = Database.getValue(cmd);
+                        SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
+                        string idtarjeta = Database.getValue(cmd);
 
-                    Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
-                    comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
-                    (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                    textBox_tel.Text, idtarjeta, cliente.iduser, cliente.estado);
+                        Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
+                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
+                        (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
+                        textBox_tel.Text, idtarjeta, cliente.iduser, cliente.estado);
 
-                    Database.actualizarCliente(clienteModificado);
+                        Database.actualizarCliente(clienteModificado);
 
-                    MessageBox.Show("Cliente modificado con éxito", "", MessageBoxButtons.OK);
-                    this.Close();
+                        MessageBox.Show("Cliente modificado con éxito", "", MessageBoxButtons.OK);
+                        this.Close();
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("CUIL Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                        return;
+                    }
                 }
             }
 
@@ -786,21 +848,22 @@ namespace PalcoNet.Registro_de_Usuario
                     this.Hide();
                     new Login.Login().Show();
                 }
-
+              
                 else
                 {
-                    ep.Clear();
+                    MessageBox.Show("CUIT Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
                     return;
                 }
             }
-
+                
             else
             {
-                MessageBox.Show("CUIT Duplicado, intente nuevamente", "", MessageBoxButtons.OK);
+                ep.Clear();
                 return;
             }
-        }
-
+        }          
+    
+    
         private void btn_backempresa_Click(object sender, EventArgs e)
         {
             groupBox_empresa.Enabled = false;

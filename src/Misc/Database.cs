@@ -381,6 +381,35 @@ namespace PalcoNet.Misc
             execNonQuery(query);
         }
 
+        public static void guardarUsuarioAdmin(Usuario user)
+        {
+            SqlCommand query = createQuery("INSERT INTO SQLITO.Usuarios VALUES(@username,@password,0,1,0)");
+            query.Parameters.AddWithValue("@username", user.username);
+            query.Parameters.AddWithValue("@password", encriptarPassword(user.password));
+            execNonQuery(query);
+        }
+
+        public static string ultimoIdAlmacenado()
+        {
+            SqlCommand query = createQuery("SELECT TOP 1 id_usuario FROM SQLITO.Usuarios ORDER BY 1 DESC");
+            var parcial = Int32.Parse(getValue(query)) + 1;
+            return parcial.ToString();
+        }
+
+        public static Boolean tieneContraseniaActivada(Usuario user)
+        {
+            SqlCommand sql = createQuery("SELECT contraseniaActivada FROM SQLITO.Usuarios WHERE username = @usr");
+            sql.Parameters.AddWithValue("@usr", user.username);
+            var ret = Boolean.Parse(getValue(sql));
+
+            if (ret)
+            {
+                return true;
+            }
+
+            else return false;
+        }
+
         public static void actualizarCliente(Cliente cliente)
         {
             SqlCommand query = createQuery(@"UPDATE SQLITO.Clientes SET nombre = @nom, apellido = @ap, cuil = @cuil, tipo_documento = @tipodoc,
@@ -452,6 +481,14 @@ namespace PalcoNet.Misc
         #endregion
 
         #region Clientes
+
+        public static Boolean documentoRepetido(string tipodoc, string nrodoc)
+        {
+            SqlCommand sql = createQuery("SELECT COUNT(*) FROM SQLITO.Clientes WHERE tipo_documento = @tipodoc AND numero_documento = @nrodoc");
+            sql.Parameters.AddWithValue("@tipodoc", tipodoc);
+            sql.Parameters.AddWithValue("@nrodoc", nrodoc);
+            return (Convert.ToInt32(getValue(sql)) != 0);
+        }
 
         public static string getIdPorUsuario(Usuario user)
         {
