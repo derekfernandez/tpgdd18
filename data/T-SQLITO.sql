@@ -60,7 +60,7 @@ IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
 THROW 50000, 'CUIT YA EXISTENTE', 1
 
 IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
-THROW 50000, 'ERROR CUIT NO VALIDO', 1
+THROW 50000, 'CUIT NO VALIDO', 1
  
 SET @fecha_creacion = GETDATE()
 SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
@@ -127,12 +127,47 @@ DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity);
 SELECT ERROR_MESSAGE()
 end catch
 end
+GO
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Modificar_Empresa')
+BEGIN
+	DROP PROCEDURE pr_Modificar_Empresa
+END
+GO
+CREATE proc [dbo].[pr_Modificar_Empresa](@razonsocial nvarchar(255), 
+    @cuit nvarchar(255),
+    @mail nvarchar(50),
+    @direccion nvarchar(255),
+    @telefono nvarchar(30),
+	@idEmpresa int)
+as
+begin
 
+--Razon Social Repetida
+IF EXISTS (select 1 from SQLITO.Empresas where razonsocial = @razonsocial)
+THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+
+--Cuit Repetido
+IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
+THROW 50000, 'CUIT YA EXISTENTE', 1
+
+IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
+THROW 50000, 'CUIT NO VALIDO', 1
+ 
+begin try
+begin transaction
+update [GD2C2018].[SQLITO].[Empresas] set razonsocial = @razonsocial,cuit =@cuit,mail=@mail,direccion=@direccion,telefono=@telefono where id_empresa =@idEmpresa
+commit transaction
+end try
+
+begin catch
+ROLLBACK TRANSACTION
+THROW
+end catch
+
+END
 /*Si llegase a romper el identity usar:
 GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
-
-
 

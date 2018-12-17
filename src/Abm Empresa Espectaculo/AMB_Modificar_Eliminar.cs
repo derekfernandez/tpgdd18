@@ -115,7 +115,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
 
 
-                string actualizar = string.Format("EXEC pr'{0}',cuit = '{1}',mail= '{2}', direccion = '{3}', telefono = '{4}'  where id_empresa = '{5}'", razonSocial, cuit, mail, direccion, telefono, id_Empresa);
+                string actualizar = string.Format("EXEC pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}'", razonSocial, cuit, mail, direccion, telefono, id_Empresa);
                
                 try
                 {
