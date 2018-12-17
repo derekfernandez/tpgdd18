@@ -46,16 +46,16 @@
             // 
             this.lbTitulo.AutoSize = true;
             this.lbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitulo.Location = new System.Drawing.Point(12, 9);
+            this.lbTitulo.Location = new System.Drawing.Point(54, 18);
             this.lbTitulo.Name = "lbTitulo";
-            this.lbTitulo.Size = new System.Drawing.Size(308, 13);
+            this.lbTitulo.Size = new System.Drawing.Size(312, 13);
             this.lbTitulo.TabIndex = 0;
-            this.lbTitulo.Text = "EMPRESAS CON MENOS LOCALIDADES VENDIDAS";
+            this.lbTitulo.Text = "EMPRESAS CON MAS LOCALIDADES NO VENDIDAS";
             // 
             // lbGrado
             // 
             this.lbGrado.AutoSize = true;
-            this.lbGrado.Location = new System.Drawing.Point(25, 52);
+            this.lbGrado.Location = new System.Drawing.Point(79, 53);
             this.lbGrado.Name = "lbGrado";
             this.lbGrado.Size = new System.Drawing.Size(36, 13);
             this.lbGrado.TabIndex = 1;
@@ -65,16 +65,16 @@
             // 
             this.comboGrado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboGrado.FormattingEnabled = true;
-            this.comboGrado.Location = new System.Drawing.Point(67, 48);
+            this.comboGrado.Location = new System.Drawing.Point(124, 50);
             this.comboGrado.Name = "comboGrado";
-            this.comboGrado.Size = new System.Drawing.Size(96, 21);
+            this.comboGrado.Size = new System.Drawing.Size(86, 21);
             this.comboGrado.TabIndex = 2;
             // 
             // btnGenerar
             // 
-            this.btnGenerar.Location = new System.Drawing.Point(192, 48);
+            this.btnGenerar.Location = new System.Drawing.Point(243, 49);
             this.btnGenerar.Name = "btnGenerar";
-            this.btnGenerar.Size = new System.Drawing.Size(95, 23);
+            this.btnGenerar.Size = new System.Drawing.Size(90, 23);
             this.btnGenerar.TabIndex = 3;
             this.btnGenerar.Text = "Generar";
             this.btnGenerar.UseVisualStyleBackColor = true;
@@ -83,9 +83,9 @@
             // dgvEmpresas
             // 
             this.dgvEmpresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmpresas.Location = new System.Drawing.Point(36, 86);
+            this.dgvEmpresas.Location = new System.Drawing.Point(24, 91);
             this.dgvEmpresas.Name = "dgvEmpresas";
-            this.dgvEmpresas.Size = new System.Drawing.Size(251, 163);
+            this.dgvEmpresas.Size = new System.Drawing.Size(368, 160);
             this.dgvEmpresas.TabIndex = 4;
             // 
             // gD2C2018DataSet
@@ -100,7 +100,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(114, 265);
+            this.btnVolver.Location = new System.Drawing.Point(169, 268);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(95, 23);
             this.btnVolver.TabIndex = 5;
@@ -112,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(331, 300);
+            this.ClientSize = new System.Drawing.Size(416, 303);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dgvEmpresas);
             this.Controls.Add(this.btnGenerar);
@@ -120,7 +120,7 @@
             this.Controls.Add(this.lbGrado);
             this.Controls.Add(this.lbTitulo);
             this.Name = "ListadoPeoresEmpresas";
-            this.Text = "ListadoPeoresEmpresas";
+            this.Text = "Estadísticas - Peores Vendedoras";
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpresas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSetBindingSource)).EndInit();

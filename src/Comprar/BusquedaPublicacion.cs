@@ -239,10 +239,5 @@ namespace PalcoNet.Comprar
 
         #endregion Eventos
 
-        private void BusquedaPublicacion_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

@@ -28,12 +28,14 @@ namespace PalcoNet.Listado_Estadistico
         
         public ListadoPeoresEmpresas(int anio, int trimestre)
         {
+            
             InitializeComponent();
 
             errorProvider = new ErrorProvider();
 
             this.anio = anio;
-            this.trimestre = trimestre;
+            //Al trimestre le sumo 1, el indice del ComboBox arranca en 0
+            this.trimestre = trimestre + 1;
 
             String query = "SELECT id_grado, descripcion FROM SQLITO.Grados";
             SqlCommand cmd = new SqlCommand(query, Database.getConnection());
@@ -62,14 +64,23 @@ namespace PalcoNet.Listado_Estadistico
             errorProvider.Clear();
 
             //Query para ejecutar el SP; devuelve la tabla con los valores a cargar en la dgv
-            String query = "DECLARE @anio INT = " + anio + ";" + "DECLARE @trimestre INT = " + trimestre + ";";
+            String query = "DECLARE @anio INT = " + this.anio + ";" + "DECLARE @trimestre INT = " + this.trimestre + ";";
             query += ("DECLARE @grado INT = " + Convert.ToInt32(comboGrado.SelectedValue) + ";");
             query += "EXEC estadistica_empresasMenosVendedoras @anio, @trimestre, @grado";
 
             SqlCommand cmd = new SqlCommand(query, Database.getConnection());
             dgvEmpresas.DataSource = Database.getTable(cmd);
             dgvEmpresas.Columns[0].HeaderText = "Razon social";
-            dgvEmpresas.Columns[1].HeaderText = "Localidades no vendidas";
+            dgvEmpresas.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgvEmpresas.Columns[1].HeaderText = "Mes";
+            dgvEmpresas.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEmpresas.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvEmpresas.Columns[2].HeaderText = "Año";
+            dgvEmpresas.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEmpresas.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvEmpresas.Columns[3].HeaderText = "Localidades no vendidas";
+            dgvEmpresas.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEmpresas.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
 

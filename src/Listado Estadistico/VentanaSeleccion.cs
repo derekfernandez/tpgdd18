@@ -27,7 +27,9 @@ namespace PalcoNet.Listado_Estadistico
 
         private void btnPeoresEmpresas_Click(object sender, EventArgs e)
         {
-            
+
+            errorProvider.Clear();
+
             if (dtpAño.Value == null)
             {
                 errorProvider.SetError(dtpAño, "Debe ingresar un año");
@@ -40,15 +42,16 @@ namespace PalcoNet.Listado_Estadistico
             }
 
             errorProvider.Clear();
-            ListadoPeoresEmpresas lpe = new ListadoPeoresEmpresas(dtpAño.Value.Year,
-                                            EstadisticasUtils.ObtenerNumeroTrimestre(comboTrim.SelectedItem.ToString()));
+            ListadoPeoresEmpresas lpe = new ListadoPeoresEmpresas(dtpAño.Value.Year, comboTrim.SelectedIndex);
             lpe.ShowDialog();
 
         }
 
         private void btnClientesPuntos_Click(object sender, EventArgs e)
         {
-            
+
+            errorProvider.Clear();
+
             if (dtpAño.Value == null)
             {
                 errorProvider.SetError(dtpAño, "Debe ingresar un año");
@@ -60,10 +63,27 @@ namespace PalcoNet.Listado_Estadistico
                 return;
             }
 
-            errorProvider.Clear();
-            ListadoClientesPuntos lcp = new ListadoClientesPuntos(dtpAño.Value.Year,
-                                            EstadisticasUtils.ObtenerNumeroTrimestre(comboTrim.SelectedItem.ToString()));
+            ListadoClientesPuntos lcp = new ListadoClientesPuntos(dtpAño.Value.Year, comboTrim.SelectedIndex);
             lcp.ShowDialog();
+
+        }
+
+        private void btnMejoresCompradores_Click(object sender, EventArgs e)
+        {
+
+            if (dtpAño.Value == null)
+            {
+                errorProvider.SetError(dtpAño, "Debe ingresar un año");
+                return;
+            }
+            else if (comboTrim.SelectedIndex < 0)
+            {
+                errorProvider.SetError(comboTrim, "Debe elegir un trimestre");
+                return;
+            }
+
+            ListadoMayoresCompradores lmc = new ListadoMayoresCompradores(dtpAño.Value.Year, comboTrim.SelectedIndex);
+            lmc.ShowDialog();
 
         }
 

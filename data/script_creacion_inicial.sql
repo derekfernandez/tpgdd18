@@ -1051,13 +1051,13 @@ FROM gd_esquema.Maestra
 */
 
 -- Actualizar las Publicaciones que tienen las localidades agotadas, y marcarlas como Finalizadas --
-IF OBJECT_ID('[SQLITO].[SP_tieneUbicacionesAgotadas]') IS NOT NULL
+IF OBJECT_ID('[SQLITO].[SP_CorregirEstadoPublicaciones]') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [SQLITO].[SP_tieneUbicacionesAgotadas]
+	DROP PROCEDURE [SQLITO].[SP_CorregirEstadoPublicaciones]
 END
 GO
 
-CREATE PROCEDURE [SQLITO].[SP_tieneUbicacionesAgotadas]
+CREATE PROCEDURE [SQLITO].[SP_CorregirEstadoPublicaciones]
 AS
 BEGIN
 
@@ -1101,6 +1101,7 @@ BEGIN
 			   WHERE id_publicacion = cod_publicacion) = 1
 
 END
+GO
 
 --- INSERTS ---
 
@@ -1243,7 +1244,7 @@ PRINT('Datos existentes migrados a la tabla SQLITO.Compras. Nuevas Filas: ' + @v
 
 -- CORRECCION DE PUBLICACIONES MIGRADAS --
 
-EXEC [SQLITO].[SP_tieneUbicacionesAgotadas]
+EXEC [SQLITO].[SP_CorregirEstadoPublicaciones]
 
 -- MIGRACION DE FACTURAS -- 
 
@@ -1446,9 +1447,48 @@ PRINT ('Script de Migracion Finalizado')
 
 --- FUNCIONES PARA LLAMAR DESDE C# EN LOS ABMs ---
 
---Para ABM de Estadisticas--
+-- PARA ABM DE ESTADISTICAS --
 
---Llenar tabla temporal con empresas con mas localidades no vendidas
+--Obtener el nombre de un mes a partir de su numero, para el listado de empresas con
+--mas localidades no vendidas por mes
+IF OBJECT_ID('[SQLITO].[nombreMes]') IS NOT NULL
+BEGIN
+
+	DROP FUNCTION [SQLITO].[nombreMes]
+
+END
+GO
+
+CREATE FUNCTION [SQLITO].[nombreMes]
+(@numeroMes INT)
+RETURNS NVARCHAR(30)
+BEGIN
+
+	DECLARE @nombre NVARCHAR(30)
+
+	--Segun el numero de mes (parametro) escribo el nombre del mismo en la variable a retornar
+	SET @nombre =
+		CASE @numeroMes
+			WHEN 1 THEN 'Enero'
+			WHEN 2 THEN 'Febrero'
+			WHEN 3 THEN 'Marzo'
+			WHEN 4 THEN 'Abril'
+			WHEN 5 THEN 'Mayo'
+			WHEN 6 THEN 'Junio'
+			WHEN 7 THEN 'Julio'
+			WHEN 8 THEN 'Agosto'
+			WHEN 9 THEN 'Septiembre'
+			WHEN 10 THEN 'Octubre'
+			WHEN 11 THEN 'Noviembre'
+			WHEN 12 THEN 'Diciembre'
+		END
+
+	RETURN @nombre
+
+END
+GO
+
+--Devolver tabla con empresas con mas localidades no vendidas
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'estadistica_empresasMenosVendedoras')
 BEGIN
 
@@ -1463,6 +1503,8 @@ AS
 BEGIN
 	
 	SELECT TOP 5 E.razonsocial,
+		   [SQLITO].[nombreMes](MONTH(P.fecha_funcion)),
+		   YEAR(P.fecha_funcion),
 	       COUNT(*)
 	FROM [SQLITO].[Empresas] AS E
 		JOIN [SQLITO].[Publicaciones] AS P ON (empresa_id = id_empresa)
@@ -1473,14 +1515,14 @@ BEGIN
 		AND (DATEPART(QUARTER, P.fecha_funcion) = @trimestre)
 		AND (YEAR(P.fecha_funcion) = @anio)
 		AND (P.grado_id = @grado)
-	GROUP BY id_empresa, razonsocial
+	GROUP BY id_empresa, razonsocial, MONTH(P.fecha_funcion), YEAR(P.fecha_funcion)
 	ORDER BY COUNT(*) DESC
 
 END
 GO
 
 
---Llenar tabla temporal con clientes con mayor cantidad de puntos vencidos
+--Devolver tabla con clientes con mayor cantidad de puntos vencidos 
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'estadistica_clientesConMasPuntosVencidos')
 BEGIN
 
@@ -1494,7 +1536,7 @@ CREATE PROCEDURE estadistica_clientesConMasPuntosVencidos
 AS
 BEGIN
 
-	--Creo una variable para almacenar el primer dia del trimestre y del añp ingresados
+	--Creo una variable para almacenar el primer dia del trimestre y del año ingresados
 	--por parametro. Al año 0 (1/1/1900) le agrego los años que pasaron entre el 
 	--parametro y ese, y le sumo tantos trimestres como se haya especificado en el parametro
 	DECLARE @fechaParametro SMALLDATETIME
@@ -1513,6 +1555,38 @@ BEGIN
 
 END
 GO
+
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'estadistica_clientesConMasCompras')
+BEGIN
+
+	DROP PROCEDURE estadistica_clientesConMasCompras
+
+END
+GO
+
+CREATE PROCEDURE estadistica_clientesConMasCompras
+	(@anio INT, @trimestre INT)
+
+AS
+BEGIN
+	
+	SELECT TOP 5 CL.nombre,
+				 CL.apellido,
+				 E.razonsocial,
+				 COUNT(*)
+	FROM SQLITO.Clientes AS CL
+		JOIN SQLITO.Compras AS CO ON (CO.cliente_id = CL.id_cliente)
+		JOIN SQLITO.Ubicaciones AS U ON (CO.ubicacion_id = U.id_ubicacion)
+		JOIN SQLITO.Publicaciones AS P ON (U.publicacion_id = P.cod_publicacion)
+		JOIN SQLITO.Empresas AS E ON (P.empresa_id = E.id_empresa)
+	WHERE (YEAR(CO.fecha_realizacion) = @anio)
+		AND (DATEPART(QUARTER, CO.fecha_realizacion) = @trimestre)
+	GROUP BY CL.nombre, CL.apellido, E.id_empresa, E.razonsocial
+	ORDER BY COUNT(*) DESC
+
+END
+GO
+
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Alta_Empresa')
 BEGIN
 

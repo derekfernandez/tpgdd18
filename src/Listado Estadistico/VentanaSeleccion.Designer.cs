@@ -56,7 +56,7 @@
             this.gbPeriodo.Controls.Add(this.lbTrimestre);
             this.gbPeriodo.Controls.Add(this.dtpAño);
             this.gbPeriodo.Controls.Add(this.lbAño);
-            this.gbPeriodo.Location = new System.Drawing.Point(33, 64);
+            this.gbPeriodo.Location = new System.Drawing.Point(41, 64);
             this.gbPeriodo.Name = "gbPeriodo";
             this.gbPeriodo.Size = new System.Drawing.Size(215, 102);
             this.gbPeriodo.TabIndex = 1;
@@ -104,7 +104,7 @@
             // 
             // btnPeoresEmpresas
             // 
-            this.btnPeoresEmpresas.Location = new System.Drawing.Point(33, 182);
+            this.btnPeoresEmpresas.Location = new System.Drawing.Point(41, 182);
             this.btnPeoresEmpresas.Name = "btnPeoresEmpresas";
             this.btnPeoresEmpresas.Size = new System.Drawing.Size(215, 23);
             this.btnPeoresEmpresas.TabIndex = 2;
@@ -114,7 +114,7 @@
             // 
             // btnClientesPuntos
             // 
-            this.btnClientesPuntos.Location = new System.Drawing.Point(33, 221);
+            this.btnClientesPuntos.Location = new System.Drawing.Point(41, 221);
             this.btnClientesPuntos.Name = "btnClientesPuntos";
             this.btnClientesPuntos.Size = new System.Drawing.Size(215, 23);
             this.btnClientesPuntos.TabIndex = 3;
@@ -124,12 +124,13 @@
             // 
             // btnMejoresCompradores
             // 
-            this.btnMejoresCompradores.Location = new System.Drawing.Point(33, 259);
+            this.btnMejoresCompradores.Location = new System.Drawing.Point(41, 259);
             this.btnMejoresCompradores.Name = "btnMejoresCompradores";
             this.btnMejoresCompradores.Size = new System.Drawing.Size(215, 23);
             this.btnMejoresCompradores.TabIndex = 4;
             this.btnMejoresCompradores.Text = "Clientes con más compras";
             this.btnMejoresCompradores.UseVisualStyleBackColor = true;
+            this.btnMejoresCompradores.Click += new System.EventHandler(this.btnMejoresCompradores_Click);
             // 
             // VentanaSeleccion
             // 
@@ -142,7 +143,7 @@
             this.Controls.Add(this.gbPeriodo);
             this.Controls.Add(this.lbTitulo);
             this.Name = "VentanaSeleccion";
-            this.Text = "Form1";
+            this.Text = "Estadísticas";
             this.gbPeriodo.ResumeLayout(false);
             this.gbPeriodo.PerformLayout();
             this.ResumeLayout(false);

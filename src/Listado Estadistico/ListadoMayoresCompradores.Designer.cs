@@ -1,6 +1,6 @@
 ﻿namespace PalcoNet.Listado_Estadistico
 {
-    partial class ListadoClientesPuntos
+    partial class ListadoMayoresCompradores
     {
         /// <summary>
         /// Required designer variable.
@@ -29,50 +29,50 @@
         private void InitializeComponent()
         {
             this.lbTitulo = new System.Windows.Forms.Label();
+            this.dgvClientes = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.dgvPuntos = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPuntos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // lbTitulo
             // 
             this.lbTitulo.AutoSize = true;
-            this.lbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitulo.Location = new System.Drawing.Point(71, 13);
+            this.lbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTitulo.Location = new System.Drawing.Point(115, 12);
             this.lbTitulo.Name = "lbTitulo";
-            this.lbTitulo.Size = new System.Drawing.Size(249, 13);
+            this.lbTitulo.Size = new System.Drawing.Size(323, 17);
             this.lbTitulo.TabIndex = 0;
-            this.lbTitulo.Text = "CLIENTES CON MAS PUNTOS VENCIDOS";
+            this.lbTitulo.Text = "MAYORES COMPRADORES POR EMPRESA";
+            // 
+            // dgvClientes
+            // 
+            this.dgvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvClientes.Location = new System.Drawing.Point(33, 49);
+            this.dgvClientes.Name = "dgvClientes";
+            this.dgvClientes.Size = new System.Drawing.Size(474, 146);
+            this.dgvClientes.TabIndex = 7;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(157, 227);
+            this.btnVolver.Location = new System.Drawing.Point(246, 206);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
-            this.btnVolver.TabIndex = 1;
+            this.btnVolver.TabIndex = 8;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // dgvPuntos
-            // 
-            this.dgvPuntos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPuntos.Location = new System.Drawing.Point(20, 37);
-            this.dgvPuntos.Name = "dgvPuntos";
-            this.dgvPuntos.Size = new System.Drawing.Size(344, 181);
-            this.dgvPuntos.TabIndex = 2;
-            // 
-            // ListadoClientesPuntos
+            // ListadoMayoresCompradores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 262);
-            this.Controls.Add(this.dgvPuntos);
+            this.ClientSize = new System.Drawing.Size(544, 238);
             this.Controls.Add(this.btnVolver);
+            this.Controls.Add(this.dgvClientes);
             this.Controls.Add(this.lbTitulo);
-            this.Name = "ListadoClientesPuntos";
-            this.Text = "Estadísticas - Clientes con Más Puntos Vencidos";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPuntos)).EndInit();
+            this.Name = "ListadoMayoresCompradores";
+            this.Text = "Estadísticas - Mayores Compradores";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,7 +81,7 @@
         #endregion
 
         private System.Windows.Forms.Label lbTitulo;
+        private System.Windows.Forms.DataGridView dgvClientes;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.DataGridView dgvPuntos;
     }
 }

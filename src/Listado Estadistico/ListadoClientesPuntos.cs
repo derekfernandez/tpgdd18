@@ -33,16 +33,22 @@ namespace PalcoNet.Listado_Estadistico
 
             //Le seteo los atributos que me pasaron por parametro, VentanaSeleccion los definio
             this.anio = anio;
-            this.trimestre = trimestre;
+            //Al trimestre le sumo 1, el indice del ComboBox arranca en 0
+            this.trimestre = trimestre + 1;
 
-            String query = "DECLARE @anio INT = " + anio + ";" + "DECLARE @trimestre INT = " + trimestre + ";";
+            String query = "DECLARE @anio INT = " + this.anio + ";" + "DECLARE @trimestre INT = " + this.trimestre + ";";
             query += "EXEC estadistica_clientesConMasPuntosVencidos @anio, @trimestre";
             SqlCommand cmd = Database.createQuery(query);
 
             dgvPuntos.DataSource = Database.getTable(cmd);
             dgvPuntos.Columns[0].HeaderText = "Nombre";
+            dgvPuntos.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvPuntos.Columns[1].HeaderText = "Apellido";
+            dgvPuntos.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvPuntos.Columns[2].HeaderText = "Puntos vencidos";
+            dgvPuntos.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvPuntos.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvPuntos.AllowUserToAddRows = false;
 
         }
 
