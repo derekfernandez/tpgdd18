@@ -22,6 +22,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             InitializeComponent();
         }
 
+        private void ABM_empresa_publicacion_Load(object sender, EventArgs e)
+        {
+
+        }
 
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -39,7 +43,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
-        public void asignarNulos() 
+        public void controlarNulos () 
         {
          foreach (Control c in Controls)
             {
@@ -53,50 +57,44 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
             }
         }
-        public Boolean todosNulos() 
-        {
-            foreach (Control c in Controls)
-            {
 
-                if (c is TextBox && c.Text.Trim() != "")
-                {
-
-                    return false;
-
-                }
-
-            }
-            return true;
-        }
         private void btnCargar_Click(object sender, EventArgs e)
         {
             string select = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
-       
-            if(todosNulos())
+            string error;
+
+            if(1==0)
             {
-                MessageBox.Show("Ingrese una empresa por favor");
+                MessageBox.Show("Error: " + error);
             }
             else
             {
-              try
-                {
+               try
+            {
                    /*Lo mejor seria agregar un stored proc que ejecute todo lo siguiente:
                     * Genere Validaciones de CUIT y demas, agregue la fecha actual*/
 
-                asignarNulos();
+                controlarNulos();
 
                 string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
+                
+                Database.ejecutarNonQueryShort(insert);
+                MessageBox.Show("Empresa agregadas ");
 
-                Database.ejecutarProc(insert);
-
-                MessageBox.Show("Empresa agregada correctamente");
-                mostrarUsuarioAsignado();
-                 }
-              catch (Exception ex)
-                 {
-                   MessageBox.Show("Error al insertar la empresa: " + ex.Message);
-                 }
+                
             }
+            catch(Exception exp) 
+            {
+                 MessageBox.Show("Error al ejecutar la query: " + exp.Message);
+            }
+            finally
+            {
+                Database.cerrar();
+            }
+            }
+
+
+          
             
         }
 
@@ -130,14 +128,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void ABM_Alta_Empresa_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
-        }
-
-        public void mostrarUsuarioAsignado() 
-        {
-            this.Hide();
-            Abm_Empresa_Espectaculo.MostrarUsuarioAsignado nuevoUsuario = new MostrarUsuarioAsignado();
-            nuevoUsuario.Show();
+            this.Close();
         }
 
         
