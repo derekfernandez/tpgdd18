@@ -229,21 +229,21 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelRazonSocial;
-        private System.Windows.Forms.Label labelMail;
         public System.Windows.Forms.Label labelTelefono;
         public System.Windows.Forms.Label labelCUIT;
-        private System.Windows.Forms.TextBox textBoxRazonSocial;
-        private System.Windows.Forms.TextBox textBoxMail;
-        private System.Windows.Forms.TextBox textBoxTelefono;
-        private System.Windows.Forms.TextBox textBoxCuit;
-        private System.Windows.Forms.TextBox textBoxDireccion;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Button btnCargar;
-        private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label labelRazonSocial;
+        public System.Windows.Forms.Label labelMail;
+        public System.Windows.Forms.TextBox textBoxRazonSocial;
+        public System.Windows.Forms.TextBox textBoxMail;
+        public System.Windows.Forms.TextBox textBoxTelefono;
+        public System.Windows.Forms.TextBox textBoxCuit;
+        public System.Windows.Forms.TextBox textBoxDireccion;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Button btnVolver;
+        public System.Windows.Forms.Button btnCargar;
+        public System.Windows.Forms.Button btnLimpiar;
+        public System.Windows.Forms.Label label1;
 
     }
 }

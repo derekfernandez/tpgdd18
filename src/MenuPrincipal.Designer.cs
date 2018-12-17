@@ -35,8 +35,9 @@
             this.menu_clientes = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_empresas = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_grados = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_comisiones = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_rubros = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_stats = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_comisiones = new System.Windows.Forms.ToolStripMenuItem();
             this.menuclientes = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_compras = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_historial = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +50,6 @@
             this.menu_datoscuenta = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_cerrarsesion = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.menu_rubros = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +63,8 @@
             this.menucuenta});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(431, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
+            this.menuStrip1.Size = new System.Drawing.Size(862, 44);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -78,50 +79,57 @@
             this.menu_stats,
             this.menu_comisiones});
             this.menuadmin.Name = "menuadmin";
-            this.menuadmin.Size = new System.Drawing.Size(100, 20);
+            this.menuadmin.Size = new System.Drawing.Size(186, 36);
             this.menuadmin.Text = "Administración";
             // 
             // menu_roles
             // 
             this.menu_roles.Name = "menu_roles";
-            this.menu_roles.Size = new System.Drawing.Size(208, 22);
+            this.menu_roles.Size = new System.Drawing.Size(359, 36);
             this.menu_roles.Text = "ABM Roles";
             this.menu_roles.Click += new System.EventHandler(this.menu_roles_Click);
             // 
             // menu_clientes
             // 
             this.menu_clientes.Name = "menu_clientes";
-            this.menu_clientes.Size = new System.Drawing.Size(208, 22);
+            this.menu_clientes.Size = new System.Drawing.Size(359, 36);
             this.menu_clientes.Text = "ABM Clientes";
             this.menu_clientes.Click += new System.EventHandler(this.menu_clientes_Click);
             // 
             // menu_empresas
             // 
             this.menu_empresas.Name = "menu_empresas";
-            this.menu_empresas.Size = new System.Drawing.Size(208, 22);
+            this.menu_empresas.Size = new System.Drawing.Size(359, 36);
             this.menu_empresas.Text = "ABM Empresas";
             this.menu_empresas.Click += new System.EventHandler(this.menu_empresas_Click);
             // 
             // menu_grados
             // 
             this.menu_grados.Name = "menu_grados";
-            this.menu_grados.Size = new System.Drawing.Size(208, 22);
+            this.menu_grados.Size = new System.Drawing.Size(359, 36);
             this.menu_grados.Text = "ABM Grados";
             this.menu_grados.Click += new System.EventHandler(this.menu_grados_Click);
             // 
-            // menu_comisiones
+            // menu_rubros
             // 
-            this.menu_comisiones.Name = "menu_comisiones";
-            this.menu_comisiones.Size = new System.Drawing.Size(208, 22);
-            this.menu_comisiones.Text = "Rendición de Comisiones";
-            this.menu_comisiones.Click += new System.EventHandler(this.menu_comisiones_Click);
+            this.menu_rubros.Name = "menu_rubros";
+            this.menu_rubros.Size = new System.Drawing.Size(359, 36);
+            this.menu_rubros.Text = "ABM Rubros";
+            this.menu_rubros.Click += new System.EventHandler(this.menu_rubros_Click);
             // 
             // menu_stats
             // 
             this.menu_stats.Name = "menu_stats";
-            this.menu_stats.Size = new System.Drawing.Size(208, 22);
+            this.menu_stats.Size = new System.Drawing.Size(359, 36);
             this.menu_stats.Text = "Estadísticas";
             this.menu_stats.Click += new System.EventHandler(this.menu_stats_Click);
+            // 
+            // menu_comisiones
+            // 
+            this.menu_comisiones.Name = "menu_comisiones";
+            this.menu_comisiones.Size = new System.Drawing.Size(359, 36);
+            this.menu_comisiones.Text = "Rendición de Comisiones";
+            this.menu_comisiones.Click += new System.EventHandler(this.menu_comisiones_Click);
             // 
             // menuclientes
             // 
@@ -130,27 +138,27 @@
             this.menu_historial,
             this.menu_puntos});
             this.menuclientes.Name = "menuclientes";
-            this.menuclientes.Size = new System.Drawing.Size(61, 20);
+            this.menuclientes.Size = new System.Drawing.Size(112, 36);
             this.menuclientes.Text = "Clientes";
             // 
             // menu_compras
             // 
             this.menu_compras.Name = "menu_compras";
-            this.menu_compras.Size = new System.Drawing.Size(211, 22);
+            this.menu_compras.Size = new System.Drawing.Size(364, 36);
             this.menu_compras.Text = "Compra de ubicaciones";
             this.menu_compras.Click += new System.EventHandler(this.menu_compras_Click);
             // 
             // menu_historial
             // 
             this.menu_historial.Name = "menu_historial";
-            this.menu_historial.Size = new System.Drawing.Size(211, 22);
+            this.menu_historial.Size = new System.Drawing.Size(364, 36);
             this.menu_historial.Text = "Historial de compras";
             this.menu_historial.Click += new System.EventHandler(this.menu_historial_Click);
             // 
             // menu_puntos
             // 
             this.menu_puntos.Name = "menu_puntos";
-            this.menu_puntos.Size = new System.Drawing.Size(211, 22);
+            this.menu_puntos.Size = new System.Drawing.Size(364, 36);
             this.menu_puntos.Text = "Administración de puntos";
             this.menu_puntos.Click += new System.EventHandler(this.menu_puntos_Click);
             // 
@@ -159,7 +167,7 @@
             this.menuempresas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_publicaciones});
             this.menuempresas.Name = "menuempresas";
-            this.menuempresas.Size = new System.Drawing.Size(69, 20);
+            this.menuempresas.Size = new System.Drawing.Size(127, 36);
             this.menuempresas.Text = "Empresas";
             // 
             // menu_publicaciones
@@ -168,20 +176,20 @@
             this.submenu_generarpublicacion,
             this.submenu_editarpublicacion});
             this.menu_publicaciones.Name = "menu_publicaciones";
-            this.menu_publicaciones.Size = new System.Drawing.Size(147, 22);
+            this.menu_publicaciones.Size = new System.Drawing.Size(234, 36);
             this.menu_publicaciones.Text = "Publicaciones";
             // 
             // submenu_generarpublicacion
             // 
             this.submenu_generarpublicacion.Name = "submenu_generarpublicacion";
-            this.submenu_generarpublicacion.Size = new System.Drawing.Size(180, 22);
+            this.submenu_generarpublicacion.Size = new System.Drawing.Size(302, 36);
             this.submenu_generarpublicacion.Text = "Generar Publicación";
             this.submenu_generarpublicacion.Click += new System.EventHandler(this.submenu_generarpublicacion_Click);
             // 
             // submenu_editarpublicacion
             // 
             this.submenu_editarpublicacion.Name = "submenu_editarpublicacion";
-            this.submenu_editarpublicacion.Size = new System.Drawing.Size(180, 22);
+            this.submenu_editarpublicacion.Size = new System.Drawing.Size(302, 36);
             this.submenu_editarpublicacion.Text = "Editar Publicación";
             this.submenu_editarpublicacion.Click += new System.EventHandler(this.submenu_editarpublicacion_Click);
             // 
@@ -191,49 +199,44 @@
             this.menu_datoscuenta,
             this.menu_cerrarsesion});
             this.menucuenta.Name = "menucuenta";
-            this.menucuenta.Size = new System.Drawing.Size(74, 20);
+            this.menucuenta.Size = new System.Drawing.Size(138, 36);
             this.menucuenta.Text = "Mi Cuenta";
             this.menucuenta.Click += new System.EventHandler(this.menucuenta_Click);
             // 
             // menu_datoscuenta
             // 
             this.menu_datoscuenta.Name = "menu_datoscuenta";
-            this.menu_datoscuenta.Size = new System.Drawing.Size(142, 22);
+            this.menu_datoscuenta.Size = new System.Drawing.Size(228, 36);
             this.menu_datoscuenta.Text = "Mis datos";
             this.menu_datoscuenta.Click += new System.EventHandler(this.menu_datoscuenta_Click);
             // 
             // menu_cerrarsesion
             // 
             this.menu_cerrarsesion.Name = "menu_cerrarsesion";
-            this.menu_cerrarsesion.Size = new System.Drawing.Size(142, 22);
+            this.menu_cerrarsesion.Size = new System.Drawing.Size(228, 36);
             this.menu_cerrarsesion.Text = "Cerrar sesión";
             this.menu_cerrarsesion.Click += new System.EventHandler(this.menu_cerrarsesion_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 52);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(431, 259);
+            this.pictureBox1.Size = new System.Drawing.Size(862, 498);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // menu_rubros
-            // 
-            this.menu_rubros.Name = "menu_rubros";
-            this.menu_rubros.Size = new System.Drawing.Size(208, 22);
-            this.menu_rubros.Text = "ABM Rubros";
-            this.menu_rubros.Click += new System.EventHandler(this.menu_rubros_Click);
-            // 
             // MenuPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 286);
+            this.ClientSize = new System.Drawing.Size(862, 550);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "MenuPrincipal";
             this.Text = "PalcoNet - Menú Principal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuPrincipal_FormClosed);

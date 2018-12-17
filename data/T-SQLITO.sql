@@ -27,7 +27,7 @@ END TRY
 BEGIN CATCH
 rollback transaction
 DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED,@identity);
-select ERROR_MESSAGE()  
+THROW 50000, 'FALLO CREACION USUARIO', 1
 END CATCH
 END
 GO
@@ -59,6 +59,7 @@ THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
 IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
 THROW 50000, 'CUIT YA EXISTENTE', 1
 
+--Cuit no valido
 IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
 THROW 50000, 'CUIT NO VALIDO', 1
  
@@ -74,16 +75,63 @@ commit transaction
 end try
 
 begin catch
+DECLARE @Cambios numeric(18,0)
+SET @Cambios = (select count(*) from SQLITO.Grados)
+--Se detectan cambios
+IF(@identity != @Cambios)
+BEGIN
 ROLLBACK TRANSACTION
 SET @id_Empresa = @id_Empresa - 1
 DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED,@id_Empresa) WITH NO_INFOMSGS;
 DBCC CHECKIDENT ('SQLITO.Empresas', RESEED,@identity) WITH NO_INFOMSGS;
+END;
 THROW
 end catch
 
 END
 
---PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO
+GO
+
+--PROC PARA MODIFICAR EMPRESAS 
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Modificar_Empresa')
+BEGIN
+	DROP PROCEDURE pr_Modificar_Empresa
+END
+GO
+CREATE proc [dbo].[pr_Modificar_Empresa](@razonsocial nvarchar(255), 
+    @cuit nvarchar(255),
+    @mail nvarchar(50),
+    @direccion nvarchar(255),
+    @telefono nvarchar(30),
+	@idEmpresa int)
+as
+begin
+--Razon Social Repetida que no es la misma que la que se inserta
+IF EXISTS (select 1 from SQLITO.Empresas where razonsocial = @razonsocial AND id_empresa != @idEmpresa)
+THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+
+--Cuit Repetido que no es el mismo que se inserta
+IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit AND id_empresa != @idEmpresa)
+THROW 50000, 'CUIT YA EXISTENTE', 1
+
+IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
+THROW 50000, 'CUIT NO VALIDO', 1
+ 
+begin try
+begin transaction
+update [GD2C2018].[SQLITO].[Empresas] set razonsocial = @razonsocial,cuit =@cuit,mail=@mail,direccion=@direccion,telefono=@telefono where id_empresa =@idEmpresa
+commit transaction
+end try
+
+begin catch
+IF @@ROWCOUNT != 0  
+ROLLBACK TRANSACTION
+THROW
+end catch
+
+END
+
+--PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO -> HAY QUE AGREGAR EL NUEVO FLAG DE EMPRESA HABILITADA
 GO
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Eliminar_empresa')
 BEGIN
@@ -106,6 +154,8 @@ SELECT ERROR_MESSAGE()
 end catch
 end
 GO
+
+--PROC PARA CREAR UN GRADO
 IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Carga_Grado')
 BEGIN
 	DROP PROCEDURE pr_Carga_Grado
@@ -117,57 +167,59 @@ begin
 begin try
 DECLARE @identity numeric(18,0)
 SET @identity = (select count(*) from SQLITO.Grados)
+
+--Descripcion ya existente
+IF EXISTS(select 1 from SQLITO.Grados WHERE descripcion = @descripcion)
+THROW 50000, 'DESCRIPCION YA EXISTENTE', 1
+
 begin transaction
 INSERT INTO SQLITO.Grados(descripcion,comision) values(@descripcion,@comision)
 commit transaction
 end try
 begin catch
+DECLARE @Cambios numeric(18,0)
+SET @Cambios = (select count(*) from SQLITO.Grados)
+IF(@identity != @Cambios)
+BEGIN
 ROLLBACK TRAN
-DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity);
-SELECT ERROR_MESSAGE()
+DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity) WITH NO_INFOMSGS;
+END;
+THROW
 end catch
 end
 GO
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Modificar_Empresa')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Mod_Grado')
 BEGIN
-	DROP PROCEDURE pr_Modificar_Empresa
+	DROP PROCEDURE pr_Mod_Grado
 END
 GO
-CREATE proc [dbo].[pr_Modificar_Empresa](@razonsocial nvarchar(255), 
-    @cuit nvarchar(255),
-    @mail nvarchar(50),
-    @direccion nvarchar(255),
-    @telefono nvarchar(30),
-	@idEmpresa int)
+CREATE proc pr_Mod_Grado(@descripcion nvarchar(255), 
+    @comision numeric(6,2),
+    @habilitado bit,
+	@idGrado int)
 as
 begin
 
---Razon Social Repetida
-IF EXISTS (select 1 from SQLITO.Empresas where razonsocial = @razonsocial)
-THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+--Descripcion repetida y no existente
+IF EXISTS (select 1 from SQLITO.Grados where descripcion = @descripcion and id_grado != @idGrado)
+THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
 
---Cuit Repetido
-IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
-THROW 50000, 'CUIT YA EXISTENTE', 1
-
-IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
-THROW 50000, 'CUIT NO VALIDO', 1
- 
 begin try
 begin transaction
-update [GD2C2018].[SQLITO].[Empresas] set razonsocial = @razonsocial,cuit =@cuit,mail=@mail,direccion=@direccion,telefono=@telefono where id_empresa =@idEmpresa
+update [GD2C2018].[SQLITO].Grados set descripcion = @descripcion,comision =@comision,habilitado=@habilitado where id_grado = @idGrado
 commit transaction
 end try
 
 begin catch
+IF @@ROWCOUNT != 0  
 ROLLBACK TRANSACTION
 THROW
 end catch
 
 END
+
 /*Si llegase a romper el identity usar:
 GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
-
