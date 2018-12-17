@@ -123,18 +123,20 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public string ObtenerIdentity() 
         {
                         
-                 filtrosVacios();          
-                string query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and mail like '{2}'", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-
+                filtrosVacios();
+                string query;
+                if (textBoxEmail.Text == "%")
+                {
+                    query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+                }
+                else
+                {
+                    query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and mail like '{2}'", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+                }
                 
 
-           
                 try
                 {
-                    if(Database.ObtenerDataSet(query).Tables[0].Rows.Count > 1)
-                {
-                    return "-1";
-                }
                     return Database.ObtenerDataSet(query).Tables[0].Rows[0]["id_empresa"].ToString();
                 }
                 catch
@@ -172,15 +174,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     {
                         MessageBox.Show("No se encontro la empresa a modificar");
                     }
-                    if (identidad == "-1")
-                    {
-                        MessageBox.Show("No existe una unica empresa para modificar");
-                    }
                     else
                     {
                         MessageBox.Show(identidad);
                         this.Hide();
-
                         ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
                         modEmp.Show();
                     }

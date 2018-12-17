@@ -18,7 +18,7 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new Abm_Empresa_Espectaculo.AMB_Modificar_Eliminar());       
+            Application.Run(new Login.Login());       
         }
 
     }
