@@ -165,7 +165,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(637, 641);
+            this.btnLimpiar.Location = new System.Drawing.Point(613, 641);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(210, 125);
             this.btnLimpiar.TabIndex = 23;
@@ -222,7 +222,6 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "ABM Empresa Publicacion";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ABM_Alta_Empresa_FormClosed);
-            this.Load += new System.EventHandler(this.ABM_empresa_publicacion_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

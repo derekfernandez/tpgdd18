@@ -45,33 +45,43 @@ CREATE proc [dbo].[pr_Alta_Empresa](@razonsocial nvarchar(255),
     @telefono nvarchar(30))
 as
 begin
-begin try
 DECLARE @fecha_creacion datetime
 DECLARE @usuario_id int
 DECLARE @id_Empresa int
 DECLARE @identity numeric(18,0)
 SET @identity = (select count(*) from SQLITO.Empresas)
-begin transaction
+
+--Razon Social Repetida
 IF EXISTS (select 1 from SQLITO.Empresas where razonsocial = @razonsocial)
-BEGIN
-raiserror ('Error: Razon Social ya registrada', 16, 15)
-END
+THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+
+--Cuit Repetido
 IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
-BEGIN
-raiserror ('Error: CUIT ya registrado', 16, 15)
-END  
+THROW 50000, 'CUIT YA EXISTENTE', 1
+
+IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
+THROW 50000, 'ERROR CUIT NO VALIDO', 1
+ 
 SET @fecha_creacion = GETDATE()
-SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas) 
+SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
+
+begin try
+begin transaction
 EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial
 insert into [GD2C2018].[SQLITO].[Empresas](razonsocial,fecha_creacion,cuit,mail,direccion,telefono,usuario_id) values (@razonsocial,@fecha_creacion,@cuit,@mail,@direccion,@telefono,@usuario_id)
 commit transaction
+
 end try
+
 begin catch
-rollback transaction
-DBCC CHECKIDENT ('SQLITO.Empresas', RESEED, @identity);
-SELECT ERROR_MESSAGE() 
+ROLLBACK TRANSACTION
+SET @id_Empresa = @id_Empresa - 1
+DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED,@id_Empresa) WITH NO_INFOMSGS;
+DBCC CHECKIDENT ('SQLITO.Empresas', RESEED,@identity) WITH NO_INFOMSGS;
+THROW
 end catch
-end
+
+END
 
 --PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO
 GO
