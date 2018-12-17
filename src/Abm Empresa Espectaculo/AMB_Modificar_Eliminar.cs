@@ -113,11 +113,15 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 telefono = grillaEmpresas.Rows[indice].Cells["telefono"].Value.ToString();
                 id_Empresa = grillaEmpresas.Rows[indice].Cells["id_empresa"].Value.ToString();
 
-                string actualizar = string.Format("update SQLITO.Empresas set razonsocial = '{0}',cuit = '{1}',mail= '{2}', direccion = '{3}', telefono = '{4}'  where id_empresa = '{5}'", razonSocial, cuit, mail, direccion, telefono, id_Empresa);
+
+
+                string actualizar = string.Format("EXEC pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}'", razonSocial, cuit, mail, direccion, telefono, id_Empresa);
                
                 try
                 {
                     Database.execNonQuery(Database.createQuery(actualizar));
+
+
                     MessageBox.Show("Empresa actualizada correctamente");
 
                     btnBuscar_Click(sender, e);
