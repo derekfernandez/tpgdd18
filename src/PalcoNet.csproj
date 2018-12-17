@@ -69,7 +69,9 @@
     <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.designer.cs">
       <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Empresa Espectaculo\MostrarUsuarioAsignado.cs" />
+    <Compile Include="Abm Empresa Espectaculo\MostrarUsuarioAsignado.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Abm Empresa Espectaculo\MostrarUsuarioAsignado.Designer.cs">
       <DependentUpon>MostrarUsuarioAsignado.cs</DependentUpon>
     </Compile>
