@@ -69,11 +69,29 @@
     <Compile Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.designer.cs">
       <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ModificacionEmpresas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ModificacionEmpresas.Designer.cs">
+      <DependentUpon>ModificacionEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\MostrarUsuarioAsignado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\MostrarUsuarioAsignado.Designer.cs">
+      <DependentUpon>MostrarUsuarioAsignado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Grado\Grado.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Grado\Grado.designer.cs">
       <DependentUpon>Grado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Grado\ModificarGrado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Grado\ModificarGrado.Designer.cs">
+      <DependentUpon>ModificarGrado.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\Modify.cs">
       <SubType>Form</SubType>
@@ -249,8 +267,17 @@
     <EmbeddedResource Include="Abm Empresa Espectaculo\AMB_Modificar_Eliminar.resx">
       <DependentUpon>AMB_Modificar_Eliminar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ModificacionEmpresas.resx">
+      <DependentUpon>ModificacionEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\MostrarUsuarioAsignado.resx">
+      <DependentUpon>MostrarUsuarioAsignado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Grado\Grado.resx">
       <DependentUpon>Grado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\ModificarGrado.resx">
+      <DependentUpon>ModificarGrado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rubro\Rubro.resx">
       <DependentUpon>Rubro.cs</DependentUpon>

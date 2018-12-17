@@ -32,7 +32,6 @@
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxDescripcion = new System.Windows.Forms.TextBox();
             this.textBoxComision = new System.Windows.Forms.TextBox();
@@ -40,27 +39,22 @@
             this.gD2C2018DataSet = new PalcoNet.GD2C2018DataSet();
             this.gradosTableAdapter = new PalcoNet.GD2C2018DataSetTableAdapters.GradosTableAdapter();
             this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnIngresar = new System.Windows.Forms.Button();
-            this.btnEliminar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.textBoxBuscar = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBoxHabilitacion = new System.Windows.Forms.TextBox();
-            this.btnHabilitar = new System.Windows.Forms.Button();
+            this.grillaGrados = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxIDaModificar = new System.Windows.Forms.TextBox();
+            this.btnDeshabilitar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gradosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grillaGrados)).BeginInit();
             this.SuspendLayout();
             // 
             // btnModificar
             // 
             this.btnModificar.AutoSize = true;
-            this.btnModificar.Location = new System.Drawing.Point(986, 320);
+            this.btnModificar.Location = new System.Drawing.Point(219, 468);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(217, 49);
+            this.btnModificar.Size = new System.Drawing.Size(206, 80);
             this.btnModificar.TabIndex = 17;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -69,9 +63,9 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(986, 561);
+            this.btnVolver.Location = new System.Drawing.Point(7, 468);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(217, 49);
+            this.btnVolver.Size = new System.Drawing.Size(206, 80);
             this.btnVolver.TabIndex = 2;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -81,26 +75,17 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(10, 313);
+            this.label1.Location = new System.Drawing.Point(9, 251);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(161, 37);
             this.label1.TabIndex = 3;
             this.label1.Text = "Descripcion:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(430, 202);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 40);
-            this.label4.TabIndex = 6;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(36, 369);
+            this.label2.Location = new System.Drawing.Point(35, 308);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(135, 37);
             this.label2.TabIndex = 7;
@@ -108,16 +93,16 @@
             // 
             // textBoxDescripcion
             // 
-            this.textBoxDescripcion.Location = new System.Drawing.Point(202, 318);
+            this.textBoxDescripcion.Location = new System.Drawing.Point(196, 256);
             this.textBoxDescripcion.Name = "textBoxDescripcion";
-            this.textBoxDescripcion.Size = new System.Drawing.Size(447, 32);
+            this.textBoxDescripcion.Size = new System.Drawing.Size(300, 32);
             this.textBoxDescripcion.TabIndex = 8;
             // 
             // textBoxComision
             // 
-            this.textBoxComision.Location = new System.Drawing.Point(202, 377);
+            this.textBoxComision.Location = new System.Drawing.Point(196, 313);
             this.textBoxComision.Name = "textBoxComision";
-            this.textBoxComision.Size = new System.Drawing.Size(447, 32);
+            this.textBoxComision.Size = new System.Drawing.Size(300, 32);
             this.textBoxComision.TabIndex = 9;
             // 
             // gradosBindingSource
@@ -137,141 +122,77 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(285, 33);
+            this.label5.Font = new System.Drawing.Font("Arial", 22.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(164, 26);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(693, 75);
+            this.label5.Size = new System.Drawing.Size(635, 69);
             this.label5.TabIndex = 12;
             this.label5.Text = "Grado de Publicacion";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(24, 164);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 37);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "ID Grado:";
-            // 
             // btnIngresar
             // 
-            this.btnIngresar.Location = new System.Drawing.Point(986, 253);
+            this.btnIngresar.Location = new System.Drawing.Point(643, 468);
             this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(217, 49);
+            this.btnIngresar.Size = new System.Drawing.Size(206, 80);
             this.btnIngresar.TabIndex = 14;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.UseVisualStyleBackColor = true;
             this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
             // 
-            // btnEliminar
+            // grillaGrados
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(986, 387);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(217, 49);
-            this.btnEliminar.TabIndex = 15;
-            this.btnEliminar.Text = "Deshabilitar";
-            this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            this.grillaGrados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grillaGrados.Location = new System.Drawing.Point(515, 110);
+            this.grillaGrados.Name = "grillaGrados";
+            this.grillaGrados.ReadOnly = true;
+            this.grillaGrados.RowTemplate.Height = 33;
+            this.grillaGrados.Size = new System.Drawing.Size(350, 320);
+            this.grillaGrados.TabIndex = 25;
             // 
-            // btnBuscar
+            // label3
             // 
-            this.btnBuscar.AutoSize = true;
-            this.btnBuscar.Location = new System.Drawing.Point(986, 152);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(217, 49);
-            this.btnBuscar.TabIndex = 0;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(0, 118);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(190, 37);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "ID a Modificar:";
             // 
-            // textBoxBuscar
+            // textBoxIDaModificar
             // 
-            this.textBoxBuscar.Location = new System.Drawing.Point(202, 170);
-            this.textBoxBuscar.Name = "textBoxBuscar";
-            this.textBoxBuscar.Size = new System.Drawing.Size(447, 32);
-            this.textBoxBuscar.TabIndex = 17;
+            this.textBoxIDaModificar.Location = new System.Drawing.Point(196, 118);
+            this.textBoxIDaModificar.Name = "textBoxIDaModificar";
+            this.textBoxIDaModificar.Size = new System.Drawing.Size(300, 32);
+            this.textBoxIDaModificar.TabIndex = 27;
             // 
-            // label6
+            // btnDeshabilitar
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Arial", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(655, 179);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(275, 24);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "* El ID solo es para buscar";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(23, 424);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(148, 37);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "Habilitado:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Arial", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(655, 435);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(173, 24);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "* 1 para habilitar";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Arial", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(655, 472);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(210, 24);
-            this.label9.TabIndex = 22;
-            this.label9.Text = "* 0 para deshabilitar";
-            // 
-            // textBoxHabilitacion
-            // 
-            this.textBoxHabilitacion.Location = new System.Drawing.Point(202, 438);
-            this.textBoxHabilitacion.Name = "textBoxHabilitacion";
-            this.textBoxHabilitacion.Size = new System.Drawing.Size(447, 32);
-            this.textBoxHabilitacion.TabIndex = 23;
-            // 
-            // btnHabilitar
-            // 
-            this.btnHabilitar.Location = new System.Drawing.Point(986, 452);
-            this.btnHabilitar.Name = "btnHabilitar";
-            this.btnHabilitar.Size = new System.Drawing.Size(217, 49);
-            this.btnHabilitar.TabIndex = 24;
-            this.btnHabilitar.Text = "Habilitar";
-            this.btnHabilitar.UseVisualStyleBackColor = true;
-            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
+            this.btnDeshabilitar.AutoSize = true;
+            this.btnDeshabilitar.Location = new System.Drawing.Point(431, 468);
+            this.btnDeshabilitar.Name = "btnDeshabilitar";
+            this.btnDeshabilitar.Size = new System.Drawing.Size(206, 80);
+            this.btnDeshabilitar.TabIndex = 28;
+            this.btnDeshabilitar.Text = "Deshabilitar";
+            this.btnDeshabilitar.UseVisualStyleBackColor = true;
+            this.btnDeshabilitar.Click += new System.EventHandler(this.btnDeshabilitar_Click);
             // 
             // Grado
             // 
-            this.AcceptButton = this.btnBuscar;
+            this.AcceptButton = this.btnIngresar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(1258, 632);
-            this.Controls.Add(this.btnHabilitar);
-            this.Controls.Add(this.textBoxHabilitacion);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBoxBuscar);
-            this.Controls.Add(this.btnBuscar);
-            this.Controls.Add(this.btnEliminar);
-            this.Controls.Add(this.btnIngresar);
+            this.ClientSize = new System.Drawing.Size(881, 570);
+            this.Controls.Add(this.btnDeshabilitar);
+            this.Controls.Add(this.textBoxIDaModificar);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.grillaGrados);
+            this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBoxComision);
             this.Controls.Add(this.textBoxDescripcion);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnModificar);
@@ -281,6 +202,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Grado_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.gradosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grillaGrados)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,7 +213,6 @@
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxDescripcion;
         private System.Windows.Forms.TextBox textBoxComision;
@@ -299,16 +220,10 @@
         private System.Windows.Forms.BindingSource gradosBindingSource;
         private GD2C2018DataSetTableAdapters.GradosTableAdapter gradosTableAdapter;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnIngresar;
-        private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.TextBox textBoxBuscar;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBoxHabilitacion;
-        private System.Windows.Forms.Button btnHabilitar;
+        private System.Windows.Forms.DataGridView grillaGrados;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBoxIDaModificar;
+        private System.Windows.Forms.Button btnDeshabilitar;
     }
 }

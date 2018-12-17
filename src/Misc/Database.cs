@@ -167,10 +167,41 @@ namespace PalcoNet.Misc
         public static void ejecutarNonQueryShort(string query)
         {
             
-            Database.execNonQuery(Database.createQuery(query));
-           
+            Database.execNonQuery(Database.createQuery(query));  
             
         }
+        
+        public static void ejecutarProc(string query)
+        {
+            int filasAfectadas = 0;
+            abrir();
+            try
+            {
+                SqlCommand comando = new SqlCommand(query, connection);
+
+
+                filasAfectadas = comando.ExecuteNonQuery();
+
+
+                if (filasAfectadas == 0)
+                {
+                    throw new Exception("0 filas afectadas");
+                }
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+
+            finally 
+            {
+                cerrar();
+            }
+                
+
+          }
+        
         //obtiene un DS con la query simplemente
         public static DataSet ObtenerDataSet(string query)
         {
