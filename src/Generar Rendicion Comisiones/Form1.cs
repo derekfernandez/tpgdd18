@@ -67,7 +67,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                 int lastNumberFactura = Int32.Parse(lastNumberOfFactura) + 1;
 
                 SqlCommand query3 = Database.createQuery(@"INSERT INTO SQLITO.ItemsFactura (factura_id, compra_id, comision)
-                                                            SELECT TOP @tope @IdFactura, id_compra,((C.valor_entrada * P.comision) / 100)
+                                                            SELECT TOP @tope @IdFactura, id_compra,((C.valor_entrada * P.publ_comision) / 100)
                                                             FROM SQLITO.Compras AS C
                                                              JOIN SQLITO.Ubicaciones AS U ON C.Ubicacion_id = U.id_ubicacion
                                                              JOIN SQLITO.Publicaciones AS P ON U.publicacion_id = P.cod_publicacion

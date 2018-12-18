@@ -50,7 +50,7 @@ namespace PalcoNet.Canje_Puntos
         }
         public void llenarPremios(ComboBox cb)
         {
-            SqlCommand query = Database.createQuery("SELECT descripcion as Premio, puntos_requeridos FROM SQLITO.Premios WHERE cantidad <> 0 ORDER BY puntos_requeridos ASC");
+            SqlCommand query = Database.createQuery("SELECT descripcion as Premio, puntos_requeridos FROM SQLITO.Premios WHERE cantidad_stock <> 0 ORDER BY puntos_requeridos ASC");
             cb.DataSource = Database.getTable(query);
             cb.DisplayMember = "Premio";
             cb.ValueMember = "puntos_requeridos";
@@ -100,15 +100,16 @@ namespace PalcoNet.Canje_Puntos
             {
                 SqlCommand query = Database.createQuery("Insert Into SQLITO.Puntos (cantidad,cliente_id,fecha_vencimiento) Values(" + Int32.Parse(label5.Text) * (-1) + ",@cliente, NULL)");
                 SqlCommand query3 = Database.createQuery("SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion = @nombreDescripcion");
-                query.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
+                query3.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
                 string nombrePremio = Database.getValue(query3);
                 SqlCommand query2 = Database.createQuery("UPDATE SQLITO.Premios SET cantidad_stock = (SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion=@nombreDescripcion) - 1 WHERE descripcion=@nombreDescripcion");
-                query.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
+                query2.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
                 query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
                 Database.execNonQuery(query);
                 Database.execNonQuery(query2);
                 sumarPuntos();
                 MessageBox.Show("Se canjeo el premio correctamente!", "Premio", MessageBoxButtons.OK);
+                llenarPremios(comboBox1);
             }
 
         }
