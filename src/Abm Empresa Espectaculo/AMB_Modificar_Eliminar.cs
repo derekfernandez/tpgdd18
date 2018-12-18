@@ -106,33 +106,38 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             else
             {
                 string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", ObtenerIdentity());
-                if (ObtenerIdentity() == "")
+                string validacion = ObtenerIdentity();
+                if (validacion == "")
                 {
                     MessageBox.Show("No se encontro la empresa a eliminar");
                 }
+
+                else if (validacion == "-1")
+                 {
+                        MessageBox.Show("Error, hay mas de una empresa a eliminar");
+                 }
+
+                else if (yaEliminado(validacion))
+                {
+                    MessageBox.Show("Empresa ya eliminada");
+                }
                 else
                 {
-                    if (yaEliminado())
-                    {
-                        MessageBox.Show("Empresa ya eliminada");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            Database.execNonQuery(Database.createQuery(eliminar));
-                            //Database.ejecutarNonQueryShort(insert);
-                            MessageBox.Show("Empresa eliminada correctamente");
-                            cargarGrilla();
-                        }
-                        catch (Exception exp)
-                        {
+                         try
+                            {
+                                Database.execNonQuery(Database.createQuery(eliminar));
+                                //Database.ejecutarNonQueryShort(insert);
+                                MessageBox.Show("Empresa eliminada correctamente");
+                                cargarGrilla();
+                            }
+                            catch (Exception exp)
+                            {
 
-                            MessageBox.Show("Error: " + exp.Message);
-                        }
-                    }
+                                MessageBox.Show("Error: " + exp.Message);
+                            }
                 }
             }
+            vaciar();
         }
 
         private void AMB_Modificar_Eliminar_FormClosed(object sender, FormClosedEventArgs e)
@@ -140,10 +145,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             Application.Exit();
         }
 
-        public Boolean yaEliminado() 
+        public Boolean yaEliminado(string validacion) 
         {
-            
-            string queryBuscar = string.Format("select 1 from SQLITO.Empresas where id_empresa = '{0}' and habilitado = 0", ObtenerIdentity());
+
+            string queryBuscar = string.Format("select 1 from SQLITO.Empresas where id_empresa = '{0}' and habilitado = 0", validacion);
             if (Database.ObtenerDataSet(queryBuscar).Tables[0].Rows.Count == 0)
                 return false;
             return true;
@@ -167,6 +172,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
                 try
                 {
+                    if (Database.ObtenerDataSet(query).Tables[0].Rows.Count > 1)
+                    {
+                        return "-1";
+                    }
                     return Database.ObtenerDataSet(query).Tables[0].Rows[0]["id_empresa"].ToString();
                 }
                 catch
@@ -199,20 +208,27 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             else
             {
+                    
                     string identidad = ObtenerIdentity();
                     if (identidad == "")
                     {
                         MessageBox.Show("No se encontro la empresa a modificar");
                     }
+                    else if (identidad == "-1")
+                    {
+                        MessageBox.Show("Error, hay mas de una empresa a modificar");
+                    }
                     else
                     {
-                        MessageBox.Show(identidad);
-                        this.Hide();
-                        ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
-                        modEmp.Show();
+                            MessageBox.Show(identidad);
+                            this.Hide();
+                            ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
+                            modEmp.Show();
+                        
                     }
                 
             }
+            vaciar();
         }
 
         
