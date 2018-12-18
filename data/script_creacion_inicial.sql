@@ -1498,25 +1498,52 @@ END
 GO
 
 CREATE PROCEDURE estadistica_empresasMenosVendedoras
-				 (@anio INT, @trimestre INT, @grado INT)
+				 (@anio INT, @trimestre INT)
 AS
 BEGIN
 	
-	SELECT TOP 5 E.razonsocial,
-		   [SQLITO].[nombreMes](MONTH(P.fecha_funcion)),
-		   YEAR(P.fecha_funcion),
-	       COUNT(*)
-	FROM [SQLITO].[Empresas] AS E
-		JOIN [SQLITO].[Publicaciones] AS P ON (empresa_id = id_empresa)
-		JOIN [SQLITO].[Ubicaciones] AS U ON (publicacion_id = cod_publicacion)
-		LEFT JOIN [SQLITO].[Compras] AS C ON (ubicacion_id = id_ubicacion)
-	WHERE id_ubicacion NOT IN (SELECT ubicacion_id
-						   	   FROM [SQLITO].[Compras])
-		AND (DATEPART(QUARTER, P.fecha_funcion) = @trimestre)
-		AND (YEAR(P.fecha_funcion) = @anio)
-		AND (P.grado_id = @grado)
-	GROUP BY id_empresa, razonsocial, MONTH(P.fecha_funcion), YEAR(P.fecha_funcion)
-	ORDER BY COUNT(*) DESC
+	DECLARE @tablaResultante AS TABLE (
+		[razonSocial] NVARCHAR(255),
+		[mes] INT,
+		[año] INT,
+		[gradoID] INT,
+		[gradoDesc] NVARCHAR(255),
+		[cantidadNoVendidas] INT
+	)
+
+	--En esta tabla, que debe ser local al SP ya que depende de los parametros pasados, pongo
+	--el top 5 de empresas con mas localidades no vendidas, siendo las 5 que mas entradas no vendieron
+	INSERT INTO @tablaResultante
+		SELECT TOP 5 E.razonsocial,
+		             MONTH(P.fecha_funcion),
+		             YEAR(P.fecha_funcion),
+					 G.id_grado,
+					 G.descripcion,
+	                 COUNT(*)
+		FROM [SQLITO].[Empresas] AS E
+			JOIN [SQLITO].[Publicaciones] AS P ON (P.empresa_id = E.id_empresa)
+			JOIN [SQLITO].[Grados] AS G ON (P.grado_id = G.id_grado)
+			JOIN [SQLITO].[Ubicaciones] AS U ON (U.publicacion_id = P.cod_publicacion)
+			LEFT JOIN [SQLITO].[Compras] AS C ON (C.ubicacion_id = U.id_ubicacion)
+		WHERE id_ubicacion NOT IN (SELECT ubicacion_id
+						   	       FROM [SQLITO].[Compras])
+			AND (DATEPART(QUARTER, P.fecha_funcion) = @trimestre)
+			AND (YEAR(P.fecha_funcion) = @anio)
+		GROUP BY id_empresa, razonsocial,
+		         MONTH(P.fecha_funcion),
+				 YEAR(P.fecha_funcion),
+				 G.id_grado,
+				 G.descripcion
+		ORDER BY COUNT(*) DESC
+
+	--Pero tengo que ordenar ese top 5 por fecha y por visibilidad
+	SELECT razonSocial,
+		   [SQLITO].[nombreMes](mes),
+		   año,
+		   gradoDesc,
+		   cantidadNoVendidas
+	FROM @tablaResultante
+	ORDER BY año ASC, mes ASC, gradoDesc ASC
 
 END
 GO

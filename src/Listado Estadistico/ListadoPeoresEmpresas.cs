@@ -16,7 +16,6 @@ namespace PalcoNet.Listado_Estadistico
     public partial class ListadoPeoresEmpresas : Form
     {
 
-        private ErrorProvider errorProvider;
         private int anio;
         private int trimestre;
         
@@ -31,44 +30,24 @@ namespace PalcoNet.Listado_Estadistico
             
             InitializeComponent();
 
-            errorProvider = new ErrorProvider();
-
             this.anio = anio;
             //Al trimestre le sumo 1, el indice del ComboBox arranca en 0
             this.trimestre = trimestre + 1;
 
-            String query = "SELECT id_grado, descripcion FROM SQLITO.Grados";
-            SqlCommand cmd = new SqlCommand(query, Database.getConnection());
-
-            comboGrado.DataSource = Database.getTable(cmd);
-            comboGrado.DisplayMember = "descripcion";
-            comboGrado.ValueMember = "id_grado";
-
-            //Tiene que arrancar vacia, solo cuando aprete generar debe llenarse
-            dgvEmpresas.DataSource = null;
-            //Seteo esta propiedad en false para que no pueda agregar filas
+            //Seteo esta propiedad en false para que no pueda agregar filas y lleno la tabla segun corresponda
             dgvEmpresas.AllowUserToAddRows = false;
+            llenarDGV();
 
         }
 
-        private void btnGenerar_Click(object sender, EventArgs e)
+        private void llenarDGV()
         {
             
-            //Por si no se hubiera seleccionado el grado de visibilidad
-            if (comboGrado.SelectedIndex < 0)
-            {
-                errorProvider.SetError(comboGrado, "Debe elegir un grado");
-                return;
-            }
-
-            errorProvider.Clear();
-
             //Query para ejecutar el SP; devuelve la tabla con los valores a cargar en la dgv
             String query = "DECLARE @anio INT = " + this.anio + ";" + "DECLARE @trimestre INT = " + this.trimestre + ";";
-            query += ("DECLARE @grado INT = " + Convert.ToInt32(comboGrado.SelectedValue) + ";");
-            query += "EXEC estadistica_empresasMenosVendedoras @anio, @trimestre, @grado";
-
+            query += "EXEC estadistica_empresasMenosVendedoras @anio, @trimestre";
             SqlCommand cmd = new SqlCommand(query, Database.getConnection());
+
             dgvEmpresas.DataSource = Database.getTable(cmd);
             dgvEmpresas.Columns[0].HeaderText = "Razon social";
             dgvEmpresas.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -78,9 +57,11 @@ namespace PalcoNet.Listado_Estadistico
             dgvEmpresas.Columns[2].HeaderText = "Año";
             dgvEmpresas.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvEmpresas.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEmpresas.Columns[3].HeaderText = "Localidades no vendidas";
-            dgvEmpresas.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEmpresas.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvEmpresas.Columns[3].HeaderText = "Visibilidad";
+            dgvEmpresas.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgvEmpresas.Columns[4].HeaderText = "Localidades no vendidas";
+            dgvEmpresas.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEmpresas.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
 
