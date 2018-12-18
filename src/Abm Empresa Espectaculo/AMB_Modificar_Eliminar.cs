@@ -88,7 +88,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     grillaEmpresas.Columns[4].HeaderText = "Mail";
                     grillaEmpresas.Columns[5].HeaderText = "Direccion";
                     grillaEmpresas.Columns[6].HeaderText = "Telefono";
-                    grillaEmpresas.Columns[7].HeaderText = "Usuario ID";
+                    grillaEmpresas.Columns[7].HeaderText = "Habilitado";
+                    grillaEmpresas.Columns[8].HeaderText = "Usuario ID";
                 }
                
             
@@ -97,26 +98,49 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            try
+            filtrosVacios();
+            string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", ObtenerIdentity());
+            if (ObtenerIdentity() == "")
             {
-                filtrosVacios();
-                string eliminar = string.Format("exec pr_Eliminar_empresa '{0}'", ObtenerIdentity());
-                Database.execNonQuery(Database.createQuery(eliminar));
-                //Database.ejecutarNonQueryShort(insert);
-                MessageBox.Show("Empresa eliminada correctamente");
-                
-                btnBuscar_Click(sender,e);
+                MessageBox.Show("No se encontro la empresa a eliminar");
             }
-            catch (Exception exp)
+            else
             {
-                
-                MessageBox.Show("Error: " + exp.Message);
+                if (yaEliminado())
+                {
+                    MessageBox.Show("Empresa ya eliminada");
+                }
+                else
+                {
+                    try
+                    {
+                        Database.execNonQuery(Database.createQuery(eliminar));
+                        //Database.ejecutarNonQueryShort(insert);
+                        MessageBox.Show("Empresa eliminada correctamente");
+                        cargarGrilla();
+                    }
+                    catch (Exception exp)
+                    {
+
+                        MessageBox.Show("Error: " + exp.Message);
+                    }
+                }
             }
         }
 
         private void AMB_Modificar_Eliminar_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        public Boolean yaEliminado() 
+        {
+            //Si llego es que el identity existe
+            MessageBox.Show(ObtenerIdentity());
+            string queryBuscar = string.Format("select 1 from SQLITO.Empresas where id_empresa = '{0}' and habilitado = 0", ObtenerIdentity());
+            if (Database.ObtenerDataSet(queryBuscar).Tables[0].Rows.Count == 0)
+                return false;
+            return true;
         }
 
         //Si no aclaro estoy modificando el primer registro

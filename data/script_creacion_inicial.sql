@@ -507,6 +507,7 @@ BEGIN
 		[mail] [nvarchar] (50),
 		[direccion] [nvarchar] (255),
 		[telefono] [nvarchar] (30),
+		[habilitado] [bit] DEFAULT 1,
 		--Id del usuario al cual esta asociada la cuenta de la Empresa
 		[usuario_id] [int]
 	)
