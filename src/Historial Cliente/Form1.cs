@@ -35,7 +35,7 @@ namespace PalcoNet.Historial_Cliente
         }
         private void CalculateTotalPages()
         {
-            SqlCommand query = Database.createQuery("SELECT id_compra AS Numero, P.descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion ORDER BY fecha_realizacion ASC ");
+            SqlCommand query = Database.createQuery("SELECT id_compra AS Numero, P.publ_descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion ORDER BY fecha_realizacion ASC ");
             int rowCount = Database.countRows(query);
             TotalPage = rowCount / PgSize;
             // if any row left after calculated pages, add one more page 
@@ -47,14 +47,14 @@ namespace PalcoNet.Historial_Cliente
             SqlCommand cmd;
            if (page == 1)
             {
-                cmd = Database.createQuery("SELECT TOP @page id_compra AS Numero, P.descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion ORDER BY fecha_realizacion ASC ");
+                cmd = Database.createQuery("SELECT TOP @page id_compra AS Numero, P.publ_descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion ORDER BY fecha_realizacion ASC ");
                 cmd.Parameters.AddWithValue("@page", PgSize);
             }
            else
             {
                 PreviousPageOffSet = (page - 1) * PgSize;
                 cmd = Database.createQuery(@"SELECT TOP @page id_compra AS Numero," +
-                    " P.descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos " +
+                    " P.publ_descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos " +
                    "FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion " +
                     "WHERE id_compra NOT IN (SELECT TOP  @prev id_compra FROM SQLITO.Compras JOIN SQLITO.Ubicaciones ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones ON publicacion_id = cod_publicacion) ORDER BY fecha_realizacion ASC");
                 cmd.Parameters.AddWithValue("@page", PgSize);
@@ -68,7 +68,7 @@ namespace PalcoNet.Historial_Cliente
 
         private void historial_Load(object sender, EventArgs e)
         {
-            SqlCommand query = Database.createQuery("SELECT id_compra AS Numero, P.descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion WHERE cliente_id = @cliente ORDER BY fecha_realizacion ASC ");
+            SqlCommand query = Database.createQuery("SELECT id_compra AS Numero, P.publ_descripcion as Descripcion, asiento as Asiento, fila as Fila, valor_entrada as Valor,fecha_realizacion as FechaCompra, cantidad_entradas as Cantidad, ISNULL(cantidad_puntos,0) as Puntos FROM SQLITO.Compras JOIN SQLITO.Ubicaciones as U ON ubicacion_id = id_ubicacion JOIN SQLITO.Publicaciones AS P ON publicacion_id = P.cod_publicacion WHERE cliente_id = @cliente ORDER BY fecha_realizacion ASC ");
 #pragma warning disable CS0618 // El tipo o el miembro están obsoletos
             query.Parameters.AddWithValue("@cliente", this.cliente);
 #pragma warning restore CS0618 // El tipo o el miembro están obsoletos
