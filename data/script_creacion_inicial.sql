@@ -1162,7 +1162,7 @@ SET IDENTITY_INSERT [SQLITO].[Publicaciones] ON
 IF (SELECT COUNT(*) FROM [SQLITO].[Publicaciones]) = 0
 BEGIN
 
-	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, publ_descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id, grado_id)
+	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, publ_descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id, grado_id, publ_comision)
 		SELECT DISTINCT Espectaculo_Cod,
 		   	   			Espectaculo_Descripcion,
 		       			Espectaculo_Fecha_Venc,
@@ -1175,9 +1175,9 @@ BEGIN
 		       			--Todas estan en estado 'Publicada', con lo cual le asignamos el id = 2
 		       			2,
 		       			--Ponemos todas en 'Media' por default, tienen una comision del 10% aprox
-		       			2
+		       			2,
+						(SELECT comision FROM SQLITO.Grados WHERE id_grado = 2)
 		FROM gd_esquema.Maestra
-
 END
 GO
 
