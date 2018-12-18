@@ -21,7 +21,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
         {
             InitializeComponent();
             label4.Visible = false;
-            fechaConfig = Convert.ToDateTime(ConfigurationManager.AppSettings["FechaSistema"]);
+            fechaConfig = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"]);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -65,6 +65,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                 SqlCommand query2 = Database.createQuery(@"SELECT TOP 1 numero_factura FROM SQLITO.Facturas ORDER BY numero_factura DESC");
                 string lastNumberOfFactura = Database.getValue(query2);
                 int lastNumberFactura = Int32.Parse(lastNumberOfFactura) + 1;
+                string numeroFacturaQuery3 = lastNumberFactura.ToString();
 
                 SqlCommand query3 = Database.createQuery(@"INSERT INTO SQLITO.ItemsFactura (factura_id, compra_id, comision)
                                                             SELECT TOP @tope @IdFactura, id_compra,((C.valor_entrada * P.publ_comision) / 100)
@@ -74,18 +75,18 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                                                             WHERE P.empresa_id = @idEmpresaElegida AND C.id_compra NOT IN (SELECT I.compra_id
                                                                                                                             FROM SQLITO.ItemsFactura AS I)
                                                             ORDER BY C.fecha_realizacion");
-                query2.Parameters.AddWithValue("@tope",numericUpDown1.Value.ToString());
-                query2.Parameters.AddWithValue("@IdFactura", lastNumberOfFactura);
-                query2.Parameters.AddWithValue("@idEmpresaElegida", empresa);
-                Database.execQuery(query2);
+                query3.Parameters.AddWithValue("@tope",numericUpDown1.Value);
+                query3.Parameters.AddWithValue("@IdFactura", numeroFacturaQuery3);
+                query3.Parameters.AddWithValue("@idEmpresaElegida", empresa);
+                Database.execQuery(query3);
                 SqlCommand query4 = Database.createQuery("SELECT SUM(comision) FROM SQLITO.ItemsFactura WHERE factura_id = @IdFactura");
                 query4.Parameters.AddWithValue("@IdFactura", lastNumberFactura);
                 string comision = Database.getValue(query4);
                 SqlCommand query5 = Database.createQuery(@"INSERT INTO SQLITO.Facturas (fecha_emision,total,empresa_id,medio_pago)
                                                            VALUES (@fecha,@totalFactura,@idEmpresaElegida,'Efectivo')");
-                query2.Parameters.AddWithValue("@fecha", fechaConfig);
-                query2.Parameters.AddWithValue("@totalFactura", comision);
-                query2.Parameters.AddWithValue("@idEmpresaElegida", empresa);
+                query5.Parameters.AddWithValue("@fecha", fechaConfig);
+                query5.Parameters.AddWithValue("@totalFactura",comision);
+                query5.Parameters.AddWithValue("@idEmpresaElegida", empresa);
                 Database.execQuery(query5);
 
             }
