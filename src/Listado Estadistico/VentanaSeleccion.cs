@@ -87,6 +87,11 @@ namespace PalcoNet.Listado_Estadistico
 
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
 
     }
 }

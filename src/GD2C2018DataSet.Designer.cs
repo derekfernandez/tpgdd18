@@ -15833,7 +15833,7 @@ SELECT funcionalidad_id, rol_id FROM SQLITO.Funcionalidades_Roles WHERE (funcion
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM [SQLITO].[Grados] WHERE (([id_grado] = @Original_id_grado) AND ((@IsN" +
                 "ull_descripcion = 1 AND [descripcion] IS NULL) OR ([descripcion] = @Original_des" +
-                "cripcion)) AND ([comision] = @Original_comision))";
+                "cripcion)) AND ([\r\n                    ] = @Original_comision))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id_grado", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id_grado", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_descripcion", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));

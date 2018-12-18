@@ -36,17 +36,8 @@ namespace PalcoNet.Editar_Publicacion
             SqlCommand cmd = Database.createQuery(queryID);
             idEmpresa = Database.getValue(cmd);
 
-            //Oculto las flechas del NUD
-            numId.Controls[0].Visible = false;
-
-            //Obtengo datos para llenar el DGV
-            String queryPublicaciones = "SELECT cod_publicacion, descripcion, fecha_creacion, fecha_funcion FROM SQLITO.Publicaciones ";
-            queryPublicaciones += "WHERE (empresa_id = @Empresa) AND (estado_id = 1)";
-            SqlCommand cmdPublic = Database.createQuery(queryPublicaciones);
-            cmdPublic.Parameters.AddWithValue("@Empresa", idEmpresa);
-            tablaEditables = Database.getTable(cmdPublic);
-
             //Lleno el DGV y formateo sus columnas/filas
+            dgvEditables.AllowUserToAddRows = false;
             ActualizarDGVEditables();
 
         }
@@ -54,8 +45,8 @@ namespace PalcoNet.Editar_Publicacion
         private void ActualizarDGVEditables()
         {
 
-            String queryPublicaciones = "SELECT cod_publicacion, descripcion, fecha_creacion, fecha_funcion FROM SQLITO.Publicaciones ";
-            queryPublicaciones += "WHERE (empresa_id = @Empresa) AND (estado_id = 1)";
+            String queryPublicaciones = "SELECT cod_publicacion, publ_descripcion, fecha_creacion, fecha_funcion ";
+            queryPublicaciones += "FROM SQLITO.Publicaciones WHERE (empresa_id = @Empresa) AND (estado_id = 1)";
             SqlCommand cmdPublic = Database.createQuery(queryPublicaciones);
             cmdPublic.Parameters.AddWithValue("@Empresa", idEmpresa);
             tablaEditables = Database.getTable(cmdPublic);
@@ -73,7 +64,6 @@ namespace PalcoNet.Editar_Publicacion
             dgvEditables.Columns[3].HeaderText = "Fecha de funcion";
             dgvEditables.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
             dgvEditables.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEditables.AllowUserToAddRows = false;
 
         }
 
@@ -82,20 +72,14 @@ namespace PalcoNet.Editar_Publicacion
 
             //Manejo de errores
             errorProvider.Clear();
-            String idElegido = numId.Text;
             
-            if (numId.Text == "")
+            if (dgvEditables.CurrentRow == null)
             {
-                errorProvider.SetError(numId, "Debe ingresar el ID de la publicacion a editar");
+                errorProvider.SetError(dgvEditables, "Elija la publicacion a editar");
                 return;
             }
 
-            DataRow[] filas = tablaEditables.Select("cod_publicacion = '" + idElegido + "'");
-            if (filas.Length == 0)
-            {
-                errorProvider.SetError(dgvEditables, "No existe ninguna publicacion editable con el ID ingresado");
-                return;
-            }
+            String idElegido = dgvEditables.CurrentRow.Cells[0].Value.ToString();
 
             Editar_Publicacion.EdicionPublicacion ep = new Editar_Publicacion.EdicionPublicacion(idEmpresa, idElegido);
             ep.ShowDialog();

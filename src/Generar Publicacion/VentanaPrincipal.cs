@@ -52,11 +52,11 @@ namespace PalcoNet.Generar_Publicacion
             errorProvider = new ErrorProvider();
 
             //Cargo los Rubros de la tabla al ComboBox
-            String queryRubros = "SELECT id_rubro, descripcion FROM SQLITO.Rubros ORDER BY descripcion";
+            String queryRubros = "SELECT id_rubro, r_descripcion FROM SQLITO.Rubros ORDER BY r_descripcion";
             SqlCommand cmdRubros = new SqlCommand(queryRubros, Database.getConnection());
 
             comboRubro.DataSource = Database.getTable(cmdRubros);
-            comboRubro.DisplayMember = "descripcion";
+            comboRubro.DisplayMember = "r_descripcion";
             comboRubro.ValueMember = "id_rubro";
 
             //Cargo los Grados de la tabla, junto con el detalle de las comisiones, al ComboBox
@@ -301,8 +301,8 @@ namespace PalcoNet.Generar_Publicacion
 
             foreach (var fecha in fechasFuncion)
             {
-                queryFecha = "INSERT INTO SQLITO.Publicaciones (descripcion, fecha_creacion, fecha_funcion, direccion, ";
-                queryFecha += "empresa_id, grado_id, comision, rubro_id, estado_id) VALUES(@Descripcion, @FechaCreacion, ";
+                queryFecha = "INSERT INTO SQLITO.Publicaciones (publ_descripcion, fecha_creacion, fecha_funcion, direccion, ";
+                queryFecha += "empresa_id, grado_id, publ_comision, rubro_id, estado_id) VALUES(@Descripcion, @FechaCreacion, ";
                 queryFecha += "@FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 1)";
                 cmdFecha = Database.createQuery(queryFecha);
                 cmdFecha.Parameters.AddWithValue("@Descripcion", descripcion);
@@ -399,8 +399,8 @@ namespace PalcoNet.Generar_Publicacion
             foreach (var fecha in fechasFuncion)
             {
                  
-                queryFecha = "INSERT INTO SQLITO.Publicaciones (descripcion, fecha_creacion, fecha_funcion, fecha_vencimiento, ";
-                queryFecha += "direccion, empresa_id, grado_id, comision, rubro_id, estado_id) VALUES(@Descripcion, ";
+                queryFecha = "INSERT INTO SQLITO.Publicaciones (publ_descripcion, fecha_creacion, fecha_funcion, fecha_vencimiento, ";
+                queryFecha += "direccion, empresa_id, grado_id, publ_comision, rubro_id, estado_id) VALUES(@Descripcion, ";
                 queryFecha += "@FechaCreacion, @FechaVenc, @FechaFuncion, @Direccion, @EmpresaID, @GradoID, @Comision, @RubroID, 2)";
                 cmdFecha = Database.createQuery(queryFecha);
                 cmdFecha.Parameters.AddWithValue("@Descripcion", descripcion);
@@ -455,6 +455,11 @@ namespace PalcoNet.Generar_Publicacion
             actualizarDatosDGV();
             ubicacionesIngresadas = new List<Ubicacion>();
             InicializarPares();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         #endregion Eventos

@@ -30,12 +30,9 @@
         {
             this.lbTitulo = new System.Windows.Forms.Label();
             this.dgvEditables = new System.Windows.Forms.DataGridView();
-            this.lbId = new System.Windows.Forms.Label();
-            this.numId = new System.Windows.Forms.NumericUpDown();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditables)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numId)).BeginInit();
             this.SuspendLayout();
             // 
             // lbTitulo
@@ -56,30 +53,9 @@
             this.dgvEditables.Size = new System.Drawing.Size(572, 287);
             this.dgvEditables.TabIndex = 1;
             // 
-            // lbId
-            // 
-            this.lbId.AutoSize = true;
-            this.lbId.Location = new System.Drawing.Point(47, 355);
-            this.lbId.Name = "lbId";
-            this.lbId.Size = new System.Drawing.Size(129, 13);
-            this.lbId.TabIndex = 2;
-            this.lbId.Text = "ID de Publicación a editar";
-            // 
-            // numId
-            // 
-            this.numId.Location = new System.Drawing.Point(182, 352);
-            this.numId.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.numId.Name = "numId";
-            this.numId.Size = new System.Drawing.Size(57, 20);
-            this.numId.TabIndex = 3;
-            // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(263, 349);
+            this.btnEditar.Location = new System.Drawing.Point(148, 349);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 23);
             this.btnEditar.TabIndex = 4;
@@ -90,9 +66,9 @@
             // btnVolver
             // 
             this.btnVolver.BackColor = System.Drawing.Color.Red;
-            this.btnVolver.Location = new System.Drawing.Point(481, 349);
+            this.btnVolver.Location = new System.Drawing.Point(360, 349);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(102, 23);
+            this.btnVolver.Size = new System.Drawing.Size(130, 23);
             this.btnVolver.TabIndex = 5;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = false;
@@ -105,14 +81,11 @@
             this.ClientSize = new System.Drawing.Size(636, 391);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnEditar);
-            this.Controls.Add(this.numId);
-            this.Controls.Add(this.lbId);
             this.Controls.Add(this.dgvEditables);
             this.Controls.Add(this.lbTitulo);
             this.Name = "SeleccionPublicacion";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditables)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numId)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,8 +95,6 @@
 
         private System.Windows.Forms.Label lbTitulo;
         private System.Windows.Forms.DataGridView dgvEditables;
-        private System.Windows.Forms.Label lbId;
-        private System.Windows.Forms.NumericUpDown numId;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnVolver;
     }

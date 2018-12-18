@@ -49,10 +49,18 @@
             this.dgvPublicaciones = new System.Windows.Forms.DataGridView();
             this.btnUbicaciones = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnLimpiarFiltros = new System.Windows.Forms.Button();
+            this.btnUltimaPag = new System.Windows.Forms.Button();
+            this.btnPagSig = new System.Windows.Forms.Button();
+            this.btnPagAnt = new System.Windows.Forms.Button();
+            this.btnPrimeraPag = new System.Windows.Forms.Button();
+            this.gbResultados = new System.Windows.Forms.GroupBox();
+            this.lbPagina = new System.Windows.Forms.Label();
+            this.btnLimpiarResultados = new System.Windows.Forms.Button();
             this.gbRubros.SuspendLayout();
             this.gbRango.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).BeginInit();
+            this.gbResultados.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbRubros
@@ -216,7 +224,7 @@
             // 
             this.lbResultados.AutoSize = true;
             this.lbResultados.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbResultados.Location = new System.Drawing.Point(245, 267);
+            this.lbResultados.Location = new System.Drawing.Point(219, 0);
             this.lbResultados.Name = "lbResultados";
             this.lbResultados.Size = new System.Drawing.Size(94, 13);
             this.lbResultados.TabIndex = 5;
@@ -235,16 +243,16 @@
             // dgvPublicaciones
             // 
             this.dgvPublicaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPublicaciones.Location = new System.Drawing.Point(20, 283);
+            this.dgvPublicaciones.Location = new System.Drawing.Point(13, 17);
             this.dgvPublicaciones.Name = "dgvPublicaciones";
-            this.dgvPublicaciones.Size = new System.Drawing.Size(526, 214);
+            this.dgvPublicaciones.Size = new System.Drawing.Size(499, 248);
             this.dgvPublicaciones.TabIndex = 7;
             // 
             // btnUbicaciones
             // 
-            this.btnUbicaciones.Location = new System.Drawing.Point(404, 505);
+            this.btnUbicaciones.Location = new System.Drawing.Point(430, 596);
             this.btnUbicaciones.Name = "btnUbicaciones";
-            this.btnUbicaciones.Size = new System.Drawing.Size(142, 23);
+            this.btnUbicaciones.Size = new System.Drawing.Size(116, 23);
             this.btnUbicaciones.TabIndex = 11;
             this.btnUbicaciones.Text = "Ver Ubicaciones";
             this.btnUbicaciones.UseVisualStyleBackColor = true;
@@ -252,35 +260,110 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(20, 506);
+            this.btnVolver.Location = new System.Drawing.Point(20, 596);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(142, 23);
+            this.btnVolver.Size = new System.Drawing.Size(115, 23);
             this.btnVolver.TabIndex = 12;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // btnLimpiar
+            // btnLimpiarFiltros
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(244, 226);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(148, 23);
-            this.btnLimpiar.TabIndex = 13;
-            this.btnLimpiar.Text = "Limpiar Filtros";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiarFiltros.Location = new System.Drawing.Point(244, 226);
+            this.btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            this.btnLimpiarFiltros.Size = new System.Drawing.Size(148, 23);
+            this.btnLimpiarFiltros.TabIndex = 13;
+            this.btnLimpiarFiltros.Text = "Limpiar Filtros";
+            this.btnLimpiarFiltros.UseVisualStyleBackColor = true;
+            this.btnLimpiarFiltros.Click += new System.EventHandler(this.btnLimpiarFiltros_Click);
+            // 
+            // btnUltimaPag
+            // 
+            this.btnUltimaPag.Location = new System.Drawing.Point(437, 272);
+            this.btnUltimaPag.Name = "btnUltimaPag";
+            this.btnUltimaPag.Size = new System.Drawing.Size(76, 39);
+            this.btnUltimaPag.TabIndex = 14;
+            this.btnUltimaPag.Text = "Última Página";
+            this.btnUltimaPag.UseVisualStyleBackColor = true;
+            this.btnUltimaPag.Click += new System.EventHandler(this.btnUltimaPag_Click);
+            // 
+            // btnPagSig
+            // 
+            this.btnPagSig.Location = new System.Drawing.Point(336, 272);
+            this.btnPagSig.Name = "btnPagSig";
+            this.btnPagSig.Size = new System.Drawing.Size(76, 39);
+            this.btnPagSig.TabIndex = 15;
+            this.btnPagSig.Text = "Página Siguiente";
+            this.btnPagSig.UseVisualStyleBackColor = true;
+            this.btnPagSig.Click += new System.EventHandler(this.btnPagSig_Click);
+            // 
+            // btnPagAnt
+            // 
+            this.btnPagAnt.Location = new System.Drawing.Point(114, 272);
+            this.btnPagAnt.Name = "btnPagAnt";
+            this.btnPagAnt.Size = new System.Drawing.Size(76, 39);
+            this.btnPagAnt.TabIndex = 17;
+            this.btnPagAnt.Text = "Página Anterior";
+            this.btnPagAnt.UseVisualStyleBackColor = true;
+            this.btnPagAnt.Click += new System.EventHandler(this.btnPagAnt_Click);
+            // 
+            // btnPrimeraPag
+            // 
+            this.btnPrimeraPag.Location = new System.Drawing.Point(13, 272);
+            this.btnPrimeraPag.Name = "btnPrimeraPag";
+            this.btnPrimeraPag.Size = new System.Drawing.Size(76, 39);
+            this.btnPrimeraPag.TabIndex = 16;
+            this.btnPrimeraPag.Text = "Primera Página";
+            this.btnPrimeraPag.UseVisualStyleBackColor = true;
+            this.btnPrimeraPag.Click += new System.EventHandler(this.btnPrimeraPag_Click);
+            // 
+            // gbResultados
+            // 
+            this.gbResultados.Controls.Add(this.lbPagina);
+            this.gbResultados.Controls.Add(this.dgvPublicaciones);
+            this.gbResultados.Controls.Add(this.btnPagSig);
+            this.gbResultados.Controls.Add(this.btnPagAnt);
+            this.gbResultados.Controls.Add(this.btnUltimaPag);
+            this.gbResultados.Controls.Add(this.lbResultados);
+            this.gbResultados.Controls.Add(this.btnPrimeraPag);
+            this.gbResultados.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbResultados.Location = new System.Drawing.Point(21, 268);
+            this.gbResultados.Name = "gbResultados";
+            this.gbResultados.Size = new System.Drawing.Size(525, 322);
+            this.gbResultados.TabIndex = 18;
+            this.gbResultados.TabStop = false;
+            // 
+            // lbPagina
+            // 
+            this.lbPagina.AutoSize = true;
+            this.lbPagina.Location = new System.Drawing.Point(220, 285);
+            this.lbPagina.Name = "lbPagina";
+            this.lbPagina.Size = new System.Drawing.Size(35, 13);
+            this.lbPagina.TabIndex = 18;
+            this.lbPagina.Text = "label1";
+            // 
+            // btnLimpiarResultados
+            // 
+            this.btnLimpiarResultados.Location = new System.Drawing.Point(181, 596);
+            this.btnLimpiarResultados.Name = "btnLimpiarResultados";
+            this.btnLimpiarResultados.Size = new System.Drawing.Size(115, 23);
+            this.btnLimpiarResultados.TabIndex = 19;
+            this.btnLimpiarResultados.Text = "Limpiar Resultados";
+            this.btnLimpiarResultados.UseVisualStyleBackColor = true;
+            this.btnLimpiarResultados.Click += new System.EventHandler(this.btnLimpiarResultados_Click);
             // 
             // BusquedaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 540);
-            this.Controls.Add(this.btnLimpiar);
+            this.ClientSize = new System.Drawing.Size(568, 629);
+            this.Controls.Add(this.btnLimpiarResultados);
+            this.Controls.Add(this.gbResultados);
+            this.Controls.Add(this.btnLimpiarFiltros);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnUbicaciones);
-            this.Controls.Add(this.dgvPublicaciones);
             this.Controls.Add(this.lbTitulo);
-            this.Controls.Add(this.lbResultados);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.tbNombre);
             this.Controls.Add(this.lbNombre);
@@ -293,6 +376,8 @@
             this.gbRango.ResumeLayout(false);
             this.gbRango.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).EndInit();
+            this.gbResultados.ResumeLayout(false);
+            this.gbResultados.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,6 +406,13 @@
         private System.Windows.Forms.DataGridView dgvPublicaciones;
         private System.Windows.Forms.Button btnUbicaciones;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnLimpiarFiltros;
+        private System.Windows.Forms.Button btnUltimaPag;
+        private System.Windows.Forms.Button btnPagSig;
+        private System.Windows.Forms.Button btnPagAnt;
+        private System.Windows.Forms.Button btnPrimeraPag;
+        private System.Windows.Forms.GroupBox gbResultados;
+        private System.Windows.Forms.Label lbPagina;
+        private System.Windows.Forms.Button btnLimpiarResultados;
     }
 }

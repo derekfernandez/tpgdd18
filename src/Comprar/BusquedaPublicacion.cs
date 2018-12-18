@@ -18,13 +18,25 @@ namespace PalcoNet.Comprar
 
         #region Atributos
 
+        //Atributos de controles
         CheckBox[] filtrosRubro;
         DateTime fechaConfig;
+        ErrorProvider errorProvider;
+        DataTable tablaPaginaActual;
+        DateTime fechaInicial;
+        DateTime fechaFinal;
+
+        //Atributos de datos de sesion
         String idUsuario;
         String idCliente;
-        ErrorProvider errorProvider;
         public Usuario user { get; set; }
         public Session session { get; set; }
+
+        //Atributos de paginacion
+        private const int resultadosPorPagina = 10;
+        private int paginaActual = 1;                               //Deberia arrancar en la primer pagina
+        private int totalPaginas;
+        private int resultadosDePaginasAnteriores;                  //Para saber cuanto moverme en el SELECT de carga
 
         #endregion Atributos
 
@@ -32,6 +44,7 @@ namespace PalcoNet.Comprar
 
         public BusquedaPublicacion(Session session)
         {
+            
             this.session = session;
             user = session.user;
             InitializeComponent();
@@ -47,6 +60,16 @@ namespace PalcoNet.Comprar
             ConfigurarDTPs();
             InicializarFiltrosRubro();
             dgvPublicaciones.AllowUserToAddRows = false;
+
+            //Deshabilito botones, asi no se pueden utilizar hasta la primera busqueda
+            btnPrimeraPag.Enabled = false;
+            btnPagAnt.Enabled = false;
+            btnPagSig.Enabled = false;
+            btnUltimaPag.Enabled = false;
+
+            //Escondo el label, asi no se lo ve hasta que se haga la primera busqueda
+            lbPagina.Visible = false;
+            lbPagina.Text = "";
 
         }
 
@@ -91,7 +114,7 @@ namespace PalcoNet.Comprar
         private void AgregarRubros(ref String query)
         {
 
-            query += " AND (P.rubro_id IN (";
+            query += " AND (rubro_id IN (";
 
             int cantidadRubros = FiltrosPorRubroActivados();
             int i = 1;
@@ -121,14 +144,14 @@ namespace PalcoNet.Comprar
         private void LlenarDGV(SqlCommand cmd)
         {
 
-            DataTable tablaPublicaciones = Database.getTable(cmd);
-            dgvPublicaciones.DataSource = tablaPublicaciones;
+            tablaPaginaActual = Database.getTable(cmd);
+            dgvPublicaciones.DataSource = tablaPaginaActual;
 
             //Lleno el DGV y formateo sus columnas/filas
-            dgvPublicaciones.DataSource = tablaPublicaciones;
+            dgvPublicaciones.DataSource = tablaPaginaActual;
             dgvPublicaciones.Columns[0].Visible = false;
             dgvPublicaciones.Columns[1].HeaderText = "Nombre";
-            dgvPublicaciones.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvPublicaciones.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgvPublicaciones.Columns[2].HeaderText = "Fecha";
             dgvPublicaciones.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //Recordar: HH asi en mayuscula es para que me muestre las horas en formato 24h
@@ -138,18 +161,109 @@ namespace PalcoNet.Comprar
 
         }
 
+        private void CalcularTotalDePaginas(SqlCommand cmdBase)
+        {
+
+            DataTable tablaMasiva = Database.getTable(cmdBase);
+            
+            int cantidadResultados = tablaMasiva.Rows.Count;
+            totalPaginas = cantidadResultados / resultadosPorPagina;
+            //Si la cantidad de resultados no es multiplo de los resultados por pagina, entonces me va a quedar una pagina
+            //mas, a medio llenar; como la division entera trunca, le sumo uno al total de paginas
+            if ((cantidadResultados % resultadosPorPagina) != 0)
+            {
+                totalPaginas++;
+            }
+
+        }
+
         #endregion Verificaciones
+
+        #region Paginacion
+
+        private void obtenerPublicaciones()
+        {
+
+            //Primero, calculo cuantos resultados deberia dejar atras en base a la pagina actual
+            //Tener en cuenta que la query se ejecuta para cada pagina, no es una general para todo
+            resultadosDePaginasAnteriores = (paginaActual - 1) * resultadosPorPagina;
+
+            #region Atributos
+
+            //Parte que tendran en comun las querys, tanto la principal como el subSELECT del NOT IN
+            String queryComun;
+            //Parte que ira en el NOT IN para no traer datos de paginas anteriores
+            String queryNotIn;
+            //Query que voy a ejecutar para traer todas las publicaciones posibles y obtener la cantidad de paginas
+            String queryMasiva;
+            SqlCommand cmdMasiva;
+            //Query efectiva que voy a usar para traer las publicaciones que necesito para la pagina actual
+            String queryPublicaciones;
+            SqlCommand cmdPublicaciones;
+
+            #endregion Atributos
+
+            #region ArmadoQueryComun
+
+            //Hago todos los CONVERT por temas de tipo, y el ISNULL porque si la fecha es NULL nunca es mayor ni menor a nada
+            queryComun = "FROM SQLITO.Publicaciones JOIN SQLITO.Rubros ON (rubro_id = id_rubro) JOIN SQLITO.";
+            queryComun += "Grados ON (grado_id = id_grado) WHERE (CONVERT(DATE, fecha_funcion) BETWEEN @FechaInicial ";
+            queryComun += "AND @FechaFinal) AND (estado_id = 2) AND (ISNULL(fecha_creacion, 0) <= CONVERT(DATE, @FechaActual))";
+            queryComun += " AND (ISNULL(fecha_vencimiento, 0) > CONVERT(DATE, @FechaActual))";
+
+            if (FiltrosPorRubroActivados() > 0)
+            {
+                AgregarRubros(ref queryComun);
+            }
+            //Si hay texto dentro del textBox de Nombre, agrego la clausula LIKE para buscarlo por ese patron
+            if (!(string.IsNullOrWhiteSpace(tbNombre.Text)))
+            {
+                queryComun += (" AND (publ_descripcion LIKE '%" + tbNombre.Text + "%')");
+            }
+
+            #endregion ArmadoQueryComun
+
+            #region ArmadoQueryFinal
+
+            queryNotIn = "(SELECT TOP " + resultadosDePaginasAnteriores.ToString() + " cod_publicacion " + queryComun + " ORDER BY";
+            queryNotIn += " comision DESC, publ_descripcion ASC)";
+
+            queryPublicaciones = "SELECT TOP " + resultadosPorPagina.ToString() + " cod_publicacion, publ_descripcion, ";
+            queryPublicaciones += ("fecha_funcion, r_descripcion " + queryComun + " AND (cod_publicacion NOT IN " + queryNotIn);
+            queryPublicaciones += ") ORDER BY comision DESC, publ_descripcion ASC";
+
+            #endregion ArmadoQueryFinal
+
+            #region LlenadoDeTabla
+
+            //Primero, calculo el total de paginas teniendo en cuenta la busqueda especificada
+            queryMasiva = "SELECT cod_publicacion " + queryComun;
+            cmdMasiva = Database.createQuery(queryMasiva);
+            cmdMasiva.Parameters.Add("@FechaInicial", SqlDbType.Date).Value = fechaInicial;
+            cmdMasiva.Parameters.Add("@FechaFinal", SqlDbType.Date).Value = fechaFinal;
+            cmdMasiva.Parameters.Add("@FechaActual", SqlDbType.Date).Value = fechaConfig;
+            CalcularTotalDePaginas(cmdMasiva);
+
+            //Y luego completo el DGV con los datos necesarios, en base a la pagina elegida y demas
+            cmdPublicaciones = Database.createQuery(queryPublicaciones);
+            cmdPublicaciones.Parameters.Add("@FechaInicial", SqlDbType.Date).Value = fechaInicial;
+            cmdPublicaciones.Parameters.Add("@FechaFinal", SqlDbType.Date).Value = fechaFinal;
+            cmdPublicaciones.Parameters.Add("@FechaActual", SqlDbType.Date).Value = fechaConfig;            
+            LlenarDGV(cmdPublicaciones);
+
+            #endregion LlenadoDeTabla
+
+        }
+
+        #endregion Paginacion
 
         #region Eventos
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            
-            String queryPublicaciones;
-            SqlCommand cmdPublicaciones;
 
-            DateTime fechaInicial = dtpInicial.Value.Date;
-            DateTime fechaFinal = dtpFinal.Value.Date;
+            fechaInicial = dtpInicial.Value.Date;
+            fechaFinal = dtpFinal.Value.Date;
 
             #region ManejoErrores
             errorProvider.Clear();
@@ -172,36 +286,120 @@ namespace PalcoNet.Comprar
 
             #endregion ManejoErrores
 
-            //Hago todos los CONVERT por temas de tipo, y el ISNULL porque si la fecha es NULL nunca es mayor ni menor a nada
-            queryPublicaciones = "SELECT P.cod_publicacion, P.descripcion, fecha_funcion, R.descripcion FROM SQLITO.Publicaciones ";
-            queryPublicaciones += "AS P JOIN SQLITO.Rubros AS R ON (P.rubro_id = R.id_rubro) JOIN SQLITO.Grados AS G ON (P.grado_id";
-            queryPublicaciones += " =  G.id_grado) WHERE (CONVERT(DATE, P.fecha_funcion) BETWEEN @FechaInicial AND @FechaFinal)";
-            queryPublicaciones += " AND (estado_id = 2) AND (ISNULL(P.fecha_creacion, 0) <= CONVERT(DATE, @FechaActual)) AND ";
-            queryPublicaciones += "(ISNULL(P.fecha_vencimiento, 0) > CONVERT(DATE, @FechaActual))";
+            obtenerPublicaciones();
 
-            if (FiltrosPorRubroActivados() > 0)
+            //Inhabilito los botones de primera pagina y pagina anterior, y actualizo el label
+            btnPagAnt.Enabled = false;
+            btnPrimeraPag.Enabled = false;
+            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
+            //Si hubiera mas de una pagina, permito ir a la siguiente y/o a la ultima
+            if (totalPaginas > 1)
             {
-                AgregarRubros(ref queryPublicaciones);
-            }
-            //Si hay texto dentro del textBox de Nombre, agrego la clausula LIKE para buscarlo por ese patron
-            if(!(string.IsNullOrWhiteSpace(tbNombre.Text)))
-            {
-                queryPublicaciones += (" AND (P.descripcion LIKE '%" + tbNombre.Text + "%')");
+                btnPagSig.Enabled = true;
+                btnUltimaPag.Enabled = true;
             }
 
-            queryPublicaciones += " ORDER BY G.comision DESC, P.descripcion ASC";
+        }
 
-            cmdPublicaciones = Database.createQuery(queryPublicaciones);
-            cmdPublicaciones.Parameters.Add("@FechaInicial", SqlDbType.Date).Value = fechaInicial;
-            cmdPublicaciones.Parameters.Add("@FechaFinal", SqlDbType.Date).Value = fechaFinal;
-            cmdPublicaciones.Parameters.Add("@FechaActual", SqlDbType.Date).Value = fechaConfig;
+        private void btnPrimeraPag_Click(object sender, EventArgs e)
+        {
 
-            LlenarDGV(cmdPublicaciones);
+            //Actualizo label y la pagina actual
+            paginaActual = 1;
+            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
+
+            //Anulo botones de Primera Pagina y Pagina Anterior, y activo los de Pagina Siguiente y Ultima Pagina
+            btnPrimeraPag.Enabled = false;
+            btnPagAnt.Enabled = false;
+            btnPagSig.Enabled = true;
+            btnUltimaPag.Enabled = true;
+            
+
+            //Actualizo el DGV y muestro solo la primera pagina
+            fechaInicial = dtpInicial.Value.Date;
+            fechaFinal = dtpFinal.Value.Date;
+            obtenerPublicaciones();
+
+        }
+
+        private void btnPagAnt_Click(object sender, EventArgs e)
+        {
+
+            //Antes que nada, bajo en uno el numero de pagina actual, y ya lo muestro
+            paginaActual--;
+            lbPagina.Text = "Pagina " + paginaActual.ToString() + " de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
+
+            //Muestro los botones de Pagina Siguiente y Ultima Pagina
+            btnPagSig.Enabled = true;
+            btnUltimaPag.Enabled = true;
+
+            //Si ya retrocedi hasta la primer pagina, anulo los botones de Pagina Anterior y Primera Pagina
+            if (paginaActual == 1)
+            {
+                btnPagAnt.Enabled = false;
+                btnPrimeraPag.Enabled = false;
+            }
+
+            //Actualizo el DGV y muestro solo la pagina solicitada
+            fechaInicial = dtpInicial.Value.Date;
+            fechaFinal = dtpFinal.Value.Date;
+            obtenerPublicaciones();
+
+        }
+
+        private void btnPagSig_Click(object sender, EventArgs e)
+        {
+
+            //Antes que nada, subo en uno el numero de pagina actual, y ya lo muestro
+            paginaActual++;
+            lbPagina.Text = "Pagina " + paginaActual.ToString() + " de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
+
+            //Muestro los botones de Pagina Anterior y Primera Pagina
+            btnPagAnt.Enabled = true;
+            btnPrimeraPag.Enabled = true;
+
+            //Si ya avance hasta la ultima pagina, anulo los botones de Pagina Siguiente y Ultima Pagina
+            if (paginaActual == totalPaginas)
+            {
+                btnPagSig.Enabled = false;
+                btnUltimaPag.Enabled = false;
+            }
+
+            //Actualizo el DGV y muestro solo la pagina solicitada
+            fechaInicial = dtpInicial.Value.Date;
+            fechaFinal = dtpFinal.Value.Date;
+            obtenerPublicaciones();
+
+        }
+
+        private void btnUltimaPag_Click(object sender, EventArgs e)
+        {
+
+            //Antes que nada, pongo en ultimo el numero de pagina actual, y ya lo muestro
+            paginaActual = totalPaginas;
+            lbPagina.Text = "Pagina " + paginaActual.ToString() + " de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
+
+            //Anulo los botones de Pagina Siguiente y Ultima Pagina; activo los de Primera Pagina y Pagina Anterior
+            //Hago esto porque si pude tocar este boton es porque habia mas de una pagina para mostrar
+            btnPrimeraPag.Enabled = true;
+            btnPagAnt.Enabled = true;
+            btnPagSig.Enabled = false;
+            btnUltimaPag.Enabled = false;
+
+            //Actualizo el DGV y muestro solo la pagina solicitada
+            fechaInicial = dtpInicial.Value.Date;
+            fechaFinal = dtpFinal.Value.Date;
+            obtenerPublicaciones();
 
         }
 
         //Destildo todos los CheckBox, pongo la fecha como al iniciar, y vacio el textBox de descripcion
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
 
             for (int i = 0; i < 7; i++)
@@ -227,14 +425,51 @@ namespace PalcoNet.Comprar
             ComprarUbicaciones cu = new ComprarUbicaciones(dgvPublicaciones.CurrentRow.Cells[0].Value.ToString(), idCliente);
             cu.ShowDialog();
 
-            //Vacio el DGV tras efectuar la compra; si quiero volver a comprar, vuelvo a buscar
-            dgvPublicaciones.DataSource = null;            
+            #region PrimeraPaginaDeNuevo
+
+            //Actualizo label y la pagina actual
+            paginaActual = 1;
+            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
+
+            //Anulo botones de Primera Pagina y Pagina Anterior, y activo los de Pagina Siguiente y Ultima Pagina
+            btnPrimeraPag.Enabled = false;
+            btnPagAnt.Enabled = false;
+            btnPagSig.Enabled = true;
+            btnUltimaPag.Enabled = true;
+
+            //Actualizo el DGV y muestro solo la primera pagina
+            fechaInicial = dtpInicial.Value.Date;
+            fechaFinal = dtpFinal.Value.Date;
+            obtenerPublicaciones();
+
+            #endregion PrimeraPaginaDeNuevo
+
 
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnLimpiarResultados_Click(object sender, EventArgs e)
+        {
+
+            //Vacio la DGV, y reseteo el numero de pagina actual a 1 (IMPORTANTE, asi al volver a buscar no la caga)
+            dgvPublicaciones.DataSource = null;
+            paginaActual = 1;
+
+            //Deshabilito botones, asi no se pueden utilizar hasta la primera busqueda
+            btnPrimeraPag.Enabled = false;
+            btnPagAnt.Enabled = false;
+            btnPagSig.Enabled = false;
+            btnUltimaPag.Enabled = false;
+
+            //Escondo el label, asi no se lo ve hasta que se haga la primera busqueda
+            lbPagina.Visible = false;
+            lbPagina.Text = "";
+
         }
 
         #endregion Eventos

@@ -45,15 +45,16 @@
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnDescartar = new System.Windows.Forms.Button();
+            this.btnEliminar = new System.Windows.Forms.Button();
             this.gbDatos.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnPublicar
             // 
             this.btnPublicar.BackColor = System.Drawing.Color.LimeGreen;
-            this.btnPublicar.Location = new System.Drawing.Point(370, 328);
+            this.btnPublicar.Location = new System.Drawing.Point(425, 317);
             this.btnPublicar.Name = "btnPublicar";
-            this.btnPublicar.Size = new System.Drawing.Size(146, 23);
+            this.btnPublicar.Size = new System.Drawing.Size(91, 44);
             this.btnPublicar.TabIndex = 22;
             this.btnPublicar.Text = "Publicar";
             this.btnPublicar.UseVisualStyleBackColor = false;
@@ -195,9 +196,9 @@
             // btnActualizar
             // 
             this.btnActualizar.BackColor = System.Drawing.Color.Gold;
-            this.btnActualizar.Location = new System.Drawing.Point(191, 328);
+            this.btnActualizar.Location = new System.Drawing.Point(321, 317);
             this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(137, 23);
+            this.btnActualizar.Size = new System.Drawing.Size(91, 44);
             this.btnActualizar.TabIndex = 26;
             this.btnActualizar.Text = "Actualizar Borrador";
             this.btnActualizar.UseVisualStyleBackColor = false;
@@ -205,19 +206,31 @@
             // 
             // btnDescartar
             // 
-            this.btnDescartar.Location = new System.Drawing.Point(13, 328);
+            this.btnDescartar.Location = new System.Drawing.Point(12, 317);
             this.btnDescartar.Name = "btnDescartar";
-            this.btnDescartar.Size = new System.Drawing.Size(137, 23);
+            this.btnDescartar.Size = new System.Drawing.Size(91, 44);
             this.btnDescartar.TabIndex = 24;
             this.btnDescartar.Text = "Descartar Cambios";
             this.btnDescartar.UseVisualStyleBackColor = true;
             this.btnDescartar.Click += new System.EventHandler(this.btnDescartar_Click);
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.BackColor = System.Drawing.Color.Red;
+            this.btnEliminar.Location = new System.Drawing.Point(216, 317);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(91, 44);
+            this.btnEliminar.TabIndex = 27;
+            this.btnEliminar.Text = "Eliminar Publicación";
+            this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // EdicionPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 373);
+            this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.lbTitulo);
             this.Controls.Add(this.btnDescartar);
@@ -251,6 +264,7 @@
         private System.Windows.Forms.DateTimePicker dtpFecha;
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnDescartar;
+        private System.Windows.Forms.Button btnEliminar;
 
     }
 }

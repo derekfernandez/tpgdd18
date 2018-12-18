@@ -418,7 +418,7 @@ BEGIN
 		* tiene codigos cargados. Si pongo identity no va a hacer los inserts. Habria que ver como hacer
 		*/
 		[cod_publicacion] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[descripcion] [nvarchar] (255) NOT NULL,
+		[publ_descripcion] [nvarchar] (255) NOT NULL,
 		[fecha_creacion] [datetime],
 		--La fecha de vencimiento puede ser null, si todavia no se publico el espectaculo
 		[fecha_vencimiento] [datetime],
@@ -428,7 +428,7 @@ BEGIN
 		[empresa_id] [int],
 		[grado_id] [int],
 		--Comision aca, desnormalizada, por si cambia la comision de uno de los grados (que son fijos)
-		[comision] [numeric] (6,2),
+		[publ_comision] [numeric] (6,2),
 		[rubro_id] [int],
 		[estado_id] [int]
 		--Este check quedaria medio al dope, ya las inserciones verifican esta restriccion desde la aplicacion
@@ -469,7 +469,7 @@ BEGIN
 	CREATE TABLE [SQLITO].[Rubros] (
 
 		[id_rubro] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[descripcion] [nvarchar] (255)
+		[r_descripcion] [nvarchar] (255)
 	)
 
 PRINT('Tabla SQLITO.Rubros creada')
@@ -485,7 +485,7 @@ BEGIN
 	CREATE TABLE [SQLITO].[EstadosPublicacion] (
 		
 		[id_estado] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-		[descripcion] [nvarchar] (255) CHECK ([descripcion] IN ('Borrador','Publicada','Finalizada','Pausada','Inhabilitada'))
+		[descripcion] [nvarchar] (255) CHECK ([descripcion] IN ('Borrador','Publicada','Finalizada','Pausada','Eliminada'))
 	)
 
 PRINT('Tabla SQLITO.EstadosPublicacion creada')
@@ -891,7 +891,7 @@ BEGIN
 		  	   ('Publicada'),
 		       ('Finalizada'),
 	           ('Pausada'),
-			   ('Inhabilitada')
+			   ('Eliminada')
 
 PRINT('Datos insertados en la tabla SQLITO.EstadosPublicacion')
 END
@@ -902,7 +902,7 @@ GO
 IF (SELECT COUNT(*) FROM [SQLITO].[Rubros]) = 0
 BEGIN
 
-	INSERT INTO [SQLITO].[Rubros] (descripcion)
+	INSERT INTO [SQLITO].[Rubros] (r_descripcion)
 		VALUES ('Teatro'),
 		       ('Cine'),
 		       ('Conciertos'),
@@ -1162,7 +1162,7 @@ SET IDENTITY_INSERT [SQLITO].[Publicaciones] ON
 IF (SELECT COUNT(*) FROM [SQLITO].[Publicaciones]) = 0
 BEGIN
 
-	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id, grado_id)
+	INSERT INTO [SQLITO].[Publicaciones] (cod_publicacion, publ_descripcion, fecha_vencimiento, fecha_funcion, empresa_id, rubro_id, estado_id, grado_id)
 		SELECT DISTINCT Espectaculo_Cod,
 		   	   			Espectaculo_Descripcion,
 		       			Espectaculo_Fecha_Venc,

@@ -44,7 +44,7 @@ namespace PalcoNet.Editar_Publicacion
             fechaConfig = Convert.ToDateTime(ConfigurationManager.AppSettings["FechaSistema"]);
             errorProvider = new ErrorProvider();
 
-            String queryDescripcion = "SELECT descripcion FROM SQLITO.Publicaciones WHERE cod_publicacion = '";
+            String queryDescripcion = "SELECT publ_descripcion FROM SQLITO.Publicaciones WHERE cod_publicacion = '";
             queryDescripcion += (idPublicacion + "'");
             SqlCommand cmdDescripcion = Database.createQuery(queryDescripcion);
             tbDescripcion.Text = Database.getValue(cmdDescripcion);
@@ -59,11 +59,11 @@ namespace PalcoNet.Editar_Publicacion
             }
 
             //Cargo los Rubros de la tabla al ComboBox
-            String queryRubros = "SELECT id_rubro, descripcion FROM SQLITO.Rubros ORDER BY descripcion";
+            String queryRubros = "SELECT id_rubro, r_descripcion FROM SQLITO.Rubros ORDER BY r_descripcion";
             SqlCommand cmdRubros = new SqlCommand(queryRubros, Database.getConnection());
 
             comboRubro.DataSource = Database.getTable(cmdRubros);
-            comboRubro.DisplayMember = "descripcion";
+            comboRubro.DisplayMember = "r_descripcion";
             comboRubro.ValueMember = "id_rubro";
             //Pongo el valor que tenia guardado en la tabla
             queryRubros = "SELECT rubro_id FROM SQLITO.Publicaciones WHERE cod_publicacion = '" + idPublicacion + "'";
@@ -89,8 +89,6 @@ namespace PalcoNet.Editar_Publicacion
             String queryVerificacion = "SELECT habilitado FROM SQLITO.Grados WHERE id_grado = " + gradoElegido;
             SqlCommand cmdVerificacion = Database.createQuery(queryVerificacion);
             String gradoHabilitado = Database.getValue(cmdVerificacion);
-
-            MessageBox.Show(gradoHabilitado);
 
             //Solo si el grado esta habilitado lo pongo como opcion al arrancar el form; si fue
             //inhabilitado en el medio (entre la generacion del borrador y esto) dejo el por defecto
@@ -256,7 +254,7 @@ namespace PalcoNet.Editar_Publicacion
                 return;
             }
 
-            String queryFechas = "SELECT cod_publicacion FROM SQLITO.Publicaciones WHERE (descripcion = @Descripcion)";
+            String queryFechas = "SELECT cod_publicacion FROM SQLITO.Publicaciones WHERE (publ_descripcion = @Descripcion)";
             queryFechas += (" AND (fecha_funcion = @FechaFunc) AND (cod_publicacion) <> " + idPublicacion);
             SqlCommand cmdFechas = Database.createQuery(queryFechas);
             cmdFechas.Parameters.AddWithValue("@Descripcion", tbDescripcion.Text);
@@ -312,8 +310,8 @@ namespace PalcoNet.Editar_Publicacion
             String queryUpdate;
             SqlCommand cmdUpdate;
 
-            queryUpdate = "UPDATE SQLITO.Publicaciones SET descripcion = @Descripcion, fecha_funcion = @FechaFuncion, ";
-            queryUpdate += "grado_id = @GradoID, direccion = @Direccion, comision = @Comision, rubro_id = @RubroID ";
+            queryUpdate = "UPDATE SQLITO.Publicaciones SET publ_descripcion = @Descripcion, fecha_funcion = @FechaFuncion, ";
+            queryUpdate += "grado_id = @GradoID, direccion = @Direccion, publ_comision = @Comision, rubro_id = @RubroID ";
             queryUpdate += ("WHERE cod_publicacion = " + idPublicacion);
             cmdUpdate = Database.createQuery(queryUpdate);
             cmdUpdate.Parameters.AddWithValue("@Descripcion", descripcion);
@@ -341,7 +339,6 @@ namespace PalcoNet.Editar_Publicacion
                 cmdUbicacion = Database.createQuery(queryUbicacion);
                 cmdUbicacion.Parameters.AddWithValue("@Fila", u.Fila);
                 cmdUbicacion.Parameters.AddWithValue("@Asiento", u.Asiento);
-                cmdUbicacion.Parameters.Add("@Comision", SqlDbType.Decimal).Value = Double.Parse(comision);
                 cmdUbicacion.Parameters.AddWithValue("@TipoID", u.TipoId.ToString());
                 cmdUbicacion.Parameters.Add("@Precio", SqlDbType.Decimal).Value = ObtenerTarifa(u.TipoId);
                 cmdUbicacion.Parameters.AddWithValue("@PublicacionID", idPublicacion);
@@ -395,7 +392,7 @@ namespace PalcoNet.Editar_Publicacion
                 return;
             }
 
-            String queryFechas = "SELECT cod_publicacion FROM SQLITO.Publicaciones WHERE (descripcion = @Descripcion)";
+            String queryFechas = "SELECT cod_publicacion FROM SQLITO.Publicaciones WHERE (publ_descripcion = @Descripcion)";
             queryFechas += (" AND (fecha_funcion = @FechaFunc) AND (cod_publicacion) <> " + idPublicacion);
             SqlCommand cmdFechas = Database.createQuery(queryFechas);
             cmdFechas.Parameters.AddWithValue("@Descripcion", tbDescripcion.Text);
@@ -427,8 +424,8 @@ namespace PalcoNet.Editar_Publicacion
             SqlCommand cmdUpdate;
 
             //El UPDATE es igual al de btnActualizar, solo que tambien le pone el estado en 2 (ya esta publicada)
-            queryUpdate = "UPDATE SQLITO.Publicaciones SET descripcion = @Descripcion, fecha_funcion = @FechaFuncion, ";
-            queryUpdate += "fecha_vencimiento = @FechaVenc, grado_id = @GradoID, direccion = @Direccion, comision = @Comision, ";
+            queryUpdate = "UPDATE SQLITO.Publicaciones SET publ_descripcion = @Descripcion, fecha_funcion = @FechaFuncion, ";
+            queryUpdate += "fecha_vencimiento = @FechaVenc, grado_id = @GradoID, direccion = @Direccion, publ_comision = @Comision, ";
             queryUpdate += ("rubro_id = @RubroID, estado_id = 2 WHERE cod_publicacion = " + idPublicacion);
             cmdUpdate = Database.createQuery(queryUpdate);
             cmdUpdate.Parameters.AddWithValue("@Descripcion", descripcion);
@@ -473,6 +470,28 @@ namespace PalcoNet.Editar_Publicacion
         }
 
         #endregion Eventos
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+            //Le pido que confirme si realmente desea eliminar la Publicación, y le advierto la decisión
+            DialogResult res = MessageBox.Show("¿Desea eliminar la Publicación? No podra recuperar los datos",
+                                               "Eliminar Publicación (No publicada)", MessageBoxButtons.YesNo);
+            if (res == DialogResult.No)
+            {
+                return;
+            }
+
+            //Registro la baja en la base: simplemente marco la Publicacion como "Eliminada", dejando
+            //sus datos tales como estaban al entrar al ABM de Editar Publicacion
+            String queryBajaLogica = "UPDATE SQLITO.Publicaciones SET estado_id = 5 WHERE cod_publicacion = @PublicacionID";
+            SqlCommand cmdBaja = Database.createQuery(queryBajaLogica);
+            cmdBaja.Parameters.AddWithValue("@PublicacionID", idPublicacion);
+            Database.execQuery(cmdBaja);
+
+            this.Close();
+
+        }
 
     }
 }

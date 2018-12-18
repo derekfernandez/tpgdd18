@@ -37,6 +37,7 @@
             this.btnPeoresEmpresas = new System.Windows.Forms.Button();
             this.btnClientesPuntos = new System.Windows.Forms.Button();
             this.btnMejoresCompradores = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.gbPeriodo.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,11 +133,22 @@
             this.btnMejoresCompradores.UseVisualStyleBackColor = true;
             this.btnMejoresCompradores.Click += new System.EventHandler(this.btnMejoresCompradores_Click);
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(112, 296);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 43);
+            this.btnVolver.TabIndex = 5;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
             // VentanaSeleccion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 309);
+            this.ClientSize = new System.Drawing.Size(300, 351);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnMejoresCompradores);
             this.Controls.Add(this.btnClientesPuntos);
             this.Controls.Add(this.btnPeoresEmpresas);
@@ -162,5 +174,6 @@
         private System.Windows.Forms.Button btnClientesPuntos;
         private System.Windows.Forms.Button btnMejoresCompradores;
         private System.Windows.Forms.ComboBox comboTrim;
+        private System.Windows.Forms.Button btnVolver;
     }
 }
