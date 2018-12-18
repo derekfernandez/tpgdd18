@@ -98,31 +98,38 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            filtrosVacios();
-            string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", ObtenerIdentity());
-            if (ObtenerIdentity() == "")
+            
+            if (todosNulos())
             {
-                MessageBox.Show("No se encontro la empresa a eliminar");
+                MessageBox.Show("Ingrese una empresa a eliminar");
             }
             else
             {
-                if (yaEliminado())
+                string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", ObtenerIdentity());
+                if (ObtenerIdentity() == "")
                 {
-                    MessageBox.Show("Empresa ya eliminada");
+                    MessageBox.Show("No se encontro la empresa a eliminar");
                 }
                 else
                 {
-                    try
+                    if (yaEliminado())
                     {
-                        Database.execNonQuery(Database.createQuery(eliminar));
-                        //Database.ejecutarNonQueryShort(insert);
-                        MessageBox.Show("Empresa eliminada correctamente");
-                        cargarGrilla();
+                        MessageBox.Show("Empresa ya eliminada");
                     }
-                    catch (Exception exp)
+                    else
                     {
+                        try
+                        {
+                            Database.execNonQuery(Database.createQuery(eliminar));
+                            //Database.ejecutarNonQueryShort(insert);
+                            MessageBox.Show("Empresa eliminada correctamente");
+                            cargarGrilla();
+                        }
+                        catch (Exception exp)
+                        {
 
-                        MessageBox.Show("Error: " + exp.Message);
+                            MessageBox.Show("Error: " + exp.Message);
+                        }
                     }
                 }
             }
@@ -135,8 +142,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         public Boolean yaEliminado() 
         {
-            //Si llego es que el identity existe
-            MessageBox.Show(ObtenerIdentity());
+            
             string queryBuscar = string.Format("select 1 from SQLITO.Empresas where id_empresa = '{0}' and habilitado = 0", ObtenerIdentity());
             if (Database.ObtenerDataSet(queryBuscar).Tables[0].Rows.Count == 0)
                 return false;
