@@ -41,13 +41,14 @@
             this.textBoxCUIT = new System.Windows.Forms.TextBox();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).BeginInit();
             this.SuspendLayout();
             // 
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(25, 873);
+            this.btnVolver.Location = new System.Drawing.Point(12, 864);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(252, 133);
@@ -58,7 +59,7 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(1264, 873);
+            this.btnBuscar.Location = new System.Drawing.Point(1562, 864);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(252, 133);
@@ -80,7 +81,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(431, 873);
+            this.btnEditar.Location = new System.Drawing.Point(399, 864);
             this.btnEditar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(252, 133);
@@ -91,7 +92,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(857, 873);
+            this.btnEliminar.Location = new System.Drawing.Point(1201, 864);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(252, 133);
@@ -109,13 +110,13 @@
             this.grillaEmpresas.Name = "grillaEmpresas";
             this.grillaEmpresas.ReadOnly = true;
             this.grillaEmpresas.RowTemplate.Height = 33;
-            this.grillaEmpresas.Size = new System.Drawing.Size(1504, 596);
+            this.grillaEmpresas.Size = new System.Drawing.Size(1802, 596);
             this.grillaEmpresas.TabIndex = 5;
             // 
             // labelCUIT
             // 
             this.labelCUIT.AutoSize = true;
-            this.labelCUIT.Location = new System.Drawing.Point(606, 171);
+            this.labelCUIT.Location = new System.Drawing.Point(783, 172);
             this.labelCUIT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCUIT.Name = "labelCUIT";
             this.labelCUIT.Size = new System.Drawing.Size(66, 25);
@@ -125,7 +126,7 @@
             // labelRazonSocial
             // 
             this.labelRazonSocial.AutoSize = true;
-            this.labelRazonSocial.Location = new System.Drawing.Point(8, 171);
+            this.labelRazonSocial.Location = new System.Drawing.Point(43, 172);
             this.labelRazonSocial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelRazonSocial.Name = "labelRazonSocial";
             this.labelRazonSocial.Size = new System.Drawing.Size(145, 25);
@@ -135,16 +136,16 @@
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
-            this.labelEmail.Location = new System.Drawing.Point(1116, 171);
+            this.labelEmail.Location = new System.Drawing.Point(1414, 174);
             this.labelEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(71, 25);
+            this.labelEmail.Size = new System.Drawing.Size(58, 25);
             this.labelEmail.TabIndex = 8;
-            this.labelEmail.Text = "Email:";
+            this.labelEmail.Text = "Mail:";
             // 
             // textBoxRazonSocial
             // 
-            this.textBoxRazonSocial.Location = new System.Drawing.Point(158, 169);
+            this.textBoxRazonSocial.Location = new System.Drawing.Point(193, 170);
             this.textBoxRazonSocial.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(324, 31);
@@ -152,7 +153,7 @@
             // 
             // textBoxCUIT
             // 
-            this.textBoxCUIT.Location = new System.Drawing.Point(678, 169);
+            this.textBoxCUIT.Location = new System.Drawing.Point(855, 170);
             this.textBoxCUIT.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxCUIT.Name = "textBoxCUIT";
             this.textBoxCUIT.Size = new System.Drawing.Size(324, 31);
@@ -160,7 +161,7 @@
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Location = new System.Drawing.Point(1192, 169);
+            this.textBoxEmail.Location = new System.Drawing.Point(1490, 172);
             this.textBoxEmail.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(324, 31);
@@ -177,13 +178,25 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "*Seleccionar buscar sin aplicar filtros traera todas las empresas existentes";
             // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(798, 864);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(252, 133);
+            this.btnLimpiar.TabIndex = 15;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
             // AMB_Modificar_Eliminar
             // 
             this.AcceptButton = this.btnBuscar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(1539, 1027);
+            this.ClientSize = new System.Drawing.Size(1845, 1020);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxEmail);
             this.Controls.Add(this.textBoxCUIT);
@@ -223,6 +236,7 @@
         public System.Windows.Forms.TextBox textBoxCUIT;
         public System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Button btnLimpiar;
 
     }
 }

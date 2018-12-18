@@ -14,38 +14,48 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class ModificacionEmpresas : ABM_Alta_Empresa
     {
-        int idEmpresa;
-        public ModificacionEmpresas(int idEmpresa)
+        string idEmpresa;
+        public ModificacionEmpresas(string idEmpresa)
         {
             InitializeComponent();
             this.idEmpresa = idEmpresa;
             cargarTextBox();
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        public override void btnVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            //AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
-            //nuevoMod.Show();
+            AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
+            nuevoMod.Show();
+            
         }
-
-        private void btnCargar_Click(object sender, EventArgs e)
+      
+        public override void btnCargar_Click(object sender, EventArgs e)
         {
-            string update = string.Format("pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text,idEmpresa);
-            try
-            {
-                Database.ejecutarNonQueryShort(update);
-                MessageBox.Show("Empresa actualizada correctamente");
-                this.Hide();
-                Abm_Empresa_Espectaculo.AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
-                nuevoMod.btnBuscar_Click(sender,e);
-                nuevoMod.Show();
-            }
-            catch (Exception exp)
-            {
-                MessageBox.Show("Error: " + exp.Message);
-            }
-        }
+
+            MessageBox.Show("se repite");
+                 //if (todosNulos())
+                 //{
+                 //    MessageBox.Show("Ingrese una empresa por favor");
+                 //}
+                 //else
+                 //{
+                 //    string update = string.Format("pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text, idEmpresa);
+                 //    try
+                 //    {
+                 //        Database.ejecutarNonQueryShort(update);
+                 //        MessageBox.Show("Empresa actualizada correctamente");
+                 //        this.Hide();
+                 //        Abm_Empresa_Espectaculo.AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
+                 //        nuevoMod.Show();
+
+                 //    }
+                 //    catch (Exception exp)
+                 //    {
+                 //        MessageBox.Show("Error: " + exp.Message);
+                 //    }
+                 //}
+         }
 
         public void cargarTextBox() 
         {
@@ -58,5 +68,46 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             textBoxTelefono.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["telefono"].ToString();
           
         }
+
+        private void btnMod_Click(object sender, EventArgs e)
+        {
+            if (todosNulos())
+            {
+                MessageBox.Show("Ingrese una empresa por favor");
+            }
+            else
+            {
+                string update = string.Format("pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text, idEmpresa);
+                try
+                {
+                    Database.ejecutarNonQueryShort(update);
+                    MessageBox.Show("Empresa actualizada correctamente");
+                    this.Hide();
+                    Abm_Empresa_Espectaculo.AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
+                    nuevoMod.cargarGrilla();
+                    nuevoMod.Show();
+
+                }
+                catch (Exception exp)
+                {
+                    MessageBox.Show("Error: " + exp.Message);
+                }
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
+            nuevoMod.Show();
+        }
+
+       
+
+       
+
+        
+
+        
     }
 }

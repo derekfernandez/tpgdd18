@@ -68,7 +68,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             return true;
         }
-        private void btnCargar_Click(object sender, EventArgs e)
+
+        public virtual void btnCargar_Click(object sender, EventArgs e)
         {
             string select = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, textBoxCuit.Text, textBoxMail.Text, textBoxDireccion.Text, textBoxTelefono.Text);
        
@@ -100,7 +101,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        public virtual void btnVolver_Click(object sender, EventArgs e)
         {
             try
             {

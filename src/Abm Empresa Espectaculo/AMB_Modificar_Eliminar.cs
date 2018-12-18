@@ -20,6 +20,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public AMB_Modificar_Eliminar()
         {
             InitializeComponent();
+            
         }
 
         private void bntAltaEmpresa_Click(object sender, EventArgs e)
@@ -49,23 +50,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             try
             {
-                
-                //LIMITACION: NO FILTRA POR VALORES NULOS
-                filtrosVacios();
-                string query = string.Format("select * from SQLITO.Empresas where (razonsocial like '{0}' or razonsocial is null) and (cuit like '{1}' or cuit is null) and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-                grillaEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-                grillaEmpresas.DataSource = Database.ObtenerDataSet(query).Tables[0];
-
-                grillaEmpresas.Columns[0].HeaderText = "ID";
-                grillaEmpresas.Columns[1].HeaderText = "Razon Social";
-                grillaEmpresas.Columns[2].HeaderText = "Fecha de Creacion";
-                grillaEmpresas.Columns[3].HeaderText = "CUIT";
-                grillaEmpresas.Columns[4].HeaderText = "Mail";
-                grillaEmpresas.Columns[5].HeaderText = "Direccion";
-                grillaEmpresas.Columns[6].HeaderText = "Telefono";
-                grillaEmpresas.Columns[7].HeaderText = "Usuario ID";
-
-                
+            cargarGrilla();
             }
             catch (Exception exp) 
             {
@@ -73,22 +58,80 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
+
+        public void cargarGrilla() 
+        {
+            string query;
+            filtrosVacios();
+            if (textBoxEmail.Text == "%")
+            {
+                query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}%' and cuit like '{1}%' and (mail like '{2}%' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+            }
+            else
+            {
+                query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}%' and cuit like '{1}%' and mail like '{2}%'", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+            }
+                grillaEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+                if (Database.ObtenerDataSet(query).Tables[0].Rows.Count == 0)
+                {
+                    MessageBox.Show("No hay empresas para mostrar");
+                }
+                else
+                {
+                    grillaEmpresas.DataSource = Database.ObtenerDataSet(query).Tables[0];
+
+                    grillaEmpresas.Columns[0].HeaderText = "ID";
+                    grillaEmpresas.Columns[1].HeaderText = "Razon Social";
+                    grillaEmpresas.Columns[2].HeaderText = "Fecha de Creacion";
+                    grillaEmpresas.Columns[3].HeaderText = "CUIT";
+                    grillaEmpresas.Columns[4].HeaderText = "Mail";
+                    grillaEmpresas.Columns[5].HeaderText = "Direccion";
+                    grillaEmpresas.Columns[6].HeaderText = "Telefono";
+                    grillaEmpresas.Columns[7].HeaderText = "Habilitado";
+                    grillaEmpresas.Columns[8].HeaderText = "Usuario ID";
+                }
+               
+            
+            vaciar();
+        }
+
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            try
+            
+            if (todosNulos())
             {
-                filtrosVacios();
-                string eliminar = string.Format("exec pr_Eliminar_empresa '{0}'", ObtenerIdentity());
-                Database.execNonQuery(Database.createQuery(eliminar));
-                //Database.ejecutarNonQueryShort(insert);
-                MessageBox.Show("Empresa eliminada correctamente");
-                
-                btnBuscar_Click(sender,e);
+                MessageBox.Show("Ingrese una empresa a eliminar");
             }
-            catch (Exception exp)
+            else
             {
-                
-                MessageBox.Show("Error: " + exp.Message);
+                string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", ObtenerIdentity());
+                if (ObtenerIdentity() == "")
+                {
+                    MessageBox.Show("No se encontro la empresa a eliminar");
+                }
+                else
+                {
+                    if (yaEliminado())
+                    {
+                        MessageBox.Show("Empresa ya eliminada");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Database.execNonQuery(Database.createQuery(eliminar));
+                            //Database.ejecutarNonQueryShort(insert);
+                            MessageBox.Show("Empresa eliminada correctamente");
+                            cargarGrilla();
+                        }
+                        catch (Exception exp)
+                        {
+
+                            MessageBox.Show("Error: " + exp.Message);
+                        }
+                    }
+                }
             }
         }
 
@@ -97,26 +140,78 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             Application.Exit();
         }
 
-        //Si no aclaro estoy modificando el primer registro
-        public int ObtenerIdentity() 
+        public Boolean yaEliminado() 
         {
-            string query = string.Format("select * from SQLITO.Empresas where (razonsocial like '{0}' or razonsocial is null) and (cuit like '{1}' or cuit is null) and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-            int identitySearch = Database.ejecutarExecuteScalar<int>(query);
-            return identitySearch;
+            
+            string queryBuscar = string.Format("select 1 from SQLITO.Empresas where id_empresa = '{0}' and habilitado = 0", ObtenerIdentity());
+            if (Database.ObtenerDataSet(queryBuscar).Tables[0].Rows.Count == 0)
+                return false;
+            return true;
         }
-        
+
+        //Si no aclaro estoy modificando el primer registro
+        public string ObtenerIdentity() 
+        {
+                        
+                filtrosVacios();
+                string query;
+                if (textBoxEmail.Text == "%")
+                {
+                    query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+                }
+                else
+                {
+                    query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and mail like '{2}'", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
+                }
+                
+
+                try
+                {
+                    return Database.ObtenerDataSet(query).Tables[0].Rows[0]["id_empresa"].ToString();
+                }
+                catch
+                {
+                    return "";
+                }
+              
+            
+        }
+        public Boolean todosNulos()
+        {
+            foreach (Control c in Controls)
+            {
+
+                if (c is TextBox && c.Text.Trim() != "")
+                {
+
+                    return false;
+
+                }
+
+            }
+            return true;
+        }
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            int identidad = ObtenerIdentity();
-            if(identidad == 0)
+            if (todosNulos())
             {
-                MessageBox.Show("No se encontro la empresa a modificar");
+                MessageBox.Show("Ingrese una empresa a modificar");
             }
             else
             {
-            this.Hide();
-            ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
-            modEmp.Show();
+                    string identidad = ObtenerIdentity();
+                    if (identidad == "")
+                    {
+                        MessageBox.Show("No se encontro la empresa a modificar");
+                    }
+                    else
+                    {
+                        MessageBox.Show(identidad);
+                        this.Hide();
+                        ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
+                        modEmp.Show();
+                    }
+                
             }
         }
 
@@ -125,6 +220,39 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         private void AMB_Modificar_Eliminar_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void vaciar() 
+        {
+            foreach (Control c in Controls)
+            {
+
+                if (c is TextBox && c.Text == "%" || c.Text == null || c.Text.ToLower() == "null")
+                {
+
+                    c.Text = "";
+
+                }
+
+            }
+        }
+
+        
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in this.Controls)
+            {
+
+                if (c is TextBox)
+                {
+
+                    c.Text = "";
+
+                }
+
+            }
+            cargarGrilla();
         }
 
     
