@@ -71,10 +71,19 @@ namespace PalcoNet.Abm_Rol
                 e.RowIndex >= 0)
             {
                 Rol rol = new Rol(dgv_delete.Rows[e.RowIndex].Cells["descripcion"].Value.ToString());
-                Database.inhabilitarRol(rol);
-                MessageBox.Show("El rol fue inhabilitado con éxito", "", MessageBoxButtons.OK);
-                dgvRefresh();
-                //sacar rol a clientes
+                
+                if(rol.descripcion.Equals("Administrador General"))
+                {
+                    MessageBox.Show("El rol no se puede inhabilitar","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    return;
+                }
+                
+                else
+                {
+                    Database.inhabilitarRol(rol);
+                    MessageBox.Show("El rol fue inhabilitado con éxito", "", MessageBoxButtons.OK);
+                    dgvRefresh();
+                }
             }
         }
 

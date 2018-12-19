@@ -125,7 +125,7 @@ namespace PalcoNet
 
         private void menucuenta_Click(object sender, EventArgs e)
         {
-
+   
         }
 
         private void menu_cerrarsesion_Click(object sender, EventArgs e)
@@ -214,6 +214,5 @@ namespace PalcoNet
         {
             new Abm_Rubro.Rubro(this.session).ShowDialog();
         }
-    
     }
 }

@@ -32,6 +32,26 @@ namespace PalcoNet.Misc
         {
             return roles.Count;
         }
+
+        public Boolean esAdministrativo()
+        {
+            return rol.descripcion.Equals("Administrativo");
+        }
+
+        public Boolean esAdminGeneral()
+        {
+            return rol.descripcion.Equals("Administrador General");
+        }
+
+        public Boolean esCliente()
+        {
+            return rol.descripcion.Equals("Cliente");
+        }
+
+        public Boolean esEmpresa()
+        {
+            return rol.descripcion.Equals("Empresa");
+        }
     }
 
 }

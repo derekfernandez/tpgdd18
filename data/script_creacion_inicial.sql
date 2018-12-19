@@ -2009,7 +2009,55 @@ end catch
 END
 GO
 
+IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'EliminarRolInhabilitadoDeUsuario')
+BEGIN
+
+	DROP TRIGGER EliminarRolInhabilitadoDeUsuarios
+
+END
+GO
+
+CREATE TRIGGER SQLITO.ElminarRolInhabilitadoDeUsuarios
+ON SQLITO.Roles
+AFTER UPDATE
+AS
+BEGIN
+
+DECLARE @estado_old BIT
+DECLARE @estado_new BIT
+DECLARE @idrol INT
+
+DECLARE upd_cursor CURSOR FOR
+SELECT d.habilitado, i.habilitado, i.id_rol FROM deleted d JOIN inserted i ON d.id_rol = i.id_rol
+
+OPEN upd_cursor
+FETCH NEXT FROM upd_cursor
+INTO @estado_old, @estado_new, @idrol
+
+WHILE @@FETCH_STATUS = 0
+
+BEGIN
+
+IF (@estado_old = 1 AND @estado_new = 0)
+	
+	BEGIN
+
+		DELETE FROM SQLITO.Roles_Usuarios
+		WHERE rol_id = @idrol
+
+	END
+
+FETCH NEXT FROM upd_cursor
+INTO @estado_old, @estado_new, @idrol
+
+END
+
+CLOSE upd_cursor
+DEALLOCATE upd_cursor
+END
+GO
+
 /*Si llegase a romper el identity usar:
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
-*/ 
+*/

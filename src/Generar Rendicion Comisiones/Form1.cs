@@ -65,7 +65,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
              string empresa = dataGridView1.CurrentRow.Cells[0].Value.ToString();
             if (Int32.Parse(dataGridView1.CurrentRow.Cells[2].Value.ToString()) < numericUpDown1.Value)
             {
-                MessageBox.Show("El número de facturas a rendir es mayor que el real. Ingrese un valor válido!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El valor ingresado excede la cantidad de facturas disponibles para rendicion", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if(numericUpDown1.Value == 0)
             {

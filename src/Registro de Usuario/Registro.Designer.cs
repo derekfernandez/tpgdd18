@@ -1214,7 +1214,7 @@
             // 
             // btn_backempresa
             // 
-            this.btn_backempresa.Location = new System.Drawing.Point(188, 320);
+            this.btn_backempresa.Location = new System.Drawing.Point(155, 320);
             this.btn_backempresa.Name = "btn_backempresa";
             this.btn_backempresa.Size = new System.Drawing.Size(75, 23);
             this.btn_backempresa.TabIndex = 69;
@@ -1427,7 +1427,7 @@
             // 
             // btn_terminarempresa
             // 
-            this.btn_terminarempresa.Location = new System.Drawing.Point(281, 320);
+            this.btn_terminarempresa.Location = new System.Drawing.Point(245, 320);
             this.btn_terminarempresa.Name = "btn_terminarempresa";
             this.btn_terminarempresa.Size = new System.Drawing.Size(75, 23);
             this.btn_terminarempresa.TabIndex = 38;
@@ -1697,7 +1697,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1073, 721);
+            this.ClientSize = new System.Drawing.Size(1086, 723);
             this.Controls.Add(this.btn_habilitar);
             this.Controls.Add(this.lbl_estado);
             this.Controls.Add(this.lbl_showestado);

@@ -85,6 +85,12 @@ namespace PalcoNet.Login
                 new ElegirRol(session).Show();
             }
 
+            else if (session.cantRoles() == 0)
+            {
+                MessageBox.Show("No puede ingresar al sistema ya que no posee roles asignados. Contacte a un administrador", "Error", MessageBoxButtons.OK);
+                return;
+            }
+
             else
             {
                 session.rol = new Rol(Database.getRolesFor(user).ElementAt(0));
@@ -92,7 +98,7 @@ namespace PalcoNet.Login
                 session.rol.funcionalidades = Database.getFuncionalidadesDeRol(session.rol);
                 this.Hide();
                 new MenuPrincipal(session).Show();
-             }
+            }
         }
 
         private void loginFailed(LoginController login)
@@ -106,6 +112,11 @@ namespace PalcoNet.Login
         {
             this.Hide();
             new Registro_de_Usuario.Registro().Show();
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new Ayuda().ShowDialog();
         }
     }
 }
