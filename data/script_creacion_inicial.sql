@@ -1429,8 +1429,8 @@ BEGIN
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(3, @adminUser)
 
-	INSERT INTO SQLITO.Empresas (razonsocial,fecha_creacion,usuario_id) 
-		 VALUES ('Admin General', '2018-11-30T00:00:00',@adminUser)
+	INSERT INTO SQLITO.Empresas (razonsocial, fecha_creacion, cuit, usuario_id) 
+		 VALUES ('Admin General', '2018-11-30T00:00:00', '23-37541207-8', @adminUser)
 	
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(1, @adminUser)
@@ -1703,9 +1703,13 @@ begin try
 DECLARE @identity numeric(18,0)
 SET @identity = (select count(*) from SQLITO.Grados)
 
+--COMISION repetida y no existente
+IF EXISTS (select 1 from SQLITO.Grados where comision = @comision)
+THROW 50000, 'COMISION YA REGISTRADA', 1
+
 --Descripcion ya existente
 IF EXISTS(select 1 from SQLITO.Grados WHERE descripcion = @descripcion)
-THROW 50000, 'DESCRIPCION YA EXISTENTE', 1
+THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
 
 begin transaction
 INSERT INTO SQLITO.Grados(descripcion,comision) values(@descripcion,@comision)
@@ -1719,7 +1723,9 @@ BEGIN
 ROLLBACK TRAN
 DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity) WITH NO_INFOMSGS;
 END;
-THROW
+IF EXISTS(SELECT ERROR_MESSAGE())
+THROW;
+THROW 50000, 'COMISION NO VALIDA', 1
 end catch
 end
 GO
@@ -1737,6 +1743,10 @@ CREATE proc pr_Mod_Grado(@descripcion nvarchar(255),
 as
 begin
 
+--COMISION repetida y no existente
+IF EXISTS (select 1 from SQLITO.Grados where comision = @comision and id_grado != @idGrado)
+THROW 50000, 'COMISION YA REGISTRADA', 1
+
 --Descripcion repetida y no existente
 IF EXISTS (select 1 from SQLITO.Grados where descripcion = @descripcion and id_grado != @idGrado)
 THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
@@ -1750,7 +1760,9 @@ end try
 begin catch
 IF @@ROWCOUNT != 0  
 ROLLBACK TRANSACTION
-THROW
+IF EXISTS(SELECT ERROR_MESSAGE())
+THROW;
+THROW 50000, 'COMISION NO VALIDA', 1
 end catch
 
 END
@@ -1784,7 +1796,7 @@ BEGIN
 END
 GO
 
-
+	
 --AGREGADO PROCS APP
 
 USE [GD2C2018]
@@ -1795,16 +1807,28 @@ BEGIN
 	DROP PROCEDURE [pr_altaUsuario_empresa]
 END
 GO
-CREATE PROCEDURE [dbo].[pr_altaUsuario_empresa] (@empresaID INT, @empresaRazonSocial nvarchar(255))
+CREATE PROCEDURE [dbo].[pr_altaUsuario_empresa] (@empresaID INT, @empresaRazonSocial nvarchar(255),@cuit nvarchar(255))
 AS
 BEGIN
 BEGIN TRY
+
 	DECLARE @username NVARCHAR(255), @password VARBINARY(255)
 	DECLARE @identity numeric(18,0)
+	DECLARE @SUF CHAR(2), @PREF CHAR(2), @MEDIO CHAR(8), @PW CHAR(12), @US CHAR(16)  	
+		
+	SET @SUF = SUBSTRING(@cuit,1,2)
+	SET @PREF = SUBSTRING(@cuit,4,8)
+	SET @MEDIO = SUBSTRING(@cuit,13,14)
+
+	--US y PW temporal
+	SET @PW = @SUF + @PREF + @MEDIO
+	SET @US = @PW
+
 	SET @identity = (select count(*) from SQLITO.Usuarios)
+
 	--Asigno US and PW
 BEGIN TRANSACTION
-	SELECT @username = @empresaRazonSocial + LOWER(SUBSTRING(@empresaRazonSocial,1,5)) + LOWER(SUBSTRING(@empresaRazonSocial,7,6)) + SUBSTRING(@empresaRazonSocial,17,2),@password = HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)) 
+	SELECT @username = @US,@password = HASHBYTES('SHA2_256',@PW) 
 	
 	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) VALUES (@username, @password, 0)
 	INSERT INTO SQLITO.Roles_Usuarios (rol_id, usuario_id)VALUES (1,SCOPE_IDENTITY()) 
@@ -1857,7 +1881,7 @@ SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
 
 begin try
 begin transaction
-EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial
+EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial, @cuit
 insert into [GD2C2018].[SQLITO].[Empresas](razonsocial,fecha_creacion,cuit,mail,direccion,telefono,usuario_id) values (@razonsocial,@fecha_creacion,@cuit,@mail,@direccion,@telefono,@usuario_id)
 commit transaction
 
@@ -1892,7 +1916,8 @@ CREATE proc [dbo].[pr_Modificar_Empresa](@razonsocial nvarchar(255),
     @mail nvarchar(50),
     @direccion nvarchar(255),
     @telefono nvarchar(30),
-	@idEmpresa int)
+	@idEmpresa int,
+	@habilitado bit)
 as
 begin
 --Razon Social Repetida que no es la misma que la que se inserta
@@ -1909,7 +1934,7 @@ THROW 50000, 'MAIL YA EXISTENTE', 1
  
 begin try
 begin transaction
-update [GD2C2018].[SQLITO].[Empresas] set razonsocial = @razonsocial,cuit =@cuit,mail=@mail,direccion=@direccion,telefono=@telefono where id_empresa =@idEmpresa
+update [GD2C2018].[SQLITO].[Empresas] set razonsocial = @razonsocial,cuit =@cuit,mail=@mail,direccion=@direccion,telefono=@telefono, habilitado=@habilitado where id_empresa =@idEmpresa
 commit transaction
 end try
 

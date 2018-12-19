@@ -17,6 +17,9 @@ namespace PalcoNet.Comprar
 
         private String idCliente;
         ErrorProvider errorProvider;
+        //Booleano para saber si la tarjeta fue registrada o no; en caso de que el cliente toque 'X' y no registre una
+        //No deberia permitirle realizar una compra hasta no registrar bien una tarjeta
+        public bool targetaRegistrada { get; set; }
         public String idTarjeta { get; set; }
         
         public RegistrarTarjeta(String idCliente)
@@ -26,6 +29,8 @@ namespace PalcoNet.Comprar
 
             errorProvider = new ErrorProvider();
             this.idCliente = idCliente;
+            //Que arranque en false, y se ponga en true solo si se registra una satisfactoriamente
+            targetaRegistrada = false;
 
             tbNumero.MaxLength = 16;
             tbCodigo.MaxLength = 3;
@@ -138,6 +143,8 @@ namespace PalcoNet.Comprar
 
             #endregion ActualizarCliente
 
+            targetaRegistrada = true;
+            MessageBox.Show("Tarjeta registrada exitosamente! Compra realizada con exito");
             this.Close();
 
         }

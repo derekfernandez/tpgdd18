@@ -59,6 +59,9 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
 
             DataTable table = Database.getTable(query);
             this.dataGridView1.DataSource = table;
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
         private void button2_Click(object sender, EventArgs e)
         {

@@ -10,10 +10,6 @@ using System.Windows.Forms;
 using PalcoNet.Generar_Publicacion;
 using PalcoNet.Misc;
 
-
-
-
-
 namespace PalcoNet.Abm_Rubro
 {
     public partial class Rubro : Form

@@ -81,7 +81,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(399, 864);
+            this.btnEditar.Location = new System.Drawing.Point(396, 864);
             this.btnEditar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(252, 133);
@@ -92,7 +92,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(1201, 864);
+            this.btnEliminar.Location = new System.Drawing.Point(805, 864);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(252, 133);
@@ -112,6 +112,7 @@
             this.grillaEmpresas.RowTemplate.Height = 33;
             this.grillaEmpresas.Size = new System.Drawing.Size(1802, 596);
             this.grillaEmpresas.TabIndex = 5;
+            this.grillaEmpresas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grillaEmpresas_CellClick);
             // 
             // labelCUIT
             // 
@@ -180,12 +181,12 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(798, 864);
+            this.btnLimpiar.Location = new System.Drawing.Point(1200, 864);
             this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(252, 133);
             this.btnLimpiar.TabIndex = 15;
-            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.Text = "Limpiar/Actualizar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -213,8 +214,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AMB_Modificar_Eliminar";
             this.Text = "Editar_ModificarABM";
-
-          
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
