@@ -17,9 +17,12 @@ namespace PalcoNet.Abm_Grado
 
         string id = "-1";
         int selector = -1;
-        public Grado()
+
+        public Session session { get; set; }
+        public Grado(Session session)
         {
             //Pepe despues me tiene que pasar por parametro el cod de la publicacion
+            this.session = session;
             InitializeComponent();
             grillaGrados.AllowUserToAddRows = false;
             grillaGrados.AllowUserToDeleteRows = false;
@@ -52,7 +55,7 @@ namespace PalcoNet.Abm_Grado
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            this.Hide();
+         
             Abm_Grado.AgregarGrado nuevoAgregado = new AgregarGrado();
             nuevoAgregado.Show();
 
@@ -74,10 +77,7 @@ namespace PalcoNet.Abm_Grado
             }
         }*/
 
-        private void Grado_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
+ 
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
@@ -103,7 +103,7 @@ namespace PalcoNet.Abm_Grado
             }
             else
             {
-            this.Hide();
+           
             ModificarGrado modgrado = new ModificarGrado(id);
             modgrado.Show();
             }
@@ -149,6 +149,11 @@ namespace PalcoNet.Abm_Grado
                     selector = grillaGrados.SelectedCells[0].RowIndex + 1;
                     id = selector.ToString();        
          
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            cargarGrilla();
         }
 
 

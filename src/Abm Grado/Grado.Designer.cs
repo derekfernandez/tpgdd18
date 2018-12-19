@@ -39,6 +39,7 @@
             this.grillaGrados = new System.Windows.Forms.DataGridView();
             this.btnDeshabilitar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnActualizar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gradosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grillaGrados)).BeginInit();
@@ -47,7 +48,7 @@
             // btnModificar
             // 
             this.btnModificar.AutoSize = true;
-            this.btnModificar.Location = new System.Drawing.Point(693, 325);
+            this.btnModificar.Location = new System.Drawing.Point(693, 355);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(176, 47);
             this.btnModificar.TabIndex = 17;
@@ -58,7 +59,7 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(693, 425);
+            this.btnVolver.Location = new System.Drawing.Point(693, 436);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(176, 47);
             this.btnVolver.TabIndex = 2;
@@ -92,7 +93,7 @@
             // 
             // btnIngresar
             // 
-            this.btnIngresar.Location = new System.Drawing.Point(693, 120);
+            this.btnIngresar.Location = new System.Drawing.Point(693, 108);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(176, 46);
             this.btnIngresar.TabIndex = 14;
@@ -114,7 +115,7 @@
             // btnDeshabilitar
             // 
             this.btnDeshabilitar.AutoSize = true;
-            this.btnDeshabilitar.Location = new System.Drawing.Point(693, 221);
+            this.btnDeshabilitar.Location = new System.Drawing.Point(693, 277);
             this.btnDeshabilitar.Name = "btnDeshabilitar";
             this.btnDeshabilitar.Size = new System.Drawing.Size(176, 46);
             this.btnDeshabilitar.TabIndex = 28;
@@ -131,6 +132,17 @@
             this.label1.TabIndex = 29;
             this.label1.Text = "Seleccione la fila a modificar/deshabilitar:";
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.AutoSize = true;
+            this.btnActualizar.Location = new System.Drawing.Point(693, 192);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(176, 46);
+            this.btnActualizar.TabIndex = 30;
+            this.btnActualizar.Text = "Actualizar";
+            this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            // 
             // Grado
             // 
             this.AcceptButton = this.btnIngresar;
@@ -138,6 +150,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
             this.ClientSize = new System.Drawing.Size(895, 520);
+            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.grillaGrados);
@@ -148,7 +161,6 @@
             this.Font = new System.Drawing.Font("Arial", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "Grado";
             this.Text = "Grado";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Grado_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.gradosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grillaGrados)).EndInit();
@@ -169,5 +181,6 @@
         private System.Windows.Forms.DataGridView grillaGrados;
         private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }

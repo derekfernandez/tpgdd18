@@ -33,6 +33,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
 
+
             if (validarCamposVacios())
             {
                 MessageBox.Show("Complete los campos correspondientes");
@@ -72,6 +73,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             try
             {
                 //Aca se va a llamar al Form anterior donde estan las opciones del admin
+
                 this.Close();
             }
             catch (Exception exp)
@@ -89,15 +91,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             Abm_Empresa_Espectaculo.MostrarUsuarioAsignado nuevoUsuario = new MostrarUsuarioAsignado();
 
             nuevoUsuario.Show();
-            
+          
         }
 
-        
-
-        private void ABM_Alta_Empresa_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.Close();
-        }
 
         #endregion
 

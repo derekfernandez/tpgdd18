@@ -187,7 +187,7 @@ namespace PalcoNet
 
         private void menu_grados_Click(object sender, EventArgs e)
         {
-            new Abm_Grado.Grado().ShowDialog();
+            new Abm_Grado.Grado(this.session).ShowDialog();
         }
 
         private void menu_comisiones_Click(object sender, EventArgs e)
@@ -212,7 +212,7 @@ namespace PalcoNet
 
         private void menu_rubros_Click(object sender, EventArgs e)
         {
-            new Abm_Rubro.Rubro().ShowDialog();
+            new Abm_Rubro.Rubro(this.session).ShowDialog();
         }
     
     }

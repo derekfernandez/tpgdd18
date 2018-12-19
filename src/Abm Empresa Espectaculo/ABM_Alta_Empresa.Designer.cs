@@ -423,7 +423,7 @@
             this.Name = "ABM_Alta_Empresa";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "ABM Empresa Publicacion";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ABM_Alta_Empresa_FormClosed);
+
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderRazonSocial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDireccion)).EndInit();

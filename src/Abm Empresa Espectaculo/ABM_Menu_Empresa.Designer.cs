@@ -88,8 +88,8 @@
             this.Controls.Add(this.btnNuevaEmpresa);
             this.Name = "ABM_Menu_Empresa";
             this.Text = "MenuEmpresa";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ABM_Menu_Empresa_FormClosed);
-            this.Load += new System.EventHandler(this.ABM_Menu_Empresa_Load);
+
+
             this.ResumeLayout(false);
             this.PerformLayout();
 

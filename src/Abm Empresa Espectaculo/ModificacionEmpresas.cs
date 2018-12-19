@@ -25,9 +25,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public override void btnVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
-            nuevoMod.Show();
-            
+               
         }
 
         //Falta CERRAR
@@ -51,15 +49,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 {
                     Database.ejecutarNonQueryShort(update);
                     MessageBox.Show("Empresa actualizada correctamente");
-                    this.Hide();
-                    Abm_Empresa_Espectaculo.AMB_Modificar_Eliminar nuevoMod = new AMB_Modificar_Eliminar();
-                    nuevoMod.cargarGrilla();
-                    nuevoMod.Show();
+                    this.Close();
 
                 }
                 catch (Exception exp)
                 {
                     MessageBox.Show("Error: " + exp.Message);
+                    
                 }
             }
          }
@@ -229,6 +225,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         }
         #endregion
+
+
+
 
 
 
