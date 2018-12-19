@@ -11,6 +11,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -113,11 +114,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnAceptar;
-        private System.Windows.Forms.Label labelUsuario;
-        private System.Windows.Forms.Label labelContraseña;
-        private System.Windows.Forms.TextBox textBoxUser;
-        private System.Windows.Forms.TextBox textBoxPw;
-        private System.Windows.Forms.Label labelTitulo;
+        public System.Windows.Forms.Button btnAceptar;
+        public System.Windows.Forms.Label labelUsuario;
+        public System.Windows.Forms.Label labelContraseña;
+        public System.Windows.Forms.TextBox textBoxUser;
+        public System.Windows.Forms.TextBox textBoxPw;
+        public System.Windows.Forms.Label labelTitulo;
+
     }
 }

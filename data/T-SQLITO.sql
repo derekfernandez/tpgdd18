@@ -59,9 +59,9 @@ THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
 IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
 THROW 50000, 'CUIT YA EXISTENTE', 1
 
---Cuit no valido
-IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
-THROW 50000, 'CUIT NO VALIDO', 1
+--Cuit Repetido
+IF Exists(select 1 from SQLITO.Empresas where mail = @mail)
+THROW 50000, 'MAIL YA EXISTENTE', 1
  
 SET @fecha_creacion = GETDATE()
 SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
@@ -114,8 +114,9 @@ THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
 IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit AND id_empresa != @idEmpresa)
 THROW 50000, 'CUIT YA EXISTENTE', 1
 
-IF(@cuit not like '[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]')
-THROW 50000, 'CUIT NO VALIDO', 1
+--Cuit Repetido
+IF Exists(select 1 from SQLITO.Empresas where mail = @mail AND id_empresa != @idEmpresa)
+THROW 50000, 'MAIL YA EXISTENTE', 1
  
 begin try
 begin transaction

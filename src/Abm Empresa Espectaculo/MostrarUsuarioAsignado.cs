@@ -32,9 +32,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Abm_Empresa_Espectaculo.ABM_Alta_Empresa nuevaAlta = new ABM_Alta_Empresa();
-            nuevaAlta.Show();
+            this.Close();
         }
 
         private void textBoxPw_TextChanged(object sender, EventArgs e)
@@ -44,7 +42,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void MostrarUsuarioAsignado_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
        

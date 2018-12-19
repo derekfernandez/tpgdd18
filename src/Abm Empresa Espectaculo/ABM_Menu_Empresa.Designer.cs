@@ -36,9 +36,9 @@
             // 
             // btnNuevaEmpresa
             // 
-            this.btnNuevaEmpresa.Location = new System.Drawing.Point(122, 430);
+            this.btnNuevaEmpresa.Location = new System.Drawing.Point(117, 335);
             this.btnNuevaEmpresa.Name = "btnNuevaEmpresa";
-            this.btnNuevaEmpresa.Size = new System.Drawing.Size(210, 125);
+            this.btnNuevaEmpresa.Size = new System.Drawing.Size(190, 73);
             this.btnNuevaEmpresa.TabIndex = 0;
             this.btnNuevaEmpresa.Text = "Nueva Empresa";
             this.btnNuevaEmpresa.UseVisualStyleBackColor = true;
@@ -47,18 +47,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 28.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(86, 74);
+            this.label1.Font = new System.Drawing.Font("Arial", 22.125F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(105, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1235, 88);
+            this.label1.Size = new System.Drawing.Size(964, 69);
             this.label1.TabIndex = 1;
             this.label1.Text = "Bienvenido al Menu de Empresas";
             // 
             // btnModEliminar
             // 
-            this.btnModEliminar.Location = new System.Drawing.Point(545, 430);
+            this.btnModEliminar.Location = new System.Drawing.Point(495, 335);
             this.btnModEliminar.Name = "btnModEliminar";
-            this.btnModEliminar.Size = new System.Drawing.Size(210, 125);
+            this.btnModEliminar.Size = new System.Drawing.Size(190, 73);
             this.btnModEliminar.TabIndex = 2;
             this.btnModEliminar.Text = "Modificar o Eliminar Empresa";
             this.btnModEliminar.UseVisualStyleBackColor = true;
@@ -67,9 +67,9 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(982, 430);
+            this.btnVolver.Location = new System.Drawing.Point(879, 335);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(210, 125);
+            this.btnVolver.Size = new System.Drawing.Size(190, 73);
             this.btnVolver.TabIndex = 3;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -81,7 +81,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(1366, 723);
+            this.ClientSize = new System.Drawing.Size(1151, 449);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnModEliminar);
             this.Controls.Add(this.label1);

@@ -43,13 +43,16 @@ namespace PalcoNet.Abm_Grado
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            transformarComision();
-            if (!comisionValida())
+            if (validarCamposVacios())
             {
-                MessageBox.Show("Ingrese una comision valida");
+                MessageBox.Show("Ingrese los campos faltantes");
+                controlarCamposNoVacios();
             }
             else
             {
+                eliminarErrorProvider();
+                transformarComision();
+
                 string update = string.Format("EXEC pr_Mod_Grado '{0}','{1}','{2}','{3}'", textBoxDescripcion.Text, textBoxComision.Text, obtenerHabilitado(), gradoAModificar);
                 try
                 {
@@ -107,6 +110,143 @@ namespace PalcoNet.Abm_Grado
             Abm_Grado.Grado nuevoGrado = new Grado();
             nuevoGrado.Show();
         }
+
+
+        #region validaciones Nulos
+
+        #region validarCamposVacios
+        public virtual bool validarCamposVacios()
+        {
+            bool vacios = false;
+
+            if (string.IsNullOrWhiteSpace(textBoxComision.Text))
+            {
+                vacios = true;
+                errorProviderComision.SetError(textBoxComision, "Ingrese una comision");
+            }
+
+
+
+
+            if (string.IsNullOrWhiteSpace(textBoxDescripcion.Text))
+            {
+                vacios = true;
+                errorProviderDescripcion.SetError(textBoxDescripcion, "Ingrese una descripcion");
+
+            }
+
+
+
+
+
+            return vacios;
+
+        }
+        #endregion
+
+        #region validarCamposNoVacios
+        public virtual void controlarCamposNoVacios()
+        {
+
+
+            if (!(string.IsNullOrWhiteSpace(textBoxComision.Text)))
+            {
+
+                errorProviderComision.SetError(textBoxComision, "");
+            }
+
+
+
+
+            if (!(string.IsNullOrWhiteSpace(textBoxDescripcion.Text)))
+            {
+
+                errorProviderDescripcion.SetError(textBoxDescripcion, "");
+
+            }
+
+
+
+        }
+
+        public virtual void eliminarErrorProvider()
+        {
+            errorProviderComision.SetError(textBoxComision, "");
+            errorProviderDescripcion.SetError(textBoxDescripcion, "");
+
+
+
+        }
+        #endregion
+
+        #region controlSobreVacios
+        public virtual void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in this.Controls)
+            {
+
+                if (c is TextBox)
+                {
+
+                    c.Text = "";
+
+                }
+
+            }
+        }
+
+        public Boolean CamposVacio()
+        {
+            //Buscar una funcion que ya evalue si los campos son blancos: seguro hay
+            foreach (Control c in Controls)
+            {
+
+                if (c is TextBox && c.Text == "")
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        public Boolean todosNulos()
+        {
+            foreach (Control c in Controls)
+            {
+
+                if (c is TextBox && c.Text.Trim() != "")
+                {
+
+                    return false;
+
+                }
+
+            }
+            return true;
+        }
+        #endregion
+
+        #endregion
+
+        #region pre validaciones cuit
+        public void validarIngreso(object sender, KeyPressEventArgs e)
+        {
+            char caracter = e.KeyChar;
+
+            if (!Char.IsDigit(caracter) && caracter != 8 && caracter != ',' && caracter != '.')
+            {
+                e.Handled = true;
+            }
+        }
+
+        #endregion
+
+        private void textBoxComision_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            validarIngreso(sender, e);
+        }
+
 
     }
 }

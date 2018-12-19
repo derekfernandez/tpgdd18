@@ -15,12 +15,16 @@ namespace PalcoNet.Abm_Grado
     public partial class Grado : Form
     {
 
-
+        string id = "-1";
+        int selector = -1;
         public Grado()
         {
             //Pepe despues me tiene que pasar por parametro el cod de la publicacion
             InitializeComponent();
+            grillaGrados.AllowUserToAddRows = false;
+            grillaGrados.AllowUserToDeleteRows = false;
             cargarGrilla();
+            
         }
 
         private void cargarGrilla()
@@ -48,32 +52,10 @@ namespace PalcoNet.Abm_Grado
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            transformarComision();
-            if (!comisionValida())
-            {
-                MessageBox.Show("Ingrese una comision valida");
-            }
-            else
-            {
-            string ingresar = string.Format("pr_Carga_Grado '{0}','{1}'", textBoxDescripcion.Text, textBoxComision.Text);
-            try
-             {
-                if (algunNulo())
-                {
-                    MessageBox.Show("Error: Descripcion vacia");
-                }
-                else
-                {
-                    Database.ejecutarNonQueryShort(ingresar);
-                    MessageBox.Show("Grado ingresado correctamente");
-                    cargarGrilla();
-                }
-             }
-            catch (Exception exp)
-             {
-                MessageBox.Show("Error: " + exp.Message);
-             }
-            }
+            this.Hide();
+            Abm_Grado.AgregarGrado nuevoAgregado = new AgregarGrado();
+            nuevoAgregado.Show();
+
         }
         /*
         private void btnModificar_Click(object sender, EventArgs e)
@@ -102,18 +84,19 @@ namespace PalcoNet.Abm_Grado
             //Falta referencias al menu:
             this.Close();
         }
-        public Boolean algunNulo()
-        {
-            if (textBoxDescripcion.Text == "" || textBoxComision.Text == "")
-                return true;
-            return false;
-        }
+        
 
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            //Valida ID
-            string query = string.Format("select * from SQLITO.Grados where id_grado = '{0}'", textBoxIDaModificar.Text);
+            if(id == "-1")
+            {
+                MessageBox.Show("Seleccione una fila");
+            }
+            else
+            {
+            
+            string query = string.Format("select * from SQLITO.Grados where id_grado = '{0}'", id);
             if (Database.ObtenerDataSet(query).Tables[0].Rows.Count == 0)
             {
                 MessageBox.Show("ID no encontrado");       
@@ -121,15 +104,23 @@ namespace PalcoNet.Abm_Grado
             else
             {
             this.Hide();
-            ModificarGrado modgrado = new ModificarGrado(textBoxIDaModificar.Text);
+            ModificarGrado modgrado = new ModificarGrado(id);
             modgrado.Show();
+            }
             }
         }
 
         private void btnDeshabilitar_Click(object sender, EventArgs e)
         {
             //Valida ID
-            string query = string.Format("select * from SQLITO.Grados where id_grado = '{0}'", textBoxIDaModificar.Text);
+            if(id == "-1")
+            {
+                MessageBox.Show("Seleccione una fila");
+            }
+            else
+            {
+            
+            string query = string.Format("select * from SQLITO.Grados where id_grado = '{0}'", id);
             if (Database.ObtenerDataSet(query).Tables[0].Rows.Count == 0)
             {
                 MessageBox.Show("ID no encontrado");
@@ -138,7 +129,7 @@ namespace PalcoNet.Abm_Grado
             {
                 try
                 {
-                    string eliminar = string.Format("update SQLITO.Grados set habilitado = 0 where id_grado = '{0}'", textBoxIDaModificar.Text);
+                    string eliminar = string.Format("update SQLITO.Grados set habilitado = 0 where id_grado = '{0}'", id);
                     Database.ejecutarNonQueryShort(eliminar);
                     MessageBox.Show("Grado Deshabilitado correctamente");
                     cargarGrilla();
@@ -148,33 +139,21 @@ namespace PalcoNet.Abm_Grado
 
                     MessageBox.Show("Error: " + exp.Message);
                 }
-                
+            }
             }
         }
 
-        public void transformarComision()
+        private void grillaGrados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (textBoxComision.Text.Contains(','))
-                textBoxComision.Text = textBoxComision.Text.Replace(',', '.');
+                        
+                    selector = grillaGrados.SelectedCells[0].RowIndex + 1;
+                    id = selector.ToString();        
+         
         }
 
-        public Boolean comisionValida() 
-        {
-            string comision = textBoxComision.Text;
 
-            if (comision.Contains('.'))
-                comision = comision.Replace('.', '1');
+      
 
-            foreach (char c in comision)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
-        }
-
-   
    }
     
 }

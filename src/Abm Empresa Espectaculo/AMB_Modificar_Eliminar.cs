@@ -20,6 +20,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public AMB_Modificar_Eliminar()
         {
             InitializeComponent();
+            grillaEmpresas.AllowUserToAddRows = false;
+            grillaEmpresas.AllowUserToDeleteRows = false;
             
         }
 
