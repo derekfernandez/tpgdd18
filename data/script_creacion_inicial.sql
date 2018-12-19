@@ -1297,16 +1297,16 @@ PRINT('Datos existentes migrados a la tabla SQLITO.ItemsFactura. Nuevas Filas: '
 
 -- USUARIOS --
 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'crearUsuario_cliente')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[crearUsuario_cliente]')
 BEGIN
 
-	DROP PROCEDURE crearUsuario_cliente
+	DROP PROCEDURE [SQLITO].[crearUsuario_cliente]
 
 END
 GO
 
 --Usuarios para Clientes migrados
-CREATE PROCEDURE crearUsuario_cliente
+CREATE PROCEDURE [SQLITO].[crearUsuario_cliente]
 AS
 BEGIN
 
@@ -1356,15 +1356,15 @@ GO
 
 --Usuarios para Empresas migradas
 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'crearUsuario_empresa')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[crearUsuario_empresa]')
 BEGIN
 
-	DROP PROCEDURE crearUsuario_empresa
+	DROP PROCEDURE [SQLITO].[crearUsuario_empresa]
 
 END
 GO
 
-CREATE PROCEDURE crearUsuario_empresa
+CREATE PROCEDURE [SQLITO].[crearUsuario_empresa]
 AS
 BEGIN
 
@@ -1429,8 +1429,8 @@ BEGIN
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(3, @adminUser)
 
-	INSERT INTO SQLITO.Empresas (razonsocial, fecha_creacion, cuit, usuario_id) 
-		 VALUES ('Admin General', '2018-11-30T00:00:00', '23-37541207-8', @adminUser)
+	INSERT INTO SQLITO.Empresas (razonsocial, fecha_creacion, cuit, mail, usuario_id) 
+		 VALUES ('Admin General', '2018-11-30T00:00:00', '23-37541207-8', 'admin@palconet.com', @adminUser)
 	
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(1, @adminUser)
@@ -1490,15 +1490,15 @@ END
 GO
 
 --Devolver tabla con empresas con mas localidades no vendidas
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'estadistica_empresasMenosVendedoras')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[estadistica_empresasMenosVendedoras]')
 BEGIN
 
-	DROP PROCEDURE estadistica_empresasMenosVendedoras
+	DROP PROCEDURE [SQLITO].[estadistica_empresasMenosVendedoras]
 
 END
 GO
 
-CREATE PROCEDURE estadistica_empresasMenosVendedoras
+CREATE PROCEDURE [SQLITO].[estadistica_empresasMenosVendedoras]
 				 (@anio INT, @trimestre INT)
 AS
 BEGIN
@@ -1551,15 +1551,15 @@ GO
 
 
 --Devolver tabla con clientes con mayor cantidad de puntos vencidos 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'estadistica_clientesConMasPuntosVencidos')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[estadistica_clientesConMasPuntosVencidos]')
 BEGIN
 
-	DROP PROCEDURE estadistica_clientesConMasPuntosVencidos
+	DROP PROCEDURE [SQLITO].[estadistica_clientesConMasPuntosVencidos]
 
 END
 GO
 
-CREATE PROCEDURE estadistica_clientesConMasPuntosVencidos
+CREATE PROCEDURE [SQLITO].[estadistica_clientesConMasPuntosVencidos]
 				 (@anio INT, @trimestre INT)
 AS
 BEGIN
@@ -1584,15 +1584,15 @@ BEGIN
 END
 GO
 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'estadistica_clientesConMasCompras')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[estadistica_clientesConMasCompras]')
 BEGIN
 
-	DROP PROCEDURE estadistica_clientesConMasCompras
+	DROP PROCEDURE [SQLITO].[estadistica_clientesConMasCompras]
 
 END
 GO
 
-CREATE PROCEDURE estadistica_clientesConMasCompras
+CREATE PROCEDURE [SQLITO].[estadistica_clientesConMasCompras]
 	(@anio INT, @trimestre INT)
 
 AS
@@ -1615,16 +1615,18 @@ BEGIN
 END
 GO
 
+-- PARA ABM DE Compras --
+
 --Trigger para controlar que cuando se acaban las ubicaciones de una publciacion, se lo ponga en estado "Finalizado" (3)
-IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'FinalizarPublicacionAutomaticamente')
+IF EXISTS (SELECT * FROM sys.triggers WHERE name = '[SQLITO].[FinalizarPublicacionAutomaticamente]')
 BEGIN
 
-	DROP TRIGGER FinalizarPublicacionAutomaticamente
+	DROP TRIGGER [SQLITO].[FinalizarPublicacionAutomaticamente]
 
 END
 GO
 
-CREATE TRIGGER SQLITO.FinalizarPublicacionAutomaticamente
+CREATE TRIGGER [SQLITO].[FinalizarPublicacionAutomaticamente]
 ON SQLITO.Compras AFTER INSERT
 AS
 BEGIN
@@ -1667,115 +1669,311 @@ BEGIN
 END
 GO
 
+
+-- PARA ABM DE Empresas --
+
+
 --PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO -> HAY QUE AGREGAR EL NUEVO FLAG DE EMPRESA HABILITADA
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Eliminar_empresa')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Eliminar_empresa]')
 BEGIN
-	DROP PROCEDURE pr_Eliminar_empresa
+
+	DROP PROCEDURE [SQLITO].[pr_Eliminar_empresa]
+
 END
 GO
-create proc pr_Eliminar_empresa (@idEmpresa int)
-as
-begin
-begin try
-DECLARE @ID_USER INT
-SET @ID_USER = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
-begin transaction
-UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE id_usuario = @ID_USER
-commit transaction
-end try
-begin catch
-ROLLBACK TRAN
-SELECT ERROR_MESSAGE()
-end catch
-end
+
+CREATE PROCEDURE [SQLITO].[pr_Eliminar_empresa] (@idEmpresa int)
+AS
+BEGIN
+
+	BEGIN TRY
+		DECLARE @ID_USER INT
+		SET @ID_USER = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
+		BEGIN TRANSACTION
+			UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE id_usuario = @ID_USER
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRAN
+		SELECT ERROR_MESSAGE()
+	END CATCH
+
+END
 GO
+
+--PROC PARA ALTA EMPRESAS 
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Alta_Empresa]')
+BEGIN
+
+	DROP PROCEDURE [SQLITO].[pr_Alta_Empresa]
+
+END
+GO
+
+CREATE PROCEDURE [SQLITO].[pr_Alta_Empresa]
+(@razonsocial nvarchar(255), @cuit nvarchar(255), @mail nvarchar(50), @direccion nvarchar(255), @telefono nvarchar(30))
+AS
+BEGIN
+
+	DECLARE @fecha_creacion datetime
+	DECLARE @usuario_id int
+	DECLARE @id_Empresa int
+	DECLARE @identity numeric(18,0)
+	SET @identity = (SELECT COUNT(*) FROM SQLITO.Empresas)
+
+	--Razon Social Repetida
+	IF EXISTS (SELECT 1 FROM SQLITO.Empresas WHERE razonsocial = @razonsocial)
+		THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+
+	--Cuit Repetido
+	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE cuit = @cuit)
+		THROW 50000, 'CUIT YA EXISTENTE', 1
+
+	--Cuit Repetido
+	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE mail = @mail)
+		THROW 50000, 'MAIL YA EXISTENTE', 1
+ 
+	SET @fecha_creacion = GETDATE()
+	SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
+
+	BEGIN TRY
+
+		BEGIN TRANSACTION
+			EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial, @cuit
+			INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit, mail, direccion, telefono, usuario_id)
+				VALUES (@razonsocial, @fecha_creacion, @cuit,@mail, @direccion, @telefono, @usuario_id)
+		COMMIT TRANSACTION
+
+	END TRY
+
+	BEGIN CATCH
+
+		DECLARE @Cambios numeric(18,0)
+		SET @Cambios = (SELECT count(*) FROM SQLITO.Grados)
+		--Se detectan cambios
+		IF(@identity != @Cambios)
+		BEGIN
+			ROLLBACK TRANSACTION
+			SET @id_Empresa = @id_Empresa - 1
+			DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED,@id_Empresa) WITH NO_INFOMSGS;
+			DBCC CHECKIDENT ('SQLITO.Empresas', RESEED,@identity) WITH NO_INFOMSGS;
+		END;
+		THROW
+
+	END CATCH
+
+END
+GO
+
+--PROC PARA MODIFICAR EMPRESAS 
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Modificar_Empresa]')
+BEGIN
+
+	DROP PROCEDURE [SQLITO].[pr_Modificar_Empresa]
+
+END
+GO
+
+CREATE PROCEDURE [SQLITO].[pr_Modificar_Empresa]
+(@razonsocial nvarchar(255), @cuit nvarchar(255), @mail nvarchar(50), @direccion nvarchar(255), @telefono nvarchar(30),	@idEmpresa int,	@habilitado bit)
+AS
+BEGIN
+
+	--Razon Social Repetida que no es la misma que la que se inserta
+	IF EXISTS (SELECT 1 FROM SQLITO.Empresas WHERE (razonsocial = @razonsocial) AND (id_empresa <> @idEmpresa))
+		THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+
+	--Cuit Repetido que no es el mismo que se inserta
+	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE (cuit = @cuit) AND (id_empresa <> @idEmpresa))
+		THROW 50000, 'CUIT YA EXISTENTE', 1
+
+	--Cuit Repetido
+	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE (mail = @mail) AND (id_empresa <> @idEmpresa))
+		THROW 50000, 'MAIL YA EXISTENTE', 1
+ 
+	BEGIN TRY
+		BEGIN TRANSACTION
+			UPDATE [SQLITO].[Empresas]
+				SET razonsocial = @razonsocial, cuit = @cuit, mail = @mail, direccion = @direccion, telefono = @telefono, habilitado = @habilitado
+				WHERE id_empresa = @idEmpresa
+		COMMIT TRANSACTION
+	END TRY
+
+	BEGIN CATCH
+		IF @@ROWCOUNT <> 0  
+			ROLLBACK TRANSACTION
+		THROW
+	END CATCH
+
+END
+GO
+
+--PROC ASIGNACION USUARIOS PARA EMPRESAS RECIEN CREADAS
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_altaUsuario_empresa]')
+BEGIN
+
+	DROP PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
+
+END
+GO
+
+CREATE PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
+(@empresaID INT, @empresaRazonSocial nvarchar(255), @cuit nvarchar(255))
+AS
+BEGIN
+
+	BEGIN TRY
+
+		DECLARE @username NVARCHAR(255), @password VARBINARY(255)
+		DECLARE @identity numeric(18,0)
+		DECLARE @SUF CHAR(2), @PREF CHAR(2), @MEDIO CHAR(8), @PW CHAR(12), @US CHAR(16)  	
+		
+		SET @SUF = SUBSTRING(@cuit,1,2)
+		SET @PREF = SUBSTRING(@cuit,4,8)
+		SET @MEDIO = SUBSTRING(@cuit,13,14)
+
+		--US y PW temporal
+		SET @PW = @SUF + @PREF + @MEDIO
+		SET @US = @PW
+
+		SET @identity = (SELECT COUNT(*) FROM SQLITO.Usuarios)
+
+		--Asigno US and PW
+		BEGIN TRANSACTION
+
+			SELECT @username = @US,@password = HASHBYTES('SHA2_256',@PW) 
+	
+			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
+				VALUES (@username, @password, 0)
+	
+			INSERT INTO SQLITO.Roles_Usuarios (rol_id, usuario_id)
+				VALUES (1, SCOPE_IDENTITY()) 
+
+		COMMIT TRANSACTION
+
+		--Retorno el Id del usuario
+		RETURN (select COUNT(*) FROM SQLITO.Usuarios)
+
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+		DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED, @identity);
+		THROW 50000, 'FALLO CREACION USUARIO', 1
+	END CATCH
+
+END
+GO
+
+-- PARA ABM DE Grados --
 
 --PROC PARA CREAR UN GRADO
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Carga_Grado')
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Carga_Grado]')
 BEGIN
-	DROP PROCEDURE pr_Carga_Grado
-END
-GO
-create proc pr_Carga_Grado (@descripcion nvarchar(255),@comision numeric(6,2))
-as
-begin
-begin try
-DECLARE @identity numeric(18,0)
-SET @identity = (select count(*) from SQLITO.Grados)
 
---COMISION repetida y no existente
-IF EXISTS (select 1 from SQLITO.Grados where comision = @comision)
-THROW 50000, 'COMISION YA REGISTRADA', 1
+	DROP PROCEDURE [SQLITO].[pr_Carga_Grado]
 
---Descripcion ya existente
-IF EXISTS(select 1 from SQLITO.Grados WHERE descripcion = @descripcion)
-THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
-
-begin transaction
-INSERT INTO SQLITO.Grados(descripcion,comision) values(@descripcion,@comision)
-commit transaction
-end try
-begin catch
-DECLARE @Cambios numeric(18,0)
-SET @Cambios = (select count(*) from SQLITO.Grados)
-IF(@identity != @Cambios)
-BEGIN
-ROLLBACK TRAN
-DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity) WITH NO_INFOMSGS;
-END;
-IF EXISTS(SELECT ERROR_MESSAGE())
-THROW;
-THROW 50000, 'COMISION NO VALIDA', 1
-end catch
-end
-GO
-
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Mod_Grado')
-BEGIN
-	DROP PROCEDURE pr_Mod_Grado
 END
 GO
 
-CREATE proc pr_Mod_Grado(@descripcion nvarchar(255), 
-    @comision numeric(6,2),
-    @habilitado bit,
-	@idGrado int)
-as
-begin
+CREATE PROCEDURE [SQLITO].[pr_Carga_Grado] (@descripcion nvarchar(255),@comision numeric(6,2))
+AS
+BEGIN
 
---COMISION repetida y no existente
-IF EXISTS (select 1 from SQLITO.Grados where comision = @comision and id_grado != @idGrado)
-THROW 50000, 'COMISION YA REGISTRADA', 1
+	BEGIN TRY
 
---Descripcion repetida y no existente
-IF EXISTS (select 1 from SQLITO.Grados where descripcion = @descripcion and id_grado != @idGrado)
-THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
+		DECLARE @identity numeric(18,0)
+		SET @identity = (SELECT COUNT(*) FROM SQLITO.Grados)
 
-begin try
-begin transaction
-update [GD2C2018].[SQLITO].Grados set descripcion = @descripcion,comision =@comision,habilitado=@habilitado where id_grado = @idGrado
-commit transaction
-end try
+		--COMISION repetida y no existente
+		IF EXISTS (SELECT 1 FROM SQLITO.Grados WHERE comision = @comision)
+			THROW 50000, 'COMISION YA REGISTRADA', 1
 
-begin catch
-IF @@ROWCOUNT != 0  
-ROLLBACK TRANSACTION
-IF EXISTS(SELECT ERROR_MESSAGE())
-THROW;
-THROW 50000, 'COMISION NO VALIDA', 1
-end catch
+		--Descripcion ya existente
+		IF EXISTS(SELECT 1 FROM SQLITO.Grados WHERE descripcion = @descripcion)
+			THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
+
+		BEGIN TRANSACTION
+			INSERT INTO SQLITO.Grados(descripcion,comision)
+				VALUES(@descripcion,@comision)
+		COMMIT TRANSACTION
+
+	END TRY
+
+	BEGIN CATCH
+
+		DECLARE @Cambios numeric(18,0)
+		SET @Cambios = (SELECT COUNT(*) FROM SQLITO.Grados)
+		IF(@identity <> @Cambios)
+		BEGIN
+			ROLLBACK TRAN
+			DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity) WITH NO_INFOMSGS;
+		END;
+		IF EXISTS(SELECT ERROR_MESSAGE())
+			THROW;
+		THROW 50000, 'COMISION NO VALIDA', 1
+
+	END CATCH
 
 END
 GO
+
+--PROC PARA MODIFICAR UN GRADO YA EXISTENTE
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Mod_Grado]')
+BEGIN
+
+	DROP PROCEDURE [SQLITO].[pr_Mod_Grado]
+
+END
+GO
+
+CREATE PROCEDURE [SQLITO].[pr_Mod_Grado]
+(@descripcion nvarchar(255), @comision numeric(6,2), @habilitado bit, @idGrado int)
+AS
+BEGIN
+
+	--COMISION repetida y no existente
+	IF EXISTS (SELECT 1 FROM SQLITO.Grados WHERE (comision = @comision) AND (id_grado <> @idGrado))
+		THROW 50000, 'COMISION YA REGISTRADA', 1
+
+	--Descripcion repetida y no existente
+	IF EXISTS (SELECT 1 FROM SQLITO.Grados WHERE (descripcion = @descripcion) AND (id_grado <> @idGrado))
+		THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
+
+	BEGIN TRY
+		BEGIN TRANSACTION
+			UPDATE [SQLITO].Grados
+				SET descripcion = @descripcion, comision = @comision, habilitado = @habilitado
+				WHERE id_grado = @idGrado
+		COMMIT TRANSACTION
+	END TRY
+
+	BEGIN CATCH
+		IF @@ROWCOUNT <> 0  
+			ROLLBACK TRANSACTION
+		IF EXISTS(SELECT ERROR_MESSAGE())
+			THROW;
+		THROW 50000, 'COMISION NO VALIDA', 1
+	END CATCH
+
+END
+GO
+
 /*Si llegase a romper el identity usar:
 GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
 
+
+-- PARA CANJE Y ADMINISTRACION DE PUNTOS --
+
+--Obtener sumatoria de puntos no vencidos de un cliente
 IF OBJECT_ID('[SQLITO].[sumarPuntos]') IS NOT NULL
 BEGIN
+
 	DROP FUNCTION [SQLITO].[sumarPuntos]
+
 END
 GO
 
@@ -1783,6 +1981,7 @@ CREATE FUNCTION [SQLITO].[sumarPuntos]
 (@cliente INT)
 RETURNS INT
 BEGIN 
+
 	DECLARE @puntos INT
 	SET @puntos = (SELECT TOP (1) ISNULL(SUM(ISNULL(cantidad,0)),0) 
 					FROM SQLITO.Puntos  
@@ -1790,259 +1989,26 @@ BEGIN
 					
 	IF(@puntos<0)
 	BEGIN 
-	SET @puntos = 0
+		SET @puntos = 0
 	END
-  RETURN @puntos
-END
-GO
 
-	
---AGREGADO PROCS APP
-
-USE [GD2C2018]
-GO
---PROC ALTA USUARIOS PARA EMPRESAS YA IMPORTADAS DEL MASTER
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_altaUsuario_empresa')
-BEGIN
-	DROP PROCEDURE [pr_altaUsuario_empresa]
-END
-GO
-CREATE PROCEDURE [dbo].[pr_altaUsuario_empresa] (@empresaID INT, @empresaRazonSocial nvarchar(255),@cuit nvarchar(255))
-AS
-BEGIN
-BEGIN TRY
-
-	DECLARE @username NVARCHAR(255), @password VARBINARY(255)
-	DECLARE @identity numeric(18,0)
-	DECLARE @SUF CHAR(2), @PREF CHAR(2), @MEDIO CHAR(8), @PW CHAR(12), @US CHAR(16)  	
-		
-	SET @SUF = SUBSTRING(@cuit,1,2)
-	SET @PREF = SUBSTRING(@cuit,4,8)
-	SET @MEDIO = SUBSTRING(@cuit,13,14)
-
-	--US y PW temporal
-	SET @PW = @SUF + @PREF + @MEDIO
-	SET @US = @PW
-
-	SET @identity = (select count(*) from SQLITO.Usuarios)
-
-	--Asigno US and PW
-BEGIN TRANSACTION
-	SELECT @username = @US,@password = HASHBYTES('SHA2_256',@PW) 
-	
-	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) VALUES (@username, @password, 0)
-	INSERT INTO SQLITO.Roles_Usuarios (rol_id, usuario_id)VALUES (1,SCOPE_IDENTITY()) 
-
-COMMIT TRANSACTION
-	--Retorno el Id del usuario
-	RETURN (select COUNT(*) FROM SQLITO.Usuarios)
-END TRY
-BEGIN CATCH
-rollback transaction
-DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED,@identity);
-THROW 50000, 'FALLO CREACION USUARIO', 1
-END CATCH
-END
-GO
-
---PROC PARA ALTA EMPRESAS 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Alta_Empresa')
-BEGIN
-	DROP PROCEDURE pr_Alta_Empresa
-END
-GO
-CREATE proc [dbo].[pr_Alta_Empresa](@razonsocial nvarchar(255), 
-    @cuit nvarchar(255),
-    @mail nvarchar(50),
-    @direccion nvarchar(255),
-    @telefono nvarchar(30))
-as
-begin
-DECLARE @fecha_creacion datetime
-DECLARE @usuario_id int
-DECLARE @id_Empresa int
-DECLARE @identity numeric(18,0)
-SET @identity = (select count(*) from SQLITO.Empresas)
-
---Razon Social Repetida
-IF EXISTS (select 1 from SQLITO.Empresas where razonsocial = @razonsocial)
-THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
-
---Cuit Repetido
-IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit)
-THROW 50000, 'CUIT YA EXISTENTE', 1
-
---Cuit Repetido
-IF Exists(select 1 from SQLITO.Empresas where mail = @mail)
-THROW 50000, 'MAIL YA EXISTENTE', 1
- 
-SET @fecha_creacion = GETDATE()
-SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
-
-begin try
-begin transaction
-EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial, @cuit
-insert into [GD2C2018].[SQLITO].[Empresas](razonsocial,fecha_creacion,cuit,mail,direccion,telefono,usuario_id) values (@razonsocial,@fecha_creacion,@cuit,@mail,@direccion,@telefono,@usuario_id)
-commit transaction
-
-end try
-
-begin catch
-DECLARE @Cambios numeric(18,0)
-SET @Cambios = (select count(*) from SQLITO.Grados)
---Se detectan cambios
-IF(@identity != @Cambios)
-BEGIN
-ROLLBACK TRANSACTION
-SET @id_Empresa = @id_Empresa - 1
-DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED,@id_Empresa) WITH NO_INFOMSGS;
-DBCC CHECKIDENT ('SQLITO.Empresas', RESEED,@identity) WITH NO_INFOMSGS;
-END;
-THROW
-end catch
-
-END
-
-GO
-
---PROC PARA MODIFICAR EMPRESAS 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Modificar_Empresa')
-BEGIN
-	DROP PROCEDURE pr_Modificar_Empresa
-END
-GO
-CREATE proc [dbo].[pr_Modificar_Empresa](@razonsocial nvarchar(255), 
-    @cuit nvarchar(255),
-    @mail nvarchar(50),
-    @direccion nvarchar(255),
-    @telefono nvarchar(30),
-	@idEmpresa int,
-	@habilitado bit)
-as
-begin
---Razon Social Repetida que no es la misma que la que se inserta
-IF EXISTS (select 1 from SQLITO.Empresas where razonsocial = @razonsocial AND id_empresa != @idEmpresa)
-THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
-
---Cuit Repetido que no es el mismo que se inserta
-IF Exists(select 1 from SQLITO.Empresas where cuit = @cuit AND id_empresa != @idEmpresa)
-THROW 50000, 'CUIT YA EXISTENTE', 1
-
---Cuit Repetido
-IF Exists(select 1 from SQLITO.Empresas where mail = @mail AND id_empresa != @idEmpresa)
-THROW 50000, 'MAIL YA EXISTENTE', 1
- 
-begin try
-begin transaction
-update [GD2C2018].[SQLITO].[Empresas] set razonsocial = @razonsocial,cuit =@cuit,mail=@mail,direccion=@direccion,telefono=@telefono, habilitado=@habilitado where id_empresa =@idEmpresa
-commit transaction
-end try
-
-begin catch
-IF @@ROWCOUNT != 0  
-ROLLBACK TRANSACTION
-THROW
-end catch
-
-END
-
---PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO -> HAY QUE AGREGAR EL NUEVO FLAG DE EMPRESA HABILITADA
-GO
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Eliminar_empresa')
-BEGIN
-	DROP PROCEDURE pr_Eliminar_empresa
-END
-GO
-create proc pr_Eliminar_empresa (@idEmpresa int)
-as
-begin
-begin try
-DECLARE @ID_USER INT
-SET @ID_USER = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
-begin transaction
-UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE id_usuario = @ID_USER
-commit transaction
-end try
-begin catch
-ROLLBACK TRAN
-SELECT ERROR_MESSAGE()
-end catch
-end
-GO
-
---PROC PARA CREAR UN GRADO
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Carga_Grado')
-BEGIN
-	DROP PROCEDURE pr_Carga_Grado
-END
-GO
-create proc pr_Carga_Grado (@descripcion nvarchar(255),@comision numeric(6,2))
-as
-begin
-begin try
-DECLARE @identity numeric(18,0)
-SET @identity = (select count(*) from SQLITO.Grados)
-
---Descripcion ya existente
-IF EXISTS(select 1 from SQLITO.Grados WHERE descripcion = @descripcion)
-THROW 50000, 'DESCRIPCION YA EXISTENTE', 1
-
-begin transaction
-INSERT INTO SQLITO.Grados(descripcion,comision) values(@descripcion,@comision)
-commit transaction
-end try
-begin catch
-DECLARE @Cambios numeric(18,0)
-SET @Cambios = (select count(*) from SQLITO.Grados)
-IF(@identity != @Cambios)
-BEGIN
-ROLLBACK TRAN
-DBCC CHECKIDENT ('SQLITO.Grados', RESEED, @identity) WITH NO_INFOMSGS;
-END;
-THROW
-end catch
-end
-GO
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'pr_Mod_Grado')
-BEGIN
-	DROP PROCEDURE pr_Mod_Grado
-END
-GO
-CREATE proc pr_Mod_Grado(@descripcion nvarchar(255), 
-    @comision numeric(6,2),
-    @habilitado bit,
-	@idGrado int)
-as
-begin
-
---Descripcion repetida y no existente
-IF EXISTS (select 1 from SQLITO.Grados where descripcion = @descripcion and id_grado != @idGrado)
-THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
-
-begin try
-begin transaction
-update [GD2C2018].[SQLITO].Grados set descripcion = @descripcion,comision =@comision,habilitado=@habilitado where id_grado = @idGrado
-commit transaction
-end try
-
-begin catch
-IF @@ROWCOUNT != 0  
-ROLLBACK TRANSACTION
-THROW
-end catch
+  	RETURN @puntos
 
 END
 GO
 
-IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'EliminarRolInhabilitadoDeUsuario')
+
+-- PARA ABM de Roles --
+
+IF EXISTS (SELECT * FROM sys.triggers WHERE name = '[SQLITO].[EliminarRolInhabilitadoDeUsuario]')
 BEGIN
 
-	DROP TRIGGER EliminarRolInhabilitadoDeUsuarios
+	DROP TRIGGER [SQLITO].[EliminarRolInhabilitadoDeUsuario]
 
 END
 GO
 
-CREATE TRIGGER SQLITO.ElminarRolInhabilitadoDeUsuarios
+CREATE TRIGGER [SQLITO].[EliminarRolInhabilitadoDeUsuario]
 ON SQLITO.Roles
 AFTER UPDATE
 AS
