@@ -235,11 +235,11 @@
     <Compile Include="Generar Rendicion Comisiones\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.cs">
+    <Compile Include="Historial Cliente\VentanaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Historial Cliente\VentanaPrincipal.Designer.cs">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\Login.cs">
       <SubType>Form</SubType>
@@ -327,8 +327,8 @@
     <EmbeddedResource Include="Generar Publicacion\VentanaPrincipal.resx">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Historial Cliente\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Historial Cliente\VentanaPrincipal.resx">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoClientesPuntos.resx">
       <DependentUpon>ListadoClientesPuntos.cs</DependentUpon>
