@@ -879,7 +879,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void textBox_cuit_TextChanged(object sender, EventArgs e)
         {
-            if (!cuilFormatoValido(textBox_cuit.Text))
+            if (!cuitFormatoValido(textBox_cuit.Text))
             {
                 errorAdv_cuit.Show();
                 lbl_cuitinvalido.Show();

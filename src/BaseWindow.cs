@@ -133,6 +133,44 @@ namespace PalcoNet
             else return false;
         }
 
+        public Boolean cuitFormatoValido(string cadena)
+        {
+            List<Char> aux = new List<Char>();
+
+            foreach (char c in cadena)
+            {
+                aux.Add(c);
+            }
+
+            if (cadena.Length == 14)
+            {
+                if (esNumero(aux.ElementAt(0)) && esNumero(aux.ElementAt(1)) && (aux.ElementAt(2) == '-') && esNumero(aux.ElementAt(3))
+                    && esNumero(aux.ElementAt(4)) && esNumero(aux.ElementAt(5)) && esNumero(aux.ElementAt(6)) && esNumero(aux.ElementAt(7))
+                       && esNumero(aux.ElementAt(8)) && esNumero(aux.ElementAt(9)) && esNumero(aux.ElementAt(10))
+                            && (aux.ElementAt(11) == '-') && esNumero(aux.ElementAt(12)) && esNumero(aux.ElementAt(13)))
+                {
+                    return true;
+                }
+
+                else return false;
+            }
+
+            else if (cadena.Length == 13)
+            {
+                if (esNumero(aux.ElementAt(0)) && esNumero(aux.ElementAt(1)) && (aux.ElementAt(2) == '-') && esNumero(aux.ElementAt(3))
+                    && esNumero(aux.ElementAt(4)) && esNumero(aux.ElementAt(5)) && esNumero(aux.ElementAt(6)) && esNumero(aux.ElementAt(7))
+                       && esNumero(aux.ElementAt(8)) && esNumero(aux.ElementAt(9)) && (aux.ElementAt(10) == '-')
+                            && esNumero(aux.ElementAt(11)) && esNumero(aux.ElementAt(12)))
+                {
+                    return true;
+                }
+
+                else return false;
+            }
+
+            else return false;
+        }
+
         public Boolean textBoxVacio(TextBox txb)
         { 
             return string.IsNullOrWhiteSpace(txb.Text);
