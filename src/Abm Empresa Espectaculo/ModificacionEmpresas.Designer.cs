@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label14 = new System.Windows.Forms.Label();
+            this.comboBoxHabilitado = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderRazonSocial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDireccion)).BeginInit();
@@ -38,11 +40,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSufijoCUIT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPrefijoCUIT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderCUITLargo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderPiso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderCiudad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMailSinArroba)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderAltura)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderValidarCalle)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTelefono
             // 
-            this.labelTelefono.Location = new System.Drawing.Point(715, 370);
+            this.labelTelefono.Location = new System.Drawing.Point(706, 377);
             // 
             // labelCUIT
             // 
@@ -50,7 +57,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(61, 317);
+            this.label3.Location = new System.Drawing.Point(61, 320);
             // 
             // labelRazonSocial
             // 
@@ -58,7 +65,7 @@
             // 
             // labelMail
             // 
-            this.labelMail.Location = new System.Drawing.Point(715, 435);
+            this.labelMail.Location = new System.Drawing.Point(706, 435);
             // 
             // textBoxRazonSocial
             // 
@@ -67,12 +74,12 @@
             // 
             // textBoxMail
             // 
-            this.textBoxMail.Location = new System.Drawing.Point(910, 435);
+            this.textBoxMail.Location = new System.Drawing.Point(919, 438);
             this.textBoxMail.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxTelefono
             // 
-            this.textBoxTelefono.Location = new System.Drawing.Point(910, 373);
+            this.textBoxTelefono.Location = new System.Drawing.Point(919, 374);
             this.textBoxTelefono.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxCuitLargo
@@ -81,7 +88,7 @@
             // 
             // textBoxDireccion
             // 
-            this.textBoxDireccion.Location = new System.Drawing.Point(269, 320);
+            this.textBoxDireccion.Location = new System.Drawing.Point(269, 323);
             this.textBoxDireccion.Size = new System.Drawing.Size(387, 31);
             // 
             // label2
@@ -92,16 +99,16 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(70, 531);
+            this.btnVolver.Location = new System.Drawing.Point(67, 560);
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(1011, 531);
-            this.btnCargar.Click += new System.EventHandler(this.btnCargar_Click_1);
+            this.btnCargar.Location = new System.Drawing.Point(1097, 560);
+
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(574, 531);
+            this.btnLimpiar.Location = new System.Drawing.Point(587, 560);
             // 
             // label1
             // 
@@ -119,7 +126,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(62, 487);
+            this.label4.Location = new System.Drawing.Point(62, 511);
             // 
             // label6
             // 
@@ -131,60 +138,130 @@
             // 
             // textBoxCodigoPostal
             // 
-            this.textBoxCodigoPostal.Location = new System.Drawing.Point(910, 208);
+            this.textBoxCodigoPostal.Location = new System.Drawing.Point(919, 264);
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(910, 264);
+            this.textBoxLocalidad.Location = new System.Drawing.Point(919, 205);
             this.textBoxLocalidad.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxDepartamento
             // 
-            this.textBoxDepartamento.Location = new System.Drawing.Point(269, 435);
-            this.textBoxDepartamento.Size = new System.Drawing.Size(387, 31);
+            this.textBoxDepartamento.Location = new System.Drawing.Point(565, 439);
+            this.textBoxDepartamento.Size = new System.Drawing.Size(91, 31);
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(715, 264);
+            this.label10.Location = new System.Drawing.Point(706, 264);
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(65, 429);
+            this.label9.Location = new System.Drawing.Point(706, 202);
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(711, 205);
+            this.label8.Location = new System.Drawing.Point(328, 433);
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(45, 270);
+            this.label7.Location = new System.Drawing.Point(35, 267);
             // 
             // label12
             // 
-            this.label12.Location = new System.Drawing.Point(715, 323);
+            this.label12.Location = new System.Drawing.Point(706, 317);
+            this.label12.Size = new System.Drawing.Size(100, 31);
+            this.label12.Text = "Ciudad";
             // 
             // textBoxCiudad
             // 
-            this.textBoxCiudad.Location = new System.Drawing.Point(910, 320);
+            this.textBoxCiudad.Location = new System.Drawing.Point(919, 320);
             this.textBoxCiudad.Size = new System.Drawing.Size(368, 31);
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(61, 370);
+            this.label11.Location = new System.Drawing.Point(63, 430);
             // 
             // textBoxNumeroPiso
             // 
-            this.textBoxNumeroPiso.Location = new System.Drawing.Point(269, 370);
-            this.textBoxNumeroPiso.Size = new System.Drawing.Size(387, 31);
+            this.textBoxNumeroPiso.Location = new System.Drawing.Point(184, 433);
+            this.textBoxNumeroPiso.Size = new System.Drawing.Size(96, 31);
+            // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(61, 379);
+            // 
+            // textBoxAltura
+            // 
+            this.textBoxAltura.Location = new System.Drawing.Point(271, 382);
+            this.textBoxAltura.Size = new System.Drawing.Size(385, 31);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F);
+            this.label14.Location = new System.Drawing.Point(893, 127);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(143, 31);
+            this.label14.TabIndex = 43;
+            this.label14.Text = "Habilitada:";
+            // 
+            // comboBoxHabilitado
+            // 
+            this.comboBoxHabilitado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHabilitado.FormattingEnabled = true;
+            this.comboBoxHabilitado.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.comboBoxHabilitado.Location = new System.Drawing.Point(1072, 125);
+            this.comboBoxHabilitado.Name = "comboBoxHabilitado";
+            this.comboBoxHabilitado.Size = new System.Drawing.Size(151, 33);
+            this.comboBoxHabilitado.TabIndex = 44;
             // 
             // ModificacionEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1336, 616);
+            this.ClientSize = new System.Drawing.Size(1336, 663);
+            this.Controls.Add(this.comboBoxHabilitado);
+            this.Controls.Add(this.label14);
             this.Name = "ModificacionEmpresas";
             this.Text = "ModificacionEmpresas";
+            this.Controls.SetChildIndex(this.labelRazonSocial, 0);
+            this.Controls.SetChildIndex(this.labelMail, 0);
+            this.Controls.SetChildIndex(this.labelTelefono, 0);
+            this.Controls.SetChildIndex(this.labelCUIT, 0);
+            this.Controls.SetChildIndex(this.textBoxRazonSocial, 0);
+            this.Controls.SetChildIndex(this.textBoxMail, 0);
+            this.Controls.SetChildIndex(this.textBoxTelefono, 0);
+            this.Controls.SetChildIndex(this.textBoxCuitLargo, 0);
+            this.Controls.SetChildIndex(this.textBoxDireccion, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.btnVolver, 0);
+            this.Controls.SetChildIndex(this.btnCargar, 0);
+            this.Controls.SetChildIndex(this.btnLimpiar, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.textBoxCUITPrefijo, 0);
+            this.Controls.SetChildIndex(this.textBoxCUITSufijo, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.label7, 0);
+            this.Controls.SetChildIndex(this.label8, 0);
+            this.Controls.SetChildIndex(this.label9, 0);
+            this.Controls.SetChildIndex(this.label10, 0);
+            this.Controls.SetChildIndex(this.textBoxDepartamento, 0);
+            this.Controls.SetChildIndex(this.textBoxLocalidad, 0);
+            this.Controls.SetChildIndex(this.textBoxCodigoPostal, 0);
+            this.Controls.SetChildIndex(this.textBoxNumeroPiso, 0);
+            this.Controls.SetChildIndex(this.label11, 0);
+            this.Controls.SetChildIndex(this.textBoxCiudad, 0);
+            this.Controls.SetChildIndex(this.label12, 0);
+            this.Controls.SetChildIndex(this.textBoxAltura, 0);
+            this.Controls.SetChildIndex(this.label13, 0);
+            this.Controls.SetChildIndex(this.label14, 0);
+            this.Controls.SetChildIndex(this.comboBoxHabilitado, 0);
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderRazonSocial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDireccion)).EndInit();
@@ -195,12 +272,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderSufijoCUIT)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPrefijoCUIT)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderCUITLargo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderPiso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderCiudad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMailSinArroba)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderAltura)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderValidarCalle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox comboBoxHabilitado;
 
     }
 }

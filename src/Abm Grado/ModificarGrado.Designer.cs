@@ -49,8 +49,8 @@
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "True",
-            "False"});
+            "Si",
+            "No"});
             this.comboBox1.Location = new System.Drawing.Point(211, 259);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(300, 33);
@@ -69,6 +69,7 @@
             // textBoxComision
             // 
             this.textBoxComision.Location = new System.Drawing.Point(211, 199);
+            this.textBoxComision.MaxLength = 10;
             this.textBoxComision.Name = "textBoxComision";
             this.textBoxComision.Size = new System.Drawing.Size(300, 31);
             this.textBoxComision.TabIndex = 28;
@@ -155,7 +156,6 @@
             this.Controls.Add(this.label1);
             this.Name = "ModificarGrado";
             this.Text = "ModificarGrado";
-
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderComision)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDescripcion)).EndInit();
             this.ResumeLayout(false);

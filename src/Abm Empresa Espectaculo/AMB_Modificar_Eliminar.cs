@@ -16,7 +16,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class AMB_Modificar_Eliminar : Form
     {
-        
+        string id = "-1";
         public AMB_Modificar_Eliminar()
         {
             InitializeComponent();
@@ -63,21 +63,17 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         public void cargarGrilla() 
         {
+            
             string query;
             filtrosVacios();
-            if (textBoxEmail.Text == "%")
-            {
-                query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}%' and cuit like '{1}%' and (mail like '{2}%' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-            }
-            else
-            {
+            
                 query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}%' and cuit like '{1}%' and mail like '{2}%'", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-            }
+            
                 grillaEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
                 if (Database.ObtenerDataSet(query).Tables[0].Rows.Count == 0)
                 {
-                    MessageBox.Show("No hay empresas para mostrar");
+                    MessageBox.Show("No se encontraron empresas para mostrar");
                 }
                 else
                 {
@@ -100,26 +96,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            
-            if (todosNulos())
+
+            if (id == "-1")
             {
-                MessageBox.Show("Ingrese una empresa a eliminar");
+                MessageBox.Show("Seleccione una fila a deshabilitar");
             }
             else
             {
-                string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", ObtenerIdentity());
-                string validacion = ObtenerIdentity();
-                if (validacion == "")
-                {
-                    MessageBox.Show("No se encontro la empresa a eliminar");
-                }
-
-                else if (validacion == "-1")
-                 {
-                        MessageBox.Show("Error, hay mas de una empresa a eliminar");
-                 }
-
-                else if (yaEliminado(validacion))
+                string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", id);
+                
+                if (yaEliminado(id))
                 {
                     MessageBox.Show("Empresa ya eliminada");
                 }
@@ -152,37 +138,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             return true;
         }
 
-        //Si no aclaro estoy modificando el primer registro
-        public string ObtenerIdentity() 
-        {
-                        
-                filtrosVacios();
-                string query;
-                if (textBoxEmail.Text == "%")
-                {
-                    query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and (mail like '{2}' or mail is null)", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-                }
-                else
-                {
-                    query = string.Format("select * from SQLITO.Empresas where razonsocial like '{0}' and cuit like '{1}' and mail like '{2}'", textBoxRazonSocial.Text, textBoxCUIT.Text, textBoxEmail.Text);
-                }
-                
-
-                try
-                {
-                    if (Database.ObtenerDataSet(query).Tables[0].Rows.Count > 1)
-                    {
-                        return "-1";
-                    }
-                    return Database.ObtenerDataSet(query).Tables[0].Rows[0]["id_empresa"].ToString();
-                }
-                catch
-                {
-                    return "";
-                }
-              
-            
-        }
+        
         public Boolean todosNulos()
         {
             foreach (Control c in Controls)
@@ -200,30 +156,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (todosNulos())
+            if (id == "-1")
             {
-                MessageBox.Show("Ingrese una empresa a modificar");
+                MessageBox.Show("No se encontro la empresa a modificar");
             }
             else
             {
-                    
-                    string identidad = ObtenerIdentity();
-                    if (identidad == "")
-                    {
-                        MessageBox.Show("No se encontro la empresa a modificar");
-                    }
-                    else if (identidad == "-1")
-                    {
-                        MessageBox.Show("Error, hay mas de una empresa a modificar");
-                    }
-                    else
-                    {
-                                                     
-                            ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
+
+                ModificacionEmpresas modEmp = new ModificacionEmpresas(id);
                             modEmp.Show();
-                        
-                    }
-                
+                       
             }
             vaciar();
         }
@@ -265,7 +207,12 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             cargarGrilla();
         }
 
-    
+        private void grillaEmpresas_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+                        //Hasta que no se modifique el admin el id sera + 2!
+                        id = Convert.ToString(grillaEmpresas.SelectedCells[0].RowIndex + 2);
+                     
+        }  
 
       
     }

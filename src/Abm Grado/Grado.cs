@@ -16,7 +16,7 @@ namespace PalcoNet.Abm_Grado
     {
 
         string id = "-1";
-        int selector = -1;
+        
 
         public Session session { get; set; }
         public Grado(Session session)
@@ -145,10 +145,8 @@ namespace PalcoNet.Abm_Grado
 
         private void grillaGrados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-                        
-                    selector = grillaGrados.SelectedCells[0].RowIndex + 1;
-                    id = selector.ToString();        
-         
+
+                    id = Convert.ToString(grillaGrados.SelectedCells[0].RowIndex + 1);
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)

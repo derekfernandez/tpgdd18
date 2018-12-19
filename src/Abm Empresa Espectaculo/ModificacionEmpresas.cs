@@ -49,9 +49,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
                 cuitCompleto = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
 
-                direccion = textBoxDireccion.Text + "," + textBoxNumeroPiso.Text + "," + textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
+                direccion = textBoxDireccion.Text + "," + textBoxAltura.Text + "," + textBoxNumeroPiso.Text + "," + textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
 
-                string update = string.Format("pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}'", textBoxRazonSocial.Text, cuitCompleto, textBoxMail.Text, direccion, textBoxTelefono.Text, idEmpresa);
+                
+
+                string update = string.Format("pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}','{6}'", textBoxRazonSocial.Text, cuitCompleto, textBoxMail.Text, direccion, textBoxTelefono.Text, idEmpresa,obtenerHabilitado());
                 try
                 {
                     Database.ejecutarNonQueryShort(update);
@@ -74,6 +76,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             string query = string.Format("select * from SQLITO.Empresas where id_empresa = '{0}'", idEmpresa);
 
+           
+
             string direcEntera = Database.ObtenerDataSet(query).Tables[0].Rows[0]["direccion"].ToString();
             string cuitEntero = Database.ObtenerDataSet(query).Tables[0].Rows[0]["cuit"].ToString();
 
@@ -84,11 +88,12 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
 
             textBoxDireccion.Text = direc[0];
-            textBoxNumeroPiso.Text = direc[1];
-            textBoxDepartamento.Text = direc[2];
-            textBoxLocalidad.Text = direc[3];
-            textBoxCodigoPostal.Text = direc[4];
-            textBoxCiudad.Text = direc[5];
+            textBoxAltura.Text = direc[1];
+            textBoxNumeroPiso.Text = direc[2];
+            textBoxDepartamento.Text = direc[3];
+            textBoxLocalidad.Text = direc[4];
+            textBoxCodigoPostal.Text = direc[5];
+            textBoxCiudad.Text = direc[6];
 
             textBoxCuitLargo.Text = cuit[1];
             textBoxCUITPrefijo.Text = cuit[0];
@@ -98,24 +103,34 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
             textBoxMail.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["mail"].ToString();
             textBoxTelefono.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["telefono"].ToString();
+
+            string habilitado = Database.ObtenerDataSet(query).Tables[0].Rows[0]["habilitado"].ToString();
+
+            if (habilitado == "True")
+            {
+                comboBoxHabilitado.SelectedIndex = 0;
+            }
+            else
+                comboBoxHabilitado.SelectedIndex = 1;
+
+      
             //textBoxCui.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["cuit"].ToString();
         }
 
         #endregion
 
-        private void btnCargar_Click_1(object sender, EventArgs e)
-        {
 
+        
+        public string obtenerHabilitado()
+        {
+            if (comboBoxHabilitado.SelectedIndex == 0)
+            {
+                return "1";
+            }
+            return "0";
         }
 
 
-      
-
-       
-
-      
-
-      
 
 
 

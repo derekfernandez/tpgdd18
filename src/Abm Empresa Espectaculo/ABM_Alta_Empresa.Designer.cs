@@ -73,6 +73,10 @@
             this.errorProviderPiso = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderCiudad = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProviderMailSinArroba = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBoxAltura = new System.Windows.Forms.TextBox();
+            this.errorProviderAltura = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderValidarCalle = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderRazonSocial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDireccion)).BeginInit();
@@ -86,6 +90,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPiso)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderCiudad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMailSinArroba)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderAltura)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderValidarCalle)).BeginInit();
             this.SuspendLayout();
             // 
             // labelRazonSocial
@@ -108,7 +114,7 @@
             this.labelMail.AutoSize = true;
             this.labelMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMail.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelMail.Location = new System.Drawing.Point(678, 452);
+            this.labelMail.Location = new System.Drawing.Point(678, 435);
             this.labelMail.Name = "labelMail";
             this.labelMail.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelMail.Size = new System.Drawing.Size(71, 31);
@@ -122,7 +128,7 @@
             this.labelTelefono.AutoSize = true;
             this.labelTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTelefono.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelTelefono.Location = new System.Drawing.Point(674, 394);
+            this.labelTelefono.Location = new System.Drawing.Point(674, 373);
             this.labelTelefono.Name = "labelTelefono";
             this.labelTelefono.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelTelefono.Size = new System.Drawing.Size(128, 31);
@@ -153,17 +159,17 @@
             // 
             // textBoxMail
             // 
-            this.textBoxMail.Location = new System.Drawing.Point(882, 452);
+            this.textBoxMail.Location = new System.Drawing.Point(882, 435);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(347, 31);
-            this.textBoxMail.TabIndex = 12;
+            this.textBoxMail.TabIndex = 13;
             // 
             // textBoxTelefono
             // 
-            this.textBoxTelefono.Location = new System.Drawing.Point(882, 397);
+            this.textBoxTelefono.Location = new System.Drawing.Point(882, 376);
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(347, 31);
-            this.textBoxTelefono.TabIndex = 11;
+            this.textBoxTelefono.TabIndex = 12;
             this.textBoxTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTelefono_KeyPress);
             // 
             // textBoxCuitLargo
@@ -181,12 +187,13 @@
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(347, 31);
             this.textBoxDireccion.TabIndex = 5;
+            this.textBoxDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDireccion_KeyPress);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(63, 128);
+            this.label2.Location = new System.Drawing.Point(63, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(571, 32);
             this.label2.TabIndex = 20;
@@ -195,30 +202,30 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(1039, 536);
+            this.btnVolver.Location = new System.Drawing.Point(1039, 543);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(190, 73);
-            this.btnVolver.TabIndex = 12;
+            this.btnVolver.TabIndex = 16;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(69, 536);
+            this.btnCargar.Location = new System.Drawing.Point(69, 543);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(190, 73);
-            this.btnCargar.TabIndex = 22;
+            this.btnCargar.TabIndex = 14;
             this.btnCargar.Text = "Cargar";
             this.btnCargar.UseVisualStyleBackColor = true;
             this.btnCargar.Click += new System.EventHandler(this.btnCargar_Click);
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(544, 536);
+            this.btnLimpiar.Location = new System.Drawing.Point(544, 543);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(190, 73);
-            this.btnLimpiar.TabIndex = 11;
+            this.btnLimpiar.TabIndex = 15;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
@@ -239,12 +246,12 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(65, 302);
+            this.label3.Location = new System.Drawing.Point(67, 305);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label3.Size = new System.Drawing.Size(199, 31);
+            this.label3.Size = new System.Drawing.Size(84, 31);
             this.label3.TabIndex = 25;
-            this.label3.Text = "Direccion calle:";
+            this.label3.Text = "Calle:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // errorProviderRazonSocial
@@ -304,7 +311,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 481);
+            this.label4.Location = new System.Drawing.Point(39, 495);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(299, 25);
             this.label4.TabIndex = 31;
@@ -324,7 +331,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(678, 196);
+            this.label8.Location = new System.Drawing.Point(319, 432);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(194, 31);
             this.label8.TabIndex = 33;
@@ -335,7 +342,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(63, 419);
+            this.label9.Location = new System.Drawing.Point(678, 199);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(138, 31);
             this.label9.TabIndex = 34;
@@ -346,7 +353,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label10.Location = new System.Drawing.Point(674, 266);
+            this.label10.Location = new System.Drawing.Point(674, 257);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(191, 31);
             this.label10.TabIndex = 35;
@@ -354,24 +361,25 @@
             // 
             // textBoxDepartamento
             // 
-            this.textBoxDepartamento.Location = new System.Drawing.Point(882, 196);
+            this.textBoxDepartamento.Location = new System.Drawing.Point(519, 435);
             this.textBoxDepartamento.Name = "textBoxDepartamento";
-            this.textBoxDepartamento.Size = new System.Drawing.Size(347, 31);
+            this.textBoxDepartamento.Size = new System.Drawing.Size(99, 31);
             this.textBoxDepartamento.TabIndex = 8;
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(271, 419);
+            this.textBoxLocalidad.Location = new System.Drawing.Point(882, 199);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(347, 31);
-            this.textBoxLocalidad.TabIndex = 7;
+            this.textBoxLocalidad.TabIndex = 9;
+            this.textBoxLocalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxLocalidad_KeyPress);
             // 
             // textBoxCodigoPostal
             // 
-            this.textBoxCodigoPostal.Location = new System.Drawing.Point(882, 266);
+            this.textBoxCodigoPostal.Location = new System.Drawing.Point(882, 260);
             this.textBoxCodigoPostal.Name = "textBoxCodigoPostal";
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(347, 31);
-            this.textBoxCodigoPostal.TabIndex = 9;
+            this.textBoxCodigoPostal.TabIndex = 10;
             // 
             // errorProviderDepartamento
             // 
@@ -403,21 +411,22 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(63, 362);
+            this.label11.Location = new System.Drawing.Point(67, 432);
             this.label11.Name = "label11";
             this.label11.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label11.Size = new System.Drawing.Size(178, 31);
+            this.label11.Size = new System.Drawing.Size(75, 31);
             this.label11.TabIndex = 37;
-            this.label11.Text = "Numero Piso:";
+            this.label11.Text = "Piso:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBoxNumeroPiso
             // 
-            this.textBoxNumeroPiso.Location = new System.Drawing.Point(271, 365);
+            this.textBoxNumeroPiso.Location = new System.Drawing.Point(184, 432);
             this.textBoxNumeroPiso.Name = "textBoxNumeroPiso";
-            this.textBoxNumeroPiso.Size = new System.Drawing.Size(347, 31);
-            this.textBoxNumeroPiso.TabIndex = 6;
+            this.textBoxNumeroPiso.Size = new System.Drawing.Size(93, 31);
+            this.textBoxNumeroPiso.TabIndex = 7;
             this.textBoxNumeroPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumeroPiso_KeyPress);
+            this.textBoxNumeroPiso.Leave += new System.EventHandler(this.textBoxNumeroPiso_Leave);
             // 
             // label12
             // 
@@ -425,20 +434,21 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label12.Location = new System.Drawing.Point(676, 332);
+            this.label12.Location = new System.Drawing.Point(674, 312);
             this.label12.Name = "label12";
             this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label12.Size = new System.Drawing.Size(108, 31);
             this.label12.TabIndex = 39;
-            this.label12.Text = "Cuidad:";
+            this.label12.Text = "Ciudad:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBoxCiudad
             // 
-            this.textBoxCiudad.Location = new System.Drawing.Point(882, 336);
+            this.textBoxCiudad.Location = new System.Drawing.Point(882, 318);
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(347, 31);
-            this.textBoxCiudad.TabIndex = 10;
+            this.textBoxCiudad.TabIndex = 11;
+            this.textBoxCiudad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxCiudad_KeyPress);
             // 
             // errorProviderPiso
             // 
@@ -452,13 +462,45 @@
             // 
             this.errorProviderMailSinArroba.ContainerControl = this;
             // 
+            // label13
+            // 
+            this.label13.AutoEllipsis = true;
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label13.Location = new System.Drawing.Point(67, 366);
+            this.label13.Name = "label13";
+            this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label13.Size = new System.Drawing.Size(93, 31);
+            this.label13.TabIndex = 41;
+            this.label13.Text = "Altura:";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBoxAltura
+            // 
+            this.textBoxAltura.Location = new System.Drawing.Point(271, 366);
+            this.textBoxAltura.Name = "textBoxAltura";
+            this.textBoxAltura.Size = new System.Drawing.Size(347, 31);
+            this.textBoxAltura.TabIndex = 6;
+            this.textBoxAltura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAltura_KeyPress);
+            // 
+            // errorProviderAltura
+            // 
+            this.errorProviderAltura.ContainerControl = this;
+            // 
+            // errorProviderValidarCalle
+            // 
+            this.errorProviderValidarCalle.ContainerControl = this;
+            // 
             // ABM_Alta_Empresa
             // 
             this.AcceptButton = this.btnCargar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(1294, 645);
+            this.ClientSize = new System.Drawing.Size(1304, 634);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.textBoxAltura);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBoxCiudad);
             this.Controls.Add(this.label11);
@@ -506,6 +548,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderPiso)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderCiudad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMailSinArroba)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderAltura)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderValidarCalle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -554,9 +598,13 @@
         public System.Windows.Forms.TextBox textBoxCiudad;
         public System.Windows.Forms.Label label11;
         public System.Windows.Forms.TextBox textBoxNumeroPiso;
-        private System.Windows.Forms.ErrorProvider errorProviderPiso;
-        private System.Windows.Forms.ErrorProvider errorProviderCiudad;
-        private System.Windows.Forms.ErrorProvider errorProviderMailSinArroba;
+        public System.Windows.Forms.Label label13;
+        public System.Windows.Forms.TextBox textBoxAltura;
+        public System.Windows.Forms.ErrorProvider errorProviderPiso;
+        public System.Windows.Forms.ErrorProvider errorProviderCiudad;
+        public System.Windows.Forms.ErrorProvider errorProviderMailSinArroba;
+        public System.Windows.Forms.ErrorProvider errorProviderAltura;
+        public System.Windows.Forms.ErrorProvider errorProviderValidarCalle;
 
     }
 }

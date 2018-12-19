@@ -32,6 +32,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         public virtual void btnCargar_Click(object sender, EventArgs e)
         {
+            
 
             if (validarCamposVacios())
             {
@@ -45,8 +46,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 try
                 {
 
-
-                    string direccion = textBoxDireccion.Text + "," + textBoxNumeroPiso.Text + "," +  textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
+                    string direccion = textBoxDireccion.Text + "," + textBoxAltura.Text + "," + textBoxNumeroPiso.Text + "," +  textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
                     string cuit = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
 
                     string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
@@ -54,6 +54,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     Database.ejecutarProc(insert);
 
                     MessageBox.Show("Empresa agregada correctamente");
+
+                    limpiar();
                   
                 }
                 catch (Exception ex)
@@ -107,6 +109,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
            
 
+
             //Validacion de longitudes
             #region longitudes cuit
             if (textBoxCuitLargo.Text.Length != 8)
@@ -137,11 +140,11 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
 
 
-            //Direccion
+            #region direccion
             if (string.IsNullOrWhiteSpace(textBoxDireccion.Text))
             {
                 vacios = true;
-                errorProviderDireccion.SetError(textBoxDireccion, "Ingrese una direccion");
+                errorProviderDireccion.SetError(textBoxDireccion, "Ingrese una calle");
             }
             if (string.IsNullOrWhiteSpace(textBoxLocalidad.Text))
             {
@@ -170,20 +173,29 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
                 errorProviderPiso.SetError(textBoxNumeroPiso, "ingrese un numero de piso");
             }
-
+            if (string.IsNullOrWhiteSpace(textBoxAltura.Text))
+            {
+                vacios = true;
+                errorProviderTelefono.SetError(textBoxAltura, "Ingrese una altura");
+            }
+            #endregion
 
             if (string.IsNullOrWhiteSpace(textBoxTelefono.Text))
             {
                 vacios = true;
                 errorProviderTelefono.SetError(textBoxTelefono, "Ingrese un telefono");
             }
+
+           
+
+
             if (!validoArroba())
             {
                 vacios = true;
-                errorProviderMailSinArroba.SetError(textBoxMail, "Ingrese un con un solo @");
+                errorProviderMailSinArroba.SetError(textBoxMail, "Ingrese un unico @");
             }
 
-            //Validaciones CUIT
+            
            
 
            
@@ -278,6 +290,12 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 errorProviderMailSinArroba.SetError(textBoxMail, "");
             }
 
+            if (!(string.IsNullOrWhiteSpace(textBoxAltura.Text)))
+            {
+
+                errorProviderTelefono.SetError(textBoxAltura, "");
+            }
+
         }
 
         public void eliminarErrorProvider() 
@@ -300,12 +318,14 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             errorProviderCiudad.SetError(textBoxCiudad, "");
             errorProviderPiso.SetError(textBoxNumeroPiso, "");
             errorProviderMailSinArroba.SetError(textBoxMail, "");
+            errorProviderTelefono.SetError(textBoxAltura, "");
 
         }
         #endregion
 
         #region controlSobreVacios
-        public virtual void btnLimpiar_Click(object sender, EventArgs e)
+
+        public virtual void limpiar() 
         {
             foreach (Control c in this.Controls)
             {
@@ -318,6 +338,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 }
 
             }
+        }
+        public virtual void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
         }
 
         public Boolean CamposVacio()
@@ -394,6 +418,34 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
         }
 
+        private void soloTexto(object sender, KeyPressEventArgs e)
+        {
+            char caracter = e.KeyChar;
+
+            if (Char.IsDigit(caracter))
+            {
+                e.Handled = true;
+            }
+        }
+        private void textBoxDireccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloTexto(sender, e);
+        }
+
+        private void textBoxAltura_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            validarIngresoSoloNumerico(sender, e);
+        }
+
+        private void textBoxCiudad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloTexto(sender, e);
+        }
+
+        private void textBoxLocalidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloTexto(sender, e);
+        }
 
         #endregion
 
@@ -418,6 +470,25 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             cantArrobas = 0;
             return false;
         }
+
+        
+
+        private void textBoxNumeroPiso_Leave(object sender, EventArgs e)
+        {
+            if (textBoxNumeroPiso.Text == "0")
+            {
+                textBoxNumeroPiso.Text = "PB";
+            }
+        }
+
+    
+
+     
+      
+
+    
+
+       
      
 
       

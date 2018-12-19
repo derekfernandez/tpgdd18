@@ -32,7 +32,7 @@ namespace PalcoNet.Abm_Grado
            textBoxComision.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["comision"].ToString();
       
            string habilitado = Database.ObtenerDataSet(query).Tables[0].Rows[0]["habilitado"].ToString();
-           
+
            if (habilitado == "True")
            {
                comboBox1.SelectedIndex = 0;
@@ -240,6 +240,8 @@ namespace PalcoNet.Abm_Grado
         {
             validarIngreso(sender, e);
         }
+
+  
 
 
     }
