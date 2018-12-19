@@ -145,7 +145,6 @@ namespace PalcoNet.Comprar
         {
 
             tablaPaginaActual = Database.getTable(cmd);
-            dgvPublicaciones.DataSource = tablaPaginaActual;
 
             //Lleno el DGV y formateo sus columnas/filas
             dgvPublicaciones.DataSource = tablaPaginaActual;
