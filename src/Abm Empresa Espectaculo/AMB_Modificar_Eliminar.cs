@@ -27,7 +27,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void bntAltaEmpresa_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("La operación fue exitosa", "", MessageBoxButtons.OK);
+            //MessageBox.Show("La operación fue exitosa", "", MessageBoxButtons.OK);
             this.Close();
         }
 
@@ -142,11 +142,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             vaciar();
         }
 
-        private void AMB_Modificar_Eliminar_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
+        
         public Boolean yaEliminado(string validacion) 
         {
 
@@ -222,8 +218,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     }
                     else
                     {
-                            MessageBox.Show(identidad);
-                            this.Hide();
+                                                     
                             ModificacionEmpresas modEmp = new ModificacionEmpresas(identidad);
                             modEmp.Show();
                         
@@ -235,10 +230,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         
 
-        private void AMB_Modificar_Eliminar_Load(object sender, EventArgs e)
-        {
-
-        }
+       
 
         public void vaciar() 
         {
