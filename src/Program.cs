@@ -18,7 +18,12 @@ namespace PalcoNet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new Login.Login());       
+            Usuario uss = new Usuario("unUS");
+            Rol unROL = new Rol("nomROL");
+
+            Session unaS = new Session(uss, unROL);
+
+            Application.Run(new Abm_Grado.Grado(unaS));       
         }
 
     }

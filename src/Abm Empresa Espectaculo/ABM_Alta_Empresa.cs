@@ -16,6 +16,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class ABM_Alta_Empresa : Form
     {
+        int cantArrobas = 0;
 
         #region constructor
 
@@ -32,8 +33,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public virtual void btnCargar_Click(object sender, EventArgs e)
         {
 
-
-
             if (validarCamposVacios())
             {
                 MessageBox.Show("Complete los campos correspondientes");
@@ -45,7 +44,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 eliminarErrorProvider();
                 try
                 {
-                    string direccion = textBoxDireccion.Text + " | " + textBoxDepartamento.Text + " | " + textBoxLocalidad.Text + " | " + textBoxCodigoPostal.Text;
+
+
+                    string direccion = textBoxDireccion.Text + "," + textBoxNumeroPiso.Text + "," +  textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
                     string cuit = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
 
                     string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
@@ -53,8 +54,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     Database.ejecutarProc(insert);
 
                     MessageBox.Show("Empresa agregada correctamente");
-
-                    mostrarUsuarioAsignado();
+                  
                 }
                 catch (Exception ex)
                 {
@@ -85,14 +85,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         
 
-        public void mostrarUsuarioAsignado() 
-        {
-            
-            Abm_Empresa_Espectaculo.MostrarUsuarioAsignado nuevoUsuario = new MostrarUsuarioAsignado();
-
-            nuevoUsuario.Show();
-          
-        }
+     
 
 
         #endregion
@@ -166,11 +159,28 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 errorProviderCP.SetError(textBoxCodigoPostal, "Ingrese un codigo postal");
             }
 
+            if (string.IsNullOrWhiteSpace(textBoxCiudad.Text))
+            {
+
+                errorProviderCiudad.SetError(textBoxCiudad, "Ingrese una ciudad");
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxNumeroPiso.Text))
+            {
+
+                errorProviderPiso.SetError(textBoxNumeroPiso, "ingrese un numero de piso");
+            }
+
 
             if (string.IsNullOrWhiteSpace(textBoxTelefono.Text))
             {
                 vacios = true;
                 errorProviderTelefono.SetError(textBoxTelefono, "Ingrese un telefono");
+            }
+            if (!validoArroba())
+            {
+                vacios = true;
+                errorProviderMailSinArroba.SetError(textBoxMail, "Ingrese un con un solo @");
             }
 
             //Validaciones CUIT
@@ -183,7 +193,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         #endregion
 
         #region validarCamposNoVacios
-        public virtual void controlarCamposNoVacios()
+        public void controlarCamposNoVacios()
         {
             
 
@@ -221,7 +231,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 errorProviderMail.SetError(textBoxMail, "");
             }
 
-            //Direccion
+#region Direccion
             if (!string.IsNullOrWhiteSpace(textBoxDireccion.Text))
             {
               
@@ -242,17 +252,35 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 
                 errorProviderCP.SetError(textBoxCodigoPostal, "");
             }
+            if (!string.IsNullOrWhiteSpace(textBoxCiudad.Text))
+            {
+                
+                errorProviderCiudad.SetError(textBoxCiudad, "");
+            }
+            
+            if (!string.IsNullOrWhiteSpace(textBoxNumeroPiso.Text))
+            {
 
+                errorProviderPiso.SetError(textBoxNumeroPiso, "");
+            }
+#endregion
 
+            //Telefono
             if (!string.IsNullOrWhiteSpace(textBoxTelefono.Text))
             {
                 
                 errorProviderTelefono.SetError(textBoxTelefono, "");
             }
 
+            if (validoArroba())
+            {
+              
+                errorProviderMailSinArroba.SetError(textBoxMail, "");
+            }
+
         }
 
-        public virtual void eliminarErrorProvider() 
+        public void eliminarErrorProvider() 
         {
             errorProviderRazonSocial.SetError(textBoxRazonSocial, "");
             errorProviderMail.SetError(textBoxMail, "");
@@ -269,6 +297,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             errorProviderLocalidad.SetError(textBoxLocalidad, "");
             errorProviderDepartamento.SetError(textBoxDepartamento, "");
             errorProviderCP.SetError(textBoxCodigoPostal, "");
+            errorProviderCiudad.SetError(textBoxCiudad, "");
+            errorProviderPiso.SetError(textBoxNumeroPiso, "");
+            errorProviderMailSinArroba.SetError(textBoxMail, "");
 
         }
         #endregion
@@ -348,7 +379,46 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             validarIngresoSoloNumerico(sender, e);
         }
 
+        private void textBoxNumeroPiso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            validarIngresoSoloNumerico(sender, e);
+        }
+
+        private void textBoxTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char caracter = e.KeyChar;
+
+            if (!Char.IsDigit(caracter) && caracter != 8 && caracter != '+')
+            {
+                e.Handled = true;
+            }
+        }
+
+
         #endregion
+
+
+
+        //Validacion mail
+        public bool validoArroba()
+        {
+            
+            foreach (char c in textBoxMail.Text)
+            {
+                if(c == '@')
+                {
+                    cantArrobas++;
+                }
+            }
+            if (cantArrobas == 1)
+            {
+                cantArrobas = 0;
+                return true;
+            }
+            cantArrobas = 0;
+            return false;
+        }
+     
 
       
 

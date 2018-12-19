@@ -1795,7 +1795,7 @@ BEGIN
 	DROP PROCEDURE [pr_altaUsuario_empresa]
 END
 GO
-CREATE PROCEDURE [dbo].[pr_altaUsuario_empresa] (@empresaID INT, @empresaRazonSocial nvarchar(255))
+CREATE PROCEDURE [dbo].[pr_altaUsuario_empresa] (@empresaID INT, @empresaRazonSocial nvarchar(255),@cuit nvarchar(255))
 AS
 BEGIN
 BEGIN TRY
@@ -1804,7 +1804,7 @@ BEGIN TRY
 	SET @identity = (select count(*) from SQLITO.Usuarios)
 	--Asigno US and PW
 BEGIN TRANSACTION
-	SELECT @username = @empresaRazonSocial + LOWER(SUBSTRING(@empresaRazonSocial,1,5)) + LOWER(SUBSTRING(@empresaRazonSocial,7,6)) + SUBSTRING(@empresaRazonSocial,17,2),@password = HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)) 
+	SELECT @username = @empresaRazonSocial,@password = HASHBYTES('SHA2_256',@cuit) 
 	
 	INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada) VALUES (@username, @password, 0)
 	INSERT INTO SQLITO.Roles_Usuarios (rol_id, usuario_id)VALUES (1,SCOPE_IDENTITY()) 
@@ -1857,7 +1857,7 @@ SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
 
 begin try
 begin transaction
-EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial
+EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial, @cuit
 insert into [GD2C2018].[SQLITO].[Empresas](razonsocial,fecha_creacion,cuit,mail,direccion,telefono,usuario_id) values (@razonsocial,@fecha_creacion,@cuit,@mail,@direccion,@telefono,@usuario_id)
 commit transaction
 
