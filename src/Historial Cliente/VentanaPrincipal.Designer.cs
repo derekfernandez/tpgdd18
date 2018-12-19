@@ -66,11 +66,11 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(356, 358);
+            this.btnVolver.Location = new System.Drawing.Point(388, 355);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(245, 23);
+            this.btnVolver.Size = new System.Drawing.Size(145, 23);
             this.btnVolver.TabIndex = 2;
-            this.btnVolver.Text = "Volver al Menú Principal";
+            this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 

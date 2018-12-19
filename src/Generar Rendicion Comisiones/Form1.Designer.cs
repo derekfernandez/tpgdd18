@@ -89,7 +89,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(113, 418);
+            this.numericUpDown1.Location = new System.Drawing.Point(119, 435);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 6;
@@ -118,7 +118,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(93, 470);
+            this.label4.Location = new System.Drawing.Point(86, 484);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(195, 15);
             this.label4.TabIndex = 10;

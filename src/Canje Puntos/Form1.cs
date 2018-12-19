@@ -89,27 +89,36 @@ namespace PalcoNet.Canje_Puntos
         {
             if (string.IsNullOrEmpty(label6.Text))
             {
-                MessageBox.Show("Lo sentimos, no dispones de puntos para canjear en este momento", "", MessageBoxButtons.OK);
+                MessageBox.Show("Lo sentimos, no dispones de puntos para canjear en este momento", "", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
 
             else if (Int32.Parse(label5.Text) > Int32.Parse(label6.Text))
             {
-                MessageBox.Show("No tiene los suficientes puntos para ese premio, intente con otro!", "Premio", MessageBoxButtons.OK);
+                MessageBox.Show("No tiene los suficientes puntos para ese premio, intente con otro!", "Premio", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                SqlCommand query = Database.createQuery("Insert Into SQLITO.Puntos (cantidad,cliente_id,fecha_vencimiento) Values(" + Int32.Parse(label5.Text) * (-1) + ",@cliente, NULL)");
-                SqlCommand query3 = Database.createQuery("SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion = @nombreDescripcion");
-                query3.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
-                string nombrePremio = Database.getValue(query3);
-                SqlCommand query2 = Database.createQuery("UPDATE SQLITO.Premios SET cantidad_stock = (SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion=@nombreDescripcion) - 1 WHERE descripcion=@nombreDescripcion");
-                query2.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
-                query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
-                Database.execNonQuery(query);
-                Database.execNonQuery(query2);
-                sumarPuntos();
-                MessageBox.Show("Se canjeo el premio correctamente!", "Premio", MessageBoxButtons.OK);
-                llenarPremios(comboBox1);
+                DialogResult result = MessageBox.Show("Está seguro que desea canjear este premio?", "Premio", MessageBoxButtons.OKCancel,MessageBoxIcon.Question);
+                if(result == DialogResult.OK)
+                {
+                    SqlCommand query = Database.createQuery("Insert Into SQLITO.Puntos (cantidad,cliente_id,fecha_vencimiento) Values(" + Int32.Parse(label5.Text) * (-1) + ",@cliente, NULL)");
+                    SqlCommand query3 = Database.createQuery("SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion = @nombreDescripcion");
+                    query3.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
+                    string nombrePremio = Database.getValue(query3);
+                    SqlCommand query2 = Database.createQuery("UPDATE SQLITO.Premios SET cantidad_stock = (SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion=@nombreDescripcion) - 1 WHERE descripcion=@nombreDescripcion");
+                    query2.Parameters.AddWithValue("@nombreDescripcion", comboBox1.Text);
+                    query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
+                    Database.execNonQuery(query);
+                    Database.execNonQuery(query2);
+                    sumarPuntos();
+                    MessageBox.Show("Se canjeo el premio correctamente!", "Premio", MessageBoxButtons.OK);
+                    llenarPremios(comboBox1);
+                }
+                else
+                {
+
+                }
+
             }
 
         }
