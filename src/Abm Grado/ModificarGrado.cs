@@ -58,9 +58,8 @@ namespace PalcoNet.Abm_Grado
                 {
                     Database.ejecutarNonQueryShort(update);
                     MessageBox.Show("Grado modificado correctamente");
-                    this.Hide();
-                    Abm_Grado.Grado nuevoGrado = new Grado();
-                    nuevoGrado.Show();
+
+                    this.Close();
                 }
                 catch (Exception exp)
                 {
@@ -78,10 +77,7 @@ namespace PalcoNet.Abm_Grado
             return "0";
         }
 
-        private void ModificarGrado_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
+     
 
         public void transformarComision() 
         {
@@ -106,9 +102,7 @@ namespace PalcoNet.Abm_Grado
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Abm_Grado.Grado nuevoGrado = new Grado();
-            nuevoGrado.Show();
+            this.Close();
         }
 
 

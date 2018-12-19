@@ -20,14 +20,10 @@ namespace PalcoNet.Abm_Grado
         {
             InitializeComponent();
             
-            cargarTextBox();
+            
         }
 
-        public void cargarTextBox() 
-        {
-
-        }
-
+      
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             
@@ -49,11 +45,8 @@ namespace PalcoNet.Abm_Grado
                             Database.ejecutarNonQueryShort(ingresar);
                             MessageBox.Show("Grado ingresado correctamente");
 
-                            this.Hide();
-                            Grado nuevoGrado = new Grado();
-                            nuevoGrado.Show();
-
-                        
+                            this.Close();
+    
                     }
                     catch (Exception exp)
                     {
@@ -207,9 +200,7 @@ namespace PalcoNet.Abm_Grado
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Grado nuevoGrado = new Grado();
-            nuevoGrado.Show();
+            this.Close();
         }
         
     }
