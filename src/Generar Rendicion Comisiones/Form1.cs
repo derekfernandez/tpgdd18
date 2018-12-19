@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using PalcoNet.Misc;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Globalization;
 
 namespace PalcoNet.Generar_Rendicion_Comisiones
 {
@@ -22,6 +23,9 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             InitializeComponent();
             label4.Visible = false;
             fechaConfig = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"]);
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -30,6 +34,20 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
         }
 
         private void comisiones_Load(object sender, EventArgs e)
+        {
+
+            cargarRendicion();
+            
+            if(dataGridView1.Rows.Count == 0)
+            {
+                numericUpDown1.Enabled = false;
+                button2.Enabled = false;
+                label4.Visible = true;
+            }
+            
+
+        }
+        public void cargarRendicion()
         {
             SqlCommand query = Database.createQuery(@"SELECT id_empresa AS ID, razonsocial as Razon_Social, COUNT(*) as Cantidad
                                                       FROM SQLITO.Empresas as E
@@ -40,35 +58,37 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                                                       GROUP BY id_empresa, razonsocial");
 
             DataTable table = Database.getTable(query);
-            this.dataGridView1.DataSource = table; 
-           
-            
-            if(table.Rows.Count == 0)
-            {
-                numericUpDown1.Enabled = false;
-                button2.Enabled = false;
-                label4.Visible = true;
-            }
-            
-
+            this.dataGridView1.DataSource = table;
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            string empresa = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            if (Int32.Parse(dataGridView1.CurrentRow.Cells[2].Value.ToString()) > numericUpDown1.Value)
+             string empresa = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            if (Int32.Parse(dataGridView1.CurrentRow.Cells[2].Value.ToString()) < numericUpDown1.Value)
             {
-                MessageBox.Show("El numero de facturas a rendir es mayor que el real. Ingrese un valor valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El número de facturas a rendir es mayor que el real. Ingrese un valor válido!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if(numericUpDown1.Value == 0)
+            {
+                MessageBox.Show("Ingrese un número de facturas a rendir mayor que 0", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
+                //se busca el ultimo numero de factura 
                 SqlCommand query2 = Database.createQuery(@"SELECT TOP 1 numero_factura FROM SQLITO.Facturas ORDER BY numero_factura DESC");
                 string lastNumberOfFactura = Database.getValue(query2);
                 int lastNumberFactura = Int32.Parse(lastNumberOfFactura) + 1;
-                string numeroFacturaQuery3 = lastNumberFactura.ToString();
-
+                string numeroFacturaNuevo = lastNumberFactura.ToString();
+                ////*************************************************************************//////////////////////////////////////
+                //se crea la factura con valores aleatorios
+                SqlCommand cmd = Database.createQuery(@"INSERT INTO SQLITO.Facturas (numero_factura,fecha_emision,total,empresa_id,medio_pago)
+                                                           VALUES (@numeroFactura,@fecha,0,@idEmpresaElegida,'Efectivo')");
+                cmd.Parameters.AddWithValue("@fecha", fechaConfig);
+                cmd.Parameters.AddWithValue("@numeroFactura", numeroFacturaNuevo);
+                cmd.Parameters.AddWithValue("@idEmpresaElegida", empresa);
+                Database.execQuery(cmd);
+                //Se insertan todos los items factura pertenecientes a la factura en cuestion
                 SqlCommand query3 = Database.createQuery(@"INSERT INTO SQLITO.ItemsFactura (factura_id, compra_id, comision)
-                                                            SELECT TOP (@tope) @IdFactura, id_compra,((C.valor_entrada * P.publ_comision) / 100)
+                                                            SELECT TOP (@tope) @numeroFactura, id_compra,((C.valor_entrada * P.publ_comision) / 100)
                                                             FROM SQLITO.Compras AS C
                                                              JOIN SQLITO.Ubicaciones AS U ON C.Ubicacion_id = U.id_ubicacion
                                                              JOIN SQLITO.Publicaciones AS P ON U.publicacion_id = P.cod_publicacion
@@ -76,18 +96,22 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
                                                                                                                             FROM SQLITO.ItemsFactura AS I)
                                                             ORDER BY C.fecha_realizacion");
                 query3.Parameters.AddWithValue("@tope",Int32.Parse(numericUpDown1.Value.ToString()));
-                query3.Parameters.AddWithValue("@IdFactura", numeroFacturaQuery3);
+                query3.Parameters.AddWithValue("@numeroFactura", numeroFacturaNuevo);
                 query3.Parameters.AddWithValue("@idEmpresaElegida", empresa);
                 Database.execQuery(query3);
-                SqlCommand query4 = Database.createQuery("SELECT SUM(comision) FROM SQLITO.ItemsFactura WHERE factura_id = @IdFactura");
-                query4.Parameters.AddWithValue("@IdFactura", lastNumberFactura);
+                //Se suman las comisiones de esa factura 
+                SqlCommand query4 = Database.createQuery("SELECT SUM(comision) FROM SQLITO.ItemsFactura WHERE factura_id =@numeroFactura");
+                query4.Parameters.AddWithValue("@numeroFactura", numeroFacturaNuevo);
                 string comision = Database.getValue(query4);
-                SqlCommand query5 = Database.createQuery(@"INSERT INTO SQLITO.Facturas (fecha_emision,total,empresa_id,medio_pago)
-                                                           VALUES (@fecha,@totalFactura,@idEmpresaElegida,'Efectivo')");
-                query5.Parameters.AddWithValue("@fecha", fechaConfig);
-                query5.Parameters.AddWithValue("@totalFactura",comision);
-                query5.Parameters.AddWithValue("@idEmpresaElegida", empresa);
+                //Se updatean los campos para que la factura quede correctamente cargada
+                SqlCommand query5 = Database.createQuery(@"Update SQLITO.Facturas set total = @comisionItemsFactura
+                                                          WHERE numero_factura = @numeroFactura");
+                query5.Parameters.AddWithValue("@comisionItemsFactura", float.Parse(comision, CultureInfo.InvariantCulture.NumberFormat));
+                query5.Parameters.AddWithValue("@numeroFactura", numeroFacturaNuevo);
                 Database.execQuery(query5);
+                cargarRendicion();
+                numericUpDown1.Value = 0;
+                MessageBox.Show("Se efectuó la rendición correctamente!");
 
             }
         }
