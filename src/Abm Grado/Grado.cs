@@ -17,9 +17,12 @@ namespace PalcoNet.Abm_Grado
 
         string id = "-1";
         int selector = -1;
-        public Grado()
+
+        public Session session { get; set; }
+        public Grado(Session session)
         {
             //Pepe despues me tiene que pasar por parametro el cod de la publicacion
+            this.session = session;
             InitializeComponent();
             grillaGrados.AllowUserToAddRows = false;
             grillaGrados.AllowUserToDeleteRows = false;

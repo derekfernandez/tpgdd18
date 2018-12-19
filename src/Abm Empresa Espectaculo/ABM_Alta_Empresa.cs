@@ -32,35 +32,35 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public virtual void btnCargar_Click(object sender, EventArgs e)
         {
 
-            mostrarUsuarioAsignado();
-            this.Close();
-            //if (validarCamposVacios())
-            //{
-            //    MessageBox.Show("Complete los campos correspondientes");
-            //    controlarCamposNoVacios();
-            //}
-            //else
-            //{
 
-            //    eliminarErrorProvider();
-            //    try
-            //    {
-            //        string direccion = textBoxDireccion.Text + " | " + textBoxDepartamento.Text + " | " + textBoxLocalidad.Text + " | " + textBoxCodigoPostal.Text;
-            //        string cuit = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
 
-            //        string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
+            if (validarCamposVacios())
+            {
+                MessageBox.Show("Complete los campos correspondientes");
+                controlarCamposNoVacios();
+            }
+            else
+            {
 
-            //        Database.ejecutarProc(insert);
+                eliminarErrorProvider();
+                try
+                {
+                    string direccion = textBoxDireccion.Text + " | " + textBoxDepartamento.Text + " | " + textBoxLocalidad.Text + " | " + textBoxCodigoPostal.Text;
+                    string cuit = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
 
-            //        MessageBox.Show("Empresa agregada correctamente");
+                    string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
 
-            //        mostrarUsuarioAsignado();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Error al insertar la empresa: " + ex.Message);
-            //    }
-            //}
+                    Database.ejecutarProc(insert);
+
+                    MessageBox.Show("Empresa agregada correctamente");
+
+                    mostrarUsuarioAsignado();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al insertar la empresa: " + ex.Message);
+                }
+            }
             
         }
         #endregion
