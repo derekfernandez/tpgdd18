@@ -246,9 +246,17 @@ namespace PalcoNet.Comprar
             //Si no tiene una tarjeta asociada, abro el ABM de Registrar Tarjeta
             if (string.IsNullOrWhiteSpace(idTarjeta))
             {
+                
                 MessageBox.Show("Estimado cliente, no posee tarjetas asociadas a su cuenta. Para proceder, por favor registre una");
                 RegistrarTarjeta rt = new RegistrarTarjeta(idCliente);
                 rt.ShowDialog();
+
+                //Me fijo que haya registrado una tarjeta (que no haya cerrado con la cruz); si no, le pido de nuevo que ingrese
+                if (rt.targetaRegistrada == false)
+                {
+                    return;
+                }
+
                 idTarjeta = rt.idTarjeta;
             }
 
