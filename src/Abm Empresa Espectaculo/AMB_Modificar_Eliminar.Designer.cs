@@ -213,8 +213,8 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AMB_Modificar_Eliminar";
             this.Text = "Editar_ModificarABM";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AMB_Modificar_Eliminar_FormClosed);
-            this.Load += new System.EventHandler(this.AMB_Modificar_Eliminar_Load);
+
+          
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

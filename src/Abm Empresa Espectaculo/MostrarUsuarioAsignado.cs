@@ -40,11 +40,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         }
 
-        private void MostrarUsuarioAsignado_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.Close();
-        }
-
        
     }
 }

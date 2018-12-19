@@ -97,6 +97,7 @@
             // btnCargar
             // 
             this.btnCargar.Location = new System.Drawing.Point(1016, 515);
+          
             // 
             // btnLimpiar
             // 

@@ -33,6 +33,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
 
             mostrarUsuarioAsignado();
+            this.Close();
             //if (validarCamposVacios())
             //{
             //    MessageBox.Show("Complete los campos correspondientes");
@@ -40,13 +41,13 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             //}
             //else
             //{
-                
+
             //    eliminarErrorProvider();
             //    try
             //    {
             //        string direccion = textBoxDireccion.Text + " | " + textBoxDepartamento.Text + " | " + textBoxLocalidad.Text + " | " + textBoxCodigoPostal.Text;
             //        string cuit = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
-                    
+
             //        string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
 
             //        Database.ejecutarProc(insert);
@@ -72,6 +73,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             try
             {
                 //Aca se va a llamar al Form anterior donde estan las opciones del admin
+
                 this.Close();
             }
             catch (Exception exp)
@@ -89,15 +91,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             Abm_Empresa_Espectaculo.MostrarUsuarioAsignado nuevoUsuario = new MostrarUsuarioAsignado();
 
             nuevoUsuario.Show();
-            
+          
         }
 
-        
-
-        private void ABM_Alta_Empresa_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.Close();
-        }
 
         #endregion
 

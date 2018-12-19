@@ -106,7 +106,6 @@
             this.Controls.Add(this.btnAceptar);
             this.Name = "MostrarUsuarioAsignado";
             this.Text = "Usuario asignado";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MostrarUsuarioAsignado_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

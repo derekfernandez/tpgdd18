@@ -155,7 +155,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ModificarGrado";
             this.Text = "ModificarGrado";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModificarGrado_FormClosed);
+
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderComision)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderDescripcion)).EndInit();
             this.ResumeLayout(false);
