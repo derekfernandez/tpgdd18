@@ -2007,9 +2007,9 @@ THROW
 end catch
 
 END
+GO
 
 /*Si llegase a romper el identity usar:
-GO
 DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
 GO
 */ 
