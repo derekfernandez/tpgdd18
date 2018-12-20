@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace PalcoNet.Listado_Estadistico
     {
 
         private ErrorProvider errorProvider;
+        private DateTime fechaConfig;
         
         public VentanaSeleccion()
         {
@@ -23,6 +25,7 @@ namespace PalcoNet.Listado_Estadistico
             dtpAño.Format = DateTimePickerFormat.Custom;
             dtpAño.CustomFormat = "yyyy";
             dtpAño.ShowUpDown = true;
+            fechaConfig = Convert.ToDateTime(ConfigurationManager.AppSettings["FechaSistema"]);
         }
 
         private void btnPeoresEmpresas_Click(object sender, EventArgs e)
@@ -38,6 +41,12 @@ namespace PalcoNet.Listado_Estadistico
             else if (comboTrim.SelectedIndex < 0)
             {
                 errorProvider.SetError(comboTrim, "Debe elegir un trimestre");
+                return;
+            }
+            //Si la fecha de hoy (archivo config) es menor a la del ultimo dia del trimestre elegido, tiro un error
+            else if (fechaConfig < new DateTime(dtpAño.Value.Year, (comboTrim.SelectedIndex * 3) + 1, 1).AddMonths(3).AddDays(-1))
+            {
+                errorProvider.SetError(dtpAño, "No puede ingresar un trimestre y año posteriores a la fecha de hoy");
                 return;
             }
 
@@ -62,6 +71,12 @@ namespace PalcoNet.Listado_Estadistico
                 errorProvider.SetError(comboTrim, "Debe elegir un trimestre");
                 return;
             }
+            //Si la fecha de hoy (archivo config) es menor a la del ultimo dia del trimestre elegido, tiro un error
+            else if (fechaConfig < new DateTime(dtpAño.Value.Year, (comboTrim.SelectedIndex * 3) + 1, 1).AddMonths(3).AddDays(-1))
+            {
+                errorProvider.SetError(dtpAño, "No puede ingresar un trimestre y año posteriores a la fecha de hoy");
+                return;
+            }
 
             ListadoClientesPuntos lcp = new ListadoClientesPuntos(dtpAño.Value.Year, comboTrim.SelectedIndex);
             lcp.ShowDialog();
@@ -79,6 +94,12 @@ namespace PalcoNet.Listado_Estadistico
             else if (comboTrim.SelectedIndex < 0)
             {
                 errorProvider.SetError(comboTrim, "Debe elegir un trimestre");
+                return;
+            }
+            //Si la fecha de hoy (archivo config) es menor a la del ultimo dia del trimestre elegido, tiro un error
+            else if (fechaConfig < new DateTime(dtpAño.Value.Year, (comboTrim.SelectedIndex * 3) + 1, 1).AddMonths(3).AddDays(-1))
+            {
+                errorProvider.SetError(dtpAño, "No puede ingresar un trimestre y año posteriores a la fecha de hoy");
                 return;
             }
 
