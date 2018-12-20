@@ -63,6 +63,12 @@ namespace PalcoNet.Listado_Estadistico
             dgvEmpresas.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvEmpresas.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgvEmpresas.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

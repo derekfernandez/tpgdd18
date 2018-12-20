@@ -57,6 +57,12 @@ namespace PalcoNet.Listado_Estadistico
 
             dgvClientes.AllowUserToAddRows = false;
 
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgvClientes.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         #endregion Inicializacion

@@ -873,7 +873,7 @@ namespace PalcoNet.Registro_de_Usuario
                     cmd.Parameters.AddWithValue("@tel", textBox_telempresa.Text);
                     cmd.Parameters.AddWithValue("@userid", iduser);
                     cmd.Parameters.AddWithValue("@dir", (textBox_calleempresa.Text + "," + textBox_nroempresa.Text + "," + textBox_pisoempresa.Text
-                        + "º" + textBox_deptoempresa.Text + "," + textBox_localidadempresa.Text + ", CP: " + textBox_cpempresa.Text));
+                        + "º" + textBox_deptoempresa.Text + "," + textBox_localidadempresa.Text + ", CP: " + textBox_cpempresa.Text + "," + textBox_ciudadempresa.Text));
                     Database.execNonQuery(cmd);
 
                     MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);

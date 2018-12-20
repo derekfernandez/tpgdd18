@@ -125,6 +125,12 @@ namespace PalcoNet.Historial_Cliente
             dgvHistorial.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvHistorial.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgvHistorial.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         private void ObtenerPaginaActualHistorial()

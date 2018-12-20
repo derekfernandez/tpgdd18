@@ -130,6 +130,7 @@ namespace PalcoNet.Generar_Publicacion
         //Para cargar de nuevo la DGV y con el formato necesario
         private void actualizarDatosDGV()
         {
+            
             fechasBinding = new BindingList<DateTime>(fechasFuncion);
             fechasSource = new BindingSource(fechasBinding, null);
             dgvFechasElegidas.DataSource = fechasSource;
@@ -144,6 +145,13 @@ namespace PalcoNet.Generar_Publicacion
             dgvFechasElegidas.Columns[4].DefaultCellStyle.Format = "00";
             dgvFechasElegidas.Columns[7].DefaultCellStyle.Format = "00";
             ocultarColumnasNoUtilizadas(dgvFechasElegidas);
+
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgvFechasElegidas.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         //En base a los pares guardados en paresTT, busco el correspondiente al tipo pasado por parametro, y devuelvo su tarifa

@@ -50,6 +50,12 @@ namespace PalcoNet.Listado_Estadistico
             dgvPuntos.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvPuntos.AllowUserToAddRows = false;
 
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgvPuntos.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

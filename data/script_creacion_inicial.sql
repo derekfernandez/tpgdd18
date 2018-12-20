@@ -1396,8 +1396,9 @@ BEGIN
 	DECLARE @username NVARCHAR(255), @password VARBINARY(255), @empresaID INT
 
 	DECLARE addus3r_cursor CURSOR FOR SELECT id_empresa,
-	LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
-	HASHBYTES('SHA2_256', REPLACE(cuit, '-', '')) FROM SQLITO.Empresas
+											 CONVERT(VARCHAR(12), CONCAT(LEFT(cuit,2),SUBSTRING(cuit,4,8),RIGHT(cuit,2))),
+											 HASHBYTES('SHA2_256', CONVERT(VARCHAR(12), CONCAT(LEFT(cuit,2),SUBSTRING(cuit,4,8),RIGHT(cuit,2))))
+									  FROM SQLITO.Empresas
 	
 	OPEN addus3r_cursor
 	FETCH NEXT FROM addus3r_cursor INTO @empresaID, @username, @password

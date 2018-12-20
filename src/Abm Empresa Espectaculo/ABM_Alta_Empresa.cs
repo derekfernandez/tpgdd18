@@ -209,7 +209,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             if (!validarMail())
             {
                 vacios = true;
-                errorProviderMailSinArroba.SetError(textBoxMail, "Ingrese un unico @");
+                errorProviderMailSinArroba.SetError(textBoxMail, "Formato de mail incorrecto");
             }
 
             

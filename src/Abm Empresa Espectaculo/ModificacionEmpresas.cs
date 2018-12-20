@@ -83,6 +83,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
        
             textBoxRazonSocial.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["razonsocial"].ToString();
             textBoxMail.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["mail"].ToString();
+            textBoxMail.Text = textBoxMail.Text.Replace(" ", "");
+            textBoxMail.Text = textBoxMail.Text.Replace(":", "");
             textBoxTelefono.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["telefono"].ToString();
             textBoxRazonSocial.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["razonsocial"].ToString();
 

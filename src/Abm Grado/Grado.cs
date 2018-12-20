@@ -49,6 +49,12 @@ namespace PalcoNet.Abm_Grado
                 grillaGrados.Columns[2].HeaderText = "Comision";
                 grillaGrados.Columns[3].HeaderText = "Habilitado";
 
+                //No permito que el usuario ordene manualmente
+                foreach (DataGridViewColumn col in grillaGrados.Columns)
+                {
+                    col.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
                 //De entrada, ambos botones estan desactivados, y hago que no haya fila seleccionada
                 grillaGrados.ClearSelection();
                 btnHabilitar.Enabled = false;
@@ -95,7 +101,7 @@ namespace PalcoNet.Abm_Grado
                 }
                 else
                 {
-                    ModificarGrado modgrado = new ModificarGrado(id);
+                    ModificarGrado modgrado = new ModificarGrado(grillaGrados.CurrentRow.Cells[0].Value.ToString());
                     modgrado.ShowDialog();
                     cargarGrilla();
                 }
@@ -152,8 +158,8 @@ namespace PalcoNet.Abm_Grado
 
         private void grillaGrados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-            id = Convert.ToString(grillaGrados.SelectedCells[0].RowIndex + 1);
+
+            id = grillaGrados.CurrentRow.Cells[0].Value.ToString();
 
             //Si el grado sobre el que me pare esta habilitado, solo enciendo el boton de Deshabilitar
             if (grillaGrados.CurrentRow.Cells[3].Value.ToString() == "True")

@@ -158,6 +158,12 @@ namespace PalcoNet.Comprar
             dgvPublicaciones.Columns[3].HeaderText = "Rubro";
             dgvPublicaciones.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgvPublicaciones.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         private void CalcularTotalDePaginas(SqlCommand cmdBase)
@@ -448,10 +454,18 @@ namespace PalcoNet.Comprar
             fechaInicial = dtpInicial.Value.Date;
             fechaFinal = dtpFinal.Value.Date;
             obtenerPublicaciones();
-
+            
             //Ahora que ya obtuve las publicaciones y calcule las paginas, pongo el label como se debe
-            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
             lbPagina.Visible = true;
+            if (totalPaginas == 0)
+            {
+                lbPagina.Text = "Pagina 0 de 0";
+                lbPagina.Visible = true;
+            }
+            else
+            {
+                lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            }
 
             #endregion PrimeraPaginaDeNuevo
 

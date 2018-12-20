@@ -71,6 +71,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -82,6 +83,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -93,6 +95,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -104,6 +107,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -115,6 +119,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -126,6 +131,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -137,6 +143,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -148,6 +155,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -159,6 +167,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -170,6 +179,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -181,6 +191,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -192,6 +203,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -203,6 +215,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -214,6 +227,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
 
@@ -225,6 +239,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
+                FormatearColumnasDGVModificar();
                 return;
             }
         }
@@ -244,6 +259,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -256,6 +272,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -268,6 +285,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -280,6 +298,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -293,6 +312,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -305,6 +325,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -318,6 +339,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -331,6 +353,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -343,6 +366,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -356,6 +380,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -369,6 +394,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -382,6 +408,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -395,6 +422,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -408,6 +436,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
 
@@ -421,6 +450,7 @@ namespace PalcoNet.Abm_Cliente
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
+                FormatearColumnasDGVEliminar();
                 return;
             }
         }
@@ -483,5 +513,64 @@ namespace PalcoNet.Abm_Cliente
                 dgv_clientesmodificar.DataSource = null;
             }
         }
+
+        private void FormatearColumnasDGVModificar()
+        {
+
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgv_clientesmodificar.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            dgv_clientesmodificar.Columns[0].Visible = false;
+            dgv_clientesmodificar.Columns[11].Visible = false;
+            dgv_clientesmodificar.Columns[13].Visible = false;
+            dgv_clientesmodificar.Columns[14].Visible = false;
+
+            dgv_clientesmodificar.Columns[1].HeaderText = "Nombre";
+            dgv_clientesmodificar.Columns[2].HeaderText = "Apellido";
+            dgv_clientesmodificar.Columns[3].HeaderText = "CUIL";
+            dgv_clientesmodificar.Columns[4].HeaderText = "Tipo de Documento";
+            dgv_clientesmodificar.Columns[5].HeaderText = "Numero de Documento";
+            dgv_clientesmodificar.Columns[6].HeaderText = "Fecha de Nacimiento";
+            dgv_clientesmodificar.Columns[7].HeaderText = "Fecha de Creacion";
+            dgv_clientesmodificar.Columns[8].HeaderText = "Mail";
+            dgv_clientesmodificar.Columns[9].HeaderText = "Direccion";
+            dgv_clientesmodificar.Columns[10].HeaderText = "Telefono";
+            dgv_clientesmodificar.Columns[12].HeaderText = "ID Usuario";
+            dgv_clientesmodificar.Columns[14].HeaderText = "Accion";
+
+        }
+
+        private void FormatearColumnasDGVEliminar()
+        {
+
+            //No permito que el usuario ordene manualmente
+            foreach (DataGridViewColumn col in dgv_eliminar.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            dgv_eliminar.Columns[0].Visible = false;
+            dgv_eliminar.Columns[11].Visible = false;
+            dgv_eliminar.Columns[13].Visible = false;
+            dgv_eliminar.Columns[14].Visible = false;
+
+            dgv_eliminar.Columns[1].HeaderText = "Nombre";
+            dgv_eliminar.Columns[2].HeaderText = "Apellido";
+            dgv_eliminar.Columns[3].HeaderText = "CUIL";
+            dgv_eliminar.Columns[4].HeaderText = "Tipo de Documento";
+            dgv_eliminar.Columns[5].HeaderText = "Numero de Documento";
+            dgv_eliminar.Columns[6].HeaderText = "Fecha de Nacimiento";
+            dgv_eliminar.Columns[7].HeaderText = "Fecha de Creacion";
+            dgv_eliminar.Columns[8].HeaderText = "Mail";
+            dgv_eliminar.Columns[9].HeaderText = "Direccion";
+            dgv_eliminar.Columns[10].HeaderText = "Telefono";
+            dgv_eliminar.Columns[12].HeaderText = "ID Usuario";
+            dgv_eliminar.Columns[14].HeaderText = "Accion";
+
+        }
+
     }
 }
