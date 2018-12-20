@@ -49,7 +49,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                     string direccion = textBoxDireccion.Text + "," + textBoxAltura.Text + "," + textBoxNumeroPiso.Text + "," +  textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
                     string cuit = textBoxCUITPrefijo.Text + "-" + textBoxCuitLargo.Text + "-" + textBoxCUITSufijo.Text;
 
-                    string insert = string.Format("exec pr_Alta_Empresa '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
+                    string insert = string.Format("exec [SQLITO].[pr_Alta_Empresa] '{0}','{1}','{2}','{3}','{4}'", textBoxRazonSocial.Text, cuit, textBoxMail.Text, direccion, textBoxTelefono.Text);
 
                     Database.ejecutarProc(insert);
 

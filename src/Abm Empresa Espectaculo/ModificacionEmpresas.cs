@@ -51,9 +51,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
                 direccion = textBoxDireccion.Text + "," + textBoxAltura.Text + "," + textBoxNumeroPiso.Text + "," + textBoxDepartamento.Text + "," + textBoxLocalidad.Text + "," + textBoxCodigoPostal.Text + "," + textBoxCiudad.Text;
 
-                
 
-                string update = string.Format("pr_Modificar_Empresa '{0}','{1}','{2}','{3}','{4}','{5}','{6}'", textBoxRazonSocial.Text, cuitCompleto, textBoxMail.Text, direccion, textBoxTelefono.Text, idEmpresa,obtenerHabilitado());
+
+                string update = string.Format("EXEC [SQLITO].[pr_Modificar_Empresa] '{0}','{1}','{2}','{3}','{4}','{5}','{6}'", textBoxRazonSocial.Text, cuitCompleto, textBoxMail.Text, direccion, textBoxTelefono.Text, idEmpresa, obtenerHabilitado());
                 try
                 {
                     Database.ejecutarNonQueryShort(update);
@@ -77,32 +77,47 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             string query = string.Format("select * from SQLITO.Empresas where id_empresa = '{0}'", idEmpresa);
 
            
-
+            
             string direcEntera = Database.ObtenerDataSet(query).Tables[0].Rows[0]["direccion"].ToString();
             string cuitEntero = Database.ObtenerDataSet(query).Tables[0].Rows[0]["cuit"].ToString();
-
-            string[] cuit = cuitEntero.Split('-');
-            string[] direc = direcEntera.Split(',');
-
+       
             textBoxRazonSocial.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["razonsocial"].ToString();
-
-
-            textBoxDireccion.Text = direc[0];
-            textBoxAltura.Text = direc[1];
-            textBoxNumeroPiso.Text = direc[2];
-            textBoxDepartamento.Text = direc[3];
-            textBoxLocalidad.Text = direc[4];
-            textBoxCodigoPostal.Text = direc[5];
-            textBoxCiudad.Text = direc[6];
-
-            textBoxCuitLargo.Text = cuit[1];
-            textBoxCUITPrefijo.Text = cuit[0];
-            textBoxCUITSufijo.Text = cuit[2];
-            
-           
-
             textBoxMail.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["mail"].ToString();
             textBoxTelefono.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["telefono"].ToString();
+            textBoxRazonSocial.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["razonsocial"].ToString();
+
+          
+
+            if (!(string.IsNullOrWhiteSpace(direcEntera)))
+            {
+                string[] direc = direcEntera.Split(',');
+
+
+                if ((direc.All(x => !(string.IsNullOrWhiteSpace(x)))) && direc.Length == 7)
+                {
+                    textBoxDireccion.Text = direc[0];
+                    textBoxAltura.Text = direc[1];
+                    textBoxNumeroPiso.Text = direc[2];
+                    textBoxDepartamento.Text = direc[3];
+                    textBoxLocalidad.Text = direc[4];
+                    textBoxCodigoPostal.Text = direc[5];
+                    textBoxCiudad.Text = direc[6];
+                }
+                else
+                {
+                    asignarDirecciones(direc);
+                }
+            }
+
+            if(!(string.IsNullOrWhiteSpace(cuitEntero)))
+            {
+                string[] cuit = cuitEntero.Split('-');
+
+                textBoxCuitLargo.Text = cuit[1];
+                textBoxCUITPrefijo.Text = cuit[0];
+                textBoxCUITSufijo.Text = cuit[2];
+            }
+            
 
             string habilitado = Database.ObtenerDataSet(query).Tables[0].Rows[0]["habilitado"].ToString();
 
@@ -114,7 +129,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 comboBoxHabilitado.SelectedIndex = 1;
 
       
-            //textBoxCui.Text = Database.ObtenerDataSet(query).Tables[0].Rows[0]["cuit"].ToString();
         }
 
         #endregion
@@ -132,7 +146,34 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
 
 
+        public void asignarDirecciones(string[] direccion)
+        {
 
+                if (!(string.IsNullOrWhiteSpace(direccion[0])))
+                {
+                    textBoxDireccion.Text = direccion[0];
+                }
+                if (!(string.IsNullOrWhiteSpace(direccion[1])))
+                {
+                    textBoxAltura.Text = direccion[1];
+                }
+                if (!(string.IsNullOrWhiteSpace(direccion[2])))
+                {
+                    string[] div = direccion[2].Split('º');
+                    textBoxNumeroPiso.Text = div[0];
+                    textBoxDepartamento.Text = div[1];
+                }
+                if (!(string.IsNullOrWhiteSpace(direccion[3])))
+                {
+                    textBoxCiudad.Text = direccion[3];
+                }
+                if (!(string.IsNullOrWhiteSpace(direccion[4])))
+                {
+                    textBoxCodigoPostal.Text = direccion[4].Replace("CP:",string.Empty).Trim();
+                }
+
+
+        }
 
 
 

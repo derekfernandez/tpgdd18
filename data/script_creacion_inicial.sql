@@ -1322,8 +1322,7 @@ PRINT('Datos existentes migrados a la tabla SQLITO.ItemsFactura. Nuevas Filas: '
 
 
 -- USUARIOS --
-
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[crearUsuario_cliente]')
+IF OBJECT_ID('[SQLITO].[crearUsuario_cliente]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[crearUsuario_cliente]
@@ -1382,7 +1381,7 @@ GO
 
 --Usuarios para Empresas migradas
 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[crearUsuario_empresa]')
+IF OBJECT_ID('[SQLITO].[crearUsuario_empresa]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[crearUsuario_empresa]
@@ -1428,10 +1427,12 @@ BEGIN
 END
 GO
 
-EXEC crearUsuario_cliente
+EXEC [SQLITO].[crearUsuario_cliente]
 PRINT ('Usuarios creados para clientes existentes')
-EXEC crearUsuario_empresa
+EXEC [SQLITO].[crearUsuario_empresa]
 PRINT ('Usuarios creados para empresas existentes')
+
+GO
 
 -- ADMINISTRADOR GENERAL DEL SISTEMA --
 
@@ -1516,7 +1517,7 @@ END
 GO
 
 --Devolver tabla con empresas con mas localidades no vendidas
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[estadistica_empresasMenosVendedoras]')
+IF OBJECT_ID('[SQLITO].[estadistica_empresasMenosVendedoras]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[estadistica_empresasMenosVendedoras]
@@ -1577,7 +1578,7 @@ GO
 
 
 --Devolver tabla con clientes con mayor cantidad de puntos vencidos 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[estadistica_clientesConMasPuntosVencidos]')
+IF OBJECT_ID('[SQLITO].[estadistica_clientesConMasPuntosVencidos]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[estadistica_clientesConMasPuntosVencidos]
@@ -1610,7 +1611,7 @@ BEGIN
 END
 GO
 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[estadistica_clientesConMasCompras]')
+IF OBJECT_ID('[SQLITO].[estadistica_clientesConMasCompras]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[estadistica_clientesConMasCompras]
@@ -1644,7 +1645,7 @@ GO
 -- PARA ABM DE Compras --
 
 --Trigger para controlar que cuando se acaban las ubicaciones de una publciacion, se lo ponga en estado "Finalizado" (3)
-IF EXISTS (SELECT * FROM sys.triggers WHERE name = '[SQLITO].[FinalizarPublicacionAutomaticamente]')
+IF OBJECT_ID('[SQLITO].[FinalizarPublicacionAutomaticamente]') IS NOT NULL
 BEGIN
 
 	DROP TRIGGER [SQLITO].[FinalizarPublicacionAutomaticamente]
@@ -1699,43 +1700,14 @@ GO
 -- PARA ABM DE Empresas --
 
 
---PROC PARA ELIMINAR EMPRESA -> DESHABILITA SU USUARIO -> HAY QUE AGREGAR EL NUEVO FLAG DE EMPRESA HABILITADA
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Eliminar_empresa]')
-BEGIN
-
-	DROP PROCEDURE [SQLITO].[pr_Eliminar_empresa]
-
-END
-GO
-
-CREATE PROCEDURE [SQLITO].[pr_Eliminar_empresa] (@idEmpresa int)
-AS
-BEGIN
-
-	BEGIN TRY
-		DECLARE @ID_USER INT
-		SET @ID_USER = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
-		BEGIN TRANSACTION
-			UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE id_usuario = @ID_USER
-		COMMIT TRANSACTION
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRAN
-		SELECT ERROR_MESSAGE()
-	END CATCH
-
-END
-GO
-
---PROC PARA ALTA EMPRESAS 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Alta_Empresa]')
+--PROC PARA ALTA EMPRESAS NUEVAS
+IF OBJECT_ID('[SQLITO].[pr_Alta_Empresa]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[pr_Alta_Empresa]
 
 END
 GO
-
 CREATE PROCEDURE [SQLITO].[pr_Alta_Empresa]
 (@razonsocial nvarchar(255), @cuit nvarchar(255), @mail nvarchar(50), @direccion nvarchar(255), @telefono nvarchar(30))
 AS
@@ -1765,7 +1737,7 @@ BEGIN
 	BEGIN TRY
 
 		BEGIN TRANSACTION
-			EXEC @usuario_id = pr_altaUsuario_empresa @id_Empresa, @razonsocial, @cuit
+			EXEC @usuario_id = [SQLITO].[pr_altaUsuario_empresa] @id_Empresa, @razonsocial, @cuit
 			INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit, mail, direccion, telefono, usuario_id)
 				VALUES (@razonsocial, @fecha_creacion, @cuit,@mail, @direccion, @telefono, @usuario_id)
 		COMMIT TRANSACTION
@@ -1791,15 +1763,14 @@ BEGIN
 END
 GO
 
---PROC PARA MODIFICAR EMPRESAS 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Modificar_Empresa]')
+--PROC PARA MODIFICAR EMPRESAS
+IF OBJECT_ID('[SQLITO].[pr_Modificar_Empresa]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[pr_Modificar_Empresa]
 
 END
 GO
-
 CREATE PROCEDURE [SQLITO].[pr_Modificar_Empresa]
 (@razonsocial nvarchar(255), @cuit nvarchar(255), @mail nvarchar(50), @direccion nvarchar(255), @telefono nvarchar(30),	@idEmpresa int,	@habilitado bit)
 AS
@@ -1833,16 +1804,16 @@ BEGIN
 
 END
 GO
-
---PROC ASIGNACION USUARIOS PARA EMPRESAS RECIEN CREADAS
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_altaUsuario_empresa]')
+--IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_altaUsuario_empresa]')
+--PROC ASIGNACION USUARIOS PARA EMPRESAS RECIEN CREADAS PARA MODIFICAR
+go
+IF OBJECT_ID('[SQLITO].[pr_altaUsuario_empresa]') IS NOT NULL
 BEGIN
-
 	DROP PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
 
 END
-GO
 
+GO
 CREATE PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
 (@empresaID INT, @empresaRazonSocial nvarchar(255), @cuit nvarchar(255))
 AS
@@ -1852,15 +1823,13 @@ BEGIN
 
 		DECLARE @username NVARCHAR(255), @password VARBINARY(255)
 		DECLARE @identity numeric(18,0)
-		DECLARE @SUF CHAR(2), @PREF CHAR(2), @MEDIO CHAR(8), @PW CHAR(12), @US CHAR(16)  	
+		DECLARE @PW CHAR(12), @US CHAR(12)  	
 		
-		SET @SUF = SUBSTRING(@cuit,1,2)
-		SET @PREF = SUBSTRING(@cuit,4,8)
-		SET @MEDIO = SUBSTRING(@cuit,13,14)
 
-		--US y PW temporal
-		SET @PW = @SUF + @PREF + @MEDIO
-		SET @US = @PW
+		SET @US = CONCAT(LEFT(@cuit,2),SUBSTRING(@cuit,4,8),RIGHT(@cuit,2))
+		SET @PW = @US
+
+		--SELECT CONCAT(LEFT(@cuit,2),SUBSTRING(@cuit,4,8),RIGHT(@cuit,2))
 
 		SET @identity = (SELECT COUNT(*) FROM SQLITO.Usuarios)
 
@@ -1894,14 +1863,13 @@ GO
 -- PARA ABM DE Grados --
 
 --PROC PARA CREAR UN GRADO
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Carga_Grado]')
+IF OBJECT_ID('[SQLITO].[pr_Carga_Grado]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[pr_Carga_Grado]
 
 END
 GO
-
 CREATE PROCEDURE [SQLITO].[pr_Carga_Grado] (@descripcion nvarchar(255),@comision numeric(6,2))
 AS
 BEGIN
@@ -1945,7 +1913,7 @@ END
 GO
 
 --PROC PARA MODIFICAR UN GRADO YA EXISTENTE
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_Mod_Grado]')
+IF OBJECT_ID('[SQLITO].[pr_Mod_Grado]') IS NOT NULL
 BEGIN
 
 	DROP PROCEDURE [SQLITO].[pr_Mod_Grado]
@@ -1985,13 +1953,6 @@ BEGIN
 END
 GO
 
-/*Si llegase a romper el identity usar:
-GO
-DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
-GO
-*/ 
-
-
 -- PARA CANJE Y ADMINISTRACION DE PUNTOS --
 
 --Obtener sumatoria de puntos no vencidos de un cliente
@@ -2023,10 +1984,9 @@ BEGIN
 END
 GO
 
-
 -- PARA ABM de Roles --
 
-IF EXISTS (SELECT * FROM sys.triggers WHERE name = '[SQLITO].[EliminarRolInhabilitadoDeUsuario]')
+IF OBJECT_ID('[SQLITO].[EliminarRolInhabilitadoDeUsuario]') IS NOT NULL
 BEGIN
 
 	DROP TRIGGER [SQLITO].[EliminarRolInhabilitadoDeUsuario]
@@ -2074,7 +2034,3 @@ DEALLOCATE upd_cursor
 END
 GO
 
-/*Si llegase a romper el identity usar:
-DBCC CHECKIDENT ('SQLITO.nomTabla', RESEED, ultimoValorTabla);
-GO
-*/

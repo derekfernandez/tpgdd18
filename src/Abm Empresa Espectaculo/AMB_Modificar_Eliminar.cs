@@ -210,7 +210,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         private void grillaEmpresas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
                         //Hasta que no se modifique el admin el id sera + 2!
-                        id = Convert.ToString(grillaEmpresas.SelectedCells[0].RowIndex + 2);
+                        id = Convert.ToString(grillaEmpresas.SelectedCells[0].RowIndex + 1);
                      
         }  
 
