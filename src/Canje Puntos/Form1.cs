@@ -23,10 +23,13 @@ namespace PalcoNet.Canje_Puntos
             InitializeComponent();
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+            label2.Visible = false;
+
         }
         public canjePuntos()
         {
             InitializeComponent();
+
         }
   
         private void label1_Click(object sender, EventArgs e)
@@ -48,6 +51,10 @@ namespace PalcoNet.Canje_Puntos
             SqlCommand query = Database.createQuery("SELECT TOP 1 SQLITO.sumarPuntos(@cliente) as Puntos FROM SQLITO.Puntos");
             query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
             string puntos = Database.getValue(query);
+            if(puntos == "")
+            {
+                label2.Visible = true;
+            }
             label6.Text = puntos;
         }
         public void llenarPremios(DataGridView data)
@@ -136,6 +143,11 @@ namespace PalcoNet.Canje_Puntos
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click_1(object sender, EventArgs e)
         {
 
         }
