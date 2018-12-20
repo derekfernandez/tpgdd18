@@ -427,10 +427,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 e.Handled = true;
             }
         }
-        private void textBoxDireccion_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            soloTexto(sender, e);
-        }
 
         private void textBoxAltura_KeyPress(object sender, KeyPressEventArgs e)
         {
