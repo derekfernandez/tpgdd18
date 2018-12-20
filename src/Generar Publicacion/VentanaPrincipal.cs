@@ -168,9 +168,10 @@ namespace PalcoNet.Generar_Publicacion
 
         #region Eventos
 
-        /////ToDo: Manejar fecha de ingreso anterior a la del sistema 
         private void btnFechaAgregar_Click(object sender, EventArgs e)
         {
+
+            errorProvider.Clear();
 
             DateTime fechaIngresada = dtpFecha.Value.Date + dtpHorario.Value.TimeOfDay;
             
@@ -178,6 +179,20 @@ namespace PalcoNet.Generar_Publicacion
             if (fechaIngresada < fechaConfig)
             {
                 errorProvider.SetError(dtpFecha, "No puede ingresar una fecha anterior al dia de hoy");
+                return;
+            }
+
+            //Verifico que no haya ninguna publicacion con el mismo nombre y rubro que tenga una funcion a esa hora
+            String queryFechas = "SELECT cod_publicacion FROM SQLITO.Publicaciones WHERE (publ_descripcion = @Descripcion)";
+            queryFechas += " AND (fecha_funcion = @FechaFunc) AND (rubro_id = @RubroID)";
+            SqlCommand cmdFechas = Database.createQuery(queryFechas);
+            cmdFechas.Parameters.AddWithValue("@Descripcion", tbDescripcion.Text);
+            cmdFechas.Parameters.Add("@FechaFunc", SqlDbType.DateTime).Value = fechaIngresada;
+            cmdFechas.Parameters.AddWithValue("@RubroID", comboRubro.SelectedValue.ToString());
+            DataTable dt = Database.getTable(cmdFechas);
+            if (dt.Rows.Count > 0)
+            {
+                errorProvider.SetError(dtpFecha, "Ya existe una funcion de un espectaculo homonimo en ese horario; ingrese otra");
                 return;
             }
 
@@ -195,19 +210,15 @@ namespace PalcoNet.Generar_Publicacion
                     errorProvider.SetError(dtpFecha, "No puede ingresar dos funciones en la misma fecha y hora");
                     return;
                 }
-                else
-                {
-                    errorProvider.Clear();
 
-                    fechasFuncion.Add(fechaIngresada);
-                    actualizarDatosDGV();
-                }
+                fechasFuncion.Add(fechaIngresada);
+                actualizarDatosDGV();
+
             }
             //Si no hay elementos en la lista, entonces ingreso la fecha, sea cual sea
             else
             {
-                errorProvider.Clear();
-
+                
                 fechasFuncion.Add(fechaIngresada);
                 actualizarDatosDGV();
 
