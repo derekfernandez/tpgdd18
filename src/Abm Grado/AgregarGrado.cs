@@ -37,8 +37,8 @@ namespace PalcoNet.Abm_Grado
                 eliminarErrorProvider();
                 transformarComision();
 
-                
-                    string ingresar = string.Format("pr_Carga_Grado '{0}','{1}'", textBoxDescripcion.Text, textBoxComision.Text);
+
+                string ingresar = string.Format("EXEC [SQLITO].[pr_Carga_Grado] '{0}','{1}'", textBoxDescripcion.Text, textBoxComision.Text);
                     try
                     {
                         

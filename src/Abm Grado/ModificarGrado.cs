@@ -53,7 +53,7 @@ namespace PalcoNet.Abm_Grado
                 eliminarErrorProvider();
                 transformarComision();
 
-                string update = string.Format("EXEC pr_Mod_Grado '{0}','{1}','{2}','{3}'", textBoxDescripcion.Text, textBoxComision.Text, obtenerHabilitado(), gradoAModificar);
+                string update = string.Format("EXEC [SQLITO].[pr_Mod_Grado] '{0}','{1}','{2}','{3}'", textBoxDescripcion.Text, textBoxComision.Text, obtenerHabilitado(), gradoAModificar);
                 try
                 {
                     Database.ejecutarNonQueryShort(update);
