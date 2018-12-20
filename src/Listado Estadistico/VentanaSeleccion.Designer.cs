@@ -109,7 +109,7 @@
             this.btnPeoresEmpresas.Name = "btnPeoresEmpresas";
             this.btnPeoresEmpresas.Size = new System.Drawing.Size(215, 23);
             this.btnPeoresEmpresas.TabIndex = 2;
-            this.btnPeoresEmpresas.Text = "Empresas menos vendedoras";
+            this.btnPeoresEmpresas.Text = "Empresas peores vendedoras";
             this.btnPeoresEmpresas.UseVisualStyleBackColor = true;
             this.btnPeoresEmpresas.Click += new System.EventHandler(this.btnPeoresEmpresas_Click);
             // 
@@ -129,7 +129,7 @@
             this.btnMejoresCompradores.Name = "btnMejoresCompradores";
             this.btnMejoresCompradores.Size = new System.Drawing.Size(215, 23);
             this.btnMejoresCompradores.TabIndex = 4;
-            this.btnMejoresCompradores.Text = "Clientes con más compras";
+            this.btnMejoresCompradores.Text = "Clientes con más compras por empresa";
             this.btnMejoresCompradores.UseVisualStyleBackColor = true;
             this.btnMejoresCompradores.Click += new System.EventHandler(this.btnMejoresCompradores_Click);
             // 
