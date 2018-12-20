@@ -227,9 +227,10 @@ namespace PalcoNet.Comprar
             queryNotIn = "(SELECT TOP " + resultadosDePaginasAnteriores.ToString() + " cod_publicacion " + queryComun + " ORDER BY";
             queryNotIn += " comision DESC, publ_descripcion ASC)";
 
-            queryPublicaciones = "SELECT TOP " + resultadosPorPagina.ToString() + " cod_publicacion, publ_descripcion, ";
-            queryPublicaciones += ("fecha_funcion, r_descripcion " + queryComun + " AND (cod_publicacion NOT IN " + queryNotIn);
-            queryPublicaciones += ") ORDER BY comision DESC, publ_descripcion ASC";
+            queryPublicaciones = "SELECT cod_publicacion, publ_descripcion, fecha_funcion, r_descripcion " + queryComun;
+            queryPublicaciones += "ORDER BY comision DESC, publ_descripcion ASC ";
+            queryPublicaciones += ("OFFSET " + resultadosDePaginasAnteriores.ToString() + " ROWS ");
+            queryPublicaciones += ("FETCH NEXT " + resultadosPorPagina.ToString() + " ROWS ONLY");
 
             #endregion ArmadoQueryFinal
 
