@@ -103,7 +103,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             else
             {
-                string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", id);
+                string eliminar = string.Format("[SQLITO].[pr_Baja_empresa] '{0}'", id);
                 
                 if (yaEliminado(id))
                 {
