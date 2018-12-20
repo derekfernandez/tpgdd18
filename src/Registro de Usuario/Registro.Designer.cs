@@ -48,10 +48,11 @@
             this.textBox_usuario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox_clientes = new System.Windows.Forms.GroupBox();
+            this.dtp_fechanac = new System.Windows.Forms.DateTimePicker();
             this.nrotarjetacounter = new System.Windows.Forms.Label();
             this.lbl_tarjetalargoerror = new System.Windows.Forms.Label();
             this.btnmodify_back = new System.Windows.Forms.Button();
-            this.lbl_fechacreacion = new System.Windows.Forms.Label();
+            this.lbl_ejcuil = new System.Windows.Forms.Label();
             this.lbl_cvvlen = new System.Windows.Forms.Label();
             this.errorAdv_titular = new System.Windows.Forms.Label();
             this.textBox_titular = new System.Windows.Forms.TextBox();
@@ -91,7 +92,6 @@
             this.textBox_cvv = new System.Windows.Forms.TextBox();
             this.textBox_nrotarjeta = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.monthCalendar_fechanac = new System.Windows.Forms.MonthCalendar();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -172,6 +172,7 @@
             this.lbl_showestado = new System.Windows.Forms.Label();
             this.lbl_estado = new System.Windows.Forms.Label();
             this.btn_habilitar = new System.Windows.Forms.Button();
+            this.lbl_ejcuit = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.groupBox_gral.SuspendLayout();
             this.groupBox_clientes.SuspendLayout();
@@ -208,7 +209,7 @@
             this.groupBox_gral.Controls.Add(this.label2);
             this.groupBox_gral.Location = new System.Drawing.Point(1, 50);
             this.groupBox_gral.Name = "groupBox_gral";
-            this.groupBox_gral.Size = new System.Drawing.Size(336, 670);
+            this.groupBox_gral.Size = new System.Drawing.Size(336, 529);
             this.groupBox_gral.TabIndex = 1;
             this.groupBox_gral.TabStop = false;
             // 
@@ -393,10 +394,11 @@
             // 
             // groupBox_clientes
             // 
+            this.groupBox_clientes.Controls.Add(this.dtp_fechanac);
             this.groupBox_clientes.Controls.Add(this.nrotarjetacounter);
             this.groupBox_clientes.Controls.Add(this.lbl_tarjetalargoerror);
             this.groupBox_clientes.Controls.Add(this.btnmodify_back);
-            this.groupBox_clientes.Controls.Add(this.lbl_fechacreacion);
+            this.groupBox_clientes.Controls.Add(this.lbl_ejcuil);
             this.groupBox_clientes.Controls.Add(this.lbl_cvvlen);
             this.groupBox_clientes.Controls.Add(this.errorAdv_titular);
             this.groupBox_clientes.Controls.Add(this.textBox_titular);
@@ -436,7 +438,6 @@
             this.groupBox_clientes.Controls.Add(this.textBox_cvv);
             this.groupBox_clientes.Controls.Add(this.textBox_nrotarjeta);
             this.groupBox_clientes.Controls.Add(this.label23);
-            this.groupBox_clientes.Controls.Add(this.monthCalendar_fechanac);
             this.groupBox_clientes.Controls.Add(this.label22);
             this.groupBox_clientes.Controls.Add(this.label21);
             this.groupBox_clientes.Controls.Add(this.label20);
@@ -469,16 +470,24 @@
             this.groupBox_clientes.Controls.Add(this.label6);
             this.groupBox_clientes.Location = new System.Drawing.Point(337, 50);
             this.groupBox_clientes.Name = "groupBox_clientes";
-            this.groupBox_clientes.Size = new System.Drawing.Size(380, 670);
+            this.groupBox_clientes.Size = new System.Drawing.Size(377, 529);
             this.groupBox_clientes.TabIndex = 2;
             this.groupBox_clientes.TabStop = false;
             this.groupBox_clientes.Visible = false;
+            // 
+            // dtp_fechanac
+            // 
+            this.dtp_fechanac.Location = new System.Drawing.Point(127, 243);
+            this.dtp_fechanac.Name = "dtp_fechanac";
+            this.dtp_fechanac.Size = new System.Drawing.Size(200, 20);
+            this.dtp_fechanac.TabIndex = 77;
+            this.dtp_fechanac.ValueChanged += new System.EventHandler(this.dtp_fechanac_ValueChanged);
             // 
             // nrotarjetacounter
             // 
             this.nrotarjetacounter.AutoSize = true;
             this.nrotarjetacounter.ForeColor = System.Drawing.Color.Orange;
-            this.nrotarjetacounter.Location = new System.Drawing.Point(20, 607);
+            this.nrotarjetacounter.Location = new System.Drawing.Point(20, 452);
             this.nrotarjetacounter.Name = "nrotarjetacounter";
             this.nrotarjetacounter.Size = new System.Drawing.Size(0, 13);
             this.nrotarjetacounter.TabIndex = 76;
@@ -487,7 +496,7 @@
             // 
             this.lbl_tarjetalargoerror.AutoSize = true;
             this.lbl_tarjetalargoerror.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_tarjetalargoerror.Location = new System.Drawing.Point(92, 608);
+            this.lbl_tarjetalargoerror.Location = new System.Drawing.Point(92, 453);
             this.lbl_tarjetalargoerror.Name = "lbl_tarjetalargoerror";
             this.lbl_tarjetalargoerror.Size = new System.Drawing.Size(169, 13);
             this.lbl_tarjetalargoerror.TabIndex = 75;
@@ -496,7 +505,7 @@
             // 
             // btnmodify_back
             // 
-            this.btnmodify_back.Location = new System.Drawing.Point(210, 625);
+            this.btnmodify_back.Location = new System.Drawing.Point(210, 470);
             this.btnmodify_back.Name = "btnmodify_back";
             this.btnmodify_back.Size = new System.Drawing.Size(75, 23);
             this.btnmodify_back.TabIndex = 74;
@@ -505,21 +514,21 @@
             this.btnmodify_back.Visible = false;
             this.btnmodify_back.Click += new System.EventHandler(this.btnmodify_back_Click);
             // 
-            // lbl_fechacreacion
+            // lbl_ejcuil
             // 
-            this.lbl_fechacreacion.AutoSize = true;
-            this.lbl_fechacreacion.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_fechacreacion.Location = new System.Drawing.Point(167, 128);
-            this.lbl_fechacreacion.Name = "lbl_fechacreacion";
-            this.lbl_fechacreacion.Size = new System.Drawing.Size(122, 13);
-            this.lbl_fechacreacion.TabIndex = 73;
-            this.lbl_fechacreacion.Text = "Ejemplo: 11-12345678-1";
+            this.lbl_ejcuil.AutoSize = true;
+            this.lbl_ejcuil.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_ejcuil.Location = new System.Drawing.Point(167, 128);
+            this.lbl_ejcuil.Name = "lbl_ejcuil";
+            this.lbl_ejcuil.Size = new System.Drawing.Size(122, 13);
+            this.lbl_ejcuil.TabIndex = 73;
+            this.lbl_ejcuil.Text = "Ejemplo: 11-12345678-1";
             // 
             // lbl_cvvlen
             // 
             this.lbl_cvvlen.AutoSize = true;
             this.lbl_cvvlen.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_cvvlen.Location = new System.Drawing.Point(206, 573);
+            this.lbl_cvvlen.Location = new System.Drawing.Point(206, 418);
             this.lbl_cvvlen.Name = "lbl_cvvlen";
             this.lbl_cvvlen.Size = new System.Drawing.Size(154, 13);
             this.lbl_cvvlen.TabIndex = 72;
@@ -531,7 +540,7 @@
             this.errorAdv_titular.AutoSize = true;
             this.errorAdv_titular.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_titular.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_titular.Location = new System.Drawing.Point(341, 553);
+            this.errorAdv_titular.Location = new System.Drawing.Point(341, 398);
             this.errorAdv_titular.Name = "errorAdv_titular";
             this.errorAdv_titular.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_titular.TabIndex = 71;
@@ -540,7 +549,7 @@
             // 
             // textBox_titular
             // 
-            this.textBox_titular.Location = new System.Drawing.Point(104, 553);
+            this.textBox_titular.Location = new System.Drawing.Point(104, 398);
             this.textBox_titular.Name = "textBox_titular";
             this.textBox_titular.Size = new System.Drawing.Size(231, 20);
             this.textBox_titular.TabIndex = 70;
@@ -549,7 +558,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(6, 556);
+            this.label29.Location = new System.Drawing.Point(6, 401);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(92, 13);
             this.label29.TabIndex = 69;
@@ -557,7 +566,7 @@
             // 
             // btn_backcliente
             // 
-            this.btn_backcliente.Location = new System.Drawing.Point(209, 625);
+            this.btn_backcliente.Location = new System.Drawing.Point(209, 470);
             this.btn_backcliente.Name = "btn_backcliente";
             this.btn_backcliente.Size = new System.Drawing.Size(75, 23);
             this.btn_backcliente.TabIndex = 68;
@@ -569,7 +578,7 @@
             // 
             this.lbl_seleccionfecha.AutoSize = true;
             this.lbl_seleccionfecha.ForeColor = System.Drawing.Color.Purple;
-            this.lbl_seleccionfecha.Location = new System.Drawing.Point(124, 423);
+            this.lbl_seleccionfecha.Location = new System.Drawing.Point(243, 268);
             this.lbl_seleccionfecha.Name = "lbl_seleccionfecha";
             this.lbl_seleccionfecha.Size = new System.Drawing.Size(0, 13);
             this.lbl_seleccionfecha.TabIndex = 67;
@@ -577,7 +586,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(17, 423);
+            this.label28.Location = new System.Drawing.Point(125, 268);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(106, 13);
             this.label28.TabIndex = 66;
@@ -586,7 +595,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(129, 423);
+            this.label5.Location = new System.Drawing.Point(248, 268);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 13);
             this.label5.TabIndex = 65;
@@ -617,7 +626,7 @@
             // 
             this.lbl_factsolonros.AutoSize = true;
             this.lbl_factsolonros.ForeColor = System.Drawing.Color.Red;
-            this.lbl_factsolonros.Location = new System.Drawing.Point(93, 609);
+            this.lbl_factsolonros.Location = new System.Drawing.Point(93, 454);
             this.lbl_factsolonros.Name = "lbl_factsolonros";
             this.lbl_factsolonros.Size = new System.Drawing.Size(194, 13);
             this.lbl_factsolonros.TabIndex = 61;
@@ -629,7 +638,7 @@
             this.errorAdv_cvv.AutoSize = true;
             this.errorAdv_cvv.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_cvv.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_cvv.Location = new System.Drawing.Point(291, 586);
+            this.errorAdv_cvv.Location = new System.Drawing.Point(291, 431);
             this.errorAdv_cvv.Name = "errorAdv_cvv";
             this.errorAdv_cvv.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_cvv.TabIndex = 60;
@@ -641,7 +650,7 @@
             this.errorAdv_nrotarjeta.AutoSize = true;
             this.errorAdv_nrotarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_nrotarjeta.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_nrotarjeta.Location = new System.Drawing.Point(191, 586);
+            this.errorAdv_nrotarjeta.Location = new System.Drawing.Point(191, 431);
             this.errorAdv_nrotarjeta.Name = "errorAdv_nrotarjeta";
             this.errorAdv_nrotarjeta.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_nrotarjeta.TabIndex = 59;
@@ -653,7 +662,7 @@
             this.errorAdv_cp.AutoSize = true;
             this.errorAdv_cp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_cp.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_cp.Location = new System.Drawing.Point(353, 504);
+            this.errorAdv_cp.Location = new System.Drawing.Point(353, 349);
             this.errorAdv_cp.Name = "errorAdv_cp";
             this.errorAdv_cp.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_cp.TabIndex = 58;
@@ -665,7 +674,7 @@
             this.errorAdv_localidad.AutoSize = true;
             this.errorAdv_localidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_localidad.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_localidad.Location = new System.Drawing.Point(255, 504);
+            this.errorAdv_localidad.Location = new System.Drawing.Point(255, 349);
             this.errorAdv_localidad.Name = "errorAdv_localidad";
             this.errorAdv_localidad.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_localidad.TabIndex = 57;
@@ -677,7 +686,7 @@
             this.errorAdv_piso.AutoSize = true;
             this.errorAdv_piso.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_piso.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_piso.Location = new System.Drawing.Point(341, 471);
+            this.errorAdv_piso.Location = new System.Drawing.Point(341, 316);
             this.errorAdv_piso.Name = "errorAdv_piso";
             this.errorAdv_piso.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_piso.TabIndex = 56;
@@ -689,7 +698,7 @@
             this.errorAdv_nro.AutoSize = true;
             this.errorAdv_nro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_nro.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_nro.Location = new System.Drawing.Point(242, 471);
+            this.errorAdv_nro.Location = new System.Drawing.Point(242, 316);
             this.errorAdv_nro.Name = "errorAdv_nro";
             this.errorAdv_nro.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_nro.TabIndex = 55;
@@ -701,7 +710,7 @@
             this.errorAdv_calle.AutoSize = true;
             this.errorAdv_calle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_calle.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_calle.Location = new System.Drawing.Point(151, 471);
+            this.errorAdv_calle.Location = new System.Drawing.Point(151, 316);
             this.errorAdv_calle.Name = "errorAdv_calle";
             this.errorAdv_calle.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_calle.TabIndex = 54;
@@ -851,7 +860,7 @@
             this.errorAdv_fecha.AutoSize = true;
             this.errorAdv_fecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_fecha.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_fecha.Location = new System.Drawing.Point(88, 261);
+            this.errorAdv_fecha.Location = new System.Drawing.Point(334, 244);
             this.errorAdv_fecha.Name = "errorAdv_fecha";
             this.errorAdv_fecha.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_fecha.TabIndex = 39;
@@ -860,7 +869,7 @@
             // 
             // btn_terminar
             // 
-            this.btn_terminar.Location = new System.Drawing.Point(290, 625);
+            this.btn_terminar.Location = new System.Drawing.Point(290, 470);
             this.btn_terminar.Name = "btn_terminar";
             this.btn_terminar.Size = new System.Drawing.Size(75, 23);
             this.btn_terminar.TabIndex = 38;
@@ -870,7 +879,7 @@
             // 
             // textBox_banco
             // 
-            this.textBox_banco.Location = new System.Drawing.Point(89, 625);
+            this.textBox_banco.Location = new System.Drawing.Point(89, 470);
             this.textBox_banco.Name = "textBox_banco";
             this.textBox_banco.Size = new System.Drawing.Size(100, 20);
             this.textBox_banco.TabIndex = 37;
@@ -878,7 +887,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(6, 625);
+            this.label26.Location = new System.Drawing.Point(6, 470);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(75, 13);
             this.label26.TabIndex = 36;
@@ -887,7 +896,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 591);
+            this.label25.Location = new System.Drawing.Point(6, 436);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(77, 13);
             this.label25.TabIndex = 35;
@@ -896,7 +905,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(206, 589);
+            this.label24.Location = new System.Drawing.Point(206, 434);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(31, 13);
             this.label24.TabIndex = 34;
@@ -904,7 +913,7 @@
             // 
             // textBox_cvv
             // 
-            this.textBox_cvv.Location = new System.Drawing.Point(246, 586);
+            this.textBox_cvv.Location = new System.Drawing.Point(246, 431);
             this.textBox_cvv.Name = "textBox_cvv";
             this.textBox_cvv.Size = new System.Drawing.Size(43, 20);
             this.textBox_cvv.TabIndex = 33;
@@ -912,7 +921,7 @@
             // 
             // textBox_nrotarjeta
             // 
-            this.textBox_nrotarjeta.Location = new System.Drawing.Point(89, 586);
+            this.textBox_nrotarjeta.Location = new System.Drawing.Point(89, 431);
             this.textBox_nrotarjeta.Name = "textBox_nrotarjeta";
             this.textBox_nrotarjeta.Size = new System.Drawing.Size(100, 20);
             this.textBox_nrotarjeta.TabIndex = 32;
@@ -921,20 +930,11 @@
             // label23
             // 
             this.label23.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label23.Location = new System.Drawing.Point(5, 534);
+            this.label23.Location = new System.Drawing.Point(5, 379);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(67, 19);
+            this.label23.Size = new System.Drawing.Size(93, 19);
             this.label23.TabIndex = 31;
-            this.label23.Text = "Facturación";
-            // 
-            // monthCalendar_fechanac
-            // 
-            this.monthCalendar_fechanac.Location = new System.Drawing.Point(114, 243);
-            this.monthCalendar_fechanac.Name = "monthCalendar_fechanac";
-            this.monthCalendar_fechanac.ShowToday = false;
-            this.monthCalendar_fechanac.ShowTodayCircle = false;
-            this.monthCalendar_fechanac.TabIndex = 30;
-            this.monthCalendar_fechanac.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_fechanac_DateChanged);
+            this.label23.Text = "Forma de Pago";
             // 
             // label22
             // 
@@ -958,7 +958,7 @@
             // label20
             // 
             this.label20.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label20.Location = new System.Drawing.Point(0, 532);
+            this.label20.Location = new System.Drawing.Point(0, 377);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(363, 2);
             this.label20.TabIndex = 27;
@@ -968,7 +968,7 @@
             // label19
             // 
             this.label19.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label19.Location = new System.Drawing.Point(5, 449);
+            this.label19.Location = new System.Drawing.Point(5, 294);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(58, 19);
             this.label19.TabIndex = 26;
@@ -977,7 +977,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(276, 504);
+            this.label18.Location = new System.Drawing.Point(276, 349);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(24, 13);
             this.label18.TabIndex = 25;
@@ -986,7 +986,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(89, 507);
+            this.label17.Location = new System.Drawing.Point(89, 352);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(56, 13);
             this.label17.TabIndex = 24;
@@ -994,7 +994,7 @@
             // 
             // textBox_localidad
             // 
-            this.textBox_localidad.Location = new System.Drawing.Point(146, 504);
+            this.textBox_localidad.Location = new System.Drawing.Point(146, 349);
             this.textBox_localidad.Name = "textBox_localidad";
             this.textBox_localidad.Size = new System.Drawing.Size(103, 20);
             this.textBox_localidad.TabIndex = 23;
@@ -1002,7 +1002,7 @@
             // 
             // textBox_cp
             // 
-            this.textBox_cp.Location = new System.Drawing.Point(306, 504);
+            this.textBox_cp.Location = new System.Drawing.Point(306, 349);
             this.textBox_cp.Name = "textBox_cp";
             this.textBox_cp.Size = new System.Drawing.Size(43, 20);
             this.textBox_cp.TabIndex = 22;
@@ -1010,7 +1010,7 @@
             // 
             // textBox_depto
             // 
-            this.textBox_depto.Location = new System.Drawing.Point(45, 504);
+            this.textBox_depto.Location = new System.Drawing.Point(45, 349);
             this.textBox_depto.Name = "textBox_depto";
             this.textBox_depto.Size = new System.Drawing.Size(27, 20);
             this.textBox_depto.TabIndex = 21;
@@ -1018,7 +1018,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 507);
+            this.label16.Location = new System.Drawing.Point(6, 352);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(39, 13);
             this.label16.TabIndex = 20;
@@ -1026,7 +1026,7 @@
             // 
             // textBox_piso
             // 
-            this.textBox_piso.Location = new System.Drawing.Point(295, 471);
+            this.textBox_piso.Location = new System.Drawing.Point(295, 316);
             this.textBox_piso.Name = "textBox_piso";
             this.textBox_piso.Size = new System.Drawing.Size(43, 20);
             this.textBox_piso.TabIndex = 19;
@@ -1035,7 +1035,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(263, 474);
+            this.label15.Location = new System.Drawing.Point(263, 319);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(30, 13);
             this.label15.TabIndex = 18;
@@ -1044,7 +1044,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(164, 474);
+            this.label14.Location = new System.Drawing.Point(164, 319);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(27, 13);
             this.label14.TabIndex = 17;
@@ -1052,7 +1052,7 @@
             // 
             // textBox_nro
             // 
-            this.textBox_nro.Location = new System.Drawing.Point(195, 471);
+            this.textBox_nro.Location = new System.Drawing.Point(195, 316);
             this.textBox_nro.Name = "textBox_nro";
             this.textBox_nro.Size = new System.Drawing.Size(43, 20);
             this.textBox_nro.TabIndex = 16;
@@ -1061,7 +1061,7 @@
             // label13
             // 
             this.label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label13.Location = new System.Drawing.Point(0, 447);
+            this.label13.Location = new System.Drawing.Point(0, 292);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(363, 2);
             this.label13.TabIndex = 15;
@@ -1070,7 +1070,7 @@
             // 
             // textBox_calle
             // 
-            this.textBox_calle.Location = new System.Drawing.Point(45, 471);
+            this.textBox_calle.Location = new System.Drawing.Point(45, 316);
             this.textBox_calle.Name = "textBox_calle";
             this.textBox_calle.Size = new System.Drawing.Size(100, 20);
             this.textBox_calle.TabIndex = 14;
@@ -1129,7 +1129,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 474);
+            this.label12.Location = new System.Drawing.Point(6, 319);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(33, 13);
             this.label12.TabIndex = 7;
@@ -1199,6 +1199,7 @@
             // 
             // groupBox_empresa
             // 
+            this.groupBox_empresa.Controls.Add(this.lbl_ejcuit);
             this.groupBox_empresa.Controls.Add(this.btn_backempresa);
             this.groupBox_empresa.Controls.Add(this.errorAdv_ciudadempresa);
             this.groupBox_empresa.Controls.Add(this.label27);
@@ -1244,7 +1245,7 @@
             this.groupBox_empresa.Controls.Add(this.label68);
             this.groupBox_empresa.Location = new System.Drawing.Point(712, 50);
             this.groupBox_empresa.Name = "groupBox_empresa";
-            this.groupBox_empresa.Size = new System.Drawing.Size(368, 670);
+            this.groupBox_empresa.Size = new System.Drawing.Size(368, 529);
             this.groupBox_empresa.TabIndex = 17;
             this.groupBox_empresa.TabStop = false;
             this.groupBox_empresa.Visible = false;
@@ -1730,11 +1731,21 @@
             this.btn_habilitar.Visible = false;
             this.btn_habilitar.Click += new System.EventHandler(this.btn_habilitar_Click);
             // 
+            // lbl_ejcuit
+            // 
+            this.lbl_ejcuit.AutoSize = true;
+            this.lbl_ejcuit.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_ejcuit.Location = new System.Drawing.Point(178, 78);
+            this.lbl_ejcuit.Name = "lbl_ejcuit";
+            this.lbl_ejcuit.Size = new System.Drawing.Size(128, 13);
+            this.lbl_ejcuit.TabIndex = 74;
+            this.lbl_ejcuit.Text = "Ejemplo: 11-12345678-11";
+            // 
             // Registro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1086, 723);
+            this.ClientSize = new System.Drawing.Size(1081, 583);
             this.Controls.Add(this.btn_habilitar);
             this.Controls.Add(this.lbl_estado);
             this.Controls.Add(this.lbl_showestado);
@@ -1790,7 +1801,6 @@
         private System.Windows.Forms.Label lbl_nullrole;
         private System.Windows.Forms.Label errorAdv_rol;
         private System.Windows.Forms.Label lbl_uservacio;
-        private System.Windows.Forms.MonthCalendar monthCalendar_fechanac;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;
@@ -1909,9 +1919,11 @@
         private System.Windows.Forms.Button btn_habilitar;
         private System.Windows.Forms.Label lbl_estado;
         private System.Windows.Forms.Label lbl_showestado;
-        private System.Windows.Forms.Label lbl_fechacreacion;
+        private System.Windows.Forms.Label lbl_ejcuil;
         private System.Windows.Forms.Button btnmodify_back;
         private System.Windows.Forms.Label lbl_tarjetalargoerror;
         private System.Windows.Forms.Label nrotarjetacounter;
+        private System.Windows.Forms.DateTimePicker dtp_fechanac;
+        private System.Windows.Forms.Label lbl_ejcuit;
     }
 }

@@ -157,7 +157,7 @@
             // textBoxRazonSocial
             // 
             this.textBoxRazonSocial.Location = new System.Drawing.Point(136, 103);
-            this.textBoxRazonSocial.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxRazonSocial.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(176, 20);
             this.textBoxRazonSocial.TabIndex = 1;
@@ -165,7 +165,7 @@
             // textBoxMail
             // 
             this.textBoxMail.Location = new System.Drawing.Point(441, 226);
-            this.textBoxMail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxMail.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(176, 20);
             this.textBoxMail.TabIndex = 13;
@@ -173,7 +173,7 @@
             // textBoxTelefono
             // 
             this.textBoxTelefono.Location = new System.Drawing.Point(441, 196);
-            this.textBoxTelefono.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxTelefono.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(176, 20);
             this.textBoxTelefono.TabIndex = 12;
@@ -182,7 +182,7 @@
             // textBoxCuitLargo
             // 
             this.textBoxCuitLargo.Location = new System.Drawing.Point(182, 128);
-            this.textBoxCuitLargo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCuitLargo.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCuitLargo.MaxLength = 8;
             this.textBoxCuitLargo.Name = "textBoxCuitLargo";
             this.textBoxCuitLargo.Size = new System.Drawing.Size(86, 20);
@@ -192,7 +192,7 @@
             // textBoxDireccion
             // 
             this.textBoxDireccion.Location = new System.Drawing.Point(136, 159);
-            this.textBoxDireccion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDireccion.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(176, 20);
             this.textBoxDireccion.TabIndex = 5;
@@ -212,7 +212,7 @@
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnVolver.Location = new System.Drawing.Point(23, 282);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(2);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(95, 38);
             this.btnVolver.TabIndex = 16;
@@ -223,7 +223,7 @@
             // btnCargar
             // 
             this.btnCargar.Location = new System.Drawing.Point(522, 282);
-            this.btnCargar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCargar.Margin = new System.Windows.Forms.Padding(2);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(95, 38);
             this.btnCargar.TabIndex = 14;
@@ -234,7 +234,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Location = new System.Drawing.Point(272, 282);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(95, 38);
             this.btnLimpiar.TabIndex = 15;
@@ -287,7 +287,7 @@
             // textBoxCUITPrefijo
             // 
             this.textBoxCUITPrefijo.Location = new System.Drawing.Point(136, 128);
-            this.textBoxCUITPrefijo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCUITPrefijo.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCUITPrefijo.MaxLength = 2;
             this.textBoxCUITPrefijo.Name = "textBoxCUITPrefijo";
             this.textBoxCUITPrefijo.Size = new System.Drawing.Size(28, 20);
@@ -297,7 +297,7 @@
             // textBoxCUITSufijo
             // 
             this.textBoxCUITSufijo.Location = new System.Drawing.Point(285, 128);
-            this.textBoxCUITSufijo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCUITSufijo.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCUITSufijo.MaxLength = 2;
             this.textBoxCUITSufijo.Name = "textBoxCUITSufijo";
             this.textBoxCUITSufijo.Size = new System.Drawing.Size(26, 20);
@@ -385,7 +385,7 @@
             // textBoxDepartamento
             // 
             this.textBoxDepartamento.Location = new System.Drawing.Point(260, 226);
-            this.textBoxDepartamento.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDepartamento.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDepartamento.Name = "textBoxDepartamento";
             this.textBoxDepartamento.Size = new System.Drawing.Size(52, 20);
             this.textBoxDepartamento.TabIndex = 8;
@@ -393,7 +393,7 @@
             // textBoxLocalidad
             // 
             this.textBoxLocalidad.Location = new System.Drawing.Point(441, 103);
-            this.textBoxLocalidad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLocalidad.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(176, 20);
             this.textBoxLocalidad.TabIndex = 9;
@@ -402,7 +402,7 @@
             // textBoxCodigoPostal
             // 
             this.textBoxCodigoPostal.Location = new System.Drawing.Point(441, 135);
-            this.textBoxCodigoPostal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCodigoPostal.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCodigoPostal.Name = "textBoxCodigoPostal";
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(176, 20);
             this.textBoxCodigoPostal.TabIndex = 10;
@@ -449,7 +449,7 @@
             // textBoxNumeroPiso
             // 
             this.textBoxNumeroPiso.Location = new System.Drawing.Point(92, 225);
-            this.textBoxNumeroPiso.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxNumeroPiso.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxNumeroPiso.Name = "textBoxNumeroPiso";
             this.textBoxNumeroPiso.Size = new System.Drawing.Size(48, 20);
             this.textBoxNumeroPiso.TabIndex = 7;
@@ -474,7 +474,7 @@
             // textBoxCiudad
             // 
             this.textBoxCiudad.Location = new System.Drawing.Point(441, 165);
-            this.textBoxCiudad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCiudad.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(176, 20);
             this.textBoxCiudad.TabIndex = 11;
@@ -510,7 +510,7 @@
             // textBoxAltura
             // 
             this.textBoxAltura.Location = new System.Drawing.Point(136, 190);
-            this.textBoxAltura.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxAltura.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxAltura.Name = "textBoxAltura";
             this.textBoxAltura.Size = new System.Drawing.Size(176, 20);
             this.textBoxAltura.TabIndex = 6;
@@ -564,7 +564,7 @@
             this.Controls.Add(this.labelTelefono);
             this.Controls.Add(this.labelMail);
             this.Controls.Add(this.labelRazonSocial);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ABM_Alta_Empresa";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "ABM Empresa Publicacion";

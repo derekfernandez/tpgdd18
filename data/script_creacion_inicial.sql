@@ -1461,7 +1461,7 @@ BEGIN
 	
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(1, @adminUser)
-	
+
 	--Lo designo como responsable de todos los premios; VER ESTO
 	UPDATE SQLITO.Premios
 	SET admin_responsable_id = @adminUser

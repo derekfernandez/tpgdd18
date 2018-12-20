@@ -206,7 +206,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
            
 
 
-            if (!validoArroba())
+            if (!validarMail())
             {
                 vacios = true;
                 errorProviderMailSinArroba.SetError(textBoxMail, "Ingrese un unico @");
@@ -301,7 +301,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 errorProviderTelefono.SetError(textBoxTelefono, "");
             }
 
-            if (validoArroba())
+            if (validarMail())
             {
               
                 errorProviderMailSinArroba.SetError(textBoxMail, "");
@@ -465,23 +465,9 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
 
         //Validacion mail
-        public bool validoArroba()
+        public bool validarMail()
         {
-            
-            foreach (char c in textBoxMail.Text)
-            {
-                if(c == '@')
-                {
-                    cantArrobas++;
-                }
-            }
-            if (cantArrobas == 1)
-            {
-                cantArrobas = 0;
-                return true;
-            }
-            cantArrobas = 0;
-            return false;
+            return BaseWindow.check_email(textBoxMail.Text);
         }
 
         
@@ -493,18 +479,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 textBoxNumeroPiso.Text = "PB";
             }
         }
-
-    
-
-     
-      
-
-    
-
-       
-     
-
-      
 
     }
 }

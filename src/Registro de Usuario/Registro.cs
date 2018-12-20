@@ -55,8 +55,8 @@ namespace PalcoNet.Registro_de_Usuario
                 groupBox_clientes.Enabled = true;
                 groupBox_clientes.Visible = true;
                 comboBox_cargarTiposDocumento(comboBox_tipodoc);
-                monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
-                monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
+                dtp_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                dtp_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
             }
 
             else if (cliente != null)
@@ -83,8 +83,8 @@ namespace PalcoNet.Registro_de_Usuario
                 groupBox_clientes.Enabled = true;
                 groupBox_clientes.Visible = true;
                 comboBox_cargarTiposDocumento(comboBox_tipodoc);
-                monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
-                monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
+                dtp_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                dtp_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
                 label1.Visible = false;
                 lbl_modify.Visible = true;
 
@@ -114,7 +114,7 @@ namespace PalcoNet.Registro_de_Usuario
                 textBox_cvv.Text = Database.getCVVTarjeta(cliente);
                 textBox_nrotarjeta.Text = Database.getNroTarjeta(cliente);
                 lbl_seleccionfecha.Text = cliente.fecha_nac;
-                lbl_fechacreacion.Text = cliente.fecha_creacion;
+                lbl_ejcuil.Text = cliente.fecha_creacion;
                 textBox_calle.Text = cliente.getCalle();
                 textBox_nro.Text = cliente.getAltura();
                 textBox_piso.Text = cliente.getPiso();
@@ -132,8 +132,8 @@ namespace PalcoNet.Registro_de_Usuario
                 comboBox_cargarRolesUsuario(comboBox_roles);
                 comboBox_cargarTiposDocumento(comboBox_tipodoc);
                 btn_next.Enabled = false;
-                monthCalendar_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
-                monthCalendar_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
+                dtp_fechanac.MaxDate = DateTime.Parse(ConfigurationManager.AppSettings["FechaSistema"].ToString());
+                dtp_fechanac.MinDate = new DateTime(1910, 01, 01, 00, 00, 00);
             } 
         }
 
@@ -370,13 +370,6 @@ namespace PalcoNet.Registro_de_Usuario
                 lbl_telinvalido.Hide();
                 return;
             }
-        }
-
-        private void monthCalendar_fechanac_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            lbl_seleccionfecha.Text = monthCalendar_fechanac.SelectionStart.ToShortDateString();
-            errorAdv_fecha.Hide();
-            return;
         }
 
         private void textBox_calle_TextChanged(object sender, EventArgs e)
@@ -620,7 +613,7 @@ namespace PalcoNet.Registro_de_Usuario
                 {
                     string fechasistema = ConfigurationManager.AppSettings["FechaSistema"].ToString();
                     DateTime fechasistema_dt = DateTime.Parse(fechasistema);
-                    lbl_fechacreacion.Text = fechasistema_dt.ToShortDateString();
+                    lbl_ejcuil.Text = fechasistema_dt.ToShortDateString();
 
                     SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
                     sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
@@ -675,7 +668,7 @@ namespace PalcoNet.Registro_de_Usuario
                     
                     string fechasistema = ConfigurationManager.AppSettings["FechaSistema"].ToString();
                     DateTime fechasistema_dt = DateTime.Parse(fechasistema);
-                    lbl_fechacreacion.Text = fechasistema_dt.ToShortDateString();
+                    lbl_ejcuil.Text = fechasistema_dt.ToShortDateString();
 
                     SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
                     sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
@@ -727,11 +720,11 @@ namespace PalcoNet.Registro_de_Usuario
                     {
                         string fechacreacion_str = cliente.fecha_creacion;
                         DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
-                        lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
+                        lbl_ejcuil.Text = fechacreacion_dt.ToShortDateString();
                         Tarjeta tarjetaModificada = new Tarjeta(textBox_nrotarjeta.Text, textBox_cvv.Text, textBox_banco.Text, textBox_titular.Text, cliente.idtarjeta);
                         Database.actualizarTarjeta(tarjetaModificada);
                         Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
-                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
+                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_ejcuil.Text, textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
                         textBox_tel.Text, cliente.idtarjeta, cliente.iduser, cliente.estado, cliente.puntos);
                         Database.actualizarCliente(clienteModificado);
@@ -754,7 +747,7 @@ namespace PalcoNet.Registro_de_Usuario
                     {
                         string fechacreacion_str = cliente.fecha_creacion;
                         DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
-                        lbl_fechacreacion.Text = fechacreacion_dt.ToShortDateString();
+                        lbl_ejcuil.Text = fechacreacion_dt.ToShortDateString();
 
                         SqlCommand sql = Database.createQuery("INSERT INTO SQLITO.Tarjetas VALUES(@nom,@titular,@nro,@cvv)");
                         sql.Parameters.AddWithValue("@nom", textBox_banco.Text);
@@ -767,7 +760,7 @@ namespace PalcoNet.Registro_de_Usuario
                         string idtarjeta = Database.getValue(cmd);
 
                         Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
-                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
+                        comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_ejcuil.Text, textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
                         textBox_tel.Text, idtarjeta, cliente.iduser, cliente.estado,cliente.puntos);
 
@@ -804,6 +797,12 @@ namespace PalcoNet.Registro_de_Usuario
             if (string.IsNullOrWhiteSpace(textBox_razonsocial.Text))
             {
                 errorAdv_razonsocial.Show();
+            }
+
+            if (Database.razonSocialExiste(textBox_razonsocial.Text))
+            {
+                errorAdv_razonsocial.Show();
+                MessageBox.Show("La razon social ingresada ya existe en el sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             if (string.IsNullOrWhiteSpace(textBox_cuit.Text))
@@ -999,22 +998,27 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void textBox_pisoempresa_TextChanged(object sender, EventArgs e)
         {
-            if (!textBox_soloNumeros(textBox_pisoempresa))
+            if (textBox_soloNumeros(textBox_pisoempresa) || (!textBox_soloNumeros(textBox_pisoempresa) && textBox_pisoempresa.Text.Equals("PB")))
             {
-                errorAdv_pisoempresa.Show();
+                if (textBox_pisoempresa.Text.Equals("0"))
+                {
+                    textBox_pisoempresa.Text = "PB";
+                }
+
+                errorAdv_pisoempresa.Hide();
                 return;
             }
 
             else
             {
-                errorAdv_pisoempresa.Hide();
+                errorAdv_pisoempresa.Show();
                 return;
             }
         }
 
         private void textBox_cpempresa_TextChanged(object sender, EventArgs e)
         {
-            if (!textBox_soloNumeros(textBox_cpempresa))
+            if (!check_cp(textBox_cpempresa.Text))
             {
                 errorAdv_cpempresa.Show();
                 return;
@@ -1084,6 +1088,13 @@ namespace PalcoNet.Registro_de_Usuario
         private void btnmodify_back_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dtp_fechanac_ValueChanged(object sender, EventArgs e)
+        {
+            lbl_seleccionfecha.Text = dtp_fechanac.Value.ToShortDateString();
+            errorAdv_fecha.Hide();
+            return;
         }
     }
 }

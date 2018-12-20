@@ -268,6 +268,17 @@ namespace PalcoNet.Misc
 
         #endregion
 
+        #region Empresa
+
+        public static Boolean razonSocialExiste(string razonsoc)
+        {
+            SqlCommand q = createQuery("SELECT COUNT(*) FROM SQLITO.Empresas WHERE razonsocial = @razonsoc");
+            q.Parameters.AddWithValue("@razonsoc",razonsoc);
+            return (Convert.ToInt32(getValue(q)) != 0);
+        }
+
+        #endregion
+
         #region Login
 
         public static LoginController checkLogin(string username, string pw)
