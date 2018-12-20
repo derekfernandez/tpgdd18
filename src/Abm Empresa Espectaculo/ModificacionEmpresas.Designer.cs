@@ -49,66 +49,65 @@
             // 
             // labelTelefono
             // 
-            this.labelTelefono.Location = new System.Drawing.Point(706, 377);
+            this.labelTelefono.Location = new System.Drawing.Point(662, 380);
             // 
             // labelCUIT
             // 
-            this.labelCUIT.Location = new System.Drawing.Point(61, 264);
+            this.labelCUIT.Location = new System.Drawing.Point(28, 264);
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(61, 320);
+            this.label3.Location = new System.Drawing.Point(28, 320);
             // 
             // labelRazonSocial
             // 
-            this.labelRazonSocial.Location = new System.Drawing.Point(61, 205);
+            this.labelRazonSocial.Location = new System.Drawing.Point(28, 205);
             // 
             // labelMail
             // 
-            this.labelMail.Location = new System.Drawing.Point(706, 435);
+            this.labelMail.Location = new System.Drawing.Point(662, 438);
             // 
             // textBoxRazonSocial
             // 
-            this.textBoxRazonSocial.Location = new System.Drawing.Point(269, 205);
+            this.textBoxRazonSocial.Location = new System.Drawing.Point(236, 205);
             this.textBoxRazonSocial.Size = new System.Drawing.Size(387, 31);
             // 
             // textBoxMail
             // 
-            this.textBoxMail.Location = new System.Drawing.Point(919, 438);
+            this.textBoxMail.Location = new System.Drawing.Point(875, 441);
             this.textBoxMail.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxTelefono
             // 
-            this.textBoxTelefono.Location = new System.Drawing.Point(919, 374);
+            this.textBoxTelefono.Location = new System.Drawing.Point(875, 377);
             this.textBoxTelefono.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxCuitLargo
             // 
-            this.textBoxCuitLargo.Location = new System.Drawing.Point(381, 264);
+            this.textBoxCuitLargo.Location = new System.Drawing.Point(348, 264);
             // 
             // textBoxDireccion
             // 
-            this.textBoxDireccion.Location = new System.Drawing.Point(269, 323);
+            this.textBoxDireccion.Location = new System.Drawing.Point(236, 323);
             this.textBoxDireccion.Size = new System.Drawing.Size(387, 31);
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(61, 122);
+            this.label2.Location = new System.Drawing.Point(37, 125);
             this.label2.Size = new System.Drawing.Size(586, 32);
             this.label2.Text = "Ingrese los datos de la empresa a modificar:";
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(67, 560);
+            this.btnVolver.Location = new System.Drawing.Point(36, 526);
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(1097, 560);
-
+            this.btnCargar.Location = new System.Drawing.Point(1053, 526);
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(587, 560);
+            this.btnLimpiar.Location = new System.Drawing.Point(586, 526);
             // 
             // label1
             // 
@@ -118,89 +117,89 @@
             // 
             // textBoxCUITSufijo
             // 
-            this.textBoxCUITSufijo.Location = new System.Drawing.Point(608, 264);
+            this.textBoxCUITSufijo.Location = new System.Drawing.Point(575, 264);
             // 
             // textBoxCUITPrefijo
             // 
-            this.textBoxCUITPrefijo.Location = new System.Drawing.Point(269, 264);
+            this.textBoxCUITPrefijo.Location = new System.Drawing.Point(236, 264);
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(62, 511);
+            this.label4.Location = new System.Drawing.Point(38, 497);
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(338, 258);
+            this.label6.Location = new System.Drawing.Point(305, 258);
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(565, 258);
+            this.label5.Location = new System.Drawing.Point(532, 258);
             // 
             // textBoxCodigoPostal
             // 
-            this.textBoxCodigoPostal.Location = new System.Drawing.Point(919, 264);
+            this.textBoxCodigoPostal.Location = new System.Drawing.Point(875, 267);
             this.textBoxCodigoPostal.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(919, 205);
+            this.textBoxLocalidad.Location = new System.Drawing.Point(875, 208);
             this.textBoxLocalidad.Size = new System.Drawing.Size(368, 31);
             // 
             // textBoxDepartamento
             // 
-            this.textBoxDepartamento.Location = new System.Drawing.Point(565, 439);
+            this.textBoxDepartamento.Location = new System.Drawing.Point(532, 439);
             this.textBoxDepartamento.Size = new System.Drawing.Size(91, 31);
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(706, 264);
+            this.label10.Location = new System.Drawing.Point(662, 267);
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(706, 202);
+            this.label9.Location = new System.Drawing.Point(662, 205);
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(328, 433);
+            this.label8.Location = new System.Drawing.Point(295, 433);
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(35, 267);
+            this.label7.Location = new System.Drawing.Point(2, 267);
             // 
             // label12
             // 
-            this.label12.Location = new System.Drawing.Point(706, 317);
+            this.label12.Location = new System.Drawing.Point(662, 320);
             this.label12.Size = new System.Drawing.Size(100, 31);
             this.label12.Text = "Ciudad";
             // 
             // textBoxCiudad
             // 
-            this.textBoxCiudad.Location = new System.Drawing.Point(919, 320);
+            this.textBoxCiudad.Location = new System.Drawing.Point(875, 323);
             this.textBoxCiudad.Size = new System.Drawing.Size(368, 31);
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(63, 430);
+            this.label11.Location = new System.Drawing.Point(30, 430);
             // 
             // textBoxNumeroPiso
             // 
-            this.textBoxNumeroPiso.Location = new System.Drawing.Point(184, 433);
+            this.textBoxNumeroPiso.Location = new System.Drawing.Point(151, 433);
             this.textBoxNumeroPiso.Size = new System.Drawing.Size(96, 31);
             // 
             // label13
             // 
-            this.label13.Location = new System.Drawing.Point(61, 379);
+            this.label13.Location = new System.Drawing.Point(28, 379);
             // 
             // textBoxAltura
             // 
-            this.textBoxAltura.Location = new System.Drawing.Point(271, 382);
+            this.textBoxAltura.Location = new System.Drawing.Point(238, 382);
             this.textBoxAltura.Size = new System.Drawing.Size(385, 31);
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F);
-            this.label14.Location = new System.Drawing.Point(893, 127);
+            this.label14.Location = new System.Drawing.Point(849, 130);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(143, 31);
             this.label14.TabIndex = 43;
@@ -213,7 +212,7 @@
             this.comboBoxHabilitado.Items.AddRange(new object[] {
             "Si",
             "No"});
-            this.comboBoxHabilitado.Location = new System.Drawing.Point(1072, 125);
+            this.comboBoxHabilitado.Location = new System.Drawing.Point(1028, 128);
             this.comboBoxHabilitado.Name = "comboBoxHabilitado";
             this.comboBoxHabilitado.Size = new System.Drawing.Size(151, 33);
             this.comboBoxHabilitado.TabIndex = 44;
@@ -222,7 +221,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1336, 663);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
+            this.ClientSize = new System.Drawing.Size(1325, 631);
             this.Controls.Add(this.comboBoxHabilitado);
             this.Controls.Add(this.label14);
             this.Name = "ModificacionEmpresas";
