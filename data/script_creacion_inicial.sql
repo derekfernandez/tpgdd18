@@ -23,7 +23,7 @@ WHERE s.name = 'SQLITO'
 ORDER BY t.name
 EXEC (@delete_var)
 PRINT('Borrado de FKs finalizado')
- 
+
 --- BORRADO DE PROCEDURES ---
 
 DECLARE DropSpCursor CURSOR FAST_FORWARD FOR
@@ -31,7 +31,7 @@ DECLARE DropSpCursor CURSOR FAST_FORWARD FOR
         name
     FROM sys.procedures
     WHERE schema_id = SCHEMA_ID('SQLITO')
-
+	
 DECLARE @StoredProcName sysname
 DECLARE @DropStatement NVARCHAR(1000)
 
@@ -346,7 +346,8 @@ BEGIN
 		[tarjeta_id] [int],
 		--Id del usuario al cual esta asociada la cuenta del Cliente
 		[usuario_id] [int],
-		[estado] [bit] DEFAULT 1
+		[estado] [bit] DEFAULT 1,
+		[puntos_gastados] [int] DEFAULT 0
 	)
 
 PRINT('Tabla SQLITO.Clientes creada')

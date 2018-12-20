@@ -682,7 +682,7 @@ namespace PalcoNet.Registro_de_Usuario
                     SqlCommand cmd = Database.createQuery("SELECT TOP 1 id_tarjeta FROM SQLITO.Tarjetas ORDER BY id_tarjeta DESC");
                     string idtarjeta = Database.getValue(cmd);
 
-                    Usuario user = new Usuario(textBox_nombre.Text.ToLower()+textBox_apellido.Text+Database.ultimoIdAlmacenado(), textBox_doc.Text);
+                    Usuario user = new Usuario(textBox_nombre.Text.ToLower()+textBox_apellido.Text, textBox_doc.Text);
                     Database.guardarUsuarioAdmin(user);
                     string iduser = Database.getIDFor(user);
 
@@ -861,7 +861,7 @@ namespace PalcoNet.Registro_de_Usuario
                     q.Parameters.AddWithValue("@id", iduser);
                     Database.execNonQuery(q);
 
-                    SqlCommand cmd = Database.createQuery("INSERT INTO SQLITO.Empresas VALUES(@razonsoc,@fecha_creacion,@cuit,@mail,@dir,@tel,@userid)");
+                    SqlCommand cmd = Database.createQuery("INSERT INTO SQLITO.Empresas VALUES(@razonsoc,@fecha_creacion,@cuit,@mail,@dir,@tel,1,@userid)");
                     cmd.Parameters.AddWithValue("@razonsoc", textBox_razonsocial.Text);
                     cmd.Parameters.AddWithValue("@fecha_creacion", ConfigurationManager.AppSettings["FechaSistema"].ToString());
                     cmd.Parameters.AddWithValue("@cuit", textBox_cuit.Text);
