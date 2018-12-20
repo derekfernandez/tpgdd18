@@ -13,13 +13,15 @@ namespace PalcoNet.Abm_Rol
 {
     public partial class Modify : BaseWindow
     {
-
-        Rol rol { get; set; }
-
-        public Modify(Rol rol)
+        public RoleMainWindow ventanaAnterior { get; set; }
+        public Rol rol { get; set; }
+        
+        public Modify(Rol rol, RoleMainWindow ventanaAnterior)
         {
+            // TODO: Complete member initialization
             InitializeComponent();
             this.rol = rol;
+            this.ventanaAnterior = ventanaAnterior;
         }
 
         private void Modify_Load(object sender, EventArgs e)
@@ -166,13 +168,39 @@ namespace PalcoNet.Abm_Rol
                     }
 
                     Database.agregarFuncionalidades(nuevoRol, li);
+
+                    List<string> li2 = new List<string>();
+
+                    foreach (string func in listBox_disponibles.Items)
+                    {
+                        if (Database.funcionalidesDe(nuevoRol).Contains(func))
+                        {
+                            li2.Add(func);
+                        }
+                    }
+
+                    Database.quitarFuncionalidades(nuevoRol, li2);
                     MessageBox.Show("Rol modificado con éxito", "", MessageBoxButtons.OK);
                     this.Close();
                 }
 
                 else
                 {
+                    Rol nuevoRol = new Rol(rol.id, textBox1.Text);
+                    Database.updateRole(nuevoRol);
+
                     Database.inhabilitarRol(rol);
+                    List<string> li2 = new List<string>();
+
+                    foreach (string func in listBox_disponibles.Items)
+                    {
+                        if (Database.funcionalidesDe(nuevoRol).Contains(func))
+                        {
+                            li2.Add(func);
+                        }
+                    }
+
+                    Database.quitarFuncionalidades(nuevoRol, li2);
                     MessageBox.Show("El rol fue inhabilitado", "", MessageBoxButtons.OK);
                     this.Close();
                 }
@@ -181,11 +209,21 @@ namespace PalcoNet.Abm_Rol
 
         private void btn_habilitar_Click(object sender, EventArgs e)
         {
-            Database.habilitarRol(rol);
-            MessageBox.Show("El rol fue habilitado", "", MessageBoxButtons.OK);
-            btn_habilitar.Enabled = false;
-            lbl_habilitado.Show();
-            return;
+            if (listBox_actuales.Items.Count < 1)
+            {
+                MessageBox.Show("Debe agregar al menos una funcionalidad para habilitar nuevamente el rol", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            else
+            {
+                Database.habilitarRol(rol);
+                MessageBox.Show("El rol fue habilitado", "", MessageBoxButtons.OK);
+                btn_habilitar.Enabled = false;
+                lbl_habilitado.Show();
+                ventanaAnterior.dgvRefresh();
+                return;
+            }
         }
 
         private void Modify_FormClosed(object sender, FormClosedEventArgs e)

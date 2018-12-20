@@ -41,7 +41,7 @@ namespace PalcoNet.Abm_Rol
             this.Close();
         }
 
-        private void dgvRefresh()
+        public void dgvRefresh()
         {   
             DataTable roles = Database.getRoles_table();
             DataTable rolesActivos = Database.getRolesActivos_table();
@@ -74,7 +74,7 @@ namespace PalcoNet.Abm_Rol
 
                 else
                 {
-                    new Modify(rol).ShowDialog();    
+                    new Modify(rol,this).ShowDialog();    
                 }
             }
         }

@@ -994,6 +994,22 @@ namespace PalcoNet.Misc
             }
         }
 
+        public static void quitarFuncionalidad(Rol rol, string func)
+        {
+            SqlCommand query = createQuery("DELETE FROM SQLITO.Funcionalidades_Roles WHERE rol_id = @rol_id AND funcionalidad_id = @func_id");
+            query.Parameters.AddWithValue("@func_id", getIdFuncionalidad(func));
+            query.Parameters.AddWithValue("@rol_id", getIdRol(rol));
+            execNonQuery(query);
+        }
+
+        public static void quitarFuncionalidades(Rol rol, List<string> func)
+        {
+            foreach (string f in func)
+            {
+                quitarFuncionalidad(rol, f);
+            }
+        }
+
         public static string getIdRol(Rol rol)
         {
             SqlCommand query = createQuery("SELECT id_rol FROM SQLITO.Roles WHERE descripcion = @desc");
