@@ -384,7 +384,7 @@ namespace PalcoNet.Misc
             SqlCommand query2 = createQuery("SELECT id_cliente FROM SQLITO.Clientes WHERE usuario_id = @id");
             query2.Parameters.AddWithValue("@id", query);
             String res = getValue(query2);
-            SqlCommand query3 = createQuery("UPDATE SQLITO.Clientes SET estado = 0 WHERE usuario_id = @res");
+            SqlCommand query3 = createQuery("UPDATE SQLITO.Clientes SET estado = 0 WHERE id_cliente = @res");
             query3.Parameters.AddWithValue("@res", res);
             execNonQuery(query3);
         }
@@ -569,7 +569,7 @@ namespace PalcoNet.Misc
             SqlCommand query2 = createQuery("SELECT usuario_id FROM SQLITO.Clientes WHERE id_cliente = @idd");
             query2.Parameters.AddWithValue("@idd", cliente.id);
             String res = getValue(query2);
-            SqlCommand query3 = createQuery("UPDATE SQLITO.Usuarios SET habilitado = 1 WHERE id_usuario = @res");
+            SqlCommand query3 = createQuery("UPDATE SQLITO.Usuarios SET habilitado = 1, intentos_fallidos = 0 WHERE id_usuario = @res");
             query3.Parameters.AddWithValue("@res", res);
             execNonQuery(query3);
         }
