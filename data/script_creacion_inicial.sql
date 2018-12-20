@@ -1702,6 +1702,7 @@ GO
 
 
 --PROC PARA ALTA EMPRESAS NUEVAS
+
 IF OBJECT_ID('[SQLITO].[pr_Alta_Empresa]') IS NOT NULL
 BEGIN
 
@@ -1765,6 +1766,7 @@ END
 GO
 
 --PROC PARA MODIFICAR EMPRESAS
+
 IF OBJECT_ID('[SQLITO].[pr_Modificar_Empresa]') IS NOT NULL
 BEGIN
 
@@ -1808,9 +1810,9 @@ BEGIN
 
 END
 GO
---IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_altaUsuario_empresa]')
---PROC ASIGNACION USUARIOS PARA EMPRESAS RECIEN CREADAS PARA MODIFICAR
-go
+
+--ALTA USUARIO EMPRESA
+
 IF OBJECT_ID('[SQLITO].[pr_altaUsuario_empresa]') IS NOT NULL
 BEGIN
 	DROP PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
@@ -1863,6 +1865,41 @@ BEGIN
 
 END
 GO
+
+
+--BAJA EMPRESA -> Implica baja usuario
+
+IF OBJECT_ID('[SQLITO].[pr_Baja_empresa]') IS NOT NULL
+BEGIN
+	DROP PROCEDURE [SQLITO].[pr_Baja_empresa]
+
+END
+
+GO
+CREATE PROCEDURE [SQLITO].[pr_Baja_empresa]
+(@idEmpresa int)
+AS
+BEGIN
+		DECLARE @userID INT
+		SET @userID = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
+
+BEGIN TRY
+		BEGIN TRANSACTION
+			UPDATE [SQLITO].[Empresas]
+				SET habilitado = 0
+				WHERE id_empresa = @idEmpresa
+			UPDATE [SQLITO].Usuarios SET habilitado = 0 WHERE id_usuario = @userID
+		COMMIT TRANSACTION
+END TRY
+
+	BEGIN CATCH
+		IF @@ROWCOUNT <> 0  
+			ROLLBACK TRANSACTION
+		;THROW 50000, 'NO SE PUDO INHABILITAR', 1
+	END CATCH
+END
+GO
+
 
 -- PARA ABM DE Grados --
 
@@ -2037,4 +2074,3 @@ CLOSE upd_cursor
 DEALLOCATE upd_cursor
 END
 GO
-
