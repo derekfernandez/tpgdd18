@@ -48,6 +48,9 @@
             this.textBox_usuario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox_clientes = new System.Windows.Forms.GroupBox();
+            this.nrotarjetacounter = new System.Windows.Forms.Label();
+            this.lbl_tarjetalargoerror = new System.Windows.Forms.Label();
+            this.btnmodify_back = new System.Windows.Forms.Button();
             this.lbl_fechacreacion = new System.Windows.Forms.Label();
             this.lbl_cvvlen = new System.Windows.Forms.Label();
             this.errorAdv_titular = new System.Windows.Forms.Label();
@@ -169,9 +172,6 @@
             this.lbl_showestado = new System.Windows.Forms.Label();
             this.lbl_estado = new System.Windows.Forms.Label();
             this.btn_habilitar = new System.Windows.Forms.Button();
-            this.btnmodify_back = new System.Windows.Forms.Button();
-            this.lbl_tarjetalargoerror = new System.Windows.Forms.Label();
-            this.nrotarjetacounter = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.groupBox_gral.SuspendLayout();
             this.groupBox_clientes.SuspendLayout();
@@ -474,15 +474,46 @@
             this.groupBox_clientes.TabStop = false;
             this.groupBox_clientes.Visible = false;
             // 
+            // nrotarjetacounter
+            // 
+            this.nrotarjetacounter.AutoSize = true;
+            this.nrotarjetacounter.ForeColor = System.Drawing.Color.Orange;
+            this.nrotarjetacounter.Location = new System.Drawing.Point(20, 607);
+            this.nrotarjetacounter.Name = "nrotarjetacounter";
+            this.nrotarjetacounter.Size = new System.Drawing.Size(0, 13);
+            this.nrotarjetacounter.TabIndex = 76;
+            // 
+            // lbl_tarjetalargoerror
+            // 
+            this.lbl_tarjetalargoerror.AutoSize = true;
+            this.lbl_tarjetalargoerror.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_tarjetalargoerror.Location = new System.Drawing.Point(92, 608);
+            this.lbl_tarjetalargoerror.Name = "lbl_tarjetalargoerror";
+            this.lbl_tarjetalargoerror.Size = new System.Drawing.Size(169, 13);
+            this.lbl_tarjetalargoerror.TabIndex = 75;
+            this.lbl_tarjetalargoerror.Text = "16 dígitos, sin guiones ni espacios";
+            this.lbl_tarjetalargoerror.Visible = false;
+            // 
+            // btnmodify_back
+            // 
+            this.btnmodify_back.Location = new System.Drawing.Point(210, 625);
+            this.btnmodify_back.Name = "btnmodify_back";
+            this.btnmodify_back.Size = new System.Drawing.Size(75, 23);
+            this.btnmodify_back.TabIndex = 74;
+            this.btnmodify_back.Text = "Regresar";
+            this.btnmodify_back.UseVisualStyleBackColor = true;
+            this.btnmodify_back.Visible = false;
+            this.btnmodify_back.Click += new System.EventHandler(this.btnmodify_back_Click);
+            // 
             // lbl_fechacreacion
             // 
             this.lbl_fechacreacion.AutoSize = true;
-            this.lbl_fechacreacion.Location = new System.Drawing.Point(209, 128);
+            this.lbl_fechacreacion.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_fechacreacion.Location = new System.Drawing.Point(167, 128);
             this.lbl_fechacreacion.Name = "lbl_fechacreacion";
-            this.lbl_fechacreacion.Size = new System.Drawing.Size(10, 13);
+            this.lbl_fechacreacion.Size = new System.Drawing.Size(122, 13);
             this.lbl_fechacreacion.TabIndex = 73;
-            this.lbl_fechacreacion.Text = "-";
-            this.lbl_fechacreacion.Visible = false;
+            this.lbl_fechacreacion.Text = "Ejemplo: 11-12345678-1";
             // 
             // lbl_cvvlen
             // 
@@ -739,7 +770,7 @@
             this.errorAdv_cuil.AutoSize = true;
             this.errorAdv_cuil.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.errorAdv_cuil.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_cuil.Location = new System.Drawing.Point(156, 128);
+            this.errorAdv_cuil.Location = new System.Drawing.Point(151, 124);
             this.errorAdv_cuil.Name = "errorAdv_cuil";
             this.errorAdv_cuil.Size = new System.Drawing.Size(15, 20);
             this.errorAdv_cuil.TabIndex = 48;
@@ -1063,7 +1094,7 @@
             // 
             // textBox_cuil
             // 
-            this.textBox_cuil.Location = new System.Drawing.Point(51, 128);
+            this.textBox_cuil.Location = new System.Drawing.Point(50, 124);
             this.textBox_cuil.Name = "textBox_cuil";
             this.textBox_cuil.Size = new System.Drawing.Size(100, 20);
             this.textBox_cuil.TabIndex = 11;
@@ -1698,37 +1729,6 @@
             this.btn_habilitar.UseVisualStyleBackColor = true;
             this.btn_habilitar.Visible = false;
             this.btn_habilitar.Click += new System.EventHandler(this.btn_habilitar_Click);
-            // 
-            // btnmodify_back
-            // 
-            this.btnmodify_back.Location = new System.Drawing.Point(210, 625);
-            this.btnmodify_back.Name = "btnmodify_back";
-            this.btnmodify_back.Size = new System.Drawing.Size(75, 23);
-            this.btnmodify_back.TabIndex = 74;
-            this.btnmodify_back.Text = "Regresar";
-            this.btnmodify_back.UseVisualStyleBackColor = true;
-            this.btnmodify_back.Visible = false;
-            this.btnmodify_back.Click += new System.EventHandler(this.btnmodify_back_Click);
-            // 
-            // lbl_tarjetalargoerror
-            // 
-            this.lbl_tarjetalargoerror.AutoSize = true;
-            this.lbl_tarjetalargoerror.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_tarjetalargoerror.Location = new System.Drawing.Point(92, 608);
-            this.lbl_tarjetalargoerror.Name = "lbl_tarjetalargoerror";
-            this.lbl_tarjetalargoerror.Size = new System.Drawing.Size(169, 13);
-            this.lbl_tarjetalargoerror.TabIndex = 75;
-            this.lbl_tarjetalargoerror.Text = "16 dígitos, sin guiones ni espacios";
-            this.lbl_tarjetalargoerror.Visible = false;
-            // 
-            // nrotarjetacounter
-            // 
-            this.nrotarjetacounter.AutoSize = true;
-            this.nrotarjetacounter.ForeColor = System.Drawing.Color.Orange;
-            this.nrotarjetacounter.Location = new System.Drawing.Point(20, 607);
-            this.nrotarjetacounter.Name = "nrotarjetacounter";
-            this.nrotarjetacounter.Size = new System.Drawing.Size(0, 13);
-            this.nrotarjetacounter.TabIndex = 76;
             // 
             // Registro
             // 

@@ -77,7 +77,13 @@ namespace PalcoNet.Abm_Rol
                     MessageBox.Show("El rol no se puede inhabilitar","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     return;
                 }
-                
+
+                else if (rol.descripcion.Equals(session.rol.descripcion))
+                {
+                    MessageBox.Show("No se puede deshabilitar el rol de la sesion actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 else
                 {
                     Database.inhabilitarRol(rol);

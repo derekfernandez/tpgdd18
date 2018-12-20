@@ -183,6 +183,13 @@ namespace PalcoNet
             return match.Success;
         }
 
+        public static Boolean check_cp(string cp)
+        {
+            Regex regex = new Regex(@"^[a-z]*[0-9][a-z0-9]*$");
+            Match m = regex.Match(cp);
+            return m.Success;
+        }
+
         public static void dgv_addButton(DataGridView dgv, string t)
         {
             DataGridViewButtonColumn boton = new DataGridViewButtonColumn();

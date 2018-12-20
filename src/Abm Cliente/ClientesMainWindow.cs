@@ -62,7 +62,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre(textBox_nombre.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -73,7 +73,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorApellido(textBox_apellido.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -84,7 +84,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNroDoc(textBox_nrodoc.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -95,7 +95,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorEmail(textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -106,7 +106,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_Apellido(textBox_nombre.Text,textBox_apellido.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -117,7 +117,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_mail(textBox_nombre.Text, textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -128,7 +128,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_nroDoc(textBox_nombre.Text, textBox_nrodoc.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -139,7 +139,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorApellido_nroDoc(textBox_apellido.Text, textBox_nrodoc.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -150,7 +150,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorApellido_mail(textBox_apellido.Text, textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -161,7 +161,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorMail_nroDoc(textBox_mail.Text, textBox_nrodoc.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -172,7 +172,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_apellido_nrodoc(textBox_nombre.Text, textBox_apellido.Text, textBox_nrodoc.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -183,7 +183,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_apellido_mail(textBox_nombre.Text, textBox_apellido.Text, textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -194,7 +194,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_nroDoc_mail(textBox_nombre.Text, textBox_nrodoc.Text, textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -205,7 +205,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorApellido_nroDoc_mail(textBox_apellido.Text, textBox_nrodoc.Text, textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -216,7 +216,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_clientesmodificar.DataSource = Database.getClientesPorNombre_apellido_nroDoc_mail(textBox_nombre.Text, textBox_apellido.Text, textBox_nrodoc.Text, textBox_mail.Text);
                 dgv_clientesmodificar.Columns["estado"].Visible = false;
-                if (dgv_clientesmodificar.Columns.Count == 14)
+                if (dgv_clientesmodificar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_clientesmodificar, "Modificar");
                 }
@@ -235,7 +235,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre(textBox_nombreeliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false;
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -247,7 +247,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorApellido(textBox_apellidoeliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -259,7 +259,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNroDoc(textBox_nrodoceliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -271,7 +271,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorEmail(textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -284,7 +284,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_Apellido(textBox_nombreeliminar.Text,
                     textBox_apellidoeliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -296,7 +296,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_mail(textBox_nombreeliminar.Text, textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -309,7 +309,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_nroDoc(textBox_nombreeliminar.Text,
                     textBox_nrodoceliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -322,7 +322,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorApellido_nroDoc(textBox_apellidoeliminar.Text,
                     textBox_nrodoceliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -334,7 +334,7 @@ namespace PalcoNet.Abm_Cliente
             {
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorApellido_mail(textBox_apellidoeliminar.Text, textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -347,7 +347,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorMail_nroDoc(textBox_maileliminar.Text,
                     textBox_nrodoceliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -360,7 +360,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_apellido_nrodoc(textBox_nombreeliminar.Text,
                     textBox_apellidoeliminar.Text, textBox_nrodoceliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -373,7 +373,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_apellido_mail(textBox_nombreeliminar.Text,
                     textBox_apellidoeliminar.Text, textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -386,7 +386,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_nroDoc_mail(textBox_nombreeliminar.Text,
                     textBox_nrodoceliminar.Text, textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -399,7 +399,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorApellido_nroDoc_mail(textBox_apellidoeliminar.Text,
                     textBox_nrodoceliminar.Text, textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -412,7 +412,7 @@ namespace PalcoNet.Abm_Cliente
                 dgv_eliminar.DataSource = Database.getClientesHabilitadosPorNombre_apellido_nroDoc_mail(textBox_nombreeliminar.Text,
                     textBox_apellidoeliminar.Text, textBox_nrodoceliminar.Text, textBox_maileliminar.Text);
                 dgv_eliminar.Columns["estado"].Visible = false; 
-                if (dgv_eliminar.Columns.Count == 14)
+                if (dgv_eliminar.Columns.Count == 15)
                 {
                     dgv_addButton(dgv_eliminar, "Eliminar");
                 }
@@ -459,7 +459,7 @@ namespace PalcoNet.Abm_Cliente
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["fecha_creacion"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["mail"].Value.ToString(),
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["direccion"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["telefono"].Value.ToString(),
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["tarjeta_id"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["usuario_id"].Value.ToString(),
-                    dgv_clientesmodificar.Rows[e.RowIndex].Cells["estado"].Value.ToString());
+                    dgv_clientesmodificar.Rows[e.RowIndex].Cells["estado"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["puntos_gastados"].Value.ToString());
 
                 new Registro_de_Usuario.Registro(cliente).ShowDialog();
                 dgv_clientesmodificar.DataSource = null;

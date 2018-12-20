@@ -23,6 +23,7 @@ namespace PalcoNet.Misc
         public string idtarjeta { get; set; }
         public string iduser { get; set; }
         public string estado { get; set; }
+        public string puntos { get; set; }
 
         public string calle { get; set; }
         public string altura { get; set; }
@@ -37,7 +38,7 @@ namespace PalcoNet.Misc
         public string emisortarjeta { get; set; }
 
         public Cliente(String id,String nombre,String apellido,String cuil,String tipo_doc,String nro_doc,String fecha_nac,
-                            String fecha_creacion,String mail,String direccion,String tel, String idtarjeta,String iduser, String estado)
+                            String fecha_creacion,String mail,String direccion,String tel, String idtarjeta,String iduser, String estado, String puntos)
         {
             this.id=id;
             this.nombre=nombre;
@@ -53,6 +54,7 @@ namespace PalcoNet.Misc
             this.idtarjeta=idtarjeta;
             this.iduser=iduser;
             this.estado=estado;
+            this.puntos = puntos;
             setCalle(direccion);
             setAltura(direccion);
             setPiso(direccion);
@@ -79,7 +81,7 @@ namespace PalcoNet.Misc
         }
 
         public Cliente(String nombre, String apellido, String cuil, String tipo_doc, String nro_doc, String fecha_nac,
-                            String fecha_creacion, String mail, String direccion, String tel, String idtarjeta, String iduser, String estado)
+                            String fecha_creacion, String mail, String direccion, String tel, String idtarjeta, String iduser, String estado, String puntos)
         {
             this.nombre = nombre;
             this.apellido = apellido;
@@ -94,6 +96,7 @@ namespace PalcoNet.Misc
             this.idtarjeta = idtarjeta;
             this.iduser = iduser;
             this.estado = estado;
+            this.puntos = puntos;
             setCalle(direccion);
             setAltura(direccion);
             setPiso(direccion);

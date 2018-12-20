@@ -380,6 +380,13 @@ namespace PalcoNet.Misc
             SqlCommand update = createQuery("UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE username = @username");
             update.Parameters.AddWithValue("@username", user.username);
             execNonQuery(update);
+            String query = getIdPorUsername(user);
+            SqlCommand query2 = createQuery("SELECT id_cliente FROM SQLITO.Clientes WHERE usuario_id = @id");
+            query2.Parameters.AddWithValue("@id", query);
+            String res = getValue(query2);
+            SqlCommand query3 = createQuery("UPDATE SQLITO.Clientes SET estado = 0 WHERE usuario_id = @res");
+            query3.Parameters.AddWithValue("@res", res);
+            execNonQuery(query3);
         }
 
         public static bool estaInhabilitado(Usuario user)
@@ -528,10 +535,17 @@ namespace PalcoNet.Misc
             return getValue(sql);
         }
 
+        public static string getIdPorUsername(Usuario user)
+        {
+            SqlCommand sql = createQuery("SELECT id_usuario FROM SQLITO.Usuarios WHERE username = @user");
+            sql.Parameters.AddWithValue("@user", user.username);
+            return getValue(sql);
+        }
+
         public static void guardarCliente(Cliente cliente)
         { 
             SqlCommand query = createQuery(@"INSERT INTO SQLITO.Clientes VALUES(@nom, @ap, @cuil, @tipodoc, @nrodoc, @fecha_nac,
-                 @fecha_creacion, @mail, @direccion, @tel, @id_tarjeta, @id_user, 1)");
+                 @fecha_creacion, @mail, @direccion, @tel, @id_tarjeta, @id_user, 1, 0)");
             query.Parameters.AddWithValue("@nom", cliente.nombre);
             query.Parameters.AddWithValue("@ap", cliente.apellido);
             query.Parameters.AddWithValue("@cuil", cliente.cuil);
@@ -552,6 +566,12 @@ namespace PalcoNet.Misc
             SqlCommand query = createQuery("UPDATE SQLITO.Clientes SET estado = 1 WHERE id_cliente = @id");
             query.Parameters.AddWithValue("@id", cliente.id);
             execNonQuery(query);
+            SqlCommand query2 = createQuery("SELECT usuario_id FROM SQLITO.Clientes WHERE id_cliente = @idd");
+            query2.Parameters.AddWithValue("@idd", cliente.id);
+            String res = getValue(query2);
+            SqlCommand query3 = createQuery("UPDATE SQLITO.Usuarios SET habilitado = 1 WHERE id_usuario = @res");
+            query3.Parameters.AddWithValue("@res", res);
+            execNonQuery(query3);
         }
 
         public static DataRow getTarjetaDeCliente(Cliente cliente)
@@ -563,28 +583,28 @@ namespace PalcoNet.Misc
 
         public static DataTable getClientesPorNombre(string nombre)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nombre + '%' ORDER BY nombre");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nombre + '%' AND nombre != 'Admin' ORDER BY nombre");
             query.Parameters.AddWithValue("@nombre",nombre);
             return getTable(query);
         }
 
         public static DataTable getClientesPorApellido(string apellido)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @apellido + '%' ORDER BY apellido");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @apellido + '%' AND nombre != 'Admin' ORDER BY apellido");
             query.Parameters.AddWithValue("@apellido",apellido);
             return getTable(query);
         }
 
         public static DataTable getClientesPorNroDoc(string nrodoc)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE numero_documento = @nrodoc");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE numero_documento = @nrodoc AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
         }
 
         public static DataTable getClientesPorEmail(string email)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @email + '%' ORDER BY mail");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @email + '%' AND nombre != 'Admin' ORDER BY mail");
             query.Parameters.AddWithValue("@email", email);
             return getTable(query);
         }
@@ -592,7 +612,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorNombre_Apellido(string nombre, string apellido)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             return getTable(query);
@@ -601,7 +621,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorNombre_nroDoc(string nombre, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
@@ -610,7 +630,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorNombre_mail(string nombre, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@mail", mail);
             return getTable(query);
@@ -619,7 +639,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorApellido_nroDoc(string apellido, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
@@ -628,7 +648,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorApellido_mail(string apellido, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
             return getTable(query);
@@ -637,7 +657,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorMail_nroDoc(string mail, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@mail", mail);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
@@ -646,7 +666,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorNombre_apellido_nrodoc(string nombre, string apellido, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
@@ -656,7 +676,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorNombre_apellido_mail(string nombre, string apellido, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
@@ -666,7 +686,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorNombre_nroDoc_mail(string nombre, string nrodoc, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@nrodoc",nrodoc);
             query.Parameters.AddWithValue("@mail", mail);
@@ -676,7 +696,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesPorApellido_nroDoc_mail(string apellido, string nrodoc, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nrodoc",nrodoc);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
@@ -687,7 +707,7 @@ namespace PalcoNet.Misc
         { 
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND id_cliente
                  IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%' AND
-                    numero_documento = @nrodoc)");
+                    numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
@@ -697,28 +717,28 @@ namespace PalcoNet.Misc
 
         public static DataTable getClientesHabilitadosPorNombre(string nombre)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nombre + '%' AND estado = 1 ORDER BY nombre");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nombre + '%' AND estado = 1  AND nombre != 'Admin' ORDER BY nombre");
             query.Parameters.AddWithValue("@nombre", nombre);
             return getTable(query);
         }
 
         public static DataTable getClientesHabilitadosPorApellido(string apellido)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @apellido + '%'  AND estado = 1 ORDER BY apellido");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @apellido + '%' AND nombre != 'Admin' AND estado = 1 ORDER BY apellido");
             query.Parameters.AddWithValue("@apellido", apellido);
             return getTable(query);
         }
 
         public static DataTable getClientesHabilitadosPorNroDoc(string nrodoc)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE numero_documento = @nrodoc AND estado = 1");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE numero_documento = @nrodoc AND estado = 1  AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
         }
 
         public static DataTable getClientesHabilitadosPorEmail(string email)
         {
-            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @email + '%' AND estado = 1 ORDER BY mail");
+            SqlCommand query = createQuery("SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @email + '%' AND estado = 1 AND nombre != 'Admin' ORDER BY mail");
             query.Parameters.AddWithValue("@email", email);
             return getTable(query);
         }
@@ -726,7 +746,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorNombre_Apellido(string nombre, string apellido)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             return getTable(query);
@@ -735,7 +755,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorNombre_nroDoc(string nombre, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
@@ -744,7 +764,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorNombre_mail(string nombre, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@mail", mail);
             return getTable(query);
@@ -753,7 +773,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorApellido_nroDoc(string apellido, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
@@ -762,7 +782,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorApellido_mail(string apellido, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
             return getTable(query);
@@ -771,7 +791,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorMail_nroDoc(string mail, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@mail", mail);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             return getTable(query);
@@ -780,7 +800,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorNombre_apellido_nrodoc(string nombre, string apellido, string nrodoc)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
@@ -790,7 +810,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorNombre_apellido_mail(string nombre, string apellido, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%')");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%') AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
@@ -800,7 +820,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorNombre_nroDoc_mail(string nombre, string nrodoc, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             query.Parameters.AddWithValue("@mail", mail);
@@ -810,7 +830,7 @@ namespace PalcoNet.Misc
         public static DataTable getClientesHabilitadosPorApellido_nroDoc_mail(string apellido, string nrodoc, string mail)
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND estado = 1  AND id_cliente
-                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc)");
+                 IN (SELECT id_cliente FROM SQLITO.Clientes WHERE mail LIKE '%' + @mail + '%' AND numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nrodoc", nrodoc);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
@@ -821,7 +841,7 @@ namespace PalcoNet.Misc
         {
             SqlCommand query = createQuery(@"SELECT * FROM SQLITO.Clientes WHERE nombre LIKE '%' + @nom + '%' AND estado = 1 AND id_cliente
                  IN (SELECT id_cliente FROM SQLITO.Clientes WHERE apellido LIKE '%' + @ap + '%' AND mail LIKE '%' + @mail + '%' AND
-                    numero_documento = @nrodoc)");
+                    numero_documento = @nrodoc) AND nombre != 'Admin'");
             query.Parameters.AddWithValue("@nom", nombre);
             query.Parameters.AddWithValue("@ap", apellido);
             query.Parameters.AddWithValue("@mail", mail);
@@ -858,6 +878,13 @@ namespace PalcoNet.Misc
             SqlCommand query = createQuery("UPDATE SQLITO.Clientes SET estado = 0 WHERE id_cliente = @id");
             query.Parameters.AddWithValue("@id", cliente.id);
             execNonQuery(query);
+            SqlCommand query2 = createQuery("SELECT usuario_id FROM SQLITO.Clientes WHERE id_cliente = @idd");
+            query2.Parameters.AddWithValue("@idd", cliente.id);
+            String res = getValue(query2);
+            SqlCommand query3 = createQuery("UPDATE SQLITO.Usuarios SET habilitado = 0 WHERE id_usuario = @res");
+            query3.Parameters.AddWithValue("@res", res);
+            execNonQuery(query3);
+            
         }
 
         public static Boolean documentoEsDeCliente(string nrodoc, string tipodoc, Cliente cliente)

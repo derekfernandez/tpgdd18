@@ -410,15 +410,20 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void textBox_piso_TextChanged(object sender, EventArgs e)
         {
-            if (!textBox_soloNumeros(textBox_piso))
+            if (textBox_soloNumeros(textBox_piso) || (!textBox_soloNumeros(textBox_piso) && textBox_piso.Text.Equals("PB")))
             {
-                errorAdv_piso.Show();
+                if (textBox_piso.Text.Equals("0"))
+                {
+                    textBox_piso.Text = "PB";
+                }
+
+                errorAdv_piso.Hide();
                 return;
             }
 
             else
             {
-                errorAdv_piso.Hide();
+                errorAdv_piso.Show();
                 return;
             }
         }
@@ -441,7 +446,7 @@ namespace PalcoNet.Registro_de_Usuario
         private void textBox_cp_TextChanged(object sender, EventArgs e)
         {
 
-            if (!textBox_soloNumeros(textBox_cp))
+            if (!check_cp(textBox_cp.Text))
             {
                 errorAdv_cp.Show();
                 return;
@@ -639,7 +644,7 @@ namespace PalcoNet.Registro_de_Usuario
                     Cliente nuevoCliente = new Cliente(textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
                         comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, ConfigurationManager.AppSettings["FechaSistema"].ToString(), textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                        textBox_tel.Text, idtarjeta, iduser, "1");
+                        textBox_tel.Text, idtarjeta, iduser, "1","0");
                     Database.guardarCliente(nuevoCliente);
 
                     MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
@@ -693,7 +698,7 @@ namespace PalcoNet.Registro_de_Usuario
                     Cliente nuevoCliente = new Cliente(textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
                         comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, ConfigurationManager.AppSettings["FechaSistema"].ToString(), textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                        textBox_tel.Text, idtarjeta, iduser, "1");
+                        textBox_tel.Text, idtarjeta, iduser, "1","0");
                     Database.guardarCliente(nuevoCliente);
 
                     MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK);
@@ -728,7 +733,7 @@ namespace PalcoNet.Registro_de_Usuario
                         Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
                         comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                        textBox_tel.Text, cliente.idtarjeta, cliente.iduser, cliente.estado);
+                        textBox_tel.Text, cliente.idtarjeta, cliente.iduser, cliente.estado, cliente.puntos);
                         Database.actualizarCliente(clienteModificado);
 
                         MessageBox.Show("Cliente modificado con éxito", "", MessageBoxButtons.OK);
@@ -764,7 +769,7 @@ namespace PalcoNet.Registro_de_Usuario
                         Cliente clienteModificado = new Cliente(cliente.id, textBox_nombre.Text, textBox_apellido.Text, textBox_cuil.Text,
                         comboBox_tipodoc.Text.ToString(), textBox_doc.Text, lbl_seleccionfecha.Text, lbl_fechacreacion.Text, textBox_mail.Text,
                         (textBox_calle.Text + "," + textBox_nro.Text + "," + textBox_piso.Text + "º" + textBox_depto.Text + "," + textBox_localidad.Text + ", CP: " + textBox_cp.Text),
-                        textBox_tel.Text, idtarjeta, cliente.iduser, cliente.estado);
+                        textBox_tel.Text, idtarjeta, cliente.iduser, cliente.estado,cliente.puntos);
 
                         Database.actualizarCliente(clienteModificado);
 
@@ -1054,8 +1059,17 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void textBox_titular_TextChanged(object sender, EventArgs e)
         {
-            errorAdv_titular.Hide();
-            return;
+            if (!textBox_soloLetras(textBox_titular))
+            {
+                errorAdv_titular.Show();
+                return;
+            }
+
+            else
+            {
+                errorAdv_titular.Hide();
+                return;    
+            }
         }
 
         private void btn_habilitar_Click(object sender, EventArgs e)
