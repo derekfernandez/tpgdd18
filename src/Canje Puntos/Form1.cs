@@ -115,6 +115,13 @@ namespace PalcoNet.Canje_Puntos
                     SqlCommand query2 = Database.createQuery("UPDATE SQLITO.Premios SET cantidad_stock = (SELECT cantidad_stock FROM SQLITO.Premios WHERE descripcion=@nombreDescripcion) - 1 WHERE descripcion=@nombreDescripcion");
                     query2.Parameters.AddWithValue("@nombreDescripcion", dataGridView1.CurrentRow.Cells[0].Value.ToString());
                     query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
+
+                    //Update al usuario con sus nuevos puntos
+                    SqlCommand puntosGastadosNuevos = Database.createQuery("UPDATE SQLITO.Clientes SET puntos_gastados = (puntos_gastados + @puntosCanjeados) WHERE id_cliente = @cliente");
+                    puntosGastadosNuevos.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
+                    puntosGastadosNuevos.Parameters.AddWithValue("@puntosCanjeados", Int32.Parse(dataGridView1.CurrentRow.Cells[1].Value.ToString()));
+
+                    Database.execNonQuery(puntosGastadosNuevos);
                     Database.execNonQuery(query);
                     Database.execNonQuery(query2);
                     sumarPuntos();
