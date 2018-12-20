@@ -14,8 +14,7 @@ GO
 --- BORRADO DE CONSTRAINTS ---
 
 DECLARE @delete_var NVARCHAR(255) = ''
-SELECT @delete_var = @delete_var + 'ALTER TABLE ' + QUOTENAME('SQLITO') + '.' + QUOTENAME(t.name) + ' DROP CONSTRAINT ' + 
-	QUOTENAME(fk.name) + '; ' + CHAR(13)
+SELECT @delete_var = @delete_var + 'ALTER TABLE ' + QUOTENAME('SQLITO') + '.' + QUOTENAME(t.name) + ' DROP CONSTRAINT ' +  QUOTENAME(fk.name) + '; ' + CHAR(13)
 FROM sys.tables t
 JOIN sys.foreign_keys fk ON t.object_id = fk.parent_object_id
 JOIN sys.schemas s ON t.schema_id = s.schema_id
@@ -1601,13 +1600,13 @@ BEGIN
 
 	SELECT TOP 5 C.nombre,
 	   	   C.apellido,
-	       SUM(P.cantidad)
+	       (SUM(P.cantidad) - C.puntos_gastados)
 	FROM [SQLITO].[Clientes] AS C
 		JOIN [SQLITO].[Puntos] AS P ON (C.id_cliente = P.cliente_id)
 	--Solo me quedo con los lotes de puntos cuyo vencimiento es anterior al parametro (estan vencidos)
 	WHERE P.fecha_vencimiento <= @fechaParametro
-	GROUP BY P.cliente_id, C.nombre, C.apellido
-	ORDER BY SUM(P.cantidad) DESC
+	GROUP BY P.cliente_id, C.nombre, C.apellido, C.puntos_gastados
+	ORDER BY (SUM(P.cantidad) - C.puntos_gastados) DESC
 
 END
 GO
@@ -1808,9 +1807,8 @@ BEGIN
 
 END
 GO
---IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_altaUsuario_empresa]')
+
 --PROC ASIGNACION USUARIOS PARA EMPRESAS RECIEN CREADAS PARA MODIFICAR
-go
 IF OBJECT_ID('[SQLITO].[pr_altaUsuario_empresa]') IS NOT NULL
 BEGIN
 	DROP PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
