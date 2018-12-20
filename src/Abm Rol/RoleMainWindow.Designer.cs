@@ -30,6 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.createTab = new System.Windows.Forms.TabPage();
+            this.errorAdv_nombre = new System.Windows.Forms.Label();
+            this.error_sololetras = new System.Windows.Forms.Label();
+            this.error_nocompleto = new System.Windows.Forms.Label();
+            this.errorAdv_disponibles = new System.Windows.Forms.Label();
+            this.errorAdv_asignadas = new System.Windows.Forms.Label();
+            this.errorSeleccionNula = new System.Windows.Forms.Label();
             this.listBox_agregadas = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,12 +52,6 @@
             this.deleteTab = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.dgv_delete = new System.Windows.Forms.DataGridView();
-            this.errorSeleccionNula = new System.Windows.Forms.Label();
-            this.errorAdv_asignadas = new System.Windows.Forms.Label();
-            this.errorAdv_disponibles = new System.Windows.Forms.Label();
-            this.error_nocompleto = new System.Windows.Forms.Label();
-            this.error_sololetras = new System.Windows.Forms.Label();
-            this.errorAdv_nombre = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.createTab.SuspendLayout();
@@ -104,6 +104,78 @@
             this.createTab.TabIndex = 0;
             this.createTab.Text = "Crear";
             this.createTab.UseVisualStyleBackColor = true;
+            // 
+            // errorAdv_nombre
+            // 
+            this.errorAdv_nombre.AutoSize = true;
+            this.errorAdv_nombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.errorAdv_nombre.ForeColor = System.Drawing.Color.Red;
+            this.errorAdv_nombre.Location = new System.Drawing.Point(197, 53);
+            this.errorAdv_nombre.Name = "errorAdv_nombre";
+            this.errorAdv_nombre.Size = new System.Drawing.Size(15, 20);
+            this.errorAdv_nombre.TabIndex = 17;
+            this.errorAdv_nombre.Text = "*";
+            this.errorAdv_nombre.Visible = false;
+            // 
+            // error_sololetras
+            // 
+            this.error_sololetras.AutoSize = true;
+            this.error_sololetras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.error_sololetras.ForeColor = System.Drawing.Color.Red;
+            this.error_sololetras.Location = new System.Drawing.Point(16, 76);
+            this.error_sololetras.Name = "error_sololetras";
+            this.error_sololetras.Size = new System.Drawing.Size(212, 15);
+            this.error_sololetras.TabIndex = 16;
+            this.error_sololetras.Text = "El nombre puede contener solo letras";
+            this.error_sololetras.Visible = false;
+            // 
+            // error_nocompleto
+            // 
+            this.error_nocompleto.AutoSize = true;
+            this.error_nocompleto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.error_nocompleto.ForeColor = System.Drawing.Color.Red;
+            this.error_nocompleto.Location = new System.Drawing.Point(16, 77);
+            this.error_nocompleto.Name = "error_nocompleto";
+            this.error_nocompleto.Size = new System.Drawing.Size(162, 15);
+            this.error_nocompleto.TabIndex = 15;
+            this.error_nocompleto.Text = "Debe completar este campo";
+            this.error_nocompleto.Visible = false;
+            // 
+            // errorAdv_disponibles
+            // 
+            this.errorAdv_disponibles.AutoSize = true;
+            this.errorAdv_disponibles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorAdv_disponibles.ForeColor = System.Drawing.Color.Red;
+            this.errorAdv_disponibles.Location = new System.Drawing.Point(162, 105);
+            this.errorAdv_disponibles.Name = "errorAdv_disponibles";
+            this.errorAdv_disponibles.Size = new System.Drawing.Size(15, 20);
+            this.errorAdv_disponibles.TabIndex = 14;
+            this.errorAdv_disponibles.Text = "*";
+            this.errorAdv_disponibles.Visible = false;
+            // 
+            // errorAdv_asignadas
+            // 
+            this.errorAdv_asignadas.AutoSize = true;
+            this.errorAdv_asignadas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.errorAdv_asignadas.ForeColor = System.Drawing.Color.Red;
+            this.errorAdv_asignadas.Location = new System.Drawing.Point(345, 105);
+            this.errorAdv_asignadas.Name = "errorAdv_asignadas";
+            this.errorAdv_asignadas.Size = new System.Drawing.Size(15, 20);
+            this.errorAdv_asignadas.TabIndex = 13;
+            this.errorAdv_asignadas.Text = "*";
+            this.errorAdv_asignadas.Visible = false;
+            // 
+            // errorSeleccionNula
+            // 
+            this.errorSeleccionNula.AutoSize = true;
+            this.errorSeleccionNula.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.errorSeleccionNula.ForeColor = System.Drawing.Color.Red;
+            this.errorSeleccionNula.Location = new System.Drawing.Point(66, 273);
+            this.errorSeleccionNula.Name = "errorSeleccionNula";
+            this.errorSeleccionNula.Size = new System.Drawing.Size(234, 17);
+            this.errorSeleccionNula.TabIndex = 12;
+            this.errorSeleccionNula.Text = "Debe seleccionar una funcionalidad";
+            this.errorSeleccionNula.Visible = false;
             // 
             // listBox_agregadas
             // 
@@ -224,6 +296,8 @@
             // 
             this.dgv_modify.AllowUserToAddRows = false;
             this.dgv_modify.AllowUserToDeleteRows = false;
+            this.dgv_modify.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_modify.BackgroundColor = System.Drawing.Color.White;
             this.dgv_modify.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_modify.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.dgv_modify.Location = new System.Drawing.Point(3, 44);
@@ -259,7 +333,8 @@
             // 
             this.dgv_delete.AllowUserToAddRows = false;
             this.dgv_delete.AllowUserToDeleteRows = false;
-            this.dgv_delete.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgv_delete.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_delete.BackgroundColor = System.Drawing.Color.White;
             this.dgv_delete.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_delete.Location = new System.Drawing.Point(3, 44);
             this.dgv_delete.Name = "dgv_delete";
@@ -267,78 +342,6 @@
             this.dgv_delete.Size = new System.Drawing.Size(366, 266);
             this.dgv_delete.TabIndex = 0;
             this.dgv_delete.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_delete_CellContentClick);
-            // 
-            // errorSeleccionNula
-            // 
-            this.errorSeleccionNula.AutoSize = true;
-            this.errorSeleccionNula.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.errorSeleccionNula.ForeColor = System.Drawing.Color.Red;
-            this.errorSeleccionNula.Location = new System.Drawing.Point(66, 273);
-            this.errorSeleccionNula.Name = "errorSeleccionNula";
-            this.errorSeleccionNula.Size = new System.Drawing.Size(234, 17);
-            this.errorSeleccionNula.TabIndex = 12;
-            this.errorSeleccionNula.Text = "Debe seleccionar una funcionalidad";
-            this.errorSeleccionNula.Visible = false;
-            // 
-            // errorAdv_asignadas
-            // 
-            this.errorAdv_asignadas.AutoSize = true;
-            this.errorAdv_asignadas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.errorAdv_asignadas.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_asignadas.Location = new System.Drawing.Point(345, 105);
-            this.errorAdv_asignadas.Name = "errorAdv_asignadas";
-            this.errorAdv_asignadas.Size = new System.Drawing.Size(15, 20);
-            this.errorAdv_asignadas.TabIndex = 13;
-            this.errorAdv_asignadas.Text = "*";
-            this.errorAdv_asignadas.Visible = false;
-            // 
-            // errorAdv_disponibles
-            // 
-            this.errorAdv_disponibles.AutoSize = true;
-            this.errorAdv_disponibles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorAdv_disponibles.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_disponibles.Location = new System.Drawing.Point(162, 105);
-            this.errorAdv_disponibles.Name = "errorAdv_disponibles";
-            this.errorAdv_disponibles.Size = new System.Drawing.Size(15, 20);
-            this.errorAdv_disponibles.TabIndex = 14;
-            this.errorAdv_disponibles.Text = "*";
-            this.errorAdv_disponibles.Visible = false;
-            // 
-            // error_nocompleto
-            // 
-            this.error_nocompleto.AutoSize = true;
-            this.error_nocompleto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.error_nocompleto.ForeColor = System.Drawing.Color.Red;
-            this.error_nocompleto.Location = new System.Drawing.Point(16, 77);
-            this.error_nocompleto.Name = "error_nocompleto";
-            this.error_nocompleto.Size = new System.Drawing.Size(162, 15);
-            this.error_nocompleto.TabIndex = 15;
-            this.error_nocompleto.Text = "Debe completar este campo";
-            this.error_nocompleto.Visible = false;
-            // 
-            // error_sololetras
-            // 
-            this.error_sololetras.AutoSize = true;
-            this.error_sololetras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.error_sololetras.ForeColor = System.Drawing.Color.Red;
-            this.error_sololetras.Location = new System.Drawing.Point(16, 76);
-            this.error_sololetras.Name = "error_sololetras";
-            this.error_sololetras.Size = new System.Drawing.Size(212, 15);
-            this.error_sololetras.TabIndex = 16;
-            this.error_sololetras.Text = "El nombre puede contener solo letras";
-            this.error_sololetras.Visible = false;
-            // 
-            // errorAdv_nombre
-            // 
-            this.errorAdv_nombre.AutoSize = true;
-            this.errorAdv_nombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.errorAdv_nombre.ForeColor = System.Drawing.Color.Red;
-            this.errorAdv_nombre.Location = new System.Drawing.Point(197, 53);
-            this.errorAdv_nombre.Name = "errorAdv_nombre";
-            this.errorAdv_nombre.Size = new System.Drawing.Size(15, 20);
-            this.errorAdv_nombre.TabIndex = 17;
-            this.errorAdv_nombre.Text = "*";
-            this.errorAdv_nombre.Visible = false;
             // 
             // RoleMainWindow
             // 

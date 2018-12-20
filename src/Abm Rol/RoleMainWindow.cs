@@ -59,7 +59,23 @@ namespace PalcoNet.Abm_Rol
                 e.RowIndex >= 0)
             {
                 Rol rol = new Rol(dgv_modify.Rows[e.RowIndex].Cells["id_rol"].Value.ToString(),dgv_modify.Rows[e.RowIndex].Cells["descripcion"].Value.ToString());
-                new Modify(rol).ShowDialog();
+
+                if (rol.descripcion.Equals("Administrador General"))
+                {
+                    MessageBox.Show("El rol no puede ser modificado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                else if (rol.descripcion.Equals(session.rol.descripcion))
+                {
+                    MessageBox.Show("No se puede modificar el rol de la sesión actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                else
+                {
+                    new Modify(rol).ShowDialog();    
+                }
             }
         }
 

@@ -123,6 +123,7 @@
             this.textBox_nombre = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox_empresa = new System.Windows.Forms.GroupBox();
+            this.lbl_ejcuit = new System.Windows.Forms.Label();
             this.btn_backempresa = new System.Windows.Forms.Button();
             this.errorAdv_ciudadempresa = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -172,7 +173,6 @@
             this.lbl_showestado = new System.Windows.Forms.Label();
             this.lbl_estado = new System.Windows.Forms.Label();
             this.btn_habilitar = new System.Windows.Forms.Button();
-            this.lbl_ejcuit = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logoPalcoNet)).BeginInit();
             this.groupBox_gral.SuspendLayout();
             this.groupBox_clientes.SuspendLayout();
@@ -478,9 +478,12 @@
             // dtp_fechanac
             // 
             this.dtp_fechanac.Location = new System.Drawing.Point(127, 243);
+            this.dtp_fechanac.MaxDate = new System.DateTime(2018, 12, 1, 0, 0, 0, 0);
+            this.dtp_fechanac.MinDate = new System.DateTime(1910, 1, 1, 0, 0, 0, 0);
             this.dtp_fechanac.Name = "dtp_fechanac";
             this.dtp_fechanac.Size = new System.Drawing.Size(200, 20);
             this.dtp_fechanac.TabIndex = 77;
+            this.dtp_fechanac.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtp_fechanac.ValueChanged += new System.EventHandler(this.dtp_fechanac_ValueChanged);
             // 
             // nrotarjetacounter
@@ -1250,6 +1253,16 @@
             this.groupBox_empresa.TabStop = false;
             this.groupBox_empresa.Visible = false;
             // 
+            // lbl_ejcuit
+            // 
+            this.lbl_ejcuit.AutoSize = true;
+            this.lbl_ejcuit.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_ejcuit.Location = new System.Drawing.Point(178, 78);
+            this.lbl_ejcuit.Name = "lbl_ejcuit";
+            this.lbl_ejcuit.Size = new System.Drawing.Size(128, 13);
+            this.lbl_ejcuit.TabIndex = 74;
+            this.lbl_ejcuit.Text = "Ejemplo: 11-12345678-11";
+            // 
             // btn_backempresa
             // 
             this.btn_backempresa.Location = new System.Drawing.Point(155, 320);
@@ -1730,16 +1743,6 @@
             this.btn_habilitar.UseVisualStyleBackColor = true;
             this.btn_habilitar.Visible = false;
             this.btn_habilitar.Click += new System.EventHandler(this.btn_habilitar_Click);
-            // 
-            // lbl_ejcuit
-            // 
-            this.lbl_ejcuit.AutoSize = true;
-            this.lbl_ejcuit.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_ejcuit.Location = new System.Drawing.Point(178, 78);
-            this.lbl_ejcuit.Name = "lbl_ejcuit";
-            this.lbl_ejcuit.Size = new System.Drawing.Size(128, 13);
-            this.lbl_ejcuit.TabIndex = 74;
-            this.lbl_ejcuit.Text = "Ejemplo: 11-12345678-11";
             // 
             // Registro
             // 

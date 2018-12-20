@@ -89,7 +89,7 @@
             this.Controls.Add(this.roleLabel);
             this.Controls.Add(this.roleSelect);
             this.Name = "ElegirRol";
-            this.Text = "Form1";
+            this.Text = "Seleccion de rol";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ElegirRol_FormClosed);
             this.Load += new System.EventHandler(this.ElegirRol_Load);
             this.Controls.SetChildIndex(this.logoPalcoNet, 0);
