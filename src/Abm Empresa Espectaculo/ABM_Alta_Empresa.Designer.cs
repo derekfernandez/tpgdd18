@@ -1,33 +1,33 @@
-﻿namespace PalcoNet.Abm_Empresa_Espectaculo
-{
-    partial class ABM_Alta_Empresa
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+﻿﻿namespace PalcoNet.Abm_Empresa_Espectaculo
+ {
+     partial class ABM_Alta_Empresa
+     {
+         /// <summary>
+         /// Required designer variable.
+         /// </summary>
+         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+         /// <summary>
+         /// Clean up any resources being used.
+         /// </summary>
+         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+         protected override void Dispose(bool disposing)
+         {
+             if (disposing && (components != null))
+             {
+                 components.Dispose();
+             }
+             base.Dispose(disposing);
+         }
 
-        #region Windows Form Designer generated code
+         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+         /// <summary>
+         /// Required method for Designer support - do not modify
+         /// the contents of this method with the code editor.
+         /// </summary>
+         private void InitializeComponent()
+         {
             this.components = new System.ComponentModel.Container();
             this.labelRazonSocial = new System.Windows.Forms.Label();
             this.labelMail = new System.Windows.Forms.Label();
@@ -528,12 +528,12 @@
             // ABM_Alta_Empresa
             // 
             this.AcceptButton = this.btnCargar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
             this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(1210, 683);
+            this.ClientSize = new System.Drawing.Size(1224, 674);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.textBoxAltura);
             this.Controls.Add(this.label12);
@@ -569,8 +569,11 @@
             this.Controls.Add(this.labelRazonSocial);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(5);
+            this.MaximumSize = new System.Drawing.Size(1250, 745);
+            this.MinimumSize = new System.Drawing.Size(1250, 745);
             this.Name = "ABM_Alta_Empresa";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "ABM Empresa Publicacion";
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderRazonSocial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderMail)).EndInit();
@@ -590,58 +593,58 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
+         }
 
-        #endregion
+         #endregion
 
-        public System.Windows.Forms.Label labelTelefono;
-        public System.Windows.Forms.Label labelCUIT;
-        public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label labelRazonSocial;
-        public System.Windows.Forms.Label labelMail;
-        public System.Windows.Forms.TextBox textBoxRazonSocial;
-        public System.Windows.Forms.TextBox textBoxMail;
-        public System.Windows.Forms.TextBox textBoxTelefono;
-        public System.Windows.Forms.TextBox textBoxCuitLargo;
-        public System.Windows.Forms.TextBox textBoxDireccion;
-        public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Button btnVolver;
-        public System.Windows.Forms.Button btnCargar;
-        public System.Windows.Forms.Button btnLimpiar;
-        public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox textBoxCUITSufijo;
-        public System.Windows.Forms.TextBox textBoxCUITPrefijo;
-        public System.Windows.Forms.Label label4;
-        public System.Windows.Forms.Label label6;
-        public System.Windows.Forms.Label label5;
-        public System.Windows.Forms.TextBox textBoxCodigoPostal;
-        public System.Windows.Forms.TextBox textBoxLocalidad;
-        public System.Windows.Forms.TextBox textBoxDepartamento;
-        public System.Windows.Forms.Label label10;
-        public System.Windows.Forms.Label label9;
-        public System.Windows.Forms.Label label8;
-        public System.Windows.Forms.Label label7;
-        public System.Windows.Forms.ErrorProvider errorProviderRazonSocial;
-        public System.Windows.Forms.ErrorProvider errorProviderMail;
-        public System.Windows.Forms.ErrorProvider errorProviderDireccion;
-        public System.Windows.Forms.ErrorProvider errorProviderTelefono;
-        public System.Windows.Forms.ErrorProvider errorProviderDepartamento;
-        public System.Windows.Forms.ErrorProvider errorProviderLocalidad;
-        public System.Windows.Forms.ErrorProvider errorProviderCP;
-        public System.Windows.Forms.ErrorProvider errorProviderSufijoCUIT;
-        public System.Windows.Forms.ErrorProvider errorProviderPrefijoCUIT;
-        public System.Windows.Forms.ErrorProvider errorProviderCUITLargo;
-        public System.Windows.Forms.Label label12;
-        public System.Windows.Forms.TextBox textBoxCiudad;
-        public System.Windows.Forms.Label label11;
-        public System.Windows.Forms.TextBox textBoxNumeroPiso;
-        public System.Windows.Forms.Label label13;
-        public System.Windows.Forms.TextBox textBoxAltura;
-        public System.Windows.Forms.ErrorProvider errorProviderPiso;
-        public System.Windows.Forms.ErrorProvider errorProviderCiudad;
-        public System.Windows.Forms.ErrorProvider errorProviderMailSinArroba;
-        public System.Windows.Forms.ErrorProvider errorProviderAltura;
-        public System.Windows.Forms.ErrorProvider errorProviderValidarCalle;
+         public System.Windows.Forms.Label labelTelefono;
+         public System.Windows.Forms.Label labelCUIT;
+         public System.Windows.Forms.Label label3;
+         public System.Windows.Forms.Label labelRazonSocial;
+         public System.Windows.Forms.Label labelMail;
+         public System.Windows.Forms.TextBox textBoxRazonSocial;
+         public System.Windows.Forms.TextBox textBoxMail;
+         public System.Windows.Forms.TextBox textBoxTelefono;
+         public System.Windows.Forms.TextBox textBoxCuitLargo;
+         public System.Windows.Forms.TextBox textBoxDireccion;
+         public System.Windows.Forms.Label label2;
+         public System.Windows.Forms.Button btnVolver;
+         public System.Windows.Forms.Button btnCargar;
+         public System.Windows.Forms.Button btnLimpiar;
+         public System.Windows.Forms.Label label1;
+         public System.Windows.Forms.TextBox textBoxCUITSufijo;
+         public System.Windows.Forms.TextBox textBoxCUITPrefijo;
+         public System.Windows.Forms.Label label4;
+         public System.Windows.Forms.Label label6;
+         public System.Windows.Forms.Label label5;
+         public System.Windows.Forms.TextBox textBoxCodigoPostal;
+         public System.Windows.Forms.TextBox textBoxLocalidad;
+         public System.Windows.Forms.TextBox textBoxDepartamento;
+         public System.Windows.Forms.Label label10;
+         public System.Windows.Forms.Label label9;
+         public System.Windows.Forms.Label label8;
+         public System.Windows.Forms.Label label7;
+         public System.Windows.Forms.ErrorProvider errorProviderRazonSocial;
+         public System.Windows.Forms.ErrorProvider errorProviderMail;
+         public System.Windows.Forms.ErrorProvider errorProviderDireccion;
+         public System.Windows.Forms.ErrorProvider errorProviderTelefono;
+         public System.Windows.Forms.ErrorProvider errorProviderDepartamento;
+         public System.Windows.Forms.ErrorProvider errorProviderLocalidad;
+         public System.Windows.Forms.ErrorProvider errorProviderCP;
+         public System.Windows.Forms.ErrorProvider errorProviderSufijoCUIT;
+         public System.Windows.Forms.ErrorProvider errorProviderPrefijoCUIT;
+         public System.Windows.Forms.ErrorProvider errorProviderCUITLargo;
+         public System.Windows.Forms.Label label12;
+         public System.Windows.Forms.TextBox textBoxCiudad;
+         public System.Windows.Forms.Label label11;
+         public System.Windows.Forms.TextBox textBoxNumeroPiso;
+         public System.Windows.Forms.Label label13;
+         public System.Windows.Forms.TextBox textBoxAltura;
+         public System.Windows.Forms.ErrorProvider errorProviderPiso;
+         public System.Windows.Forms.ErrorProvider errorProviderCiudad;
+         public System.Windows.Forms.ErrorProvider errorProviderMailSinArroba;
+         public System.Windows.Forms.ErrorProvider errorProviderAltura;
+         public System.Windows.Forms.ErrorProvider errorProviderValidarCalle;
 
-    }
-}
+     }
+ }
