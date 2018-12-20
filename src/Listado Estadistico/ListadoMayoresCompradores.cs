@@ -40,7 +40,7 @@ namespace PalcoNet.Listado_Estadistico
 
             //Query para ejecutar el SP; devuelve la tabla con los valores a cargar en la DGV; uso this para usar atributos, no parametros
             String query = "DECLARE @anio INT = " + this.anio + "; DECLARE @trimestre INT  = " + this.trimestre + ";";
-            query += "EXEC estadistica_clientesConMasCompras @anio, @trimestre";
+            query += "EXEC SQLITO.estadistica_clientesConMasCompras @anio, @trimestre";
 
             //Lleno la DGV con las empresas requeridas
             SqlCommand cmd = Database.createQuery(query);
