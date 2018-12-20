@@ -38,7 +38,7 @@
             // 
             this.btnNuevaEmpresa.Location = new System.Drawing.Point(117, 335);
             this.btnNuevaEmpresa.Name = "btnNuevaEmpresa";
-            this.btnNuevaEmpresa.Size = new System.Drawing.Size(190, 73);
+            this.btnNuevaEmpresa.Size = new System.Drawing.Size(204, 73);
             this.btnNuevaEmpresa.TabIndex = 0;
             this.btnNuevaEmpresa.Text = "Nueva Empresa";
             this.btnNuevaEmpresa.UseVisualStyleBackColor = true;
@@ -58,18 +58,18 @@
             // 
             this.btnModEliminar.Location = new System.Drawing.Point(495, 335);
             this.btnModEliminar.Name = "btnModEliminar";
-            this.btnModEliminar.Size = new System.Drawing.Size(190, 73);
+            this.btnModEliminar.Size = new System.Drawing.Size(204, 73);
             this.btnModEliminar.TabIndex = 2;
-            this.btnModEliminar.Text = "Modificar o Eliminar Empresa";
+            this.btnModEliminar.Text = "Modificar o Eliminar Empresas";
             this.btnModEliminar.UseVisualStyleBackColor = true;
             this.btnModEliminar.Click += new System.EventHandler(this.btnModEliminar_Click);
             // 
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(879, 335);
+            this.btnVolver.Location = new System.Drawing.Point(865, 335);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(190, 73);
+            this.btnVolver.Size = new System.Drawing.Size(204, 73);
             this.btnVolver.TabIndex = 3;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -88,8 +88,6 @@
             this.Controls.Add(this.btnNuevaEmpresa);
             this.Name = "ABM_Menu_Empresa";
             this.Text = "MenuEmpresa";
-
-
             this.ResumeLayout(false);
             this.PerformLayout();
 
