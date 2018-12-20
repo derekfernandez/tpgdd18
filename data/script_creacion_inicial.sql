@@ -1725,15 +1725,15 @@ BEGIN
 
 	--Razon Social Repetida
 	IF EXISTS (SELECT 1 FROM SQLITO.Empresas WHERE razonsocial = @razonsocial)
-		THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+		THROW 50000, 'Razon social ya existente', 1
 
 	--Cuit Repetido
 	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE cuit = @cuit)
-		THROW 50000, 'CUIT YA EXISTENTE', 1
+		THROW 50000, 'Cuit ya existente', 1
 
 	--Cuit Repetido
 	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE mail = @mail)
-		THROW 50000, 'MAIL YA EXISTENTE', 1
+		THROW 50000, 'Mail ya existente', 1
  
 	
 	SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
@@ -1785,15 +1785,15 @@ BEGIN
 
 	--Razon Social Repetida que no es la misma que la que se inserta
 	IF EXISTS (SELECT 1 FROM SQLITO.Empresas WHERE (razonsocial = @razonsocial) AND (id_empresa <> @idEmpresa))
-		THROW 50000, 'RAZON SOCIAL YA EXISTENTE', 1
+		THROW 50000, 'Razon social ya existente', 1
 
 	--Cuit Repetido que no es el mismo que se inserta
 	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE (cuit = @cuit) AND (id_empresa <> @idEmpresa))
-		THROW 50000, 'CUIT YA EXISTENTE', 1
+		THROW 50000, 'Cuit ya existente', 1
 
 	--Cuit Repetido
 	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE (mail = @mail) AND (id_empresa <> @idEmpresa))
-		THROW 50000, 'MAIL YA EXISTENTE', 1
+		THROW 50000, 'Mail ya existente', 1
 
 	BEGIN TRY
 		BEGIN TRANSACTION
@@ -1863,7 +1863,7 @@ BEGIN
 	BEGIN CATCH
 		ROLLBACK TRANSACTION
 		DBCC CHECKIDENT ('SQLITO.Usuarios', RESEED, @identity);
-		THROW 50000, 'FALLO CREACION USUARIO', 1
+		THROW 50000, 'Fallo creacion de usuario', 1
 	END CATCH
 
 END
@@ -1898,7 +1898,7 @@ END TRY
 	BEGIN CATCH
 		IF @@ROWCOUNT <> 0  
 			ROLLBACK TRANSACTION
-		;THROW 50000, 'NO SE PUDO INHABILITAR', 1
+		;THROW 50000, 'No se pudo inhabilitar', 1
 	END CATCH
 END
 GO
@@ -1925,11 +1925,11 @@ BEGIN
 
 		--COMISION repetida y no existente
 		IF EXISTS (SELECT 1 FROM SQLITO.Grados WHERE comision = @comision)
-			THROW 50000, 'COMISION YA REGISTRADA', 1
+			THROW 50000, 'Comision ya registrada', 1
 
 		--Descripcion ya existente
 		IF EXISTS(SELECT 1 FROM SQLITO.Grados WHERE descripcion = @descripcion)
-			THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
+			THROW 50000, 'Descripcion ya registrada', 1
 
 		BEGIN TRANSACTION
 			INSERT INTO SQLITO.Grados(descripcion,comision)
@@ -1949,7 +1949,7 @@ BEGIN
 		END;
 		IF EXISTS(SELECT ERROR_MESSAGE())
 			THROW;
-		THROW 50000, 'COMISION NO VALIDA', 1
+		THROW 50000, 'Comision no valida', 1
 
 	END CATCH
 
@@ -1972,11 +1972,11 @@ BEGIN
 
 	--COMISION repetida y no existente
 	IF EXISTS (SELECT 1 FROM SQLITO.Grados WHERE (comision = @comision) AND (id_grado <> @idGrado))
-		THROW 50000, 'COMISION YA REGISTRADA', 1
+		THROW 50000, 'Comision ya registrada', 1
 
 	--Descripcion repetida y no existente
 	IF EXISTS (SELECT 1 FROM SQLITO.Grados WHERE (descripcion = @descripcion) AND (id_grado <> @idGrado))
-		THROW 50000, 'DESCRIPCION YA REGISTRADA', 1
+		THROW 50000, 'Descripcion ya registrada', 1
 
 	BEGIN TRY
 		BEGIN TRANSACTION
@@ -1991,7 +1991,7 @@ BEGIN
 			ROLLBACK TRANSACTION
 		IF EXISTS(SELECT ERROR_MESSAGE())
 			THROW;
-		THROW 50000, 'COMISION NO VALIDA', 1
+		THROW 50000, 'Comision no valida', 1
 	END CATCH
 
 END
