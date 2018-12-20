@@ -45,7 +45,7 @@ namespace PalcoNet.Listado_Estadistico
             
             //Query para ejecutar el SP; devuelve la tabla con los valores a cargar en la dgv
             String query = "DECLARE @anio INT = " + this.anio + ";" + "DECLARE @trimestre INT = " + this.trimestre + ";";
-            query += "EXEC estadistica_empresasMenosVendedoras @anio, @trimestre";
+            query += "EXEC SQLITO.estadistica_empresasMenosVendedoras @anio, @trimestre";
             SqlCommand cmd = new SqlCommand(query, Database.getConnection());
 
             dgvEmpresas.DataSource = Database.getTable(cmd);
