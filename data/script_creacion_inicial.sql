@@ -1456,6 +1456,9 @@ BEGIN
 	INSERT INTO SQLITO.Roles_Usuarios
 	VALUES(3, @adminUser)
 
+	INSERT INTO SQLITO.Roles_Usuarios
+	VALUES(2, @adminUser)
+
 	INSERT INTO SQLITO.Empresas (razonsocial, fecha_creacion, cuit, mail, usuario_id) 
 		 VALUES ('Admin General', '2018-11-30T00:00:00', '23-37541207-8', 'admin@palconet.com', @adminUser)
 	
