@@ -135,14 +135,12 @@ namespace PalcoNet.Historial_Cliente
             resultadosDePaginasAnteriores = (paginaActual - 1) * resultadosPorPagina;
 
             //Query que va a traer solo los resultados de la pagina seleccionada, sin contar los anteriores
-            String queryPagina = "SELECT TOP " + resultadosPorPagina.ToString() + " fecha_realizacion, publ_descripcion,";
-            queryPagina += " fecha_funcion, fila, asiento, valor_entrada, (SELECT CASE WHEN tarjeta_id IS NULL THEN 'Desconocido'";
-            queryPagina += " ELSE 'Tarjeta de Credito' END), ISNULL(cantidad_puntos, 0) FROM SQLITO.Compras	JOIN SQLITO.";
-            queryPagina += "Ubicaciones ON (ubicacion_id = id_ubicacion) JOIN SQLITO.Publicaciones ON (publicacion_id = ";
-            queryPagina += "cod_publicacion) WHERE (cliente_id = @ClienteID) AND (id_compra NOT IN (SELECT TOP ";
-            queryPagina += (resultadosDePaginasAnteriores.ToString() + " id_compra FROM SQLITO.Compras JOIN SQLITO.Ubicaciones");
-            queryPagina += " ON (ubicacion_id = id_ubicacion) JOIN SQLITO.Publicaciones ON (publicacion_id = cod_publicacion)";
-            queryPagina += " WHERE (cliente_id = @ClienteID))) ORDER BY fecha_realizacion ASC";
+            String queryPagina = "SELECT fecha_realizacion, publ_descripcion, fecha_funcion, fila, asiento, valor_entrada, ";
+            queryPagina += " (SELECT CASE WHEN tarjeta_id IS NULL THEN 'Desconocido' ELSE 'Tarjeta de Credito' END), ISNULL";
+            queryPagina += "(cantidad_puntos, 0) FROM SQLITO.Compras JOIN SQLITO.Ubicaciones ON (ubicacion_id = id_ubicacion) ";
+            queryPagina += "JOIN SQLITO.Publicaciones ON (publicacion_id = cod_publicacion) WHERE (cliente_id = @ClienteID) ";
+            queryPagina += ("ORDER BY fecha_realizacion ASC OFFSET " + resultadosDePaginasAnteriores.ToString() + " ROWS ");
+            queryPagina += ("FETCH NEXT " + resultadosPorPagina.ToString() + " ROWS ONLY");
 
             //Lleno el DGV con las compras de la pagina actual
             SqlCommand cmdPagina = Database.createQuery(queryPagina);

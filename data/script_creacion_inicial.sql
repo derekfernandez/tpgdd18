@@ -1339,7 +1339,7 @@ BEGIN
 
 	DECLARE adduser_cursor CURSOR FOR 
 	SELECT id_cliente,LOWER(REPLACE(nombre,' ','')) + LOWER(REPLACE(apellido,' ','')),
-	HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)) FROM SQLITO.Clientes
+	HASHBYTES('SHA2_256', CONVERT(VARCHAR(8), numero_documento)) FROM SQLITO.Clientes
 
 	OPEN adduser_cursor
 	FETCH NEXT FROM adduser_cursor INTO @clienteID, @username, @password
@@ -1351,13 +1351,13 @@ BEGIN
 		    WHERE username = @username) = 0
 		BEGIN
 			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-			VALUES (@username, @password, 1)
+			VALUES (@username, @password, 0)
 		END
 
 		ELSE 
 		BEGIN
 			INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-			VALUES (@username + '2', @password, 1)
+			VALUES (@username + '2', @password, 0)
 		END
 
 		--Al Cliente cuyo usuario recien cree, le guardo el ID de dicho usuario
@@ -1397,7 +1397,7 @@ BEGIN
 
 	DECLARE addus3r_cursor CURSOR FOR SELECT id_empresa,
 	LOWER(SUBSTRING(razonsocial,1,5)) + LOWER(SUBSTRING(razonsocial,7,6)) + SUBSTRING(razonsocial,17,2), 
-	HASHBYTES('SHA2_256',CRYPT_GEN_RANDOM(8)) FROM SQLITO.Empresas
+	HASHBYTES('SHA2_256', REPLACE(cuit, '-', '')) FROM SQLITO.Empresas
 	
 	OPEN addus3r_cursor
 	FETCH NEXT FROM addus3r_cursor INTO @empresaID, @username, @password
@@ -1406,7 +1406,7 @@ BEGIN
 	BEGIN
 
 		INSERT INTO SQLITO.Usuarios (username, password, contraseniaActivada)
-		VALUES (@username, @password, 1)
+		VALUES (@username, @password, 0)
 
 		--A la Empresa cuyo usuario recien cree, le guardo el ID de dicho usuario
 		UPDATE SQLITO.Empresas
