@@ -23,7 +23,7 @@ WHERE s.name = 'SQLITO'
 ORDER BY t.name
 EXEC (@delete_var)
 PRINT('Borrado de FKs finalizado')
- 
+
 --- BORRADO DE PROCEDURES ---
 
 DECLARE DropSpCursor CURSOR FAST_FORWARD FOR
@@ -31,7 +31,7 @@ DECLARE DropSpCursor CURSOR FAST_FORWARD FOR
         name
     FROM sys.procedures
     WHERE schema_id = SCHEMA_ID('SQLITO')
-
+	
 DECLARE @StoredProcName sysname
 DECLARE @DropStatement NVARCHAR(1000)
 
