@@ -205,6 +205,8 @@ namespace PalcoNet.Abm_Rol
                     this.Close();
                 }
             }
+
+            ventanaAnterior.dgvRefresh();
         }
 
         private void btn_habilitar_Click(object sender, EventArgs e)
