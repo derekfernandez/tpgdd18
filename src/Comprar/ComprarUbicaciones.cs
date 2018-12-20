@@ -115,7 +115,7 @@ namespace PalcoNet.Comprar
             dgvDisponibles.Columns[5].Visible = false;
             dgvDisponibles.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvDisponibles.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvDisponibles.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvDisponibles.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgvDisponibles.Columns[2].HeaderText = "Tipo";
             dgvDisponibles.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
@@ -127,7 +127,7 @@ namespace PalcoNet.Comprar
             dgvCarrito.Columns[5].Visible = false;
             dgvCarrito.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvCarrito.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvCarrito.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvCarrito.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgvCarrito.Columns[2].HeaderText = "Tipo";
             dgvCarrito.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
