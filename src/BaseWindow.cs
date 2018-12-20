@@ -194,8 +194,14 @@ namespace PalcoNet
         {
             DataGridViewButtonColumn boton = new DataGridViewButtonColumn();
             boton.Text = t;
+            boton.Name = "Accion";
             boton.UseColumnTextForButtonValue = true;
             dgv.Columns.Add(boton);
+        }
+
+        public static void dgv_eliminarColumna(DataGridView dgv, string t)
+        {
+            dgv.Columns.Remove(t);
         }
 
         public static void comboBox_cargarTiposDocumento(ComboBox cb)

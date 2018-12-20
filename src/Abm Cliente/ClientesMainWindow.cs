@@ -50,8 +50,13 @@ namespace PalcoNet.Abm_Cliente
         #region modificar
 
         private void btn_clean_Click(object sender, EventArgs e)
-        {
+        {   
             limpiarTextBox(this.tab_modificar);
+            if (dgv_clientesmodificar.DataSource != null)
+            {
+                dgv_eliminarColumna(dgv_clientesmodificar, "Accion");
+            }
+
             dgv_clientesmodificar.DataSource = null;
         }
 
@@ -426,6 +431,12 @@ namespace PalcoNet.Abm_Cliente
             textBox_nombreeliminar.Clear();
             textBox_nrodoceliminar.Clear();
             textBox_apellidoeliminar.Clear();
+            if (dgv_eliminar.DataSource != null)
+            {
+                dgv_eliminarColumna(dgv_eliminar, "Accion");
+            }
+
+            dgv_eliminar.DataSource = null;
             dgv_eliminar.DataSource = null;
             return;
         }
@@ -445,6 +456,8 @@ namespace PalcoNet.Abm_Cliente
             }
         }
 
+        #endregion
+
         private void dgv_clientesmodificar_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
@@ -462,10 +475,13 @@ namespace PalcoNet.Abm_Cliente
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["estado"].Value.ToString(), dgv_clientesmodificar.Rows[e.RowIndex].Cells["puntos_gastados"].Value.ToString());
 
                 new Registro_de_Usuario.Registro(cliente).ShowDialog();
+                if (dgv_clientesmodificar.DataSource != null)
+                {
+                    dgv_eliminarColumna(dgv_clientesmodificar, "Accion");
+                }
+
                 dgv_clientesmodificar.DataSource = null;
             }
         }
-
-        #endregion
     }
 }
