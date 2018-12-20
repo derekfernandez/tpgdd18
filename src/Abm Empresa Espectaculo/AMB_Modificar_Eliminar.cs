@@ -52,7 +52,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         {
             try
             {
-            cargarGrilla();
+                cargarGrilla();
             }
             catch (Exception exp) 
             {
@@ -79,7 +79,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 {
                     grillaEmpresas.DataSource = Database.ObtenerDataSet(query).Tables[0];
 
-                    grillaEmpresas.Columns[0].HeaderText = "ID";
+                    grillaEmpresas.Columns[0].Visible = false;
                     grillaEmpresas.Columns[1].HeaderText = "Razon Social";
                     grillaEmpresas.Columns[2].HeaderText = "Fecha de Creacion";
                     grillaEmpresas.Columns[3].HeaderText = "CUIT";
@@ -103,7 +103,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             else
             {
-                string eliminar = string.Format("update SQLITO.Empresas set habilitado = 0 where id_empresa = '{0}'", id);
+                string eliminar = string.Format("[SQLITO].[pr_Baja_empresa] '{0}'", id);
                 
                 if (yaEliminado(id))
                 {
@@ -125,7 +125,10 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                             }
                 }
             }
-            vaciar();
+
+            //Vuelvo a cargar el DGV con los mismos filtros, para que se vea como quedo actualizado
+            cargarGrilla();
+
         }
 
         
@@ -154,6 +157,7 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             }
             return true;
         }
+
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (id == "-1")
@@ -164,15 +168,14 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
             {
 
                 ModificacionEmpresas modEmp = new ModificacionEmpresas(id);
-                            modEmp.Show();
+                modEmp.ShowDialog();
                        
             }
+
+            //Vacio los textboxes y el DGV
             vaciar();
-        }
-
-        
-
-       
+            grillaEmpresas.DataSource = null;
+        }    
 
         public void vaciar() 
         {
@@ -193,6 +196,8 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
+            
+            //Limpio primero todos los controles del form
             foreach (Control c in this.Controls)
             {
 
@@ -204,13 +209,16 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
                 }
 
             }
-            cargarGrilla();
+
+            //Y vacio el DGV, para que no traiga ningun resultado
+            grillaEmpresas.DataSource = null;
+
         }
 
         private void grillaEmpresas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-                        //Hasta que no se modifique el admin el id sera + 2!
-                        id = Convert.ToString(grillaEmpresas.SelectedCells[0].RowIndex + 1);
+            //Hasta que no se modifique el admin el id sera + 2!
+            id = Convert.ToString(grillaEmpresas.SelectedCells[0].RowIndex + 1);
                      
         }  
 

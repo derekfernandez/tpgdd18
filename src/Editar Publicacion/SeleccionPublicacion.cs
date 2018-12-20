@@ -53,8 +53,7 @@ namespace PalcoNet.Editar_Publicacion
 
             //Lleno el DGV y formateo sus columnas/filas
             dgvEditables.DataSource = tablaEditables;
-            dgvEditables.Columns[0].HeaderText = "ID";
-            dgvEditables.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvEditables.Columns[0].Visible = false;
             dgvEditables.Columns[1].HeaderText = "Descripcion";
             dgvEditables.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvEditables.Columns[2].HeaderText = "Fecha de creacion";

@@ -290,8 +290,16 @@ namespace PalcoNet.Comprar
             //Inhabilito los botones de primera pagina y pagina anterior, y actualizo el label
             btnPagAnt.Enabled = false;
             btnPrimeraPag.Enabled = false;
-            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
             lbPagina.Visible = true;
+            if (totalPaginas == 0)
+            {
+                lbPagina.Text = "Pagina 0 de 0";
+            }
+            else
+            {
+                lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            }
+            
             //Si hubiera mas de una pagina, permito ir a la siguiente y/o a la ultima
             if (totalPaginas > 1)
             {
@@ -426,10 +434,8 @@ namespace PalcoNet.Comprar
 
             #region PrimeraPaginaDeNuevo
 
-            //Actualizo label y la pagina actual
+            //Actualizo la pagina actual
             paginaActual = 1;
-            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
-            lbPagina.Visible = true;
 
             //Anulo botones de Primera Pagina y Pagina Anterior, y activo los de Pagina Siguiente y Ultima Pagina
             btnPrimeraPag.Enabled = false;
@@ -441,6 +447,10 @@ namespace PalcoNet.Comprar
             fechaInicial = dtpInicial.Value.Date;
             fechaFinal = dtpFinal.Value.Date;
             obtenerPublicaciones();
+
+            //Ahora que ya obtuve las publicaciones y calcule las paginas, pongo el label como se debe
+            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            lbPagina.Visible = true;
 
             #endregion PrimeraPaginaDeNuevo
 

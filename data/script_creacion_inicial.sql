@@ -14,8 +14,7 @@ GO
 --- BORRADO DE CONSTRAINTS ---
 
 DECLARE @delete_var NVARCHAR(255) = ''
-SELECT @delete_var = @delete_var + 'ALTER TABLE ' + QUOTENAME('SQLITO') + '.' + QUOTENAME(t.name) + ' DROP CONSTRAINT ' + 
-	QUOTENAME(fk.name) + '; ' + CHAR(13)
+SELECT @delete_var = @delete_var + 'ALTER TABLE ' + QUOTENAME('SQLITO') + '.' + QUOTENAME(t.name) + ' DROP CONSTRAINT ' +  QUOTENAME(fk.name) + '; ' + CHAR(13)
 FROM sys.tables t
 JOIN sys.foreign_keys fk ON t.object_id = fk.parent_object_id
 JOIN sys.schemas s ON t.schema_id = s.schema_id
@@ -1601,13 +1600,13 @@ BEGIN
 
 	SELECT TOP 5 C.nombre,
 	   	   C.apellido,
-	       SUM(P.cantidad)
+	       (SUM(P.cantidad) - C.puntos_gastados)
 	FROM [SQLITO].[Clientes] AS C
 		JOIN [SQLITO].[Puntos] AS P ON (C.id_cliente = P.cliente_id)
 	--Solo me quedo con los lotes de puntos cuyo vencimiento es anterior al parametro (estan vencidos)
 	WHERE P.fecha_vencimiento <= @fechaParametro
-	GROUP BY P.cliente_id, C.nombre, C.apellido
-	ORDER BY SUM(P.cantidad) DESC
+	GROUP BY P.cliente_id, C.nombre, C.apellido, C.puntos_gastados
+	ORDER BY (SUM(P.cantidad) - C.puntos_gastados) DESC
 
 END
 GO
@@ -1702,6 +1701,7 @@ GO
 
 
 --PROC PARA ALTA EMPRESAS NUEVAS
+
 IF OBJECT_ID('[SQLITO].[pr_Alta_Empresa]') IS NOT NULL
 BEGIN
 
@@ -1714,7 +1714,7 @@ CREATE PROCEDURE [SQLITO].[pr_Alta_Empresa]
 AS
 BEGIN
 
-	DECLARE @fecha_creacion datetime
+	
 	DECLARE @usuario_id int
 	DECLARE @id_Empresa int
 	DECLARE @identity numeric(18,0)
@@ -1732,15 +1732,15 @@ BEGIN
 	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE mail = @mail)
 		THROW 50000, 'MAIL YA EXISTENTE', 1
  
-	SET @fecha_creacion = GETDATE()
+	
 	SET @id_Empresa =  (select COUNT(*) + 1 FROM SQLITO.Empresas)
 
 	BEGIN TRY
 
 		BEGIN TRANSACTION
 			EXEC @usuario_id = [SQLITO].[pr_altaUsuario_empresa] @id_Empresa, @razonsocial, @cuit
-			INSERT INTO [SQLITO].[Empresas] (razonsocial, fecha_creacion, cuit, mail, direccion, telefono, usuario_id)
-				VALUES (@razonsocial, @fecha_creacion, @cuit,@mail, @direccion, @telefono, @usuario_id)
+			INSERT INTO [SQLITO].[Empresas] (razonsocial, cuit, mail, direccion, telefono, usuario_id)
+				VALUES (@razonsocial, @cuit,@mail, @direccion, @telefono, @usuario_id)
 		COMMIT TRANSACTION
 
 	END TRY
@@ -1765,6 +1765,7 @@ END
 GO
 
 --PROC PARA MODIFICAR EMPRESAS
+
 IF OBJECT_ID('[SQLITO].[pr_Modificar_Empresa]') IS NOT NULL
 BEGIN
 
@@ -1776,6 +1777,8 @@ CREATE PROCEDURE [SQLITO].[pr_Modificar_Empresa]
 (@razonsocial nvarchar(255), @cuit nvarchar(255), @mail nvarchar(50), @direccion nvarchar(255), @telefono nvarchar(30),	@idEmpresa int,	@habilitado bit)
 AS
 BEGIN
+	DECLARE @USUARIO INT
+	SET @USUARIO = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa )
 
 	--Razon Social Repetida que no es la misma que la que se inserta
 	IF EXISTS (SELECT 1 FROM SQLITO.Empresas WHERE (razonsocial = @razonsocial) AND (id_empresa <> @idEmpresa))
@@ -1788,12 +1791,13 @@ BEGIN
 	--Cuit Repetido
 	IF Exists(SELECT 1 FROM SQLITO.Empresas WHERE (mail = @mail) AND (id_empresa <> @idEmpresa))
 		THROW 50000, 'MAIL YA EXISTENTE', 1
- 
+
 	BEGIN TRY
 		BEGIN TRANSACTION
 			UPDATE [SQLITO].[Empresas]
 				SET razonsocial = @razonsocial, cuit = @cuit, mail = @mail, direccion = @direccion, telefono = @telefono, habilitado = @habilitado
 				WHERE id_empresa = @idEmpresa
+			UPDATE [SQLITO].Usuarios SET habilitado = @habilitado WHERE id_usuario = @USUARIO
 		COMMIT TRANSACTION
 	END TRY
 
@@ -1805,9 +1809,10 @@ BEGIN
 
 END
 GO
---IF EXISTS (SELECT * FROM sys.procedures WHERE name = '[SQLITO].[pr_altaUsuario_empresa]')
+
+
 --PROC ASIGNACION USUARIOS PARA EMPRESAS RECIEN CREADAS PARA MODIFICAR
-go
+
 IF OBJECT_ID('[SQLITO].[pr_altaUsuario_empresa]') IS NOT NULL
 BEGIN
 	DROP PROCEDURE [SQLITO].[pr_altaUsuario_empresa]
@@ -1860,6 +1865,41 @@ BEGIN
 
 END
 GO
+
+
+--BAJA EMPRESA -> Implica baja usuario
+
+IF OBJECT_ID('[SQLITO].[pr_Baja_empresa]') IS NOT NULL
+BEGIN
+	DROP PROCEDURE [SQLITO].[pr_Baja_empresa]
+
+END
+
+GO
+CREATE PROCEDURE [SQLITO].[pr_Baja_empresa]
+(@idEmpresa int)
+AS
+BEGIN
+		DECLARE @userID INT
+		SET @userID = (SELECT usuario_id FROM SQLITO.Empresas WHERE id_empresa = @idEmpresa)
+
+BEGIN TRY
+		BEGIN TRANSACTION
+			UPDATE [SQLITO].[Empresas]
+				SET habilitado = 0
+				WHERE id_empresa = @idEmpresa
+			UPDATE [SQLITO].Usuarios SET habilitado = 0 WHERE id_usuario = @userID
+		COMMIT TRANSACTION
+END TRY
+
+	BEGIN CATCH
+		IF @@ROWCOUNT <> 0  
+			ROLLBACK TRANSACTION
+		;THROW 50000, 'NO SE PUDO INHABILITAR', 1
+	END CATCH
+END
+GO
+
 
 -- PARA ABM DE Grados --
 
@@ -2034,4 +2074,3 @@ CLOSE upd_cursor
 DEALLOCATE upd_cursor
 END
 GO
-

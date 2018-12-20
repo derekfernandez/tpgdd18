@@ -55,7 +55,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(148, 349);
+            this.btnEditar.Location = new System.Drawing.Point(365, 349);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 23);
             this.btnEditar.TabIndex = 4;
@@ -66,7 +66,7 @@
             // btnVolver
             // 
             this.btnVolver.BackColor = System.Drawing.Color.Red;
-            this.btnVolver.Location = new System.Drawing.Point(360, 349);
+            this.btnVolver.Location = new System.Drawing.Point(142, 349);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(130, 23);
             this.btnVolver.TabIndex = 5;
@@ -84,7 +84,7 @@
             this.Controls.Add(this.dgvEditables);
             this.Controls.Add(this.lbTitulo);
             this.Name = "SeleccionPublicacion";
-            this.Text = "Form1";
+            this.Text = "Editar Publicacion - Seleccionar Publicacion";
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditables)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

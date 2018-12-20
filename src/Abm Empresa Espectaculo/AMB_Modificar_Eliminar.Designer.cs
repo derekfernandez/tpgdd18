@@ -49,7 +49,7 @@
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnVolver.Location = new System.Drawing.Point(6, 449);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(2);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(126, 69);
             this.btnVolver.TabIndex = 0;
@@ -60,7 +60,7 @@
             // btnBuscar
             // 
             this.btnBuscar.Location = new System.Drawing.Point(781, 449);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(126, 69);
             this.btnBuscar.TabIndex = 0;
@@ -82,7 +82,7 @@
             // btnEditar
             // 
             this.btnEditar.Location = new System.Drawing.Point(198, 449);
-            this.btnEditar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEditar.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(126, 69);
             this.btnEditar.TabIndex = 3;
@@ -93,7 +93,7 @@
             // btnEliminar
             // 
             this.btnEliminar.Location = new System.Drawing.Point(402, 449);
-            this.btnEliminar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEliminar.Margin = new System.Windows.Forms.Padding(2);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(126, 69);
             this.btnEliminar.TabIndex = 4;
@@ -106,7 +106,7 @@
             this.grillaEmpresas.AllowUserToOrderColumns = true;
             this.grillaEmpresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grillaEmpresas.Location = new System.Drawing.Point(6, 122);
-            this.grillaEmpresas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grillaEmpresas.Margin = new System.Windows.Forms.Padding(2);
             this.grillaEmpresas.Name = "grillaEmpresas";
             this.grillaEmpresas.ReadOnly = true;
             this.grillaEmpresas.RowTemplate.Height = 33;
@@ -147,7 +147,7 @@
             // textBoxRazonSocial
             // 
             this.textBoxRazonSocial.Location = new System.Drawing.Point(96, 88);
-            this.textBoxRazonSocial.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxRazonSocial.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxRazonSocial.Name = "textBoxRazonSocial";
             this.textBoxRazonSocial.Size = new System.Drawing.Size(164, 20);
             this.textBoxRazonSocial.TabIndex = 10;
@@ -155,7 +155,7 @@
             // textBoxCUIT
             // 
             this.textBoxCUIT.Location = new System.Drawing.Point(428, 88);
-            this.textBoxCUIT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCUIT.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCUIT.Name = "textBoxCUIT";
             this.textBoxCUIT.Size = new System.Drawing.Size(164, 20);
             this.textBoxCUIT.TabIndex = 12;
@@ -163,7 +163,7 @@
             // textBoxEmail
             // 
             this.textBoxEmail.Location = new System.Drawing.Point(745, 89);
-            this.textBoxEmail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxEmail.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(164, 20);
             this.textBoxEmail.TabIndex = 13;
@@ -182,11 +182,11 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Location = new System.Drawing.Point(600, 449);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(126, 69);
             this.btnLimpiar.TabIndex = 15;
-            this.btnLimpiar.Text = "Limpiar/Actualizar";
+            this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -211,7 +211,7 @@
             this.Controls.Add(this.labelTituloModEli);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnVolver);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AMB_Modificar_Eliminar";
             this.Text = "Editar_ModificarABM";
             ((System.ComponentModel.ISupportInitialize)(this.grillaEmpresas)).EndInit();

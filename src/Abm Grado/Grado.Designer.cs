@@ -39,7 +39,7 @@
             this.grillaGrados = new System.Windows.Forms.DataGridView();
             this.btnDeshabilitar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnActualizar = new System.Windows.Forms.Button();
+            this.btnHabilitar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gradosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gD2C2018DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grillaGrados)).BeginInit();
@@ -87,7 +87,7 @@
             this.label5.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold);
             this.label5.Location = new System.Drawing.Point(182, 19);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(515, 56);
+            this.label5.Size = new System.Drawing.Size(262, 29);
             this.label5.TabIndex = 12;
             this.label5.Text = "Grado de Publicacion";
             // 
@@ -128,29 +128,29 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 108);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(426, 24);
+            this.label1.Size = new System.Drawing.Size(233, 14);
             this.label1.TabIndex = 29;
             this.label1.Text = "Seleccione la fila a modificar/deshabilitar:";
             // 
-            // btnActualizar
+            // btnHabilitar
             // 
-            this.btnActualizar.AutoSize = true;
-            this.btnActualizar.Location = new System.Drawing.Point(693, 192);
-            this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(176, 46);
-            this.btnActualizar.TabIndex = 30;
-            this.btnActualizar.Text = "Actualizar";
-            this.btnActualizar.UseVisualStyleBackColor = true;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            this.btnHabilitar.AutoSize = true;
+            this.btnHabilitar.Location = new System.Drawing.Point(693, 194);
+            this.btnHabilitar.Name = "btnHabilitar";
+            this.btnHabilitar.Size = new System.Drawing.Size(176, 46);
+            this.btnHabilitar.TabIndex = 30;
+            this.btnHabilitar.Text = "Habilitar";
+            this.btnHabilitar.UseVisualStyleBackColor = true;
+            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
             // 
             // Grado
             // 
             this.AcceptButton = this.btnIngresar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnVolver;
             this.ClientSize = new System.Drawing.Size(895, 520);
-            this.Controls.Add(this.btnActualizar);
+            this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.grillaGrados);
@@ -181,6 +181,6 @@
         private System.Windows.Forms.DataGridView grillaGrados;
         private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.Button btnHabilitar;
     }
 }

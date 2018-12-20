@@ -74,6 +74,11 @@ namespace PalcoNet.Comprar
                 errorProvider.SetError(tbTitular, "Por favor, ingrese el nombre del titular de la tarjeta");
                 return;
             }
+            if(!tbTitular.Text.All(c => Char.IsLetter(c) || Char.IsWhiteSpace(c)))
+            {
+                errorProvider.SetError(tbTitular, "Nombre de titular invalido. Solo puede ingresar letras y espacios");
+                return;
+            }
             if (tbCodigo.TextLength < 3)
             {
                 errorProvider.SetError(tbCodigo, "Codigo de seguridad invalido. Debe ser de 3 digitos");

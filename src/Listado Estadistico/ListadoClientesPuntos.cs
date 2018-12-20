@@ -37,7 +37,7 @@ namespace PalcoNet.Listado_Estadistico
             this.trimestre = trimestre + 1;
 
             String query = "DECLARE @anio INT = " + this.anio + ";" + "DECLARE @trimestre INT = " + this.trimestre + ";";
-            query += "EXEC estadistica_clientesConMasPuntosVencidos @anio, @trimestre";
+            query += "EXEC SQLITO.estadistica_clientesConMasPuntosVencidos @anio, @trimestre";
             SqlCommand cmd = Database.createQuery(query);
 
             dgvPuntos.DataSource = Database.getTable(cmd);

@@ -10,19 +10,24 @@ using System.Windows.Forms;
 using PalcoNet.Misc;
 
 using PalcoNet.Controllers;
+using System.Data.SqlClient;
+using System.Configuration;
 
 
 namespace PalcoNet.Abm_Empresa_Espectaculo
 {
     public partial class ABM_Alta_Empresa : Form
     {
+        
         int cantArrobas = 0;
+        DateTime fechaConfig;
 
         #region constructor
 
         public ABM_Alta_Empresa()
         {
             InitializeComponent();
+            fechaConfig = Convert.ToDateTime(ConfigurationManager.AppSettings["FechaSistema"]);
         }
 
         #endregion
@@ -33,7 +38,6 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
         public virtual void btnCargar_Click(object sender, EventArgs e)
         {
             
-
             if (validarCamposVacios())
             {
                 MessageBox.Show("Complete los campos correspondientes");
@@ -53,9 +57,22 @@ namespace PalcoNet.Abm_Empresa_Espectaculo
 
                     Database.ejecutarProc(insert);
 
-                    MessageBox.Show("Empresa agregada correctamente");
+                    //Primero, obtengo el ID de la empresa que acabo de crear, para registrarle bien la fecha
+                    String queryID = "SELECT TOP 1 id_empresa FROM SQLITO.Empresas ORDER BY id_empresa DESC";
+                    SqlCommand cmdID = Database.createQuery(queryID);
+                    String idEmpresa = Database.getValue(cmdID);
 
-                    limpiar();
+                    //Actualizo el registro de la empresa, poniendo bien su fecha de creacion
+                    String queryFechaCreacion = "UPDATE SQLITO.Empresas SET fecha_creacion = @Fecha WHERE id_empresa = @ID";
+                    SqlCommand cmdFechaCreacion = Database.createQuery(queryFechaCreacion);
+                    cmdFechaCreacion.Parameters.AddWithValue("@ID", idEmpresa);
+                    cmdFechaCreacion.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fechaConfig;
+                    Database.execQuery(cmdFechaCreacion);
+
+                    MessageBox.Show("Empresa agregada correctamente");
+                    
+                    //Una vez terminada la carga, cierro esta ventana auxiliar y vuelvo a la ventana principal del ABM
+                    this.Close();
                   
                 }
                 catch (Exception ex)
