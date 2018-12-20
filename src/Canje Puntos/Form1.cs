@@ -16,7 +16,8 @@ namespace PalcoNet.Canje_Puntos
     public partial class canjePuntos : Form
     {
         public Session session { get; set; }
-     
+        DateTime fechaConfig;
+
         public canjePuntos(Session session)
         {
             this.session = session;
@@ -24,6 +25,7 @@ namespace PalcoNet.Canje_Puntos
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             label2.Visible = false;
+            fechaConfig = DateTime.Parse(System.Configuration.ConfigurationManager.AppSettings["FechaSistema"]);
 
         }
         public canjePuntos()
@@ -48,8 +50,9 @@ namespace PalcoNet.Canje_Puntos
         }
         public void sumarPuntos()
         {
-            SqlCommand query = Database.createQuery("SELECT TOP 1 SQLITO.sumarPuntos(@cliente) as Puntos FROM SQLITO.Puntos");
+            SqlCommand query = Database.createQuery("SELECT TOP 1 SQLITO.sumarPuntos(@cliente,@fechaConfig) as Puntos FROM SQLITO.Puntos");
             query.Parameters.AddWithValue("@cliente", Database.getIdPorUsuario(session.user));
+            query.Parameters.AddWithValue("@fechaConfig", fechaConfig);
             string puntos = Database.getValue(query);
             if(puntos == "")
             {

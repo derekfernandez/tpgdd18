@@ -2009,14 +2009,14 @@ END
 GO
 
 CREATE FUNCTION [SQLITO].[sumarPuntos]
-(@cliente INT)
+(@cliente INT, @fecha SMALLDATETIME)
 RETURNS INT
 BEGIN 
 
 	DECLARE @puntos INT
 	SET @puntos = (SELECT TOP (1) ISNULL(SUM(ISNULL(cantidad,0)),0) 
 					FROM SQLITO.Puntos  
-					WHERE (cliente_id = @cliente AND fecha_vencimiento IS NULL) OR (cliente_id = @cliente AND fecha_vencimiento > (SELECT CAST (GETDATE() AS SMALLDATETIME))))
+					WHERE (cliente_id = @cliente AND fecha_vencimiento IS NULL) OR (cliente_id = @cliente AND fecha_vencimiento > @fecha ))
 					
 	IF(@puntos<0)
 	BEGIN 
