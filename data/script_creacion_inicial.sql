@@ -1,8 +1,6 @@
 ﻿USE [GD2C2018]
 GO
-
 --- CREACION DE ESQUEMA ---
-
 
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SQLITO')
 BEGIN
@@ -26,6 +24,34 @@ ORDER BY t.name
 EXEC (@delete_var)
 PRINT('Borrado de FKs finalizado')
  
+--- BORRADO DE PROCEDURES ---
+
+DECLARE DropSpCursor CURSOR FAST_FORWARD FOR
+    SELECT 
+        name
+    FROM sys.procedures
+    WHERE schema_id = SCHEMA_ID('SQLITO')
+
+DECLARE @StoredProcName sysname
+DECLARE @DropStatement NVARCHAR(1000)
+
+OPEN DropSpCursor
+
+FETCH NEXT FROM DropSpCursor INTO @StoredProcName
+
+WHILE (@@fetch_status <> -1)
+BEGIN
+    IF (@@fetch_status <> -2)
+    BEGIN
+        SET @DropStatement = N'DROP PROCEDURE [SQLITO].' + @StoredProcName
+        EXEC(@DropStatement)
+    END
+
+    FETCH NEXT FROM DropSpCursor INTO @StoredProcName
+END
+CLOSE DropSpCursor 
+DEALLOCATE DropSpCursor
+
 --- BORRADO DE TABLAS ---
 
 IF OBJECT_ID('SQLITO.Funcionalidades_Roles') IS NOT NULL

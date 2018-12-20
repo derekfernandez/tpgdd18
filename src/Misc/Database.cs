@@ -860,6 +860,24 @@ namespace PalcoNet.Misc
             execNonQuery(query);
         }
 
+        public static Boolean documentoEsDeCliente(string nrodoc, string tipodoc, Cliente cliente)
+        {
+            SqlCommand q = createQuery(@"SELECT numero_documento FROM SQLITO.Clientes WHERE tipo_documento = @tipodoc
+                                AND numero_documento = @nrodoc AND id_cliente = @id");
+            q.Parameters.AddWithValue("@tipodoc", tipodoc);
+            q.Parameters.AddWithValue("@nrodoc", nrodoc);
+            q.Parameters.AddWithValue("@id", cliente.id);
+            return (getValue(q) != "");
+        }
+
+        public static Boolean cuilEsDeCliente(string cuil, Cliente cliente)
+        {
+            SqlCommand q = createQuery("SELECT cuil FROM SQLITO.Clientes WHERE cuil = @cuil AND id_cliente = @id");
+            q.Parameters.AddWithValue("@cuil", cuil);
+            q.Parameters.AddWithValue("@id", cliente.id);
+            return (getValue(q) != "");
+        }
+
         #endregion
 
         #region Puntos

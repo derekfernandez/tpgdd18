@@ -46,6 +46,8 @@ namespace PalcoNet.Registro_de_Usuario
         {
             if (session != null)
             {
+                btn_backcliente.Visible = false;
+                btnmodify_back.Visible = true;
                 groupBox_gral.Enabled = false;
                 groupBox_gral.Visible = false;
                 groupBox_empresa.Enabled = false;
@@ -59,6 +61,8 @@ namespace PalcoNet.Registro_de_Usuario
 
             else if (cliente != null)
             {
+                btn_backcliente.Visible = false;
+                btnmodify_back.Visible = true;
                 lbl_showestado.Visible = true;
                 lbl_estado.Visible = true;
                 btn_habilitar.Visible = true;
@@ -452,6 +456,9 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void textBox_nrotarjeta_TextChanged(object sender, EventArgs e)
         {
+            nrotarjetacounter.Text = textBox_nrotarjeta.Text.Length.ToString();
+            lbl_tarjetalargoerror.Hide();
+
             if (!textBox_soloNumeros(textBox_nrotarjeta))
             {
                 errorAdv_nrotarjeta.Show();
@@ -499,11 +506,26 @@ namespace PalcoNet.Registro_de_Usuario
                 errorAdv_nombre.Show();
             }
 
-            if (!string.IsNullOrWhiteSpace(textBox_doc.Text) && Database.documentoRepetido(comboBox_tipodoc.SelectedItem.ToString(), textBox_doc.Text))
+            if (!string.IsNullOrWhiteSpace(textBox_doc.Text))
             {
-                MessageBox.Show("El documento ingresado ya se encuentra asociado a un cliente. Revise los datos e intente nuevamente", "", MessageBoxButtons.OK);
-                errorAdv_doc.Show();
-                return;
+                if (this.cliente != null && Database.documentoRepetido(comboBox_tipodoc.SelectedItem.ToString(), textBox_doc.Text) && 
+                        !Database.documentoEsDeCliente(textBox_doc.Text, comboBox_tipodoc.SelectedItem.ToString(),cliente))
+                {
+                    MessageBox.Show("El documento ingresado ya se encuentra asociado a un cliente. Revise los datos e intente nuevamente", "", MessageBoxButtons.OK);
+                    errorAdv_doc.Show();
+                }
+
+                else if (this.session != null && Database.documentoRepetido(comboBox_tipodoc.SelectedItem.ToString(), textBox_doc.Text))
+                {
+                    MessageBox.Show("El documento ingresado ya se encuentra asociado a un cliente. Revise los datos e intente nuevamente", "", MessageBoxButtons.OK);
+                    errorAdv_doc.Show();
+                }
+
+                else if (this.session == null && this.cliente == null && Database.documentoRepetido(comboBox_tipodoc.SelectedItem.ToString(), textBox_doc.Text))
+                {
+                    MessageBox.Show("El documento ingresado ya se encuentra asociado a un cliente. Revise los datos e intente nuevamente", "", MessageBoxButtons.OK);
+                    errorAdv_doc.Show();
+                }
             }
 
             if (string.IsNullOrWhiteSpace(textBox_apellido.Text))
@@ -574,7 +596,12 @@ namespace PalcoNet.Registro_de_Usuario
             if (string.IsNullOrWhiteSpace(textBox_nrotarjeta.Text))
             {
                 errorAdv_nrotarjeta.Show();
+            }
 
+            if (textBox_nrotarjeta.Text.Length != 16)
+            {
+                errorAdv_nrotarjeta.Show();
+                lbl_tarjetalargoerror.Show();
             }
 
             //crear cliente
@@ -640,6 +667,7 @@ namespace PalcoNet.Registro_de_Usuario
             {
                 if (!Database.cuilDuplicado(textBox_cuil.Text))
                 {
+                    
                     string fechasistema = ConfigurationManager.AppSettings["FechaSistema"].ToString();
                     DateTime fechasistema_dt = DateTime.Parse(fechasistema);
                     lbl_fechacreacion.Text = fechasistema_dt.ToShortDateString();
@@ -690,7 +718,7 @@ namespace PalcoNet.Registro_de_Usuario
             {
                 if (cliente.idtarjeta != String.Empty)
                 {
-                    if (!Database.cuilDuplicado(textBox_cuil.Text))
+                    if (!Database.cuilDuplicado(textBox_cuil.Text) || (Database.cuilDuplicado(textBox_cuil.Text) && Database.cuilEsDeCliente(textBox_cuil.Text,cliente)))
                     {
                         string fechacreacion_str = cliente.fecha_creacion;
                         DateTime fechacreacion_dt = DateTime.Parse(fechacreacion_str);
@@ -1037,6 +1065,11 @@ namespace PalcoNet.Registro_de_Usuario
             Database.habilitarCliente(cliente);
             cliente.estado = "True";
             return;
+        }
+
+        private void btnmodify_back_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

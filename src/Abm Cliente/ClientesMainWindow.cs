@@ -462,6 +462,7 @@ namespace PalcoNet.Abm_Cliente
                     dgv_clientesmodificar.Rows[e.RowIndex].Cells["estado"].Value.ToString());
 
                 new Registro_de_Usuario.Registro(cliente).ShowDialog();
+                dgv_clientesmodificar.DataSource = null;
             }
         }
 
