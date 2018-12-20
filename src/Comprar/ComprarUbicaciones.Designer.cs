@@ -49,7 +49,7 @@
             // 
             this.lbTitulo.AutoSize = true;
             this.lbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitulo.Location = new System.Drawing.Point(189, 9);
+            this.lbTitulo.Location = new System.Drawing.Point(201, 9);
             this.lbTitulo.Name = "lbTitulo";
             this.lbTitulo.Size = new System.Drawing.Size(191, 17);
             this.lbTitulo.TabIndex = 0;
@@ -58,7 +58,7 @@
             // dgvDisponibles
             // 
             this.dgvDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDisponibles.Location = new System.Drawing.Point(14, 54);
+            this.dgvDisponibles.Location = new System.Drawing.Point(26, 54);
             this.dgvDisponibles.Name = "dgvDisponibles";
             this.dgvDisponibles.Size = new System.Drawing.Size(256, 301);
             this.dgvDisponibles.TabIndex = 1;
@@ -66,14 +66,14 @@
             // dgvCarrito
             // 
             this.dgvCarrito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCarrito.Location = new System.Drawing.Point(307, 54);
+            this.dgvCarrito.Location = new System.Drawing.Point(319, 54);
             this.dgvCarrito.Name = "dgvCarrito";
             this.dgvCarrito.Size = new System.Drawing.Size(256, 301);
             this.dgvCarrito.TabIndex = 2;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(73, 361);
+            this.btnAgregar.Location = new System.Drawing.Point(85, 361);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(129, 23);
             this.btnAgregar.TabIndex = 3;
@@ -85,7 +85,7 @@
             // 
             this.lbDisponibles.AutoSize = true;
             this.lbDisponibles.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDisponibles.Location = new System.Drawing.Point(110, 34);
+            this.lbDisponibles.Location = new System.Drawing.Point(122, 34);
             this.lbDisponibles.Name = "lbDisponibles";
             this.lbDisponibles.Size = new System.Drawing.Size(72, 13);
             this.lbDisponibles.TabIndex = 4;
@@ -95,7 +95,7 @@
             // 
             this.lbCarrito.AutoSize = true;
             this.lbCarrito.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbCarrito.Location = new System.Drawing.Point(416, 34);
+            this.lbCarrito.Location = new System.Drawing.Point(428, 34);
             this.lbCarrito.Name = "lbCarrito";
             this.lbCarrito.Size = new System.Drawing.Size(44, 13);
             this.lbCarrito.TabIndex = 5;
@@ -103,7 +103,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(374, 361);
+            this.btnEliminar.Location = new System.Drawing.Point(386, 361);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(129, 23);
             this.btnEliminar.TabIndex = 6;
@@ -114,7 +114,7 @@
             // btnCancelar
             // 
             this.btnCancelar.BackColor = System.Drawing.Color.Red;
-            this.btnCancelar.Location = new System.Drawing.Point(73, 435);
+            this.btnCancelar.Location = new System.Drawing.Point(85, 435);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(129, 37);
             this.btnCancelar.TabIndex = 7;
@@ -125,7 +125,7 @@
             // btnConfirmar
             // 
             this.btnConfirmar.BackColor = System.Drawing.Color.LimeGreen;
-            this.btnConfirmar.Location = new System.Drawing.Point(374, 435);
+            this.btnConfirmar.Location = new System.Drawing.Point(386, 435);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(129, 37);
             this.btnConfirmar.TabIndex = 8;
@@ -136,7 +136,7 @@
             // lbTotal
             // 
             this.lbTotal.AutoSize = true;
-            this.lbTotal.Location = new System.Drawing.Point(56, 404);
+            this.lbTotal.Location = new System.Drawing.Point(68, 404);
             this.lbTotal.Name = "lbTotal";
             this.lbTotal.Size = new System.Drawing.Size(102, 13);
             this.lbTotal.TabIndex = 9;
@@ -144,14 +144,14 @@
             // 
             // tbTotalAcumulado
             // 
-            this.tbTotalAcumulado.Location = new System.Drawing.Point(172, 400);
+            this.tbTotalAcumulado.Location = new System.Drawing.Point(184, 400);
             this.tbTotalAcumulado.Name = "tbTotalAcumulado";
             this.tbTotalAcumulado.Size = new System.Drawing.Size(100, 20);
             this.tbTotalAcumulado.TabIndex = 10;
             // 
             // tbCantidad
             // 
-            this.tbCantidad.Location = new System.Drawing.Point(420, 400);
+            this.tbCantidad.Location = new System.Drawing.Point(432, 400);
             this.tbCantidad.Name = "tbCantidad";
             this.tbCantidad.Size = new System.Drawing.Size(100, 20);
             this.tbCantidad.TabIndex = 12;
@@ -159,7 +159,7 @@
             // lbCantidad
             // 
             this.lbCantidad.AutoSize = true;
-            this.lbCantidad.Location = new System.Drawing.Point(313, 403);
+            this.lbCantidad.Location = new System.Drawing.Point(325, 403);
             this.lbCantidad.Name = "lbCantidad";
             this.lbCantidad.Size = new System.Drawing.Size(92, 13);
             this.lbCantidad.TabIndex = 11;
@@ -169,7 +169,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 484);
+            this.ClientSize = new System.Drawing.Size(603, 484);
             this.Controls.Add(this.tbCantidad);
             this.Controls.Add(this.lbCantidad);
             this.Controls.Add(this.tbTotalAcumulado);

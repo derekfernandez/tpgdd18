@@ -239,6 +239,12 @@ namespace PalcoNet.Comprar
 
             errorProvider.Clear();
 
+            if (ubicacionesElegidas.Count == 0)
+            {
+                errorProvider.SetError(dgvCarrito, "Carrito vacio; no puede efectuar una compra sin elegir al menos una ubicacion");
+                return;
+            }
+
             String queryTarjeta = "SELECT tarjeta_id FROM SQLITO.Clientes WHERE id_cliente = " + idCliente;
             SqlCommand cmdTarjeta = Database.createQuery(queryTarjeta);
             String idTarjeta = Database.getValue(cmdTarjeta);

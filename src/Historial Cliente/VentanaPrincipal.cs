@@ -50,7 +50,15 @@ namespace PalcoNet.Historial_Cliente
             //De por si, anulo los botones de navegacion hacia atras, y le pongo el texto correcto al label
             btnPagAnt.Enabled = false;
             btnPrimeraPag.Enabled = false;
-            lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+
+            if (totalPaginas == 0)
+            {
+                lbPagina.Text = "Pagina 0 de 0";
+            }
+            else
+            {
+                lbPagina.Text = "Pagina 1 de " + totalPaginas.ToString();
+            }
 
             //Si hubiera una sola pagina en total, tambien anulo los botones de navegacion hacia delante
             if (totalPaginas <= 1)
@@ -104,8 +112,10 @@ namespace PalcoNet.Historial_Cliente
             dgvHistorial.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgvHistorial.Columns[3].HeaderText = "Fila";
             dgvHistorial.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgvHistorial.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvHistorial.Columns[4].HeaderText = "Asiento";
             dgvHistorial.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgvHistorial.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvHistorial.Columns[5].HeaderText = "Valor";
             dgvHistorial.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvHistorial.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
