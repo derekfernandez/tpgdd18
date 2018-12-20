@@ -187,7 +187,7 @@
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(347, 31);
             this.textBoxDireccion.TabIndex = 5;
-            this.textBoxDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDireccion_KeyPress);
+          
             // 
             // label2
             // 
