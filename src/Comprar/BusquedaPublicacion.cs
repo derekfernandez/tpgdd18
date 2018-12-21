@@ -294,9 +294,12 @@ namespace PalcoNet.Comprar
 
             obtenerPublicaciones();
 
-            //Inhabilito los botones de primera pagina y pagina anterior, y actualizo el label
+            //Inhabilito todos los botones, solo habilito los correspondientes, y actualizo el label
             btnPagAnt.Enabled = false;
             btnPrimeraPag.Enabled = false;
+            btnPagSig.Enabled = false;
+            btnUltimaPag.Enabled = false;
+
             lbPagina.Visible = true;
             if (totalPaginas == 0)
             {
