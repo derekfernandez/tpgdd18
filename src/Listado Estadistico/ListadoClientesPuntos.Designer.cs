@@ -46,7 +46,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(157, 227);
+            this.btnVolver.Location = new System.Drawing.Point(161, 180);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
             this.btnVolver.TabIndex = 1;
@@ -59,14 +59,14 @@
             this.dgvPuntos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPuntos.Location = new System.Drawing.Point(20, 37);
             this.dgvPuntos.Name = "dgvPuntos";
-            this.dgvPuntos.Size = new System.Drawing.Size(344, 181);
+            this.dgvPuntos.Size = new System.Drawing.Size(344, 131);
             this.dgvPuntos.TabIndex = 2;
             // 
             // ListadoClientesPuntos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 262);
+            this.ClientSize = new System.Drawing.Size(384, 212);
             this.Controls.Add(this.dgvPuntos);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.lbTitulo);
