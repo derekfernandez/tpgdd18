@@ -1,5 +1,6 @@
 ﻿USE [GD2C2018]
 GO
+
 --- CREACION DE ESQUEMA ---
 
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SQLITO')
